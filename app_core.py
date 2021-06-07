@@ -4,6 +4,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 
+# 利用 handler 處理 LINE 觸發事件
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 app = Flask(__name__)
