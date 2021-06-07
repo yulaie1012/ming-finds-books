@@ -14,7 +14,7 @@ def callback():
     app.logger.info("Request body: " + body)
 
     try:
-        handler.handle(body, signature)
+        echo(body, signature)
     except InvalidSignatureError:
         abort(400)
 
