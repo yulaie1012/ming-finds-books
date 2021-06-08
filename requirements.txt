@@ -4,3 +4,4 @@ line-bot-sdk==1.17.0
 psycopg2==2.8.6
 numpy==1.19.4
 Pillow==8.0.1
+selenium==3.8.0
