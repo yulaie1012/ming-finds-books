@@ -2,6 +2,11 @@
 
 from app import handler, line_bot_api
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from selenium import webdriver # 先下載 webdriver
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+import time
 
 def findbooks(event):
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
@@ -83,7 +88,7 @@ def findbooks(event):
                 trlist = driver.find_elements_by_class_name('bibItemsEntry')
                 for row in trlist:
                     tdlist = row.find_elements_by_tag_name('td')
-                    result = ('臺灣師範大學', tdlist[0].text, tdlist[3].text, w,)
+                    result = ('臺灣師範大學', tdlist[0].text, tdlist[3].text, w)
  
     driver.close()
     return(result)
