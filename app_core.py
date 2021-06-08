@@ -3,6 +3,7 @@ import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
+import selenium
 from selenium import webdriver # 先下載 webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options

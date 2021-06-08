@@ -1,5 +1,6 @@
 # 處理觸發事件
 
+import selenium
 from app import handler, line_bot_api
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from selenium import webdriver # 先下載 webdriver

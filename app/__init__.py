@@ -1,7 +1,7 @@
 # 用來初始化 LINE BOT
 
 import os
-
+import selenium
 from flask import Flask
 from linebot import LineBotApi, WebhookHandler
 import configparser
