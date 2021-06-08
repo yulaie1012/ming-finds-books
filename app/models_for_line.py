@@ -19,7 +19,7 @@ def findbooks(owo):
     from selenium.webdriver.common.action_chains import ActionChains
     import time
     
-    driver.get("https://metacat.ntu.edu.tw/") # 更改網址以前往不同網頁
+    driver.get("https://metacat.ntu.edu.tw") # 更改網址以前往不同網頁
 
     ISBN = owo
     element = driver.find_element_by_name('simpleSearchText')
