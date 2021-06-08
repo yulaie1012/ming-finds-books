@@ -83,7 +83,7 @@ def findbooks(event):
                 trlist = driver.find_elements_by_class_name('bibItemsEntry')
                 for row in trlist:
                     tdlist = row.find_elements_by_tag_name('td')
-                    result = ('臺灣師範大學', tdlist[0].text, tdlist[3].text, w, end = "\n")
+                    result = ('臺灣師範大學', tdlist[0].text, tdlist[3].text, w,)
  
     driver.close()
     return(result)
