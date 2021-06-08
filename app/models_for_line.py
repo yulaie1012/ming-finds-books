@@ -1,10 +1,10 @@
 # 處理觸發事件
-import os
+
 from app import handler, line_bot_api
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from selenium import webdriver
-
+import os
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
@@ -18,7 +18,7 @@ def findbooks(event):
     from selenium.webdriver.common.action_chains import ActionChains
     import time
     
-    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver")
+
     driver.get("https://metacat.ntu.edu.tw/") # 更改網址以前往不同網頁
 
     ISBN = event
