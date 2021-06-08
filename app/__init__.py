@@ -10,6 +10,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
 
 app = Flask(__name__)
 

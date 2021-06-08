@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
 
 # 利用 handler 處理 LINE 觸發事件
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
