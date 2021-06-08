@@ -3,8 +3,6 @@
 from app import handler, line_bot_api
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
-
-
 def findbooks(owo):
     
     from selenium import webdriver
