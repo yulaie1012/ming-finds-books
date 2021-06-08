@@ -3,23 +3,28 @@
 from selenium import webdriver
 import os
 
-chrome_options = webdriver.ChromeOptions()
+
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
-driver = webdriver.Chrome(executable_path=os.environ.get("C:\\Users\mayda\Downloads\chromedriver"), chrome_options=chrome_options)from app import handler, line_bot_api
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
 from selenium import webdriver # 先下載 webdriver
+chrome_options = webdriver.ChromeOptions()
+driver = webdriver.Chrome(executable_path=os.environ.get("C:\\Users\mayda\Downloads\chromedriver"), chrome_options=chrome_options)
+
+from app import handler, line_bot_api
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
+
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 
-driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
+ 
 
 def findbooks(event):
-    
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver")
     driver.get("https://metacat.ntu.edu.tw/") # 更改網址以前往不同網頁
 
     ISBN = event
