@@ -3,6 +3,11 @@ import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
+from selenium import webdriver # 先下載 webdriver
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+import time
 
 # 利用 handler 處理 LINE 觸發事件
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
