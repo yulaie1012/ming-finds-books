@@ -18,8 +18,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 
- 
-
 def findbooks(event):
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver")
     driver.get("https://metacat.ntu.edu.tw/") # 更改網址以前往不同網頁
