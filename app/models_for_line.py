@@ -21,9 +21,8 @@ def findbooks(owo):
        
     driver.get("https://metacat.ntu.edu.tw") # 更改網址以前往不同網頁
 
-    ISBN = owo
     element = driver.find_element_by_name('simpleSearchText')
-    element.send_keys(ISBN)
+    element.send_keys(owo)
     select = Select(driver.find_element_by_id('simpleType'))
     select.select_by_value("ISBN")
 
