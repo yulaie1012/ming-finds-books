@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import pandas as pd
+=======
+import pandas
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
 
 # title = "二十一世紀資本論"
 # https://opac.lib.ntnu.edu.tw/search*cht/searchtype=i&search=9789869109321
@@ -6,7 +10,11 @@ ISBN = 9789869109321
 
 try:
     url = f"https://opac.lib.ntnu.edu.tw/search*cht/i?SEARCH={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[4])
 except:
     print("========================================")
@@ -15,7 +23,11 @@ except:
 
 try:
     url = f"https://las.sinica.edu.tw/search*cht/a?searchtype=i&searcharg={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[4])
 except:
     print("========================================")
@@ -24,7 +36,11 @@ except:
 
 try:
     url = f"https://opac.lib.ncu.edu.tw/search*cht/i?SEARCH={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[6])
 except:
     print("========================================")
@@ -33,7 +49,11 @@ except:
 
 try:
     url = f"https://ocean.ntou.edu.tw/search*cht/i?SEARCH={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[0])
 except:
     print("========================================")
@@ -42,7 +62,11 @@ except:
 
 try:
     url = f"https://library.ym.edu.tw/search*cht/a?searchtype=i&searcharg={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[4])
 except:
     print("========================================")
@@ -51,7 +75,11 @@ except:
 
 try:
     url = f"https://webpac.pccu.edu.tw/search*cht/?searchtype=i&searcharg={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[7])
 except:
     print("========================================")
@@ -60,7 +88,11 @@ except:
 
 try:
     url = f"https://library.lib.fju.edu.tw/search~S0*cht/?searchtype=i&searcharg={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[7])
 except:
     print("========================================")
@@ -69,7 +101,11 @@ except:
 
 try:
     url = f"https://cylis.lib.cycu.edu.tw/search*cht/~?searchtype=i&searcharg={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[6])
 except:
     print("========================================")
@@ -78,7 +114,11 @@ except:
 
 try:
     url = f"https://sierra.lib.ntust.edu.tw/search*cht/i?SEARCH={ISBN}"
+<<<<<<< HEAD
     dfs = pd.read_html(url, encoding="utf-8")
+=======
+    dfs = pandas.read_html(url, encoding="utf-8")
+>>>>>>> a51324008d2a7e608dd03ff18490991c5fdf8965
     print(dfs[6])
 except:
     print("========================================")
