@@ -6,7 +6,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 df_lst = []
-ISBN = '9789861371955'
+ISBN = '986729193X'
 driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver")
 url = "https://webpac.lhu.edu.tw/webpac/search.cfm?m=ss&k0=" + ISBN + "&t0=k&c0=and&s0=0&w=0&si=&list_num=10&current_page=1&mt=&at=&sj=&py=&it=&lr=&lg=&si=1"
 driver.get(url)
