@@ -3,7 +3,7 @@
       "type": "bubble",
       "hero": {
         "type": "image",
-        "url": "https://github.com/yumei86/iRamen_linebot/blob/master/image/northtw.png?raw=true",
+        "url": "https://github.com/yulaie1012/MingFindsBooks/blob/master/image/north.jpg?raw=true",
         "size": "full",
         "aspectRatio": "20:12",
         "aspectMode": "cover"
@@ -121,30 +121,6 @@
                 "color": "#806408"
               }
             ]
-          },
-          {
-            "type": "box",
-            "layout": "horizontal",
-            "margin": "lg",
-            "spacing": "sm",
-            "contents": [
-              {
-                "type": "button",
-                "action": {
-                  "type": "message",
-                  "text": "苗栗縣",
-                  "label": "苗栗縣"
-                },
-                "style": "primary",
-                "height": "sm",
-                "color": "#806408"
-              },
-              {
-                "type": "text",
-                "text": " ",
-                "margin": "xxl"
-              }
-            ]
           }
         ]
       }
@@ -155,7 +131,7 @@
       "type": "bubble",
       "hero": {
         "type": "image",
-        "url": "https://github.com/yumei86/iRamen_linebot/blob/master/image/centraltw.png?raw=true",
+        "url": "https://github.com/yulaie1012/MingFindsBooks/blob/master/image/middle.jpg?raw=true",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover"
@@ -191,8 +167,8 @@
                 "type": "button",
                 "action": {
                   "type": "message",
-                  "text": "台中市",
-                  "label": "台中市"
+                  "text": "苗栗縣",
+                  "label": "苗栗縣"
                 },
                 "style": "primary",
                 "height": "sm",
@@ -202,8 +178,8 @@
                 "type": "button",
                 "action": {
                   "type": "message",
-                  "label": "彰化縣",
-                  "text": "彰化縣"
+                  "label": "台中市",
+                  "text": "台中市"
                 },
                 "style": "primary",
                 "height": "sm",
@@ -222,8 +198,8 @@
                 "type": "button",
                 "action": {
                   "type": "message",
-                  "label": "南投縣",
-                  "text": "南投縣"
+                  "label": "彰化縣",
+                  "text": "彰化縣"
                 },
                 "style": "primary",
                 "height": "sm",
@@ -233,13 +209,37 @@
                 "type": "button",
                 "action": {
                   "type": "message",
-                  "label": "雲林縣",
-                  "text": "雲林縣"
+                  "label": "南投縣",
+                  "text": "南投縣"
                 },
                 "style": "primary",
                 "height": "sm",
                 "margin": "xxl",
                 "color": "#806408"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "text": "雲林縣",
+                  "label": "雲林縣"
+                },
+                "style": "primary",
+                "height": "sm",
+                "color": "#806408"
+              },
+              {
+                "type": "text",
+                "text": " ",
+                "margin": "xxl"
               }
             ]
           }
@@ -250,7 +250,7 @@
       "type": "bubble",
       "hero": {
         "type": "image",
-        "url": "https://github.com/yumei86/iRamen_linebot/blob/master/image/southtw.png?raw=true",
+        "url": "https://github.com/yulaie1012/MingFindsBooks/blob/master/image/south.jpg?raw=true",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover"
@@ -370,7 +370,7 @@
       "type": "bubble",
       "hero": {
         "type": "image",
-        "url": "https://github.com/yumei86/iRamen_linebot/blob/master/image/easttw.png?raw=true",
+        "url": "https://github.com/yulaie1012/MingFindsBooks/blob/master/image/east.jpg?raw=true",
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "cover"
