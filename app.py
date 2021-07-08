@@ -55,7 +55,7 @@ def callback():
 
 #----------------設定回覆訊息介面-----------------
 @handler.add(MessageEvent, message=TextMessage)
-def NTNU_crawling(event):
+def NTNU_crawling(keyevent):
     #----------------取得userid-----------------
     user_id = event.source.user_id
     if user_id == '':
@@ -89,7 +89,7 @@ def NTNU_crawling(event):
 
 
     #----------------爬蟲-----------------    
-    ISBN = event.message.text
+    ISBN = keyevent.message.text
     urltest = "https://libholding.ntut.edu.tw/webpacIndex.jsp"
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
     driver.get(urltest)
@@ -111,7 +111,7 @@ def NTNU_crawling(event):
     
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
         line_bot_api.reply_message(
-            event.reply_token,
+            keyevent.reply_token,
             TextSendMessage(text=output)
         )
 
