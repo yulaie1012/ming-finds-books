@@ -1,2 +1,4 @@
 ,#,條碼號,館藏地/室,索書號,資料類型,目前狀態 / 到期日,附件,預約,圖書館,連結
-0,1,89372,校本部圖書館/蘆洲圖書室,BOOK 550.187 4025,圖書/一般,仍在館內,,不可預約,國立空中大學圖書館,https://hyweblib.nou.edu.tw/webpac/bookDetail.do?id=116994
+0,1,X006008,新竹中心/圖書室,BOOK 873.57 6014,圖書/一般,仍在館內,,不可預約,國立空中大學圖書館,https://hyweblib.nou.edu.tw/webpac/bookDetail.do?id=42304
+1,2,0053601,校本部圖書館/蘆洲圖書室,BOOK 873.57 6014,圖書/一般,仍在館內,,不可預約,國立空中大學圖書館,https://hyweblib.nou.edu.tw/webpac/bookDetail.do?id=42304
+2,3,Q007690,台東中心/圖書室,BOOK 873.57 6014,圖書/一般,仍在館內,,不可預約,國立空中大學圖書館,https://hyweblib.nou.edu.tw/webpac/bookDetail.do?id=42304

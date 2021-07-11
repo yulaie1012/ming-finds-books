@@ -1,5 +1,8 @@
 ,#,登錄號,館藏地/室,索書號,資料類型,目前狀態 / 到期日,附件,預約,圖書館,連結
-0,1,C633123,行政單位/教學資源中心,BOOK 550.187 1430 2015四刷,圖書/一般,不可外借,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=523863
-1,2,C610195,哲學系/哲學系圖,BOOK 550.187 1430 2014,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=523863
-2,3,C568839,圖書總館/圖書總館,BOOK 550.187 1430 2014,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=523863
-3,4,C607418,圖書總館/圖書總館,BOOK 550.187 1430 2014,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=523863
+0,1,C341531,中文系/中文系圖,BOOK 873.57 7042 2000,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=683691
+1,2,C280922,中文系/中文系圖,BOOK 873.57 7042,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=683691
+2,3,C392885,圖書總館/圖書總館,BOOK 873.57 7042 2001十八刷,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=683691
+3,4,C620375,圖書總館/二樓兒童文學區,BOOK 873.57 7042 2000,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=683691
+4,5,C260048,圖書總館/圖書總館,BOOK 873.57 7042,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=683691
+5,6,C274344,圖書總館/圖書總館,BOOK 873.57 7042,圖書/一般,仍在館內,,,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=683691
+6,7,C362749,管院分館/管院分館,BOOK 873.57 7042 2002二十八刷,圖書/一般,已被外借 / 2021-09-14,,/ 0人預約,東海大學圖書館,https://webpac.lib.thu.edu.tw/bookDetail.do?id=683691
