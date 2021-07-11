@@ -121,6 +121,30 @@
                 "color": "#806408"
               }
             ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "margin": "lg",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "text": "連江縣",
+                  "label": "連江縣"
+                },
+                "style": "primary",
+                "height": "sm",
+                "color": "#806408"
+              },
+              {
+                "type": "text",
+                "text": " ",
+                "margin": "xxl"
+              }
+            ]
           }
         ]
       }
@@ -237,9 +261,16 @@
                 "color": "#806408"
               },
               {
-                "type": "text",
-                "text": " ",
-                "margin": "xxl"
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "label": "金門縣",
+                  "text": "金門縣"
+                },
+                "style": "primary",
+                "height": "sm",
+                "margin": "xxl",
+                "color": "#806408"
               }
             ]
           }
@@ -356,10 +387,15 @@
                 "color": "#806408"
               },
               {
-                "type": "text",
-                "text": " ",
-                "size": "lg",
-                "margin": "xxl"
+                "type": "button",
+                "action": {
+                  "type": "message",
+                  "text": "澎湖縣",
+                  "label": "澎湖縣"
+                },
+                "style": "primary",
+                "height": "sm",
+                "color": "#806408"
               }
             ]
           }
