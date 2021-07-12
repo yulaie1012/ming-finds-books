@@ -4,6 +4,7 @@ import os
 import time
 import json
 import math
+import sys
 import flex_template
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -61,6 +62,14 @@ def NTNU_crawling(event):
     user_id = event.source.user_id
     if user_id == '':
         user_id = event.source.user_id
+
+    #-------判斷使用者輸入的是否為ISBN-------
+    def isAlpha(event):
+        try:
+            return event.message.text.encode('ascii').isalnum()
+        except UnicodeEncodeError:
+            return False
+
     
     #----------------地區-----------------
     TWregion = ["北部","中部","南部","東部"]
@@ -72,7 +81,7 @@ def NTNU_crawling(event):
     if event.message.text == "選擇縣市":
         flex_message0 = flex_template.main_panel_flex()
         line_bot_api.reply_message(event.reply_token,flex_message0)
-    #----------------不同區域的介面設定-----------------
+     #----------------不同區域的介面設定-----------------
     elif event.message.text in TWregion:
             #讀需要的json資料
         f_region = open('json_files_for_robot/json_for_app.json', encoding="utf8") 
@@ -89,13 +98,16 @@ def NTNU_crawling(event):
 
         f_region.close()
 
-
-    #----------------爬蟲-----------------    
-    if event.message.text.isalnum(): #所有字元都是數字或者字母
+     #-------------拿使用者輸入的ISBN爬蟲--------------    
+    elif isAlpha(event) == True: #所有字元都是數字或者字母(判斷為ISBN)
         ISBN = event.message.text
-        urltest = "https://libholding.ntut.edu.tw/webpacIndex.jsp"
-        driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
+        urltest = "https://libholding.ntut.edu.tw/webpacIndex.jsp" 
+        my_options = Options()
+        my_options.add_argument("--incognito")  # 開啟無痕模式
+        # my_options.add_argument("--headless")  # 不開啟實體瀏覽器
+        driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options)
         driver.get(urltest)
+
         element = driver.find_element_by_id('search_inputS')
         element.send_keys(ISBN)
         select = Select(driver.find_element_by_id('search_field'))
@@ -111,12 +123,14 @@ def NTNU_crawling(event):
             for sth in tdlist:
                 output = tdlist[2].text +" "+ tdlist[8].text
                 break
-    
-    if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=output)
-        )
+        driver.close()
+        
+        if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=output)
+            )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
