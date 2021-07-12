@@ -395,6 +395,7 @@
                 },
                 "style": "primary",
                 "height": "sm",
+                "margin": "xxl",
                 "color": "#806408"
               }
             ]

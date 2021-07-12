@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import os
 import time
 import json
+import math
 import flex_template
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -66,6 +67,7 @@ def NTNU_crawling(event):
     city_name = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","台中市","彰化縣","南投縣","雲林縣","嘉義市","台南市","高雄市","屏東縣","宜蘭縣","花蓮縣","台東縣", "金門縣, 連江縣, 澎湖縣"]
     city_name_dic = {**n_dict, **c_dict, **s_dict, **e_dict}
     city_region_dict = dict(zip(["north","center","south","east"], [north,center,south,east]))
+    
     #----------------選擇縣市介面-----------------
     if event.message.text == "選擇縣市":
         flex_message0 = flex_template.main_panel_flex()
@@ -89,7 +91,7 @@ def NTNU_crawling(event):
 
 
     #----------------爬蟲-----------------    
-    if event.isalnum(): #所有字元都是數字或者字母
+    if event.message.text.isalnum(): #所有字元都是數字或者字母
         ISBN = event.message.text
         urltest = "https://libholding.ntut.edu.tw/webpacIndex.jsp"
         driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
