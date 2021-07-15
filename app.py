@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 import os
 import time
 import json
+import math
+import sys
 import flex_template
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -16,9 +18,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 #----------------用來做縣市對應region字典-----------------
-north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市"]
-center = ["台中市","彰化縣","南投縣","雲林縣","臺中市"]
-south = ["嘉義市","台南市","高雄市","屏東縣","臺南市"]
+north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]
+center = ["台中市","彰化縣","南投縣","雲林縣","臺中市", "金門縣"]
+south = ["嘉義市","台南市","高雄市","屏東縣","臺南市", "澎湖縣"]
 east = ["宜蘭縣","花蓮縣","台東縣","臺東縣"]
 n_dict = dict.fromkeys(north, ("北","north"))
 c_dict = dict.fromkeys(center, ("中","center"))
@@ -55,22 +57,31 @@ def callback():
 
 #----------------設定回覆訊息介面-----------------
 @handler.add(MessageEvent, message=TextMessage)
-def NTNU_crawling(keyevent):
+def NTNU_crawling(event):
     #----------------取得userid-----------------
     user_id = event.source.user_id
     if user_id == '':
         user_id = event.source.user_id
+
+    #-------判斷使用者輸入的是否為ISBN-------
+    def isAlpha(event):
+        try:
+            return event.message.text.encode('ascii').isalnum()
+        except UnicodeEncodeError:
+            return False
+
     
     #----------------地區-----------------
     TWregion = ["北部","中部","南部","東部"]
-    city_name = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","台中市","彰化縣","南投縣","雲林縣","嘉義市","台南市","高雄市","屏東縣","宜蘭縣","花蓮縣","台東縣"]
+    city_name = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","台中市","彰化縣","南投縣","雲林縣","嘉義市","台南市","高雄市","屏東縣","宜蘭縣","花蓮縣","台東縣", "金門縣, 連江縣, 澎湖縣"]
     city_name_dic = {**n_dict, **c_dict, **s_dict, **e_dict}
     city_region_dict = dict(zip(["north","center","south","east"], [north,center,south,east]))
+    
     #----------------選擇縣市介面-----------------
     if event.message.text == "選擇縣市":
         flex_message0 = flex_template.main_panel_flex()
         line_bot_api.reply_message(event.reply_token,flex_message0)
-    #----------------不同區域的介面設定-----------------
+     #----------------不同區域的介面設定-----------------
     elif event.message.text in TWregion:
             #讀需要的json資料
         f_region = open('json_files_for_robot/json_for_app.json', encoding="utf8") 
@@ -87,33 +98,39 @@ def NTNU_crawling(keyevent):
 
         f_region.close()
 
+     #-------------拿使用者輸入的ISBN爬蟲--------------    
+    elif isAlpha(event) == True: #所有字元都是數字或者字母(判斷為ISBN)
+        ISBN = event.message.text
+        urltest = "https://libholding.ntut.edu.tw/webpacIndex.jsp" 
+        my_options = Options()
+        my_options.add_argument("--incognito")  # 開啟無痕模式
+        # my_options.add_argument("--headless")  # 不開啟實體瀏覽器
+        driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options)
+        driver.get(urltest)
 
-    #----------------爬蟲-----------------    
-    ISBN = keyevent.message.text
-    urltest = "https://libholding.ntut.edu.tw/webpacIndex.jsp"
-    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver") 
-    driver.get(urltest)
-    element = driver.find_element_by_id('search_inputS')
-    element.send_keys(ISBN)
-    select = Select(driver.find_element_by_id('search_field'))
-    select.select_by_value("STANDARDNO")
-    search_gogogo = driver.find_element_by_xpath('/html/body/div[2]/table/tbody/tr/td[1]/div/div/div[1]/div/div[1]/div/form/table/tbody/tr[2]/td/input[3]').click()
+        element = driver.find_element_by_id('search_inputS')
+        element.send_keys(ISBN)
+        select = Select(driver.find_element_by_id('search_field'))
+        select.select_by_value("STANDARDNO")
+        search_gogogo = driver.find_element_by_xpath('/html/body/div[2]/table/tbody/tr/td[1]/div/div/div[1]/div/div[1]/div/form/table/tbody/tr[2]/td/input[3]').click()
 
-    time.sleep(5)
-    output = str()
-    table = driver.find_element_by_class_name('order')
-    trlist = table.find_elements_by_tag_name('tr')
-    for row in trlist:
-        tdlist = row.find_elements_by_tag_name('td')
-        for sth in tdlist:
-            output = tdlist[2].text +" "+ tdlist[8].text
-            break
-    
-    if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        line_bot_api.reply_message(
-            keyevent.reply_token,
-            TextSendMessage(text=output)
-        )
+        time.sleep(5)
+        output = str()
+        table = driver.find_element_by_class_name('order')
+        trlist = table.find_elements_by_tag_name('tr')
+        for row in trlist:
+            tdlist = row.find_elements_by_tag_name('td')
+            for sth in tdlist:
+                output = tdlist[2].text +" "+ tdlist[8].text
+                break
+        driver.close()
+        
+        if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=output)
+            )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
