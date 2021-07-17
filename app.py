@@ -6,16 +6,36 @@ import json
 import math
 import sys
 import flex_template
+import pandas as pd
+import pandas.io.formats.excel
+import requests
+import requests.packages.urllib3
+requests.packages.urllib3.disable_warnings()
+from urllib.request import HTTPError
+from bs4 import BeautifulSoup
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from linebot.models import *
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys  # 鍵盤操作
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from google.oauth2 import service_account
+from google.oauth2.service_account import Credentials
+import gspread
 
+# 載入自定義函式
+import import_ipynb
+
+driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=capabilities)
 
 #----------------用來做縣市對應region字典-----------------
 north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]
@@ -27,7 +47,21 @@ c_dict = dict.fromkeys(center, ("中","center"))
 s_dict = dict.fromkeys(south, ("南","south"))
 e_dict = dict.fromkeys(east, ("東","east"))
 
-
+def Keelung(ISBN):
+    output = []
+    
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        klccab_crawler(
+            "基隆市公共圖書館", ISBN,  driver, wait
+        )
+    )
+        
+    driver.quit()
+    return organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
 app = Flask(__name__)
 
 # LINE 聊天機器人的基本資料
@@ -108,29 +142,12 @@ def NTNU_crawling(event):
         driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options)
         driver.get(urltest)
 
-        element = driver.find_element_by_id('search_inputS')
-        element.send_keys(ISBN)
-        select = Select(driver.find_element_by_id('search_field'))
-        select.select_by_value("STANDARDNO")
-        search_gogogo = driver.find_element_by_xpath('/html/body/div[2]/table/tbody/tr/td[1]/div/div/div[1]/div/div[1]/div/form/table/tbody/tr[2]/td/input[3]').click()
-
-        time.sleep(5)
-        output = str()
-        table = driver.find_element_by_class_name('order')
-        trlist = table.find_elements_by_tag_name('tr')
-        for row in trlist:
-            tdlist = row.find_elements_by_tag_name('td')
-            for sth in tdlist:
-                output = tdlist[2].text +" "+ tdlist[8].text
-                break
-        driver.close()
         
         if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=output)
             )
-
 
 if __name__ == "__main__":
     app.run(debug=True)
