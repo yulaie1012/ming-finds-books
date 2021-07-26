@@ -30,13 +30,6 @@ my_capabilities = DesiredCapabilities.CHROME
 my_capabilities[
     'pageLoadStrategy'] = 'none'  # 當 html下載完成之後，不等待解析完成，selenium會直接返回
 
-scope = ['https://www.googleapis.com/auth/spreadsheets']
-creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
-gs = gspread.authorize(creds)
-sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-worksheet = sheet.get_worksheet(0)
-worksheet.clear()
-
 def toread_crawlers(org, org_url, ISBN, url_behind, thetable, del_lst, driver):
     wait = WebDriverWait(driver, 10)
     search_url = org_url + ISBN + url_behind
@@ -51,7 +44,7 @@ def toread_crawlers(org, org_url, ISBN, url_behind, thetable, del_lst, driver):
     if version != 0:
         for i in range(version):
             edition = driver.find_elements_by_name('book_link')[i].click()
-            time.sleep(8)
+            time.sleep(5)
 
             df_ntc = pd.read_html(driver.page_source, encoding="utf-8")[thetable]
 
@@ -84,7 +77,15 @@ def toread_crawlers(org, org_url, ISBN, url_behind, thetable, del_lst, driver):
         return(table.dropna())
 
 def toread(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.clear()
+
     output = []
+    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
     
@@ -111,7 +112,7 @@ def toread(ISBN):
         driver=driver
         )
     )
-    
+    '''
     output.append(
         toread_crawlers(
         org="國立東華大學",
@@ -123,12 +124,12 @@ def toread(ISBN):
         driver=driver
         )
     )
+    '''
     
     driver.close()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.update([gg.columns.values.tolist()] + gg.values.tolist())
-    return 'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0'
-
+    return goal
 
 
 

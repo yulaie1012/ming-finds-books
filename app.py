@@ -93,16 +93,15 @@ def test1(event):
         f_region.close()
 
     #----------------爬蟲-----------------    
-    if event.message.text.isalnum(): #所有字元都是數字或者字母
-        driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver")
+    elif event.message.text.isalnum(): #所有字元都是數字或者字母
         ISBN = event.message.text
-        output = toread(ISBN)
-  
+        """toread(ISBN)"""
+        final = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=output)
+            TextSendMessage(text=final)
         )
-
 if __name__ == "__main__":
     app.run(debug=True)
