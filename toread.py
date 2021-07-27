@@ -131,8 +131,7 @@ def toread(ISBN):
     driver.close()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.update([gg.columns.values.tolist()] + gg.values.tolist())
-    return
-
+    return "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
 
 
 

@@ -30,6 +30,12 @@ import import_ipynb
 import toread
 from toread import toread, toread_crawlers
 
+scope = ['https://www.googleapis.com/auth/spreadsheets']
+creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+gs = gspread.authorize(creds)
+sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+worksheet = sheet.get_worksheet(0)
+
 #----------------用來做縣市對應region字典-----------------
 north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]
 center = ["台中市","彰化縣","南投縣","雲林縣","臺中市", "金門縣"]
@@ -102,27 +108,14 @@ def test1(event):
         f_region.close()
 
     #----------------爬蟲-----------------    
-    elif event.message.text.isalnum(): #所有字元都是數字或者字母
+    elif event.message.text.isalnum() and len(event.message.text) > 6: #所有字元都是數字或者字母
         ISBN = event.message.text
-
-        a = toread(ISBN)
-        """        
-        if a == True:
-            line_bot_api.reply_message(
+        
+        line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
-            )
-        else:
-            line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
-            )"""
-
-    if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
-            )
+        )
+        toread(ISBN)
 
 if __name__ == "__main__":
     app.run(debug=True)
