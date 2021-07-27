@@ -24,6 +24,7 @@ import time  # 強制等待
 
 my_options = Options()
 my_options.add_argument("--incognito")  # 開啟無痕模式
+my_options.add_experimental_option('excludeSwitches', ['enable-automation'])  #把新版google的自動控制提醒關掉
 # my_options.add_argument('--start-maximized')  # 視窗最大化
 # my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
@@ -85,6 +86,7 @@ def toread(ISBN):
     worksheet.clear()
 
     output = []
+    final = ""
     goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
@@ -129,7 +131,8 @@ def toread(ISBN):
     driver.close()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.update([gg.columns.values.tolist()] + gg.values.tolist())
-    return goal
+    return
+
 
 
 

@@ -6,19 +6,30 @@ import json
 import math
 import flex_template
 from flask import Flask, request, abort
+#---------------------------------------
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from linebot.models import *
+#---------------------------------------
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.action_chains import ActionChains
-
-
+from selenium.webdriver.chrome.options import Options  # 設定 driver 的行為
+from selenium.webdriver.support.ui import Select  # 選擇＂下拉式選單＂
+from selenium.webdriver.common.keys import Keys  # 鍵盤操作
+from selenium.common.exceptions import NoSuchElementException, TimeoutException  # 載入常見錯誤
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities  # 更改載入策略
+from selenium.webdriver.support.ui import WebDriverWait  # 等待機制
+from selenium.webdriver.support import expected_conditions as EC  # 預期事件
+from selenium.webdriver.common.by import By  # 找尋元素的方法
+#---------------------------------------
+from google.oauth2 import service_account
+from google.oauth2.service_account import Credentials
+import gspread
+#---------------------------------------
 import import_ipynb
 import toread
 from toread import toread, toread_crawlers
+
 #----------------用來做縣市對應region字典-----------------
 north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]
 center = ["台中市","彰化縣","南投縣","雲林縣","臺中市", "金門縣"]
@@ -28,7 +39,6 @@ n_dict = dict.fromkeys(north, ("北","north"))
 c_dict = dict.fromkeys(center, ("中","center"))
 s_dict = dict.fromkeys(south, ("南","south"))
 e_dict = dict.fromkeys(east, ("東","east"))
-
 
 app = Flask(__name__)
 
@@ -55,7 +65,6 @@ def callback():
         abort(400)
 
     return 'OK'
-
 
 #----------------設定回覆訊息介面-----------------
 @handler.add(MessageEvent, message=TextMessage)
@@ -95,13 +104,25 @@ def test1(event):
     #----------------爬蟲-----------------    
     elif event.message.text.isalnum(): #所有字元都是數字或者字母
         ISBN = event.message.text
-        """toread(ISBN)"""
-        final = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+
+        a = toread(ISBN)
+        """        
+        if a == True:
+            line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
+            )
+        else:
+            line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
+            )"""
 
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=final)
-        )
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
+            )
+
 if __name__ == "__main__":
     app.run(debug=True)
