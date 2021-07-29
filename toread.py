@@ -138,7 +138,7 @@ def NTC(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    
+    worksheet.get_all_values()
 
     output = []
     final = ""
@@ -160,10 +160,11 @@ def NTC(ISBN):
     
     driver.quit()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
-    
+    worksheet.append_rows(gg.values.tolist())
     return gg
 #------------醒吾科技大學-------------
 def HWU(ISBN):
+    
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
     gs = gspread.authorize(creds)
@@ -191,7 +192,39 @@ def HWU(ISBN):
     
     driver.quit()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+#------------國立東華大學-------------
+def NDHU(ISBN):
     
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    final = ""
+    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawlers(
+        org="國立東華大學",
+        org_url="https://books-lib.ndhu.edu.tw/toread/opac/search?q=",
+        ISBN=ISBN,
+        url_behind='&max=0&view=LIST&level=all&material_type=all&location=0',
+        thetable=int(6),
+        del_lst=["條碼號", "資料類型", "館藏流通類別", "預約狀態", "備註欄", "使用類型", "附件", "Unnamed: 10"],
+        driver=driver
+        )
+    )
+    
+    driver.quit()
+    gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
+    worksheet.append_rows(gg.values.tolist())
     return gg
 
 

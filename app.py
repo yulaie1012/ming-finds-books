@@ -25,17 +25,18 @@ from selenium.webdriver.common.by import By  # 找尋元素的方法
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
 import gspread
+import gspread_dataframe as gd
 #---------------------------------------
 import import_ipynb
 import toread
-from toread import toread, toread_crawlers, NTC, HWU
+from toread import toread, toread_crawlers, NTC, HWU, NDHU
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
 gs = gspread.authorize(creds)
 sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
 worksheet = sheet.get_worksheet(0)
-worksheet.clear()
+
 
 #----------------用來做縣市對應region字典-----------------
 north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]
@@ -108,19 +109,23 @@ def test1(event):
     
     #----------------爬蟲----------------- 
     else: 
+        worksheet.clear()
         str_input = event.message.text.split(' ')
         ISBN = str_input[0]
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
         )
-        for i in str_input:
-            if i == "NTC" or "國立臺東專科學校" or "臺東專科學校" or "東專" or "台東專科學校"or "國立台東專科學校":
-                print(NTC(ISBN))
-                continue
-            elif i == "HWU" or "醒吾科技大學" or "醒吾科大" or "醒吾":   
-                print(HWU(ISBN))
-            
+        HWUs = ["hwu","HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
+        NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
+        NDHUs = ["ndhu","NDHU","國立東華大學", "東華大學","東華"]
+        for i in range(1, len(str_input)):
+            if str_input[i] in NTCs:               
+                NTC(ISBN)
+            elif str_input[i] in HWUs:
+                HWU(ISBN)                               
+            else:
+                print("nono")
             
 
     
