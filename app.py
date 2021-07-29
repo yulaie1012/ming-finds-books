@@ -7,8 +7,8 @@ import math
 import flex_template
 from flask import Flask, request, abort
 #---------------------------------------
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
+from linebot import LineBotApi, WebhookHandler, WebhookParser
+from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from linebot.models import *
 #---------------------------------------
@@ -28,13 +28,14 @@ import gspread
 #---------------------------------------
 import import_ipynb
 import toread
-from toread import toread, toread_crawlers
+from toread import toread, toread_crawlers, NTC, HWU
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
 gs = gspread.authorize(creds)
 sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
 worksheet = sheet.get_worksheet(0)
+worksheet.clear()
 
 #----------------用來做縣市對應region字典-----------------
 north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]
@@ -51,6 +52,7 @@ app = Flask(__name__)
 # LINE 聊天機器人的基本資料
 line_bot_api = LineBotApi('rtut2oGaCBibk5DTObwKuFgQgD8rC7JazGdF9f68BIP/2lXU+bBWjm3JgHQtvh0iHySthUi2We1XPVlGTMCh9s8Q1IZZL58osZBRvyHz8GXOnp4cd959MMyh/bXZkpaqdOepM0vcrSXXZvHSzcolLQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('5fecbae22c9e1492decda139bd70fd70')
+parser = WebhookParser('5fecbae22c9e1492decda139bd70fd70')
 
 # 打個招呼 :)
 @app.route("/", methods=['GET'])
@@ -61,7 +63,6 @@ def hello():
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
-
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
@@ -69,7 +70,6 @@ def callback():
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
-
     return 'OK'
 
 #----------------設定回覆訊息介面-----------------
@@ -78,8 +78,7 @@ def test1(event):
     #----------------取得userid-----------------
     user_id = event.source.user_id
     if user_id == '':
-        user_id = event.source.user_id
-    
+        user_id = event.source.user_id  
     #----------------地區-----------------
     TWregion = ["北部","中部","南部","東部"]
     city_name = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","台中市","彰化縣","南投縣","雲林縣","嘉義市","台南市","高雄市","屏東縣","宜蘭縣","花蓮縣","台東縣", "金門縣, 連江縣, 澎湖縣"]
@@ -106,16 +105,25 @@ def test1(event):
                 line_bot_api.reply_message(event.reply_token,flex_message1) 
 
         f_region.close()
-
-    #----------------爬蟲-----------------    
-    elif event.message.text.isalnum() and len(event.message.text) > 6: #所有字元都是數字或者字母
-        ISBN = event.message.text
-        
+    
+    #----------------爬蟲----------------- 
+    else: 
+        str_input = event.message.text.split(' ')
+        ISBN = str_input[0]
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
         )
-        toread(ISBN)
+        for i in str_input:
+            if i == "NTC" or "國立臺東專科學校" or "臺東專科學校" or "東專" or "台東專科學校"or "國立台東專科學校":
+                print(NTC(ISBN))
+                continue
+            elif i == "HWU" or "醒吾科技大學" or "醒吾科大" or "醒吾":   
+                print(HWU(ISBN))
+            
+            
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True)

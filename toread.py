@@ -126,13 +126,72 @@ def toread(ISBN):
         driver=driver
         )
     )
-    '''
-    
+    '''  
     driver.close()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.update([gg.columns.values.tolist()] + gg.values.tolist())
     return "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+#------------國立臺東專科學校-------------
+def NTC(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
 
+    output = []
+    final = ""
+    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawlers(
+        org='國立臺東專科學校',
+        org_url='https://library.ntc.edu.tw/toread/opac/search?q=',
+        ISBN=ISBN,
+        url_behind='&max=0&view=LIST&level=all&material_type=all&location=0',
+        thetable=int(5),
+        del_lst=["條碼號", "資料類型", "館藏流通類別", "預約人數", "備註欄", "使用類型", "Unnamed: 12", "附件", "調閱人數", "尋書單"],
+        driver=driver
+        )
+    )
+    
+    driver.quit()
+    gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
+    
+    return gg
+#------------醒吾科技大學-------------
+def HWU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
 
+    output = []
+    final = ""
+    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawlers(
+        org='醒吾科技大學',
+        org_url="http://120.102.129.237/toread/opac/search?q=",
+        ISBN=ISBN,
+        url_behind='&max=0&view=LIST&level=all&material_type=all&location=0',
+        thetable=int(5),
+        del_lst=["尋書單", "條碼號", "資料類型", "館藏流通類別", "備註欄", "使用類型", "Unnamed: 11", "附件", "預約人數"],
+        driver=driver
+        )
+    )
+    
+    driver.quit()
+    gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
+    
+    return gg
 
 
