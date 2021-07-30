@@ -29,7 +29,10 @@ import gspread_dataframe as gd
 #---------------------------------------
 import import_ipynb
 import toread
+import INSTs
 from toread import toread, toread_crawlers, NTC, HWU, NDHU
+from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
+    search_ISBN, click_more_btn, 臺北市立圖書館, TPML
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -116,14 +119,19 @@ def test1(event):
             event.reply_token,
             TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
         )
-        HWUs = ["hwu","HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
+
         NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
+        HWUs = ["hwu","HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
+        TPMLs = ["tpml","TPML", "臺北市立圖書館", "台北市立圖書館", "北市圖"]
         NDHUs = ["ndhu","NDHU","國立東華大學", "東華大學","東華"]
+        
         for i in range(1, len(str_input)):
-            if str_input[i] in NTCs:               
+            if str_input[i] in NTCs: # 國立臺東專科學校              
                 NTC(ISBN)
-            elif str_input[i] in HWUs:
-                HWU(ISBN)                               
+            elif str_input[i] in HWUs: # 醒吾科技大學
+                HWU(ISBN)    
+            elif str_input[i] in TPMLs: # 臺北市立圖書館
+                TPML(ISBN)                           
             else:
                 print("nono")
             

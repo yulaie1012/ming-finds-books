@@ -86,8 +86,6 @@ def toread(ISBN):
     worksheet.clear()
 
     output = []
-    final = ""
-    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
     
@@ -131,6 +129,7 @@ def toread(ISBN):
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.update([gg.columns.values.tolist()] + gg.values.tolist())
     return "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+
 #------------國立臺東專科學校-------------
 def NTC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -141,8 +140,6 @@ def NTC(ISBN):
     worksheet.get_all_values()
 
     output = []
-    final = ""
-    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
     
