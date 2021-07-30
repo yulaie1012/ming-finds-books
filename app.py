@@ -25,17 +25,21 @@ from selenium.webdriver.common.by import By  # 找尋元素的方法
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
 import gspread
+import gspread_dataframe as gd
 #---------------------------------------
 import import_ipynb
 import toread
-from toread import toread, toread_crawlers, NTC, HWU
+import INSTs
+from toread import toread, toread_crawlers, NTC, HWU, NDHU
+from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
+    search_ISBN, click_more_btn, 臺北市立圖書館, TPML
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
 gs = gspread.authorize(creds)
 sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
 worksheet = sheet.get_worksheet(0)
-worksheet.clear()
+
 
 #----------------用來做縣市對應region字典-----------------
 north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]
@@ -108,19 +112,28 @@ def test1(event):
     
     #----------------爬蟲----------------- 
     else: 
+        worksheet.clear()
         str_input = event.message.text.split(' ')
         ISBN = str_input[0]
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
         )
-        for i in str_input:
-            if i == "NTC" or "國立臺東專科學校" or "臺東專科學校" or "東專" or "台東專科學校"or "國立台東專科學校":
-                print(NTC(ISBN))
-                continue
-            elif i == "HWU" or "醒吾科技大學" or "醒吾科大" or "醒吾":   
-                print(HWU(ISBN))
-            
+
+        NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
+        HWUs = ["hwu","HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
+        TPMLs = ["tpml","TPML", "臺北市立圖書館", "台北市立圖書館", "北市圖"]
+        NDHUs = ["ndhu","NDHU","國立東華大學", "東華大學","東華"]
+        
+        for i in range(1, len(str_input)):
+            if str_input[i] in NTCs: # 國立臺東專科學校              
+                NTC(ISBN)
+            elif str_input[i] in HWUs: # 醒吾科技大學
+                HWU(ISBN)    
+            elif str_input[i] in TPMLs: # 臺北市立圖書館
+                TPML(ISBN)                           
+            else:
+                print("nono")
             
 
     
