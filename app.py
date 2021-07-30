@@ -32,7 +32,8 @@ import toread
 import INSTs
 from toread import toread, toread_crawlers, NTC, HWU, NDHU
 from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
-    search_ISBN, click_more_btn, 臺北市立圖書館, TPML
+    search_ISBN, click_more_btn, 臺北市立圖書館, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
+    easy_crawler
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -123,8 +124,10 @@ def test1(event):
         NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
         HWUs = ["hwu","HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
         TPMLs = ["tpml","TPML", "臺北市立圖書館", "台北市立圖書館", "北市圖"]
-        NDHUs = ["ndhu","NDHU","國立東華大學", "東華大學","東華"]
-        
+        FGUs = ["fgu","FGU", "佛光大學", "佛光", "佛大"]
+        NDHUs = ["ndhu","NDHU", "國立東華大學", "東華大學","東華"]
+        NTOUs = ["ntou","NTOU", "國立臺灣海洋大學", "國立台灣海洋大學", "海大", "海洋大學"]
+
         for i in range(1, len(str_input)):
             if str_input[i] in NTCs: # 國立臺東專科學校              
                 NTC(ISBN)
@@ -132,6 +135,10 @@ def test1(event):
                 HWU(ISBN)    
             elif str_input[i] in TPMLs: # 臺北市立圖書館
                 TPML(ISBN)                           
+            elif str_input[i] in FGUs: # 佛光大學
+                FGU(ISBN) 
+            elif str_input[i] in NTOUs: # 國立臺灣海洋大學
+                NTOU(ISBN)                 
             else:
                 print("nono")
             
