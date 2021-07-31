@@ -105,7 +105,7 @@ def wait_for_url_changed(old_url, driver, waiting_time=10):
         return True
 
 # ------------------------精準定位table-------------------------
-def accurately_find_table_and_read_it(table_position, table_position2=0):
+def accurately_find_table_and_read_it(table_position, driver,table_position2=0):
     try:
         if not wait_for_element_present(table_position):
             print(f'找不到 {table_position}！')
@@ -147,21 +147,21 @@ def click_more_btn(driver):
 # ----------------------載入更多系列--------------------------
 # webpac_gov_crawler() 
 # 宜蘭|桃園|高雄|屏東|花蓮|澎湖|雲科|影視中心
-def webpac_gov_crawler(org, org_url, ISBN,driver, wait):
+def webpac_gov_crawler(org, org_url, ISBN,driver):
     try:
         table = []
         driver.get(org_url)
-        select_ISBN_strategy('searchField', 'ISBN')
-        search_ISBN(ISBN, 'searchInput')
+        select_ISBN_strategy('searchField', 'ISBN', driver)
+        search_ISBN(ISBN, 'searchInput', driver)
 
         # 一筆
-        if wait_for_element_present('.bookplace_list > table', 10):
+        if wait_for_element_present('.bookplace_list > table', driver):
             click_more_btn(driver)
-            tgt = accurately_find_table_and_read_it('.bookplace_list > table')
+            tgt = accurately_find_table_and_read_it('.bookplace_list > table', driver)
             tgt['圖書館'], tgt['連結'] = org, driver.current_url
             table.append(tgt)
         # 多筆
-        elif wait_for_element_present('.data_all .data_quantity2 em', 5):
+        elif wait_for_element_present('.data_all .data_quantity2 em', driver):
             tgt_urls = []
             soup = BeautifulSoup(driver.page_source, 'html.parser')
             anchors = soup.select('.bookdata > h2 > a')
@@ -169,9 +169,9 @@ def webpac_gov_crawler(org, org_url, ISBN,driver, wait):
                 tgt_urls.append(org_url.replace('advanceSearch', '') + anchor['href'])
             for tgt_url in tgt_urls:
                 driver.get(tgt_url)
-                if wait_for_element_present('.bookplace_list > table', 10):
+                if wait_for_element_present('.bookplace_list > table', driver):
                     click_more_btn(driver)
-                    tgt = accurately_find_table_and_read_it('.bookplace_list > table')
+                    tgt = accurately_find_table_and_read_it('.bookplace_list > table', driver)
                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
                     table.append(tgt)
         # 無
@@ -202,8 +202,7 @@ def ILCCB(ISBN):
         '宜蘭縣公共圖書館',
         'https://webpac.ilccb.gov.tw/search?searchField=ISBN&searchInput=',
         ISBN,
-        driver,
-        wait
+        driver
         )
     )
     
@@ -507,7 +506,6 @@ def FJU(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    worksheet.get_all_values()
     output = []
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
@@ -532,14 +530,14 @@ def FJU(ISBN):
 # 中研院|輔仁|陽交大 ?
 def changed_crawler(org, org_url, ISBN, driver):
     driver.get(org_url)   
-    select_ISBN_strategy('searchtype', 'i')  
-    search_ISBN(ISBN, 'searcharg')
+    select_ISBN_strategy('searchtype', 'i', driver)  
+    search_ISBN(ISBN, 'searcharg', driver)
 
-    if not wait_for_element_present('table.bibItems'):
+    if not wait_for_element_present('table.bibItems', driver):
         print(f'在「{org}」找不到「{ISBN}」')
         return
 
-    table = accurately_find_table_and_read_it('table.bibItems')
+    table = accurately_find_table_and_read_it('table.bibItems', driver)
     table['圖書館'], table['連結'] = org, driver.current_url
     table = organize_columns(table)
     return table
