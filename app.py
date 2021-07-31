@@ -32,7 +32,8 @@ import toread
 import INSTs
 from toread import toread, toread_crawlers, NTC, HWU, NDHU
 from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
-    search_ISBN, click_more_btn, 臺北市立圖書館, TPML
+    search_ISBN, click_more_btn, 臺北市立圖書館, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
+    easy_crawler, YM, NTNU, NTUST, PCCU, FJU, SINICA
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -123,8 +124,16 @@ def test1(event):
         NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
         HWUs = ["hwu","HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
         TPMLs = ["tpml","TPML", "臺北市立圖書館", "台北市立圖書館", "北市圖"]
-        NDHUs = ["ndhu","NDHU","國立東華大學", "東華大學","東華"]
-        
+        FGUs = ["fgu","FGU", "佛光大學", "佛光", "佛大"]
+        NDHUs = ["ndhu","NDHU", "國立東華大學", "東華大學","東華"]
+        NTOUs = ["ntou","NTOU", "國立臺灣海洋大學", "國立台灣海洋大學", "海大", "海洋大學"]
+        YMs = ["ym","YM", "國立陽明大學","陽明大學", "陽明"]
+        NTNUs = ["ntnu","NTNU", "國立臺灣師範大學","國立台灣師範大學","臺灣師範大學","台灣師範大學","台師大","臺師大"]
+        NTUSTs = ["ntust","NTUST", "國立臺灣科技大學", "國立台灣科技大學","臺灣科技大學", "台灣科技大學", "台科大","臺科大"]
+        PCCUs = ["pccu","PCCU", "中國文化大學", "文化大學","文化", "文大"]
+        FJUs = ["fju", "FJU", "輔仁大學", "輔仁", "輔大"]
+        SINICAs = ["sinica","SINICA", "中央研究院", "中研院"]
+
         for i in range(1, len(str_input)):
             if str_input[i] in NTCs: # 國立臺東專科學校              
                 NTC(ISBN)
@@ -132,6 +141,24 @@ def test1(event):
                 HWU(ISBN)    
             elif str_input[i] in TPMLs: # 臺北市立圖書館
                 TPML(ISBN)                           
+            elif str_input[i] in FGUs: # 佛光大學
+                FGU(ISBN) 
+            elif str_input[i] in NTOUs: # 國立臺灣海洋大學
+                NTOU(ISBN)                 
+            elif str_input[i] in YMs: # 國立陽明大學
+                YM(ISBN)  
+            elif str_input[i] in NTNUs: # 國立臺灣師範大學
+                NTNU(ISBN)  
+            elif str_input[i] in NTUSTs: # 國立臺灣科技大學
+                NTUST(ISBN)
+            elif str_input[i] in PCCUs: # 中國文化大學
+                PCCU(ISBN)                 
+            elif str_input[i] in FJUs: # 輔仁大學
+                FJU(ISBN)  
+            elif str_input[i] in SINICAs: # 中央研究院
+                SINICA(ISBN) 
+
+
             else:
                 print("nono")
             
