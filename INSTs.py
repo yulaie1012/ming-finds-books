@@ -145,8 +145,8 @@ def click_more_btn(driver):
     except:
         return
 
-# 臺北市立圖書館 TPML
-def 臺北市立圖書館(org, org_url, ISBN, driver):
+# 臺北市立圖書館 TPML X
+def 臺北市立圖書館(org, org_url, ISBN, driver, wait):
     try:
         # 進入＂搜尋主頁＂
         driver.get(org_url)
@@ -188,18 +188,18 @@ def TPML(ISBN):
         '臺北市立圖書館',
         'https://book.tpml.edu.tw/webpac/webpacIndex.jsp',
         ISBN,
-        driver
+        driver, wait
         )
     )   
     driver.close()
-    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # webpac_jsp_crawler()
 # 宜大|佛光|嘉藥|中華
 # --------------------------jsp系列--------------------------------
-def webpac_jsp_crawler(org, org_url, ISBN, driver):
+def webpac_jsp_crawler(org, org_url, ISBN, driver,wait):
     try:
         table = []       
         driver.get(org_url)
@@ -245,7 +245,7 @@ def webpac_jsp_crawler(org, org_url, ISBN, driver):
     else:
         return table
 
-# 佛光大學 FGU
+# 佛光大學 FGU X
 def FGU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -261,7 +261,8 @@ def FGU(ISBN):
         '佛光大學',
         "http://libils.fgu.edu.tw/webpacIndex.jsp",
         ISBN,
-        driver
+        driver,
+        wait
         )
     )
     
@@ -271,7 +272,7 @@ def FGU(ISBN):
     return gg
 
 # easy_crawler()
-# 海大|台師大|中研院
+# 海大|陽明|台科大|台師大|文化|輔仁|中研院|
 # ------------------------最簡單的那種------------------------------
 def easy_crawler(table_position, org, org_url, ISBN, driver):
     try:
@@ -292,7 +293,7 @@ def easy_crawler(table_position, org, org_url, ISBN, driver):
     except:
         print(f'《{ISBN}》在「{url}」無法爬取')
 
-# 國立臺灣海洋大學 NTOU
+# 國立臺灣海洋大學 NTOU V
 def NTOU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -318,3 +319,166 @@ def NTOU(ISBN):
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
+
+# 國立陽明大學 YM V
+def YM(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        easy_crawler(
+        4,
+        '國立陽明大學',
+        "https://library.ym.edu.tw/search*cht/a?searchtype=i&searcharg=",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立臺灣科技大學 YM V
+def NTUST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        easy_crawler(
+        6,
+        '國立臺灣科技大學',
+        "https://sierra.lib.ntust.edu.tw/search*cht/i?SEARCH=",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立臺灣師範大學 NTNU V
+def NTNU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        easy_crawler(
+        4,
+        '國立臺灣師範大學',
+        "https://opac.lib.ntnu.edu.tw/search*cht/i?SEARCH=",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 中國文化大學 PCCU V
+def PCCU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        easy_crawler(
+        7,
+        '中國文化大學',
+        "https://webpac.pccu.edu.tw/search*cht/?searchtype=i&searcharg=",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 輔仁大學 FJU ?
+def FJU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        easy_crawler(
+        7,
+        '輔仁大學',
+        "https://library.lib.fju.edu.tw/search~S0*cht/?searchtype=i&searcharg=",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 中央研究院 SINICA ?
+def SINICA(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        easy_crawler(
+        4,
+        '中央研究院',
+        "https://las.sinica.edu.tw/search*cht/a?searchtype=i&searcharg=",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
