@@ -95,6 +95,15 @@ def wait_for_element_present(element_position, driver, waiting_time=5, by=By.CSS
     else:
         return element
 
+def wait_for_element_clickable(element_position, driver, waiting_time=5, by=By.PARTIAL_LINK_TEXT):
+    try:
+        element = WebDriverWait(driver, waiting_time).until(
+            EC.element_to_be_clickable((by, element_position)))
+    except:
+        return
+    else:
+        return element
+
 # ------------------------等待網址改變--------------------------
 def wait_for_url_changed(old_url, driver, waiting_time=10):
     try:
@@ -265,26 +274,26 @@ def TPML(ISBN):
 
 # --------------------------jsp系列--------------------------------
 # webpac_jsp_crawler()
-# 宜大|佛光|嘉藥|中華
-def webpac_jsp_crawler(org, org_url, ISBN,driver):
+# 佛光|宜大|嘉藥|中華
+def webpac_jsp_crawler(org, org_url, ISBN, driver):
     try:
         table = []       
         driver.get(org_url)
         try:
-            select_ISBN_strategy('search_field', 'ISBN')
+            select_ISBN_strategy('search_field', 'ISBN', driver)
         except:
-            select_ISBN_strategy('search_field', 'STANDARDNO')  # 北科大
-        search_ISBN(ISBN, 'search_input')
+            select_ISBN_strategy('search_field', 'STANDARDNO', driver)  # 北科大
+        search_ISBN(ISBN, 'search_input', driver)
         
         # 一筆
-        if wait_for_element_present('div.mainCon'):
-            if not wait_for_element_present('table.order'):
+        if wait_for_element_present('div.mainCon', driver):
+            if not wait_for_element_present('table.order', driver):
                 return
-            tgt = accurately_find_table_and_read_it('table.order')
+            tgt = accurately_find_table_and_read_it('table.order', driver)
             tgt['圖書館'], tgt['連結'] = org, driver.current_url
             table.append(tgt)
         # 多筆、零筆
-        elif wait_for_element_present('iframe#leftFrame'):
+        elif wait_for_element_present('iframe#leftFrame', driver):
             iframe = driver.find_element_by_id('leftFrame')
             driver.switch_to.frame(iframe)
             # 切換到 <frame> 需要時間，否則會無法讀取
@@ -305,9 +314,9 @@ def webpac_jsp_crawler(org, org_url, ISBN,driver):
                 # 進入＂詳細書目＂
                 driver.get(tgt_url)
                 # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
-                if not wait_for_element_present('table.order'):
+                if not wait_for_element_present('table.order', driver):
                     continue  # 暫停＂本次＂迴圈，以下敘述不會執行
-                tgt = accurately_find_table_and_read_it('table.order')
+                tgt = accurately_find_table_and_read_it('table.order', driver)
                 tgt['圖書館'], tgt['連結'] = org, driver.current_url
                 table.append(tgt)
         table = organize_columns(table)
@@ -317,7 +326,7 @@ def webpac_jsp_crawler(org, org_url, ISBN,driver):
     else:
         return table
 
-# 佛光大學 FGU X(name 'driver' is not defined)
+# 佛光大學 FGU X(在「佛光大學」搜尋「9789861371955」時，發生不明錯誤！)
 def FGU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -325,13 +334,38 @@ def FGU(ISBN):
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
     
     output.append(
         webpac_jsp_crawler(
         '佛光大學',
         "http://libils.fgu.edu.tw/webpacIndex.jsp",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立宜蘭大學 NIU
+def NIU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_jsp_crawler(
+        '國立宜蘭大學',
+        "https://lib.niu.edu.tw/webpacIndex.jsp",
         ISBN,
         driver
         )
@@ -398,7 +432,7 @@ def YM(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    worksheet.get_all_values()
+    
     output = []
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)

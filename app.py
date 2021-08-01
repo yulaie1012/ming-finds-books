@@ -34,7 +34,7 @@ from toread import toread, toread_crawlers, NTC, HWU, NDHU
 from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
     search_ISBN, click_more_btn, 臺北市立圖書館, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
     easy_crawler, YM, NTNU, NTUST, PCCU, FJU, SINICA, changed_crawler, webpac_ajax_page_crawler, NTPC, KLCCAB, \
-    基隆市公共圖書館, webpac_gov_crawler, ILCCB
+    基隆市公共圖書館, webpac_gov_crawler, ILCCB, wait_for_element_clickable, NIU
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -137,6 +137,7 @@ def test1(event):
         NTPCs = ["ntpc","NTPC", "新北市立圖書館", "新北市圖","新北市圖書館"]
         KLCCABs = ["klccab","KLCCAB","kllib","KLLIB","基隆市公共圖書館","基隆市圖","基隆市圖書館", "基隆圖書館"]
         ILCCBs = ["ilccb","ILCCB","宜蘭縣公共圖書館","宜蘭縣圖書館","宜蘭圖書館" "宜蘭縣圖","宜圖"]
+        NIUs = ["niu","NIU", "國立宜蘭大學", "宜蘭大學", "宜大", "宜蘭大"]
 
         for i in range(1, len(str_input)):
             if str_input[i] in NTCs: # 國立臺東專科學校              
@@ -167,6 +168,8 @@ def test1(event):
                 KLCCAB(ISBN)
             elif str_input[i] in ILCCBs: # 宜蘭縣公共圖書館
                 ILCCB(ISBN)
+            elif str_input[i] in NIUs: # 國立宜蘭大學
+                NIU(ISBN)
 
             else:
                 print("nono")
