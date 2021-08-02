@@ -141,6 +141,52 @@ def select_ISBN_strategy(select_position, option_position, driver, waiting_time=
     select = Select(search_field)
     select.select_by_value(option_position)
 
+# ------------------------Primo找書--------------------------
+def primo_finding(org, tcn, driver): #primo爬資訊的def ；#tcn = thelist_class_name
+	sub_df_lst = []
+	time.sleep(5)
+	try:
+		back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
+	except:
+		back = None
+	if back != None:
+		back.click()
+
+	thelist = driver.find_elements_by_class_name(tcn)
+	if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
+		thelist = thelist[0:-2]
+	else:
+		pass
+
+	for row in thelist:
+		plist = row.find_elements_by_tag_name("p")
+		where = row.find_elements_by_tag_name("h3")
+		i = len(where)
+		for sth in plist:
+			a = sth.find_elements_by_tag_name("span")
+			for _ in range(i):
+				now_url = driver.current_url
+				new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
+				sub_df_lst.append(new_row)
+				break
+			break
+	return sub_df_lst
+
+# ------------------------綠點點找書--------------------------
+def primo_greendot_finding(org, driver): #primo爬資訊的def
+    sub_df_lst = []
+    try:
+        time.sleep(1)
+        num = driver.find_elements_by_class_name('EXLLocationTableColumn1')
+        status = driver.find_elements_by_class_name('EXLLocationTableColumn3')
+        for i in range(0, len(num)):
+            now_url = driver.current_url
+            new_row = [org, "圖書館總館", num[i].text, status[i].text, now_url]
+            sub_df_lst.append(new_row)
+    except:
+        pass
+    return sub_df_lst
+
 #------------------------按載入更多----------------------------
 def click_more_btn(driver):
     try:
@@ -819,47 +865,18 @@ def NCL(ISBN):
 def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
     url = url_front + ISBN + url_behind
     primo_lst = []
-    def primo_finding(org, tcn): #primo爬資訊的def ；#tcn = thelist_class_name
-        sub_df_lst = []
-        time.sleep(2)
-        try:
-            back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
-        except:
-            back = None
-        if back != None:
-            back.click()
-
-        thelist = driver.find_elements_by_class_name(tcn)
-        if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
-            thelist = thelist[0:-2]
-        else:
-            pass
-
-        for row in thelist:
-            plist = row.find_elements_by_tag_name("p")
-            where = row.find_elements_by_tag_name("h3")
-            i = len(where)
-            for sth in plist:
-                a = sth.find_elements_by_tag_name("span")
-                for _ in range(i):
-                    now_url = driver.current_url
-                    new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
-                    sub_df_lst.append(new_row)
-                    break
-                break
-        return sub_df_lst
 
     try:
         # 進入《館藏系統》頁面
         driver.get(url)
-        # 等待＂進階查詢的按鈕＂直到出現：click
-        time.sleep(3)
+        time.sleep(8)
+
         try: #開始爬蟲
             editions = driver.find_elements_by_class_name('item-title') 
             if len(editions) > 1: #如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else: #如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
-                time.sleep(2)
+                time.sleep(5)
                 editions[0].click()
                 time.sleep(5)
                 editions = driver.find_elements_by_class_name('item-title') #這時候是第二層的分版本了！(ex.政大 9789869109321)
@@ -871,22 +888,21 @@ def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
             if back_check == None: #多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
                     into = editions[i].click()
-                    time.sleep(3)
-                    primo_lst += primo_finding(org, tcn)
+                    time.sleep(8)
+                    primo_lst += primo_finding(org, tcn, driver)
                     try: 
                         back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
                     except:
                         back2 = None
 
             else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
-                time.sleep(3)
-                primo_lst += primo_finding(org, tcn)
+                time.sleep(10)
+                primo_lst += primo_finding(org, tcn, driver)
         except:
             pass
     except:
         pass
     return pd.DataFrame(primo_lst)
-
 # 國立臺灣大學 NTU X
 def NTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -894,10 +910,8 @@ def NTU(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    
     output = []
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
     
     output.append(
         primo_crawler(
@@ -910,7 +924,6 @@ def NTU(ISBN):
         )
     )
     
-    driver.quit()
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
@@ -925,7 +938,6 @@ def NCCU(ISBN):
     
     output = []
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
     
     output.append(
         primo_crawler(
@@ -938,7 +950,7 @@ def NCCU(ISBN):
         )
     )
     
-    driver.quit()
+    
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
@@ -946,30 +958,27 @@ def NCCU(ISBN):
 # --------------------綠點點------------------------
 # primo_greendot_crawler()
 # 長庚|中正
-def primo_greendot_crawler(org, url_front, ISBN ,url_behind, driver):
+def primo_greendot_crawler(org, url_front, ISBN ,url_behind , driver):
     url = url_front + ISBN + url_behind
     primo_greendot_lst = []
-    def primo_greendot_finding(org): #primo爬資訊的def
-        sub_df_lst = []
-        try:
-            time.sleep(1)
-            num = driver.find_elements_by_class_name('EXLLocationTableColumn1')
-            status = driver.find_elements_by_class_name('EXLLocationTableColumn3')
-            for i in range(0, len(num)):
-                now_url = driver.current_url
-                new_row = [org, "圖書館總館", num[i].text, status[i].text, now_url]
-                sub_df_lst.append(new_row)
-        except:
-            pass
-        return sub_df_lst
-   
+
     try:
         driver.get(url)
         try: #只有一個版本
             time.sleep(2)
             place_click = driver.find_element_by_id('exlidResult0-LocationsTab').click()
-            time.sleep(2)
-            primo_greendot_lst += primo_greendot_finding(org)
+            sub_df_lst = []
+            try:
+                time.sleep(1)
+                num = driver.find_elements_by_class_name('EXLLocationTableColumn1')
+                status = driver.find_elements_by_class_name('EXLLocationTableColumn3')
+                for i in range(0, len(num)):
+                    now_url = driver.current_url
+                    new_row = [org, "圖書館總館", num[i].text, status[i].text, now_url]
+                    sub_df_lst.append(new_row)
+            except:
+                pass
+            primo_greendot_lst += sub_df_lst
         except: #有多個版本，所以要點進去再做
             time.sleep(2)
             manyeditions = driver.find_element_by_id('titleLink').click()
@@ -979,7 +988,6 @@ def primo_greendot_crawler(org, url_front, ISBN ,url_behind, driver):
                     place_click2 = driver.find_element_by_id('exlidResult' + str(i) + '-LocationsTab').click()
                 except:
                     continue
-            primo_greendot_lst += primo_greendot_finding(org)
     except:
         pass
 
@@ -1006,7 +1014,7 @@ def CGU(ISBN):
         )
     )
     
-    driver.quit()
+    
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg

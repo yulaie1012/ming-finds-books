@@ -35,7 +35,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     search_ISBN, click_more_btn, 臺北市立圖書館, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
     easy_crawler, YM, NTNU, NTUST, PCCU, FJU, SINICA, changed_crawler, webpac_ajax_page_crawler, NTPC, KLCCAB, \
     基隆市公共圖書館, webpac_gov_crawler, ILCCB, wait_for_element_clickable, NIU, 國家圖書館, NCL, \
-    primo_crawler, NTU, NCCU, primo_greendot_crawler, CGU
+    primo_crawler, NTU, NCCU, primo_greendot_crawler, CGU, primo_greendot_finding, primo_finding
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
