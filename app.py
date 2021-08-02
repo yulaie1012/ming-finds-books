@@ -35,7 +35,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     search_ISBN, click_more_btn, 臺北市立圖書館, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
     easy_crawler, YM, NTNU, NTUST, PCCU, FJU, SINICA, changed_crawler, webpac_ajax_page_crawler, NTPC, KLCCAB, \
     基隆市公共圖書館, webpac_gov_crawler, ILCCB, wait_for_element_clickable, NIU, 國家圖書館, NCL, \
-    primo_crawler, NTU
+    primo_crawler, NTU, NCCU, primo_greendot_crawler, CGU
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -141,6 +141,8 @@ def test1(event):
         NIUs = ["niu","NIU", "國立宜蘭大學", "宜蘭大學", "宜大", "宜蘭大"]
         NCLs = ["ncl","NCL", "國家圖書館", "國圖"]
         NTUs = ["ntu","NTU", "國立臺灣大學", "國立台灣大學", "臺灣大學", "台灣大學", "臺大", "台大"]
+        NCCUs = ["nccu","NCCU", "國立政治大學", "政治大學", "政大"]
+        CGUs = ["cgu","CGU", "長庚大學", "長庚"]
 
         for i in range(1, len(str_input)):
             if str_input[i] in NTCs: # 國立臺東專科學校              
@@ -177,6 +179,10 @@ def test1(event):
                 NCL(ISBN)
             elif str_input[i] in NTUs: # 國立臺灣大學
                 NTU(ISBN)
+            elif str_input[i] in NCCUs: # 國立政治大學
+                NCCU(ISBN)
+            elif str_input[i] in CGUs: # 長庚大學
+                CGU(ISBN)
 
             else:
                 print("nono")
