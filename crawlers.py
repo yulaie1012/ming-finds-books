@@ -222,7 +222,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         return tgt
 
 
-# ## select_ISBN_strategy(driver, select_position, option_position, waiting_time=30)
+# ## select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME)
 # - 用法：
 #     - 等待 select 出現，並選擇以 ISBN 方式搜尋
 # - 參數：
@@ -230,31 +230,33 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
 #     - select_position：select 位置，預設 name
 #     - option_position：option 位置，預設 value
 #     - waiting_time：等待時間，預設 30 秒
+#     - by：預設 By.NAME
 
-# In[127]:
+# In[155]:
 
 
-def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30):
+def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
     time.sleep(0.5)
-    search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((By.NAME, select_position)))
+    search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
     select = Select(search_field)
     select.select_by_value(option_position)
 
 
-# ## search_ISBN(driver, ISBN, input_position, waiting_time=10)
+# ## search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME)
 # - 用法：
 #     - 等待 input 出現，輸入 ISBN 並按下 ENTER
 # - 參數：
 #     - ISBN：ISBN
 #     - input_position：input 位置，預設 name
 #     - waiting_time：等待時間，預設 10 秒
+#     - by：預設 By.NAME
 
-# In[128]:
+# In[154]:
 
 
-def search_ISBN(driver, ISBN, input_position, waiting_time=10):
+def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
     time.sleep(0.5)
-    search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((By.NAME, input_position)))
+    search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
     search_input.send_keys(ISBN)
     search_input.send_keys(Keys.ENTER)
 
@@ -482,85 +484,51 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# ## <font color='red'>待維修</font>webpac_ajax_page_crawler(driver, org, org_url, ISBN)
+# ## <mark>完成</mark>webpac_ajax_crawler(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/07/31
 # - 『函式完成度』：極高
 
 # ### 函式說明
 # - 『運作的原理』：使用 selenium 進行搜索，進入＂書目資料＂頁面後，從該網址分析並得到 mid，在由此進入 ajax_page。
-# - 『適用的機構』：[新北市立圖書館](https://webpac.tphcc.gov.tw/webpac/search.cfm?show=adv)、[高雄市立空中大學](https://webpac.ouk.edu.tw/webpac/search.cfm?show=adv)、[國立屏東大學](https://webpac.nptu.edu.tw/webpac/search.cfm?show=adv)
+# - 『適用的機構』：[新北市立圖書館](https://webpac.tphcc.gov.tw/webpac/search.cfm)、[高雄市立空中大學](https://webpac.ouk.edu.tw/webpac/search.cfm)、[國立屏東大學](https://webpac.nptu.edu.tw/webpac/search.cfm)
 # - 『能處理狀況』：判斷搜尋結果有沒有超過一筆、只有一筆搜尋結果有沒有跳轉、找不到書
 # - 『下一步優化』：當搜尋無結果時，可以直接結束。
 
 # ### 函式本體
 
-# In[ ]:
+# In[204]:
 
 
-def webpac_ajax_page_crawler(org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-        # 等待點擊＂進階查詢＂按鈕，接著點擊
-        WebDriverWait(driver, 30).until(
-            EC.element_to_be_clickable((By.LINK_TEXT, '進階查詢'))).click()
-        # 等待定位＂下拉式選單＂，選擇以 ISBN 方式搜尋
-        search_field = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, 'as_type_1')))
-        select = Select(search_field)
-        select.select_by_value('i')
-        # 定位＂搜尋欄＂，輸入 ISBN
-        search_input = driver.find_element_by_id('as_keyword_1')
-        search_input.send_keys(ISBN)
-        search_input.send_keys(Keys.ENTER)
+def webpac_ajax_crawler(driver, org, org_url, ISBN):
+    table = []
+    
+    driver.get(org_url)
+    wait_for_element_clickable(driver, '進階查詢').click()  # 點擊＂進階查詢＂
+    select_ISBN_strategy(driver, 'as_type_1', 'i', by=By.ID)
+    search_ISBN(driver, ISBN, 'as_keyword_1', by=By.ID)
 
-        # 在＂搜尋結果頁面＂，等待定位＂書目資料＂。
-        # try-except 來判斷有沒有在＂搜尋結果頁面＂
-        try:
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.LINK_TEXT, '詳細書目')))
-        except:
-            try:
-                WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located(
-                        (By.CSS_SELECTOR, 'div.book-detail')))
-
-                # 抓取方式：找出 mid 後，進入 ajax pag 抓取 DataFrame
-                org_url = org_url.replace('/search.cfm', '')
-                tgts = []
-                url = driver.current_url
-                mid = url.split('mid=')[-1].split('&')[0]
-                ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
-                tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
-                tgt['圖書館'], tgt['連結'] = org, url
-                tgts.append(tgt)
-                table = pd.concat(tgts, axis=0, ignore_index=True)
-                table = organize_columns(table)
-                return table  # 完成抓取 table
-            except:  # 沒有搜尋結果，也沒有進入＂詳細書目頁面＂
-                print(f'《{ISBN}》查無此書')
-                return  # 什麼都不做，退出此 function
-
-        # 抓取多個＂書目資料＂的網址
+    org_url = org_url.replace('/search.cfm', '')
+    if wait_for_element_present(driver, '詳細書目', by=By.LINK_TEXT):
+        tgt_urls = []
         anchors = driver.find_elements_by_link_text('詳細書目')
-        urls = []
         for anchor in anchors:
-            urls.append(anchor.get_attribute('href'))
+            tgt_urls.append(anchor.get_attribute('href'))
 
-        # 抓取方式：找出 mid 後，進入 ajax pag 抓取 DataFrame
-        org_url = org_url.replace('/search.cfm', '')
-        tgts = []
-        for url in urls:
-            mid = url.split('mid=')[-1].split('&')[0]  # 抓取 mid
+        for tgt_url in tgt_urls:
+            mid = tgt_url.split('mid=')[-1].split('&')[0]
             ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
             tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
-            tgt['圖書館'], tgt['連結'] = org, url
-            tgts.append(tgt)
-        table = organize_columns(table)
-    except:
-        print(f'《{ISBN}》在「{url}」無法爬取')
-        return
-    else:
-        return table
+            tgt['圖書館'], tgt['連結'] = org, tgt_url
+            table.append(tgt)
+    elif wait_for_element_present(driver, 'div.book-detail'):  # 高雄市立空中大學、國立屏東大學才會遇到跳轉
+        tgt_url = driver.current_url
+        mid = tgt_url.split('mid=')[-1].split('&')[0]
+        ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
+        tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
+        tgt['圖書館'], tgt['連結'] = org, tgt_url
+        table.append(tgt)
+    table = organize_columns(table)
+    return table
 
 
 # ## <font color='red'>待維修</font>基隆市公共圖書館(driver, org, org_url, ISBN) 很奇怪
@@ -639,7 +607,7 @@ if __name__ == '__main__':
 
 
 # ## <mark>完成</mark>國家圖書館(driver, org, org_url, ISBN)
-# - 『最後編輯』：2021/07/31
+# - 『最後編輯』：2021/08/02
 # - 『函式完成度』：極高
 
 # ### 函式說明
