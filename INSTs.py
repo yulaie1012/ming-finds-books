@@ -887,9 +887,11 @@ def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
                 back_check = None
             if back_check == None: #多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
+                    time.sleep(5)
                     into = editions[i].click()
                     time.sleep(8)
                     primo_lst += primo_finding(org, tcn, driver)
+                    table = pd.concat(primo_lst, axis=0, ignore_index=True)
                     try: 
                         back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
                     except:
@@ -898,11 +900,14 @@ def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
             else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
                 time.sleep(10)
                 primo_lst += primo_finding(org, tcn, driver)
+                table = pd.concat(primo_lst, axis=0, ignore_index=True)
         except:
             pass
     except:
         pass
-    return pd.DataFrame(primo_lst)
+    
+    return table
+
 # 國立臺灣大學 NTU X
 def NTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -950,7 +955,7 @@ def NCCU(ISBN):
         )
     )
     
-    
+    driver.close()
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
@@ -1014,7 +1019,7 @@ def CGU(ISBN):
         )
     )
     
-    
+    driver.close()
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
