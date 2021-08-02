@@ -346,14 +346,14 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 #         - 還是會停留在＂搜尋結果＂頁面，但大部分會看不到，網址仍會改變，所以無法用網址判定
 #     - 當搜尋結果有多筆時，會要切換到 iframe 爬取。
 #     - 有些＂詳細書目＂會有沒有表格的情況（例：[中華科大](http://192.192.231.232/bookDetail.do?id=260965&nowid=3&resid=188809854)）
-# - 『適用的機構』：[臺北市立圖書館](https://book.tpml.edu.tw/webpac/webpacIndex.jsp)、[國立宜蘭大學](https://lib.niu.edu.tw/webpacIndex.jsp)、[佛光大學](http://libils.fgu.edu.tw/webpacIndex.jsp)、[嘉南藥理大學](https://webpac.cnu.edu.tw/webpacIndex.jsp)、……
+# - 『適用的機構』：[國立宜蘭大學](https://lib.niu.edu.tw/webpacIndex.jsp)、[佛光大學](http://libils.fgu.edu.tw/webpacIndex.jsp)、[嘉南藥理大學](https://webpac.cnu.edu.tw/webpacIndex.jsp)、……
 # - 『能處理狀況』：[一筆](http://webpac.meiho.edu.tw/bookDetail.do?id=194508)、[無](http://webpac.meiho.edu.tw/bookSearchList.do?searchtype=simplesearch&search_field=ISBN&search_input=97895733172411&searchsymbol=hyLibCore.webpac.search.common_symbol&execodehidden=true&execode=&ebook=)、[多筆](http://webpac.meiho.edu.tw/bookSearchList.do?searchtype=simplesearch&execodeHidden=true&execode=&search_field=ISBN&search_input=9789573317241&searchsymbol=hyLibCore.webpac.search.common_symbol&resid=189006169&nowpage=1#searchtype=simplesearch&execodeHidden=true&execode=&search_field=ISBN&search_input=9789573317241&searchsymbol=hyLibCore.webpac.search.common_symbol&resid=189006169&nowpage=1)、[無表格](http://192.192.231.232/bookDetail.do?id=260965&nowid=3&resid=188809854)
 # - 『下一步優化』：
 #     - 統一 search_input.submit() 和 search_input.send_keys(Keys.ENTER)？
 
 # ### 函式本體
 
-# In[105]:
+# In[ ]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
@@ -381,17 +381,17 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
             driver.switch_to.frame(iframe)
             time.sleep(1)  # 切換到 <frame> 需要時間，否則會無法讀取
             
-            # 判斷是不是＂零筆＂查詢結果
-            if wait_for_element_present(driver, '#totalpage').text == '0':
+            tgt_urls = []
+            soup = BeautifulSoup(driver.page_source, 'html.parser')
+            # 判斷是不是＂零筆＂
+            if soup.find('em', {'id': 'totalpage'}).text == '0':
                 print(f'在「{org}」找不到「{ISBN}」')
                 return
-            
-            # ＂多筆＂查詢結果
-            tgt_urls = []
-            anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
+            anchors = soup.select('a.bookname')
+            # anchors = soup.find_all('a', 'bookname')
             for anchor in anchors:
-                tgt_urls.append(anchor.get_attribute('href'))
-
+                tgt_urls.append(org_url.replace('webpacIndex.jsp', '') + anchor['href'])
+            
             for tgt_url in tgt_urls:
                 driver.get(tgt_url)
                 # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
@@ -401,8 +401,8 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
                 tgt['圖書館'], tgt['連結'] = org, driver.current_url
                 table.append(tgt)
         table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+    except:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生不明錯誤！')
         return
     else:
         return table
@@ -635,6 +635,37 @@ if __name__ == '__main__':
         org_url='https://webpac.klccab.gov.tw/webpac/search.cfm',
         ISBN='9789869109321'
     )
+
+
+# ## <font color='red'>多筆</font>臺北市立圖書館(org, org_url, ISBN)  
+# - 『最後編輯』：2021/07/31
+# - 『函式完成度』：極高
+
+# ### 函式說明
+# - 『運作的原理』：輸入 ISBN 搜索後，直接進入＂詳細書目＂，並且該頁面有全部的藏書狀況，只要爬一個表格即可。
+# - 『適用的機構』：[臺北市立圖書館](https://book.tpml.edu.tw/webpac/webpacIndex.jsp)
+# - 『能處理狀況』：找不到、一筆
+# - 『下一步優化』：暫無問題
+
+# ### 函式本體
+
+# In[46]:
+
+
+def 臺北市立圖書館(driver, org, org_url, ISBN):
+    try:
+        driver.get(org_url)
+        select_ISBN_strategy(driver, 'search_field', 'ISBN')
+        search_ISBN(driver, ISBN, 'search_input')
+
+        table = accurately_find_table_and_read_it(driver, 'table.order')
+        table['圖書館'], table['連結'] = org, driver.current_url
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生不明錯誤！')
+        return
+    else:
+        return table
 
 
 # ## 國家圖書館(driver, org, org_url, ISBN)
