@@ -600,7 +600,7 @@ def CYUT(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立中山大學 NSYSU
+# 國立中山大學 NSYSU V
 def NSYSU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -625,7 +625,7 @@ def NSYSU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立高雄師範大學 NKNU
+# 國立高雄師範大學 NKNU V
 def NKNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -650,7 +650,7 @@ def NKNU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 文藻外語大學 WZU
+# 文藻外語大學 WZU V
 def WZU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -675,7 +675,7 @@ def WZU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 大仁科技大學 Tajen
+# 大仁科技大學 Tajen V
 def Tajen(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -700,7 +700,7 @@ def Tajen(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立中央大學 NCU
+# 國立中央大學 NCU V
 def NCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
