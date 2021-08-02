@@ -6,7 +6,7 @@
 # ## 載入套件
 # - selenium、pandas、requests、bs4、time
 
-# In[26]:
+# In[119]:
 
 
 from selenium import webdriver
@@ -27,7 +27,7 @@ import time  # 強制等待
 
 # ## 設定 driver 的參數：options、desired_capabilities
 
-# In[27]:
+# In[120]:
 
 
 if __name__ == '__main__':
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[28]:
+# In[121]:
 
 
 def organize_columns(df1):
@@ -109,7 +109,7 @@ def organize_columns(df1):
 # ## set_excel(df, directory) 暫停
 # - 待
 
-# In[29]:
+# In[122]:
 
 
 def set_excel(df, directory):
@@ -147,7 +147,7 @@ def set_excel(df, directory):
 #     - waiting_time：等待時間，預設 5 秒
 #     - by：定位方式，預設 By.CSS_SELECTOR
 
-# In[30]:
+# In[123]:
 
 
 def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
@@ -163,11 +163,12 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
 # ## wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT)
 # - 同上
 
-# In[31]:
+# In[151]:
 
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
     try:
+        time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.element_to_be_clickable((by, element_position)))
     except:
@@ -184,7 +185,7 @@ def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.L
 #     - old_url：舊網址
 #     - waiting_time：等待時間，預設 10 秒
 
-# In[32]:
+# In[125]:
 
 
 def wait_for_url_changed(driver, old_url, waiting_time=10):
@@ -203,7 +204,7 @@ def wait_for_url_changed(driver, old_url, waiting_time=10):
 # - 參數：
 #     - table_position：table 位置，預設 CSS selector
 
-# In[45]:
+# In[126]:
 
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
@@ -230,7 +231,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
 #     - option_position：option 位置，預設 value
 #     - waiting_time：等待時間，預設 30 秒
 
-# In[34]:
+# In[127]:
 
 
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30):
@@ -248,7 +249,7 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 #     - input_position：input 位置，預設 name
 #     - waiting_time：等待時間，預設 10 秒
 
-# In[35]:
+# In[128]:
 
 
 def search_ISBN(driver, ISBN, input_position, waiting_time=10):
@@ -637,14 +638,14 @@ if __name__ == '__main__':
     )
 
 
-# ## <mark>待，處理9789861371955</mark>國家圖書館(driver, org, org_url, ISBN)
+# ## <mark>完成</mark>國家圖書館(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/07/31
 # - 『函式完成度』：極高
 
 # ### 函式說明
 # - 『運作的原理』：使用 Selenium
 # - 『適用的機構』：[國家圖書館](https://aleweb.ncl.edu.tw/F)
-# - 『能處理狀況』：找不到、一筆
+# - 『能處理狀況』：找不到、一筆、[無表格內容](https://aleweb.ncl.edu.tw/F/MPXYG72FRS6Q4T31JTU5GKITQSE7B3ASA51D88R8BSTBT6T6E5-03970?func=item-global&doc_library=TOP02&doc_number=003632992&year=&volume=&sub_library=)
 # - 『下一步優化』：
 #     - 9789861371955
 #     - 目前尚未遇到多筆情況
@@ -652,7 +653,7 @@ if __name__ == '__main__':
 
 # ### 函式本體
 
-# In[114]:
+# In[152]:
 
 
 def 國家圖書館(driver, org, org_url, ISBN):
@@ -665,6 +666,9 @@ def 國家圖書館(driver, org, org_url, ISBN):
         wait_for_element_clickable(driver, '書在哪裡(請點選)').click()
 
         table = accurately_find_table_and_read_it(driver, 'table', -2)
+        if 0 in table.columns:
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
         table['圖書館'], table['連結'] = org, driver.current_url
         table = organize_columns(table)
     except Exception as e:
