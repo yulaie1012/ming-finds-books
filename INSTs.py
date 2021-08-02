@@ -116,7 +116,7 @@ def wait_for_url_changed(old_url, driver, waiting_time=10):
 # ------------------------精準定位table-------------------------
 def accurately_find_table_and_read_it(table_position, driver,table_position2=0):
     try:
-        if not wait_for_element_present(table_position):
+        if not wait_for_element_present(table_position, driver):
             print(f'找不到 {table_position}！')
             return
         soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -459,7 +459,7 @@ def NTUST(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    worksheet.get_all_values()
+    
     output = []
     driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
@@ -766,3 +766,152 @@ def KLCCAB(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+# ---------------------被獨立出來的國圖---------------------
+def 國家圖書館(org, org_url, ISBN,driver):
+    try:
+        driver.get(org_url)
+        select_ISBN_strategy('find_code', 'ISBN', driver)
+        search_ISBN(ISBN, 'request', driver)
+
+        # 點擊＂書在哪裡(請點選)＂，進入＂詳細書目＂
+        tgt_url = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (By.LINK_TEXT, '書在哪裡(請點選)'))).get_attribute('href')
+        driver.get(tgt_url)
+
+        table = accurately_find_table_and_read_it('table', driver, -2)
+        table['圖書館'], table['連結'] = org, tgt_url
+        table = organize_columns(table)
+    except:
+        print(f'《{ISBN}》在「{org_url}」無法爬取')
+        return
+    return table
+
+# 國家圖書館 NCL X(有狀況沒有處理到)(9789861371955)
+def NCL(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        國家圖書館(
+        '國家圖書館',
+        "https://aleweb.ncl.edu.tw/F",
+        ISBN,
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# --------------------Primo------------------------
+# primo_crawler()
+# 臺大|政大|淡大|東吳
+def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
+    url = url_front + ISBN + url_behind
+    primo_lst = []
+    def primo_finding(org, tcn): #primo爬資訊的def ；#tcn = thelist_class_name
+        sub_df_lst = []
+        time.sleep(2)
+        try:
+            back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
+        except:
+            back = None
+        if back != None:
+            back.click()
+
+        thelist = driver.find_elements_by_class_name(tcn)
+        if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
+            thelist = thelist[0:-2]
+        else:
+            pass
+
+        for row in thelist:
+            plist = row.find_elements_by_tag_name("p")
+            where = row.find_elements_by_tag_name("h3")
+            i = len(where)
+            for sth in plist:
+                a = sth.find_elements_by_tag_name("span")
+                for _ in range(i):
+                    now_url = driver.current_url
+                    new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
+                    sub_df_lst.append(new_row)
+                    break
+                break
+        return sub_df_lst
+
+    try:
+        # 進入《館藏系統》頁面
+        driver.get(url)
+        # 等待＂進階查詢的按鈕＂直到出現：click
+        time.sleep(3)
+
+        try: #開始爬蟲
+            editions = driver.find_elements_by_class_name('item-title') 
+            if len(editions) > 1: #如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
+                pass
+            else: #如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
+                time.sleep(2)
+                editions[0].click()
+                time.sleep(5)
+                editions = driver.find_elements_by_class_name('item-title') #這時候是第二層的分版本了！(ex.政大 9789869109321)
+                
+            try: #先找叉叉確定是不是在最裡層了
+                back_check = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple")
+            except:
+                back_check = None
+            if back_check == None: #多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
+                for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
+                    into = editions[i].click()
+                    time.sleep(3)
+                    primo_lst += primo_finding(org, tcn)
+                    try: 
+                        back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
+                    except:
+                        back2 = None
+
+            else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
+                time.sleep(3)
+                primo_lst += primo_finding(org, tcn)
+        except:
+            pass
+    except:
+        pass
+    return pd.DataFrame(primo_lst)
+
+# 國立臺灣大學 NTU
+def NTU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        primo_crawler(
+        '國立臺灣大學',
+        "https://ntu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+        ISBN,
+        "&tab=Everything&search_scope=MyInst_and_CI&vid=886NTU_INST:886NTU_INST&offset=0",
+        "layout-align-space-between-center.layout-row.flex-100",
+        driver
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
