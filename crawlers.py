@@ -160,7 +160,7 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
         return element
 
 
-# ## wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.PARTIAL_LINK_TEXT)
+# ## wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT)
 # - 同上
 
 # In[31]:
@@ -342,10 +342,10 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 # - 『運作的原理』：
 #     - 使用 selenium 進行搜索。
 #     - 大量使用 wait 機制，來應對加載過慢的網頁（例：[佛光大學](http://libils.fgu.edu.tw/webpacIndex.jsp)）
-#     - 當搜尋結果只有一筆時，有些網站會直接進入＂詳細書目＂（例：[國立宜蘭大學](https://lib.niu.edu.tw/webpacIndex.jsp)）
+#     - 當搜尋結果只有一筆時，有些網站會直接進入＂書目資料＂（例：[國立宜蘭大學](https://lib.niu.edu.tw/webpacIndex.jsp)）
 #         - 還是會停留在＂搜尋結果＂頁面，但大部分會看不到，網址仍會改變，所以無法用網址判定
 #     - 當搜尋結果有多筆時，會要切換到 iframe 爬取。
-#     - 有些＂詳細書目＂會有沒有表格的情況（例：[中華科大](http://192.192.231.232/bookDetail.do?id=260965&nowid=3&resid=188809854)）
+#     - 有些＂書目資料＂會有沒有表格的情況（例：[中華科大](http://192.192.231.232/bookDetail.do?id=260965&nowid=3&resid=188809854)）
 # - 『適用的機構』：[臺北市立圖書館](https://book.tpml.edu.tw/webpac/webpacIndex.jsp)、[國立宜蘭大學](https://lib.niu.edu.tw/webpacIndex.jsp)、[佛光大學](http://libils.fgu.edu.tw/webpacIndex.jsp)、[嘉南藥理大學](https://webpac.cnu.edu.tw/webpacIndex.jsp)、……
 # - 『能處理狀況』：[一筆](http://webpac.meiho.edu.tw/bookDetail.do?id=194508)、[無](http://webpac.meiho.edu.tw/bookSearchList.do?searchtype=simplesearch&search_field=ISBN&search_input=97895733172411&searchsymbol=hyLibCore.webpac.search.common_symbol&execodehidden=true&execode=&ebook=)、[多筆](http://webpac.meiho.edu.tw/bookSearchList.do?searchtype=simplesearch&execodeHidden=true&execode=&search_field=ISBN&search_input=9789573317241&searchsymbol=hyLibCore.webpac.search.common_symbol&resid=189006169&nowpage=1#searchtype=simplesearch&execodeHidden=true&execode=&search_field=ISBN&search_input=9789573317241&searchsymbol=hyLibCore.webpac.search.common_symbol&resid=189006169&nowpage=1)、[無表格](http://192.192.231.232/bookDetail.do?id=260965&nowid=3&resid=188809854)
 # - 『下一步優化』：
@@ -437,8 +437,8 @@ def easy_crawler(driver, org, org_url, ISBN):
         table = accurately_find_table_and_read_it(driver, 'table.bibItems')
         table['圖書館'], table['連結'] = org, driver.current_url
         table = organize_columns(table)
-    except:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生不明錯誤！')
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
     else:
         return table
@@ -474,8 +474,8 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
         table = accurately_find_table_and_read_it(driver, 'table.bibItems')
         table['圖書館'], table['連結'] = org, driver.current_url
         table = organize_columns(table)
-    except:
-        print(f'在「{org}」找不到「{ISBN}」')
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
     else:
         return table
@@ -486,7 +486,7 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
 # - 『函式完成度』：極高
 
 # ### 函式說明
-# - 『運作的原理』：使用 selenium 進行搜索，進入＂詳細書目＂頁面後，從該網址分析並得到 mid，在由此進入 ajax_page。
+# - 『運作的原理』：使用 selenium 進行搜索，進入＂書目資料＂頁面後，從該網址分析並得到 mid，在由此進入 ajax_page。
 # - 『適用的機構』：[新北市立圖書館](https://webpac.tphcc.gov.tw/webpac/search.cfm?show=adv)、[高雄市立空中大學](https://webpac.ouk.edu.tw/webpac/search.cfm?show=adv)、[國立屏東大學](https://webpac.nptu.edu.tw/webpac/search.cfm?show=adv)
 # - 『能處理狀況』：判斷搜尋結果有沒有超過一筆、只有一筆搜尋結果有沒有跳轉、找不到書
 # - 『下一步優化』：當搜尋無結果時，可以直接結束。
@@ -512,7 +512,7 @@ def webpac_ajax_page_crawler(org, org_url, ISBN):
         search_input.send_keys(ISBN)
         search_input.send_keys(Keys.ENTER)
 
-        # 在＂搜尋結果頁面＂，等待定位＂詳細書目＂。
+        # 在＂搜尋結果頁面＂，等待定位＂書目資料＂。
         # try-except 來判斷有沒有在＂搜尋結果頁面＂
         try:
             WebDriverWait(driver, 10).until(
@@ -539,7 +539,7 @@ def webpac_ajax_page_crawler(org, org_url, ISBN):
                 print(f'《{ISBN}》查無此書')
                 return  # 什麼都不做，退出此 function
 
-        # 抓取多個＂詳細書目＂的網址
+        # 抓取多個＂書目資料＂的網址
         anchors = driver.find_elements_by_link_text('詳細書目')
         urls = []
         for anchor in anchors:
@@ -637,7 +637,7 @@ if __name__ == '__main__':
     )
 
 
-# ## 國家圖書館(driver, org, org_url, ISBN)
+# ## <mark>待，處理9789861371955</mark>國家圖書館(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/07/31
 # - 『函式完成度』：極高
 
@@ -646,31 +646,30 @@ if __name__ == '__main__':
 # - 『適用的機構』：[國家圖書館](https://aleweb.ncl.edu.tw/F)
 # - 『能處理狀況』：找不到、一筆
 # - 『下一步優化』：
+#     - 9789861371955
 #     - 目前尚未遇到多筆情況
 #     - 不知道可以和什麼機構的系統合併在一起？
 
 # ### 函式本體
 
-# In[ ]:
+# In[114]:
 
 
-def 國家圖書館(org, org_url, ISBN):
+def 國家圖書館(driver, org, org_url, ISBN):
     try:
         driver.get(org_url)
-        select_ISBN_strategy('find_code', 'ISBN')
-        search_ISBN(ISBN, 'request')
+        select_ISBN_strategy(driver, 'find_code', 'ISBN')
+        search_ISBN(driver, ISBN, 'request')
 
-        # 點擊＂書在哪裡(請點選)＂，進入＂詳細書目＂
-        tgt_url = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located(
-                (By.LINK_TEXT, '書在哪裡(請點選)'))).get_attribute('href')
-        driver.get(tgt_url)
+        # 點擊＂書在哪裡(請點選)＂，進入＂書目資料＂
+        wait_for_element_clickable(driver, '書在哪裡(請點選)').click()
 
-        table = accurately_find_table_and_read_it('table', -2)
-        table['圖書館'], table['連結'] = org, tgt_url
+        table = accurately_find_table_and_read_it(driver, 'table', -2)
+        table['圖書館'], table['連結'] = org, driver.current_url
         table = organize_columns(table)
-    except:
-        print(f'《{ISBN}》在「{org_url}」無法爬取')
+    except Exception as e:
+        # 沒有物件可以 click，表示＂零筆＂搜尋結果
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
     return table
 
@@ -702,12 +701,12 @@ def 彰化縣公共圖書館(org, org_url, ISBN):
         print(f'在{org}裡，沒有《{ISBN}》')
         return
     
-    # 有 div#results，接著分析 html，找出所有的＂詳細書目＂的網址
+    # 有 div#results，接著分析 html，找出所有的＂書目資料＂的網址
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     ul = soup.select('div#results > ul')[0]
     for li in ul.select('li.is_img'):
         tgt_urls.append(org_url + li.a['href'])
-    # for 迴圈，進入所有的＂詳細書目＂的網址
+    # for 迴圈，進入所有的＂書目資料＂的網址
     for tgt_url in tgt_urls:
         driver.get(tgt_url)
         tgt = accurately_find_table_and_read_it('table.gridTable')
