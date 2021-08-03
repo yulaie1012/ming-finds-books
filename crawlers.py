@@ -270,7 +270,7 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
 # ### 函式說明
 # 
 # - 『運作的原理』：
-# - 『適用的機構』：[宜蘭縣公共圖書館](https://webpac.ilccb.gov.tw/)、[桃園市立圖書館](https://webpac.typl.gov.tw/)、[高雄市立圖書館](https://webpacx.ksml.edu.tw/)、[屏東縣公共圖書館](https://library.pthg.gov.tw/)、[花蓮縣公共圖書館](https://center.hccc.gov.tw/)、[澎湖縣圖書館](https://webpac.phlib.nat.gov.tw/)、[國立雲林科技大學](https://www.libwebpac.yuntech.edu.tw/)、[國家電影及視聽文化中心](https://lib.tfi.org.tw/)
+# - 『適用的機構』：[宜蘭縣公共圖書館](https://webpac.ilccb.gov.tw/)、[桃園市立圖書館](https://webpac.typl.gov.tw/)、[高雄市立圖書館](https://webpacx.ksml.edu.tw/)、[屏東縣公共圖書館](https://library.pthg.gov.tw/)、[花蓮縣公共圖書館](https://center.hccc.gov.tw/)、[澎湖縣公共圖書館](https://webpac.phlib.nat.gov.tw/)、[國立雲林科技大學](https://www.libwebpac.yuntech.edu.tw/)、[國家電影及視聽文化中心](https://lib.tfi.org.tw/)
 # - 『能處理狀況』：判斷搜尋結果有沒有超過一筆、只有一筆搜尋結果有沒有跳轉、[多筆](https://webpac.typl.gov.tw/search?searchField=ISBN&searchInput=986729193X)、找不到書、[不斷的點擊＂載入更多＂](https://webpac.ilccb.gov.tw/bookDetail/419482?qs=%7B%5Eurl3%2C%2Fsearch4%2Cquery%5E%3A%7B%5Ephonetic3%2C04%2CqueryType3%2C04%2C%2Cs23%2CISBN4%2C%2Cs13%2C9789573317241%5E%7D%7D)
 # - 『下一步優化』：
 
@@ -645,6 +645,109 @@ def 彰化縣公共圖書館(driver, org, org_url, ISBN):
         return table
 
 
+# ## <mark>完成</mark>連江縣公共圖書館(driver, org, org_url, ISBN)
+# - 最後更新：2021/08/03
+# - 『函式完成度』：極高
+
+# ### 函式說明
+# - 『運作的原理』：待輸入
+# - 『適用的機構』：[連江縣公共圖書館](http://210.63.206.76/Webpac2/msearch.dll/)、[開南大學](http://www.lib.knu.edu.tw/Webpac2/msearch.dll/)
+# - 『能處理狀況』：一筆、無
+# - 『下一步優化』：
+#     - 開南大學搜尋哈利波特會有多個情況
+
+# ### 函式本體
+
+# In[22]:
+
+
+def 連江縣公共圖書館(driver, org, org_url, ISBN):
+    try:
+        table = []
+
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'ISBN')
+
+        if wait_for_element_present(driver, '重新查詢', by=By.LINK_TEXT):
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
+
+        tgt = accurately_find_table_and_read_it(driver, 'table', -2)
+        tgt['圖書館'], tgt['連結'] = org, driver.current_url
+        table.append(tgt)
+
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+
+# ## <mark>完成</mark>webpac_aspx_crawler(driver, org, org_url, ISBN)
+# - 最後更新：2021/08/03
+# - 『函式完成度』：高
+
+# ### 函式說明
+# - 『運作的原理』：一直切 iframe
+# - 『適用的機構』：[樹德科技大學](https://webpac.stu.edu.tw/webopac/)、[台灣首府大學](http://120.114.1.19/webopac/Jycx.aspx?dc=1&fc=1&n=7)、[崑山科技大學](https://weblis.lib.ksu.edu.tw/webopac/)、、、
+# - 『能處理狀況』：一筆、多筆、無
+# - 『下一步優化』：
+#     - 無法取得＂書目資料＂的網址，用的是 JavaScript 語法
+#     - ugly code
+
+# ### 函式本體
+
+# In[191]:
+
+
+def webpac_aspx_crawler(driver, org, org_url, ISBN):
+    try:
+        table = []
+
+        driver.get(org_url)
+
+        time.sleep(1.5)
+        iframe = wait_for_element_present(driver, 'default', by=By.NAME)
+        driver.switch_to.frame(iframe)
+        select_ISBN_strategy(driver, 'ctl00$ContentPlaceHolder1$ListBox1', 'Info000076')
+        search_ISBN(driver, ISBN, 'ctl00$ContentPlaceHolder1$TextBox1')
+        driver.switch_to.default_content()
+        
+        i = 0
+        while True:
+            time.sleep(1.5)
+            iframe = wait_for_element_present(driver, 'default', by=By.NAME)
+            driver.switch_to.frame(iframe)
+            try:
+                wait_for_element_present(driver, f'//*[@id="ctl00_ContentPlaceHolder1_dg_ctl0{i+2}_lbtgcd2"]', by=By.XPATH).click()
+            except:
+                break
+            driver.switch_to.default_content()
+
+            time.sleep(1.5)
+            iframe = wait_for_element_present(driver, 'default', by=By.NAME)
+            driver.switch_to.frame(iframe)
+            tgt = accurately_find_table_and_read_it(driver, '#ctl00_ContentPlaceHolder1_dg')
+            tgt['圖書館'], tgt['連結'] = org, driver.current_url
+            table.append(tgt)
+            driver.switch_to.default_content()
+
+            driver.back()
+            i += 1
+
+        try:
+            table = organize_columns(table)
+        except:
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+
 # ## web2_crawler(org, org_url, ISBN) 進行中
 # - 『函式完成度』：待輸入
 
@@ -672,102 +775,6 @@ def web2_crawler(org, url_front, ISBN, url_behind):
         return df_web2
     except:
         print(f"「{url}」無法爬取！")
-
-
-# ## 連江縣公共圖書館(org, org_url, ISBN)
-# - 最後更新：7/27
-# - 『函式完成度』：極高
-
-# ### 函式說明
-# - 『運作的原理』：待輸入
-# - 『適用的機構』：[連江縣公共圖書館](http://210.63.206.76/Webpac2/msearch.dll/)、[開南大學](http://www.lib.knu.edu.tw/Webpac2/msearch.dll/)
-# - 『能處理狀況』：一筆、無
-# - 『下一步優化』：
-#     - 開南大學搜尋哈利波特會有多個情況
-
-# ### 函式本體
-
-# In[ ]:
-
-
-def 連江縣公共圖書館(org, org_url, ISBN):
-    table = []
-    
-    driver.get(org_url)
-    search_ISBN(ISBN, 'ISBN')
-
-    if wait_for_element_present('重新查詢', by=By.LINK_TEXT):
-        print(f'在「{org}」找不到「{ISBN}」')
-        return
-    
-    tgt = accurately_find_table_and_read_it('table', -2)
-    tgt['圖書館'], tgt['連結'] = org, driver.current_url
-    table.append(tgt)
-    
-    table = organize_columns(table)
-    return table
-
-
-# ### 函式測試
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    table = 連江縣公共圖書館(
-        org='開南大學',
-        org_url='http://www.lib.knu.edu.tw/Webpac2/msearch.dll/',
-        ISBN='9789869109321'
-    )
-
-
-# ## 樹德科技大學(org, org_url, ISBN) 進行中
-# - 『函式完成度』：待輸入
-
-# ### 函式說明
-# - 『運作的原理』：待輸入
-# - 『適用的機構』：待輸入
-# - 『能處理狀況』：待輸入
-# - 『下一步優化』：
-#     - 待輸入
-#     - 待輸入
-
-# ### 函式本體
-
-# In[ ]:
-
-
-def 樹德科技大學(org, org_url, ISBN):
-    table = []
-    driver.get('https://webpac.stu.edu.tw/webopac/')
-    iframe = driver.find_element(By.NAME, 'default')
-    driver.switch_to.frame(iframe)
-    select_ISBN_strategy('ctl00$ContentPlaceHolder1$ListBox1', 'Info000076')
-    search_ISBN(ISBN, 'ctl00$ContentPlaceHolder1$TextBox1')
-    driver.switch_to.default_content()
-    iframe = driver.find_element(By.NAME, 'default')
-    driver.switch_to.frame(iframe)
-    driver.find_elements(By.CSS_SELECTOR, '#ctl00_ContentPlaceHolder1_dg_ctl02_lbtgcd2')[0].click()
-    tgt = accurately_find_table_and_read_it('#ctl00_ContentPlaceHolder1_dg')
-    tgt['圖書館'], tgt['連結'] = '樹德科技大學', driver.current_url
-    table.append(tgt)
-    table = organize_columns(table)
-    return table
-
-
-# ### 函式測試
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    table = 待輸入(
-        org='待輸入',
-        org_url='待輸入',
-        ISBN='9789869109321'
-    )
 
 
 # ## 國立臺北護理健康大學(org, org_url, ISBN)
