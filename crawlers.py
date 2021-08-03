@@ -794,47 +794,30 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# # 未完成的爬蟲程式
-
-# ## web2_crawler(org, org_url, ISBN) 進行中
-# - 『函式完成度』：待輸入
-
-# ### 函式說明
-# - 『運作的原理』：待輸入
-# - 『適用的機構』：待輸入
-# - 『能處理狀況』：待輸入
-# - 『下一步優化』：
-#     - 待輸入
-#     - 待輸入
+# ## <mark>完成</mark>webpac_2_crawler(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/03
+# - 『編輯者』：靖妤、仕瑋
+# - 『試用機構』：[國立臺北藝術大學](http://203.64.5.158/webpac/)、[國立勤益科技大學](http://140.128.95.172/webpac/)、[義守大學](http://webpac.isu.edu.tw/webpac/)、[中山醫學大學](http://140.128.138.208/webpac/)
 
 # ### 函式本體
 
-# In[ ]:
+# In[225]:
 
 
-def web2_crawler(org, url_front, ISBN, url_behind):
-    url = url_front + ISBN + url_behind
+def webpac_2_crawler(driver, org, org_url, ISBN):
     try:
-        driver.get(url)
-        title = driver.find_element_by_xpath('/html/body/div/div[1]/div[2]/div/div/div[2]/div[3]/div[1]/div[3]/div/ul/li/div/div[2]/h3/a').click()
+        tgt_url = f'{org_url}search/?q={ISBN}&field=isn&op=AND&type='
+        driver.get(tgt_url)
+        driver.find_element_by_xpath('/html/body/div/div[1]/div[2]/div/div/div[2]/div[3]/div[1]/div[3]/div/ul/li/div/div[2]/h3/a').click()
         
-        df_web2 = accurately_find_table_and_read_it('div#LocalHolding > table')
-        df_web2 = organize_columns(df_web2)
-        return df_web2
+        table = accurately_find_table_and_read_it(driver, '#LocalHolding > table')
+        table['圖書館'], table['連結'] = org, driver.current_url
+        table = organize_columns(table)
     except:
-        print(f"「{url}」無法爬取！")
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
+        print(f'在「{org}」找不到「{ISBN}」')
+        return
+    else:
+        return table
 
 
 # ## <mark>完成</mark>台北海洋科技大學(driver, org, org_url, ISBN)
@@ -846,26 +829,31 @@ def web2_crawler(org, url_front, ISBN, url_behind):
 
 
 def 台北海洋科技大學(driver, org, org_url, ISBN):
-    df_lst = []
-    org_url = org_url + ISBN
-    driver.get(org_url)
-    result = driver.find_element_by_id("qresult-content")
-    trlist = result.find_elements_by_tag_name('tr')
-    for row in range(2, len(trlist)):
-        css = "#qresult-content > tbody > tr:nth-child(" + str(row) + ") > td:nth-child(3) > a"
-        into = driver.find_element_by_css_selector(css).click()
-        time.sleep(2)
-        html_text = driver.page_source
-        dfs = pd.read_html(html_text, encoding="utf-8")
-        df_tumt = dfs[6]
-        df_tumt.rename(columns={1: "館藏地", 3: "索書號", 4: "館藏狀態"}, inplace=True)
-        df_tumt.drop([0], inplace=True)
-        df_tumt["圖書館"], df_tumt["連結"] = "台北海洋科技大學", driver.current_url
-        df_tumt = organize_columns(df_tumt)
-        df_lst.append(df_tumt)
-        back = driver.find_element_by_css_selector("#table1 > tbody > tr > td:nth-child(1) > a:nth-child(3)").click()
-    table = pd.concat(df_lst, axis=0, ignore_index=True)
-    return table
+    try:
+        df_lst = []
+        org_url = org_url + ISBN
+        driver.get(org_url)
+        result = driver.find_element_by_id("qresult-content")
+        trlist = result.find_elements_by_tag_name('tr')
+        for row in range(2, len(trlist)):
+            css = "#qresult-content > tbody > tr:nth-child(" + str(row) + ") > td:nth-child(3) > a"
+            into = driver.find_element_by_css_selector(css).click()
+            time.sleep(2)
+            html_text = driver.page_source
+            dfs = pd.read_html(html_text, encoding="utf-8")
+            df_tumt = dfs[6]
+            df_tumt.rename(columns={1: "館藏地", 3: "索書號", 4: "館藏狀態"}, inplace=True)
+            df_tumt.drop([0], inplace=True)
+            df_tumt["圖書館"], df_tumt["連結"] = "台北海洋科技大學", driver.current_url
+            df_tumt = organize_columns(df_tumt)
+            df_lst.append(df_tumt)
+            back = driver.find_element_by_css_selector("#table1 > tbody > tr > td:nth-child(1) > a:nth-child(3)").click()
+        table = pd.concat(df_lst, axis=0, ignore_index=True)
+    except Exception as e:
+            print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+            return
+    else:
+        return table
 
 
 # ## 台中科技大學
