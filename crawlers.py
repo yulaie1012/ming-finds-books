@@ -646,7 +646,7 @@ def 彰化縣公共圖書館(driver, org, org_url, ISBN):
 
 
 # ## <mark>完成</mark>連江縣公共圖書館(driver, org, org_url, ISBN)
-# - 最後更新：2021/08/03
+# - 『最後編輯』：2021/08/03
 # - 『函式完成度』：極高
 
 # ### 函式說明
@@ -685,7 +685,7 @@ def 連江縣公共圖書館(driver, org, org_url, ISBN):
 
 
 # ## <mark>完成</mark>webpac_aspx_crawler(driver, org, org_url, ISBN)
-# - 最後更新：2021/08/03
+# - 『最後編輯』：2021/08/03
 # - 『函式完成度』：高
 
 # ### 函式說明
@@ -748,6 +748,52 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
         return table
 
 
+# ## <mark>完成</mark>uhtbin_crawler(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/03
+# - 『函式完成度』：高
+
+# ### 函式說明
+# - 『運作的原理』：待輸入
+# - 『適用的機構』：[國立臺北護理健康大學](http://140.131.94.8/uhtbin/webcat)、[大同大學](http://140.129.23.14/uhtbin/webcat)、[國立體育大學](http://192.83.181.243/uhtbin/webcat)
+# - 『能處理狀況』：一筆、無
+# - 『下一步優化』：
+#     - 待輸入
+#     - 待輸入
+
+# ### 函式本體
+
+# In[208]:
+
+
+def uhtbin_crawler(driver, org, org_url, ISBN):
+    try:
+        driver.get(org_url)
+        try:
+            select_ISBN_strategy(driver, 'srchfield1', 'GENERAL^SUBJECT^GENERAL^^所有欄位')
+        except:
+            select_ISBN_strategy(driver, 'srchfield1', '020^SUBJECT^SERIES^Title Processing^ISBN')
+        search_ISBN(driver, ISBN, 'searchdata1')
+        
+        if '未在任何圖書館找到' in driver.find_element(By.CSS_SELECTOR, 'table').text:
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
+        
+        table = accurately_find_table_and_read_it(driver, 'table')
+        
+        # 特殊處理
+        table.drop([0, 1, 2], inplace=True)
+        table.drop([1, 2, 4], axis='columns', inplace=True)
+        table.rename(columns={0: '索書號', 3: '館藏狀態'}, inplace=True)
+        table['圖書館'], table['連結'], table['館藏地'] = org, driver.current_url, table['館藏狀態']
+        
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+
 # ## web2_crawler(org, org_url, ISBN) 進行中
 # - 『函式完成度』：待輸入
 
@@ -777,63 +823,8 @@ def web2_crawler(org, url_front, ISBN, url_behind):
         print(f"「{url}」無法爬取！")
 
 
-# ## 國立臺北護理健康大學(org, org_url, ISBN)
-# - 最後更新：7/29
-# - 『函式完成度』：高
-
-# ### 函式說明
-# - 『運作的原理』：待輸入
-# - 『適用的機構』：[國立臺北護理健康大學](http://140.131.94.8/uhtbin/webcat)、[大同大學](http://140.129.23.14/uhtbin/webcat)、[國立體育大學](http://192.83.181.243/uhtbin/webcat)
-# - 『能處理狀況』：待輸入
-# - 『下一步優化』：
-#     - 待輸入
-#     - 待輸入
-
-# ### 函式本體
-
-# In[ ]:
-
-
-def 國立臺北護理健康大學(org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-        try:
-            select_ISBN_strategy('srchfield1', 'GENERAL^SUBJECT^GENERAL^^所有欄位')
-        except:
-            select_ISBN_strategy('srchfield1', '020^SUBJECT^SERIES^Title Processing^ISBN')
-        search_ISBN(ISBN, 'searchdata1')
-        
-        table = accurately_find_table_and_read_it('table')
-        
-        table.drop([0, 1, 2], inplace=True)
-        table.drop([1, 2, 4], axis='columns', inplace=True)
-        table.rename(columns={0: '索書號', 3: '館藏狀態'}, inplace=True)
-        table['圖書館'], table['連結'], table['館藏地'] = org, driver.current_url, table['館藏狀態']
-        
-        table = organize_columns(table)
-    except:
-        print(f'在「{org}」找不到「{ISBN}」')
-        return
-    else:
-        return table
-
-
-# ### 函式測試
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    table = 國立體育大學(
-        org='國立體育大學',
-        org_url='http://192.83.181.243/uhtbin/webcat',
-        ISBN='9789574672028'
-    )
-
-
 # ## 台北海洋科技大學
-# - 最後更新：7/31
+# - 『最後編輯』：7/31
 # - 『函式完成度』：高
 
 # In[ ]:
