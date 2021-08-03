@@ -48,7 +48,7 @@ if __name__ == '__main__':
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[3]:
+# In[258]:
 
 
 def organize_columns(df1):
@@ -61,7 +61,7 @@ def organize_columns(df1):
     # 處理 column 2：館藏地
     c2 = [
         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
-        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location'
+        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置'
     ]
     df1['c2'] = ''
     for c in c2:
@@ -538,154 +538,6 @@ def webpac_ajax_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# ## <mark>完成</mark>國家圖書館(driver, org, org_url, ISBN)
-# - 『最後編輯』：2021/08/02
-# - 『函式完成度』：極高
-
-# ### 函式說明
-# - 『運作的原理』：使用 Selenium
-# - 『適用的機構』：[國家圖書館](https://aleweb.ncl.edu.tw/F)
-# - 『能處理狀況』：找不到、一筆、[無表格內容](https://aleweb.ncl.edu.tw/F/MPXYG72FRS6Q4T31JTU5GKITQSE7B3ASA51D88R8BSTBT6T6E5-03970?func=item-global&doc_library=TOP02&doc_number=003632992&year=&volume=&sub_library=)
-# - 『下一步優化』：
-#     - 9789861371955
-#     - 目前尚未遇到多筆情況
-#     - 不知道可以和什麼機構的系統合併在一起？
-
-# ### 函式本體
-
-# In[17]:
-
-
-def 國家圖書館(driver, org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-        select_ISBN_strategy(driver, 'find_code', 'ISBN')
-        search_ISBN(driver, ISBN, 'request')
-
-        # 點擊＂書在哪裡(請點選)＂，進入＂書目資料＂
-        wait_for_element_clickable(driver, '書在哪裡(請點選)').click()
-
-        table = accurately_find_table_and_read_it(driver, 'table', -2)
-        if 0 in table.columns:
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-        table['圖書館'], table['連結'] = org, driver.current_url
-        table = organize_columns(table)
-    except Exception as e:
-        # 沒有物件可以 click，表示＂零筆＂搜尋結果
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    return table
-
-
-# ## <mark>完成</mark>彰化縣公共圖書館(driver, org, org_url, ISBN)
-# - 『最後編輯』：2021/08/03
-# - 『函式完成度』：高
-
-# ### 函式說明
-# - 『運作的原理』：待輸入
-# - 『適用的機構』：彰化縣圖書館
-# - 『能處理狀況』：一筆、無、多筆、[翻頁](https://library.toread.bocach.gov.tw/toread/opac/bibliographic_view?NewBookMode=false&id=341724&mps=10&q=986729193X+OR+9789867291936&start=0&view=CONTENT)
-# - 『下一步優化』：
-#     - 待輸入
-
-# ### 函式本體
-
-# In[18]:
-
-
-def 彰化縣公共圖書館(driver, org, org_url, ISBN):
-    try:
-        table = []
-
-        driver.get(org_url)
-        search_ISBN(driver, ISBN, 'q')
-
-        if not wait_for_element_present(driver, 'div#results'):
-            print(f'在{org}裡，沒有《{ISBN}》')
-            return
-
-        # 有 div#results，找出所有的＂書目資料＂的網址
-        tgt_urls = []
-        anchors = driver.find_elements(By.CSS_SELECTOR, 'div.img_reslt > a')
-        for anchor in anchors:
-            tgt_urls.append(anchor.get_attribute('href'))
-
-        # 進入各個＂書目資料＂爬取表格
-        for tgt_url in tgt_urls:
-            driver.get(tgt_url)
-
-            tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
-            tgt['圖書館'], tgt['連結'] = org, tgt_url
-
-            # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-            filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
-            filtered_tgt.reset_index(drop=True, inplace=True)
-
-            table.append(filtered_tgt)
-            
-            # 換頁：書沒有那麼多吧 XD，土法煉鋼法
-            try:
-                driver.find_element(By.XPATH, '//*[@id="DirectLink_0_0"]').click()
-                
-                time.sleep(2.5)
-                tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
-                tgt['圖書館'], tgt['連結'] = org, tgt_url
-                
-                # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-                filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
-                filtered_tgt.reset_index(drop=True, inplace=True)
-                
-                table.append(filtered_tgt)
-            except:
-                pass
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
-
-
-# ## <mark>完成</mark>連江縣公共圖書館(driver, org, org_url, ISBN)
-# - 『最後編輯』：2021/08/03
-# - 『函式完成度』：極高
-
-# ### 函式說明
-# - 『運作的原理』：待輸入
-# - 『適用的機構』：[連江縣公共圖書館](http://210.63.206.76/Webpac2/msearch.dll/)、[開南大學](http://www.lib.knu.edu.tw/Webpac2/msearch.dll/)
-# - 『能處理狀況』：一筆、無
-# - 『下一步優化』：
-#     - 開南大學搜尋哈利波特會有多個情況
-
-# ### 函式本體
-
-# In[22]:
-
-
-def 連江縣公共圖書館(driver, org, org_url, ISBN):
-    try:
-        table = []
-
-        driver.get(org_url)
-        search_ISBN(driver, ISBN, 'ISBN')
-
-        if wait_for_element_present(driver, '重新查詢', by=By.LINK_TEXT):
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-
-        tgt = accurately_find_table_and_read_it(driver, 'table', -2)
-        tgt['圖書館'], tgt['連結'] = org, driver.current_url
-        table.append(tgt)
-
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
-
-
 # ## <mark>完成</mark>webpac_aspx_crawler(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/03
 # - 『函式完成度』：高
@@ -795,6 +647,244 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
     else:
         return table
 
+
+# ## <mark>完成</mark>連江縣公共圖書館(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/03
+# - 『函式完成度』：極高
+
+# ### 函式說明
+# - 『運作的原理』：待輸入
+# - 『適用的機構』：[連江縣公共圖書館](http://210.63.206.76/Webpac2/msearch.dll/)、[開南大學](http://www.lib.knu.edu.tw/Webpac2/msearch.dll/)
+# - 『能處理狀況』：一筆、無
+# - 『下一步優化』：
+#     - 開南大學搜尋哈利波特會有多個情況
+
+# ### 函式本體
+
+# In[22]:
+
+
+def 連江縣公共圖書館(driver, org, org_url, ISBN):
+    try:
+        table = []
+
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'ISBN')
+
+        if wait_for_element_present(driver, '重新查詢', by=By.LINK_TEXT):
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
+
+        tgt = accurately_find_table_and_read_it(driver, 'table', -2)
+        tgt['圖書館'], tgt['連結'] = org, driver.current_url
+        table.append(tgt)
+
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+
+# # 自我獨立的爬蟲程式
+
+# ## <mark>完成</mark>toread_crawler(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/03
+# - 『函式完成度』：高、爆複雜
+
+# ### 函式說明
+# - 『運作的原理』：待輸入
+# - 『適用的機構』：[彰化縣圖書館](https://library.toread.bocach.gov.tw/toread/opac)、toread 系統
+# - 『能處理狀況』：一筆、無、多筆、[翻頁](https://library.toread.bocach.gov.tw/toread/opac/bibliographic_view?NewBookMode=false&id=341724&mps=10&q=986729193X+OR+9789867291936&start=0&view=CONTENT)
+# - 『下一步優化』：
+#     - 待輸入
+
+# ### 函式本體
+
+# In[18]:
+
+
+def toread_crawler(driver, org, org_url, ISBN):
+    try:
+        table = []
+
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'q')
+
+        if not wait_for_element_present(driver, 'div#results'):
+            print(f'在{org}裡，沒有《{ISBN}》')
+            return
+
+        # 有 div#results，找出所有的＂書目資料＂的網址
+        tgt_urls = []
+        anchors = driver.find_elements(By.CSS_SELECTOR, 'div.img_reslt > a')
+        for anchor in anchors:
+            tgt_urls.append(anchor.get_attribute('href'))
+
+        # 進入各個＂書目資料＂爬取表格
+        for tgt_url in tgt_urls:
+            driver.get(tgt_url)
+
+            tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+            tgt['圖書館'], tgt['連結'] = org, tgt_url
+
+            # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+            filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
+            filtered_tgt.reset_index(drop=True, inplace=True)
+
+            table.append(filtered_tgt)
+            
+            # 換頁：書沒有那麼多吧 XD，土法煉鋼法
+            try:
+                driver.find_element(By.XPATH, '//*[@id="DirectLink_0_0"]').click()
+                
+                time.sleep(2.5)
+                tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+                tgt['圖書館'], tgt['連結'] = org, tgt_url
+                
+                # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+                filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
+                filtered_tgt.reset_index(drop=True, inplace=True)
+                
+                table.append(filtered_tgt)
+            except:
+                pass
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+
+# In[291]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# toread_crawler(
+#     driver=driver,
+#     org='test',
+#     org_url='https://libopac.nuk.edu.tw/toread/opac',
+#     ISBN='9789573317241'
+# )
+
+
+# ## <mark>完成</mark>國家圖書館(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/02
+# - 『函式完成度』：極高
+
+# ### 函式說明
+# - 『運作的原理』：使用 Selenium
+# - 『適用的機構』：[國家圖書館](https://aleweb.ncl.edu.tw/F)
+# - 『能處理狀況』：找不到、一筆、[無表格內容](https://aleweb.ncl.edu.tw/F/MPXYG72FRS6Q4T31JTU5GKITQSE7B3ASA51D88R8BSTBT6T6E5-03970?func=item-global&doc_library=TOP02&doc_number=003632992&year=&volume=&sub_library=)
+# - 『下一步優化』：
+#     - 9789861371955
+#     - 目前尚未遇到多筆情況
+#     - 不知道可以和什麼機構的系統合併在一起？
+
+# ### 函式本體
+
+# In[17]:
+
+
+def 國家圖書館(driver, org, org_url, ISBN):
+    try:
+        driver.get(org_url)
+        select_ISBN_strategy(driver, 'find_code', 'ISBN')
+        search_ISBN(driver, ISBN, 'request')
+
+        # 點擊＂書在哪裡(請點選)＂，進入＂書目資料＂
+        wait_for_element_clickable(driver, '書在哪裡(請點選)').click()
+
+        table = accurately_find_table_and_read_it(driver, 'table', -2)
+        if 0 in table.columns:
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
+        table['圖書館'], table['連結'] = org, driver.current_url
+        table = organize_columns(table)
+    except Exception as e:
+        # 沒有物件可以 click，表示＂零筆＂搜尋結果
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    return table
+
+
+# ## <mark>完成</mark>世新大學(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/03
+# - 『函式完成度』：極高
+
+# ### 函式說明
+# - 『運作的原理』：待輸入
+# - 『適用的機構』：[世新大學](https://koha.shu.edu.tw/)
+# - 『能處理狀況』：一筆、無
+# - 『下一步優化』：
+#     - 待輸入
+#     - 待輸入
+
+# ### 函式本體
+
+# In[267]:
+
+
+def 世新大學(driver, org, org_url, ISBN):
+    try:
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'q')
+
+        table = accurately_find_table_and_read_it(driver, '#holdingst')
+        table['圖書館'], table['連結'] = org, driver.current_url
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」找不到「{ISBN}」')
+        return
+    else:
+        return table
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# # 靖妤的爬蟲程式
 
 # ## <mark>完成</mark>webpac_two_cralwer(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/03
@@ -1003,7 +1093,7 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
 
 
 
-# ## 台中科技大學
+# ## <font color='red'>進行中</font>台中科技大學
 
 # In[ ]:
 
@@ -1077,8 +1167,6 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
 #     except:
 #         print(f'《{ISBN}》在「{url}」無法爬取')
 
-
-# ### 函式測試
 
 # In[ ]:
 
