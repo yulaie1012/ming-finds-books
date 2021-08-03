@@ -41,7 +41,7 @@ def organize_columns(df1):
     # 處理 column 2：館藏地
     c2 = [
         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
-        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location'
+        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置'
     ]
     df1['c2'] = ''
     for c in c2:
@@ -63,7 +63,7 @@ def organize_columns(df1):
     c4 = [
         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
-        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status'
+        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status', '館藏狀況(月-日-西元年)'
     ]
     df1['c4'] = ''
     for c in c4:
@@ -146,7 +146,7 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 # ------------------------Primo找書--------------------------
 def primo_finding(org, tcn, driver): #primo爬資訊的def ；#tcn = thelist_class_name
 	sub_df_lst = []
-	time.sleep(5)
+	time.sleep(10)
 	try:
 		back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
 	except:
@@ -1294,7 +1294,7 @@ def Tajen(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立中央大學 NCU X
+# 國立中央大學 NCU V
 def NCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -1858,9 +1858,10 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xp
         time.sleep(2) 
         where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail
         where3 = driver.find_element_by_xpath(where3_xpath).click()
-        time.sleep(4)
-        table = driver.find_element_by_xpath(table_xpath)
-        time.sleep(2)
+        time.sleep(10)
+        
+        table = driver.find_element_by_css_selector('body > table:nth-child(16)')
+        time.sleep(3)
         trlist = table.find_elements_by_tag_name('tr')
         for row in trlist:
             tdlist = row.find_elements_by_tag_name('td')
@@ -1868,14 +1869,16 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xp
                 if org != "工業技術研究院":
                     now_url = driver.current_url
                     new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[7].text, now_url]
+                    
                 else:
                     new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]
+                    print("5")
                 clickclick_lst.append(new_row)
                 break       
     except:
         pass
     print(clickclick_lst)
-    table = pd.concat(clickclick_lst, axis=0, ignore_index=True)
+    table = pd.DataFrame(clickclick_lst)
     return table
 
 # 馬偕醫學院 MMC
