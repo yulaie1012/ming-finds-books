@@ -1842,37 +1842,33 @@ def CGU(ISBN):
 # ----------------------------------------要一直點進去------------------------------------------
 # clickclick_crawler()
 # 馬偕醫學院|工研院
-def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xpath):
+def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_place):
     clickclick_lst = []
     ISBN_xpath = "/html/body/table[6]/tbody/tr/td[1]/form/fieldset[1]/select/option[" + xpath_num + "]"
     try:
         driver.get(url)
-        time.sleep(4)
+        time.sleep(8)
         use_ISBN = driver.find_element_by_xpath(ISBN_xpath).click()
         search_input = driver.find_element_by_name("y")
         search_input.send_keys(ISBN)
         gogo = driver.find_element_by_name("Search").click()
-        time.sleep(2)
+        time.sleep(4)
         
         where2 = driver.find_element_by_class_name("brieftit").click()
         time.sleep(2) 
         where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail
         where3 = driver.find_element_by_xpath(where3_xpath).click()
-        time.sleep(10)
-        
-        table = driver.find_element_by_css_selector('body > table:nth-child(16)')
+        time.sleep(10)      
+        table = driver.find_element_by_css_selector(table_place)       
         time.sleep(3)
+        now_url = driver.current_url
         trlist = table.find_elements_by_tag_name('tr')
         for row in trlist:
+            print("a")
             tdlist = row.find_elements_by_tag_name('td')
             for sth in tdlist:
-                if org != "工業技術研究院":
-                    now_url = driver.current_url
-                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[7].text, now_url]
+                new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]
                     
-                else:
-                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]
-                    print("5")
                 clickclick_lst.append(new_row)
                 break       
     except:
@@ -1900,7 +1896,7 @@ def MMC(ISBN):
         ISBN, 
         "8", 
         "span/a[1]", 
-        '/html/body/table[10]'
+        'body > table:nth-child(16)'
         )
     )
     
@@ -1928,7 +1924,7 @@ def ITRI(ISBN):
         ISBN, 
         "7", 
         "a/img", 
-        '/html/body/table[10]'
+        'body > table:nth-child(17)'
         )
     )
     
