@@ -6,7 +6,7 @@
 # ## 載入套件
 # - selenium、pandas、requests、bs4、time
 
-# In[119]:
+# In[1]:
 
 
 from selenium import webdriver
@@ -27,7 +27,7 @@ import time  # 強制等待
 
 # ## 設定 driver 的參數：options、desired_capabilities
 
-# In[120]:
+# In[2]:
 
 
 if __name__ == '__main__':
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[121]:
+# In[3]:
 
 
 def organize_columns(df1):
@@ -83,7 +83,7 @@ def organize_columns(df1):
     c4 = [
         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
-        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status'
+        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status', '館藏狀況(月-日-西元年)'
     ]
     df1['c4'] = ''
     for c in c4:
@@ -109,7 +109,7 @@ def organize_columns(df1):
 # ## set_excel(df, directory) 暫停
 # - 待
 
-# In[122]:
+# In[4]:
 
 
 def set_excel(df, directory):
@@ -147,7 +147,7 @@ def set_excel(df, directory):
 #     - waiting_time：等待時間，預設 5 秒
 #     - by：定位方式，預設 By.CSS_SELECTOR
 
-# In[123]:
+# In[5]:
 
 
 def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
@@ -163,7 +163,7 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
 # ## wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT)
 # - 同上
 
-# In[151]:
+# In[6]:
 
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
@@ -185,7 +185,7 @@ def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.L
 #     - old_url：舊網址
 #     - waiting_time：等待時間，預設 10 秒
 
-# In[125]:
+# In[7]:
 
 
 def wait_for_url_changed(driver, old_url, waiting_time=10):
@@ -204,7 +204,7 @@ def wait_for_url_changed(driver, old_url, waiting_time=10):
 # - 參數：
 #     - table_position：table 位置，預設 CSS selector
 
-# In[126]:
+# In[8]:
 
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
@@ -232,7 +232,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
 #     - waiting_time：等待時間，預設 30 秒
 #     - by：預設 By.NAME
 
-# In[155]:
+# In[9]:
 
 
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
@@ -251,7 +251,7 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 #     - waiting_time：等待時間，預設 10 秒
 #     - by：預設 By.NAME
 
-# In[154]:
+# In[10]:
 
 
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
@@ -276,7 +276,7 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
 
 # ### 函式本體
 
-# In[13]:
+# In[11]:
 
 
 def click_more_btn(driver):
@@ -291,7 +291,7 @@ def click_more_btn(driver):
         return
 
 
-# In[14]:
+# In[12]:
 
 
 def webpac_gov_crawler(driver, org, org_url, ISBN):
@@ -356,7 +356,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[105]:
+# In[13]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
@@ -425,7 +425,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[25]:
+# In[14]:
 
 
 def easy_crawler(driver, org, org_url, ISBN):
@@ -461,7 +461,7 @@ def easy_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[ ]:
+# In[15]:
 
 
 def webpac_pro_crawler(driver, org, org_url, ISBN):
@@ -485,7 +485,7 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
 
 
 # ## <mark>完成</mark>webpac_ajax_crawler(driver, org, org_url, ISBN)
-# - 『最後編輯』：2021/07/31
+# - 『最後編輯』：2021/08/02
 # - 『函式完成度』：極高
 
 # ### 函式說明
@@ -496,114 +496,44 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[204]:
+# In[16]:
 
 
 def webpac_ajax_crawler(driver, org, org_url, ISBN):
-    table = []
-    
-    driver.get(org_url)
-    wait_for_element_clickable(driver, '進階查詢').click()  # 點擊＂進階查詢＂
-    select_ISBN_strategy(driver, 'as_type_1', 'i', by=By.ID)
-    search_ISBN(driver, ISBN, 'as_keyword_1', by=By.ID)
+    try:
+        table = []
 
-    org_url = org_url.replace('/search.cfm', '')
-    if wait_for_element_present(driver, '詳細書目', by=By.LINK_TEXT):
-        tgt_urls = []
-        anchors = driver.find_elements_by_link_text('詳細書目')
-        for anchor in anchors:
-            tgt_urls.append(anchor.get_attribute('href'))
+        driver.get(org_url)
+        wait_for_element_clickable(driver, '進階查詢').click()  # 點擊＂進階查詢＂
+        select_ISBN_strategy(driver, 'as_type_1', 'i', by=By.ID)
+        search_ISBN(driver, ISBN, 'as_keyword_1', by=By.ID)
 
-        for tgt_url in tgt_urls:
+        org_url = org_url.replace('/search.cfm', '')
+        if wait_for_element_present(driver, '詳細書目', by=By.LINK_TEXT):
+            tgt_urls = []
+            anchors = driver.find_elements_by_link_text('詳細書目')
+            for anchor in anchors:
+                tgt_urls.append(anchor.get_attribute('href'))
+
+            for tgt_url in tgt_urls:
+                mid = tgt_url.split('mid=')[-1].split('&')[0]
+                ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
+                tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
+                tgt['圖書館'], tgt['連結'] = org, tgt_url
+                table.append(tgt)
+        elif wait_for_element_present(driver, 'div.book-detail'):  # 高雄市立空中大學、國立屏東大學才會遇到跳轉
+            tgt_url = driver.current_url
             mid = tgt_url.split('mid=')[-1].split('&')[0]
             ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
             tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
             tgt['圖書館'], tgt['連結'] = org, tgt_url
             table.append(tgt)
-    elif wait_for_element_present(driver, 'div.book-detail'):  # 高雄市立空中大學、國立屏東大學才會遇到跳轉
-        tgt_url = driver.current_url
-        mid = tgt_url.split('mid=')[-1].split('&')[0]
-        ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
-        tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
-        tgt['圖書館'], tgt['連結'] = org, tgt_url
-        table.append(tgt)
-    table = organize_columns(table)
-    return table
-
-
-# ## <font color='red'>待維修</font>基隆市公共圖書館(driver, org, org_url, ISBN) 很奇怪
-# - 『最後編輯』：
-# - 『函式完成度』：中
-
-# ### 函式說明
-# - 『運作的原理』：使用 Selenium
-# - 『適用的機構』：[基隆市公共圖書館](https://webpac.klccab.gov.tw/webpac/search.cfm)
-# - 『能處理狀況』：一筆、無
-# - 『下一步優化』：
-#     - 網站載入過慢，且 wait 方式不適用於此，只能使用大量的 time.sleep()
-
-# ### 函式本體
-
-# In[ ]:
-
-
-def 基隆市公共圖書館(org, org_url, ISBN):
-    try:
-        # 進入＂搜尋主頁＂
-        driver.get(org_url)
-        # 等待點擊＂進階查詢＂按鈕，接著點擊
-        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.LINK_TEXT, '進階檢索'))).click()
-        time.sleep(2)  # JavaScript 動畫，強制等待
-        # 等待定位＂下拉式選單＂，選擇以 ISBN 方式搜尋
-        search_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'as_type_1')))
-        select = Select(search_field)
-        select.select_by_value('i')
-        # 定位＂搜尋欄＂，輸入 ISBN
-        search_input = driver.find_element_by_id('as_keyword_1')
-        search_input.send_keys(ISBN)
-        search_input.send_keys(Keys.ENTER)
-
-        time.sleep(8)  # 基隆的系統太詭異了，強制等待
-        soup = BeautifulSoup(driver.page_source, "html.parser")
-        results = len(soup.find_all("div", "list_box"))
-        if results < 2:
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, "table.list.list_border")))
-            time.sleep(2)
-            table = pd.read_html(driver.page_source)[0]
-        else:
-            table = []
-            for li in soup.find_all("div", "list_box"):
-                url_temp = "https://webpac.klccab.gov.tw/webpac/" + li.find(
-                    "a", "btn")["href"]
-                driver.get(url_temp)
-                wait.until(
-                    EC.presence_of_element_located(
-                        (By.CSS_SELECTOR, "table.list.list_border")))
-                time.sleep(2)
-                table.append(
-                    pd.read_html(driver.page_source, encoding="utf-8")[0])
-            table = pd.concat(table, axis=0, ignore_index=True)
-        table['圖書館'], table['連結'] = org, driver.current_url
         table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
         return table
-    except:
-        print(f'《{ISBN}》在「{url}」無法爬取')
-
-
-# ### 函式測試
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    table = 基隆市公共圖書館(
-        org='基隆市公共圖書館',
-        org_url='https://webpac.klccab.gov.tw/webpac/search.cfm',
-        ISBN='9789869109321'
-    )
 
 
 # ## <mark>完成</mark>國家圖書館(driver, org, org_url, ISBN)
@@ -621,7 +551,7 @@ if __name__ == '__main__':
 
 # ### 函式本體
 
-# In[152]:
+# In[17]:
 
 
 def 國家圖書館(driver, org, org_url, ISBN):
@@ -646,64 +576,73 @@ def 國家圖書館(driver, org, org_url, ISBN):
     return table
 
 
-# ## 彰化縣公共圖書館(org, org_url, ISBN) 進行中
+# ## <mark>完成</mark>彰化縣公共圖書館(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/03
 # - 『函式完成度』：高
 
 # ### 函式說明
 # - 『運作的原理』：待輸入
 # - 『適用的機構』：彰化縣圖書館
-# - 『能處理狀況』：一筆、無、多筆、（翻頁
+# - 『能處理狀況』：一筆、無、多筆、[翻頁](https://library.toread.bocach.gov.tw/toread/opac/bibliographic_view?NewBookMode=false&id=341724&mps=10&q=986729193X+OR+9789867291936&start=0&view=CONTENT)
 # - 『下一步優化』：
-#     - [翻頁](https://library.toread.bocach.gov.tw/toread/opac/bibliographic_view?NewBookMode=false&id=341724&mps=10&q=986729193X+OR+9789867291936&start=0&view=CONTENT)
 #     - 待輸入
 
 # ### 函式本體
 
-# In[ ]:
+# In[18]:
 
 
-def 彰化縣公共圖書館(org, org_url, ISBN):
-    table = []
-    tgt_urls = []
-    
-    driver.get(org_url)
-    search_ISBN(ISBN, 'q')
-    
-    if not wait_for_element_present('div#results'):
-        print(f'在{org}裡，沒有《{ISBN}》')
+def 彰化縣公共圖書館(driver, org, org_url, ISBN):
+    try:
+        table = []
+
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'q')
+
+        if not wait_for_element_present(driver, 'div#results'):
+            print(f'在{org}裡，沒有《{ISBN}》')
+            return
+
+        # 有 div#results，找出所有的＂書目資料＂的網址
+        tgt_urls = []
+        anchors = driver.find_elements(By.CSS_SELECTOR, 'div.img_reslt > a')
+        for anchor in anchors:
+            tgt_urls.append(anchor.get_attribute('href'))
+
+        # 進入各個＂書目資料＂爬取表格
+        for tgt_url in tgt_urls:
+            driver.get(tgt_url)
+
+            tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+            tgt['圖書館'], tgt['連結'] = org, tgt_url
+
+            # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+            filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
+            filtered_tgt.reset_index(drop=True, inplace=True)
+
+            table.append(filtered_tgt)
+            
+            # 換頁：書沒有那麼多吧 XD，土法煉鋼法
+            try:
+                driver.find_element(By.XPATH, '//*[@id="DirectLink_0_0"]').click()
+                
+                time.sleep(2.5)
+                tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+                tgt['圖書館'], tgt['連結'] = org, tgt_url
+                
+                # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+                filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
+                filtered_tgt.reset_index(drop=True, inplace=True)
+                
+                table.append(filtered_tgt)
+            except:
+                pass
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
-    
-    # 有 div#results，接著分析 html，找出所有的＂書目資料＂的網址
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-    ul = soup.select('div#results > ul')[0]
-    for li in ul.select('li.is_img'):
-        tgt_urls.append(org_url + li.a['href'])
-    # for 迴圈，進入所有的＂書目資料＂的網址
-    for tgt_url in tgt_urls:
-        driver.get(tgt_url)
-        tgt = accurately_find_table_and_read_it('table.gridTable')
-        
-        # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-        filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
-        filtered_tgt.reset_index(drop=True, inplace=True)
-        
-        table.append(filtered_tgt)
-    table = organize_columns(table)
-    return table
-
-
-# ### 函式測試
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    table = 彰化縣公共圖書館(
-        org='彰化縣公共圖書館',
-        org_url='https://library.toread.bocach.gov.tw',
-        ISBN='986729193X'
-    )
+    else:
+        return table
 
 
 # ## web2_crawler(org, org_url, ISBN) 進行中
@@ -733,21 +672,6 @@ def web2_crawler(org, url_front, ISBN, url_behind):
         return df_web2
     except:
         print(f"「{url}」無法爬取！")
-
-
-# ### 函式測試
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    table = web2_crawler(
-        org='國立勤益科技大學',
-        url_front='http://140.128.95.172/webpac/search/?q=',
-        url_behind='&field=isn&op=AND&type=&department=&college=&dep=&active=1',
-        ISBN='9789869109321'
-    )
 
 
 # ## 連江縣公共圖書館(org, org_url, ISBN)
@@ -949,4 +873,92 @@ if __name__ == '__main__':
 
 
 
+
+
+# ## <font color='red'>待維修</font>基隆市公共圖書館(driver, org, org_url, ISBN) 很奇怪
+# - 『最後編輯』：
+# - 『函式完成度』：中
+
+# ### 函式說明
+# - 『運作的原理』：使用 Selenium
+# - 『適用的機構』：[基隆市公共圖書館](https://webpac.klccab.gov.tw/webpac/search.cfm)
+# - 『能處理狀況』：一筆、無
+# - 『下一步優化』：
+#     - 網站載入過慢，且 wait 方式不適用於此，只能使用大量的 time.sleep()
+
+# ### 函式本體
+
+# In[ ]:
+
+
+# def 基隆市公共圖書館(driver, org, org_url, ISBN):
+#     try:
+#         driver.get(org_url)
+#         wait_for_element_clickable(driver, '進階檢索').click()  # 點擊＂進階檢索＂
+#         time.sleep(2)  # JavaScript 動畫，強制等待
+#         select_ISBN_strategy(driver, 'as_type_1', 'i')
+#         search_ISBN(driver, ISBN, 'as_keyword_1')
+
+#         time.sleep(8)  # 基隆的系統太詭異了，強制等待
+#         soup = BeautifulSoup(driver.page_source, "html.parser")
+#         results = len(soup.find_all("div", "list_box"))
+#         if results < 2:
+#             WebDriverWait(driver, 10).until(
+#                 EC.presence_of_element_located(
+#                     (By.CSS_SELECTOR, "table.list.list_border")))
+#             time.sleep(2)
+#             table = pd.read_html(driver.page_source)[0]
+#         else:
+#             table = []
+#             for li in soup.find_all("div", "list_box"):
+#                 url_temp = "https://webpac.klccab.gov.tw/webpac/" + li.find(
+#                     "a", "btn")["href"]
+#                 driver.get(url_temp)
+#                 wait.until(
+#                     EC.presence_of_element_located(
+#                         (By.CSS_SELECTOR, "table.list.list_border")))
+#                 time.sleep(2)
+#                 table.append(
+#                     pd.read_html(driver.page_source, encoding="utf-8")[0])
+#             table = pd.concat(table, axis=0, ignore_index=True)
+#         table['圖書館'], table['連結'] = org, driver.current_url
+#         table = organize_columns(table)
+#         return table
+#     except:
+#         print(f'《{ISBN}》在「{url}」無法爬取')
+
+
+# ### 函式測試
+
+# In[ ]:
+
+
+# def 基隆市公共圖書館(driver, org, org_url, ISBN):
+#     table = []
+
+#     driver.get(org_url)
+#     search_ISBN(driver, ISBN, 'ss_keyword')
+
+#     time.sleep(8)  # 基隆的系統太詭異了，強制等待
+
+#     if wait_for_element_present(driver, '.list_border'):  # 一筆
+#         tgt = accurately_find_table_and_read_it(driver, '.list_border')
+#         tgt['圖書館'], tgt['連結'] = org, driver.current_url
+#         table.append(tgt)
+#     elif wait_for_element_clickable(driver, '詳細書目'):  # 多筆
+#         tgt_urls = []
+#         anchors = driver.find_elements_by_link_text('詳細書目')
+#         for anchor in anchors:
+#             tgt_urls.append(anchor.get_attribute('href'))
+
+#         for tgt_url in tgt_urls:
+#             driver.get(tgt_url)
+
+#             if not wait_for_element_present(driver, '.list_border'):
+#                 continue
+#             tgt = accurately_find_table_and_read_it(driver, '.list_border')
+#             tgt['圖書館'], tgt['連結'] = org, driver.current_url
+#             table.append(tgt)
+#     table = organize_columns(table)
+#     return table
 
