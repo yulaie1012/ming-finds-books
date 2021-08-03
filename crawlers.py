@@ -261,7 +261,7 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
     search_input.send_keys(Keys.ENTER)
 
 
-# # 爬蟲程式
+# # 已完成的爬蟲程式
 
 # ## <mark>完成</mark>webpac_gov_crawler(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/02
@@ -794,6 +794,8 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
         return table
 
 
+# # 未完成的爬蟲程式
+
 # ## web2_crawler(org, org_url, ISBN) 進行中
 # - 『函式完成度』：待輸入
 
@@ -823,14 +825,27 @@ def web2_crawler(org, url_front, ISBN, url_behind):
         print(f"「{url}」無法爬取！")
 
 
-# ## 台北海洋科技大學
-# - 『最後編輯』：7/31
-# - 『函式完成度』：高
+# In[ ]:
+
+
+
+
 
 # In[ ]:
 
 
-def 台北海洋科技大學(org, org_url, ISBN):
+
+
+
+# ## <mark>完成</mark>台北海洋科技大學(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/03
+# - 『編輯者』：靖妤
+# - 『試用機構』：[台北海洋科技大學](http://140.129.253.4/webopac7/bk_seek.php)
+
+# In[212]:
+
+
+def 台北海洋科技大學(driver, org, org_url, ISBN):
     df_lst = []
     org_url = org_url + ISBN
     driver.get(org_url)
@@ -851,18 +866,6 @@ def 台北海洋科技大學(org, org_url, ISBN):
         back = driver.find_element_by_css_selector("#table1 > tbody > tr > td:nth-child(1) > a:nth-child(3)").click()
     table = pd.concat(df_lst, axis=0, ignore_index=True)
     return table
-
-
-# In[ ]:
-
-
-if __name__ == '__main__':
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    table = 台北海洋科技大學(
-        org='台北海洋科技大學',
-        org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
-        ISBN='9789861371955'
-    )
 
 
 # ## 台中科技大學
