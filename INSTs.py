@@ -1710,12 +1710,13 @@ def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
             else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
                 time.sleep(10)
                 primo_lst += primo_finding(org, tcn, driver)
-                table = pd.concat(primo_lst, axis=0, ignore_index=True)
+                
         except:
             pass
     except:
         pass
-    print(primo_lst)
+    table = pd.DataFrame(primo_lst)
+    table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
 # 國立臺灣大學 NTU X
@@ -1787,7 +1788,7 @@ def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
             place_click = driver.find_element_by_id('exlidResult0-LocationsTab').click()
             sub_df_lst = []
             try:
-                time.sleep(1)
+                time.sleep(5)
                 num = driver.find_elements_by_class_name('EXLLocationTableColumn1')
                 status = driver.find_elements_by_class_name('EXLLocationTableColumn3')
                 for i in range(0, len(num)):
@@ -1800,7 +1801,7 @@ def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
         except: #有多個版本，所以要點進去再做
             time.sleep(2)
             manyeditions = driver.find_element_by_id('titleLink').click()
-            time.sleep(2)
+            time.sleep(5)
             for i in range(1, 10): #假設有十個版本吧
                 try:
                     place_click2 = driver.find_element_by_id('exlidResult' + str(i) + '-LocationsTab').click()
@@ -1808,8 +1809,9 @@ def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
                     continue
     except:
         pass
-
-    return pd.DataFrame(primo_greendot_lst)
+    table = pd.DataFrame(primo_greendot_lst)
+    table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
+    return table
 
 # 長庚大學 CGU
 def CGU(ISBN):
@@ -1860,21 +1862,23 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_pl
         where3 = driver.find_element_by_xpath(where3_xpath).click()
         time.sleep(10)      
         table = driver.find_element_by_css_selector(table_place)       
-        time.sleep(3)
+        time.sleep(5)
         now_url = driver.current_url
         trlist = table.find_elements_by_tag_name('tr')
         for row in trlist:
-            print("a")
             tdlist = row.find_elements_by_tag_name('td')
             for sth in tdlist:
-                new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]
-                    
+                if org != "工業技術研究院":
+                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[7].text, now_url]
+                else:
+                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]     
                 clickclick_lst.append(new_row)
                 break       
     except:
         pass
-    print(clickclick_lst)
     table = pd.DataFrame(clickclick_lst)
+    print(table)
+    table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
 # 馬偕醫學院 MMC
