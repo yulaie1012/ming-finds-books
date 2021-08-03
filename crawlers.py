@@ -356,7 +356,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[13]:
+# In[243]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
@@ -392,6 +392,8 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
             # ＂多筆＂查詢結果
             tgt_urls = []
             anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
+            if anchors == []:
+                anchors = driver.find_elements(By.LINK_TEXT, '內容')
             for anchor in anchors:
                 tgt_urls.append(anchor.get_attribute('href'))
 
@@ -794,7 +796,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# ## <mark>完成</mark>webpac_2_crawler(driver, org, org_url, ISBN)
+# ## <mark>完成</mark>webpac_two_cralwer(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/03
 # - 『編輯者』：靖妤、仕瑋
 # - 『試用機構』：[國立臺北藝術大學](http://203.64.5.158/webpac/)、[國立勤益科技大學](http://140.128.95.172/webpac/)、[義守大學](http://webpac.isu.edu.tw/webpac/)、[中山醫學大學](http://140.128.138.208/webpac/)
@@ -804,7 +806,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
 # In[225]:
 
 
-def webpac_2_crawler(driver, org, org_url, ISBN):
+def webpac_two_cralwer(driver, org, org_url, ISBN):
     try:
         tgt_url = f'{org_url}search/?q={ISBN}&field=isn&op=AND&type='
         driver.get(tgt_url)
@@ -856,6 +858,151 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
+# ## <font color='red'>進行中</font>primo_crawler(driver, org, url_front, ISBN ,url_behind , tcn)
+
+# - 『最後編輯』：2021/08/03
+# - 『編輯者』：靖妤
+# - 『試用機構』：[國立臺灣大學](https://ntu.primo.exlibrisgroup.com/discovery/search?sortby=rank&vid=886NTU_INST:886NTU_INST&lang=zh-tw)
+
+# In[241]:
+
+
+#台大、政大、淡江、東吳、然後銘傳沒有索書碼QQ(要另外進去但我懶🙄)
+def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
+    url = url_front + ISBN + url_behind
+    primo_lst = []
+    def primo_finding(driver, org, tcn): #primo爬資訊的def ；#tcn = thelist_class_name
+        sub_df_lst = []
+        time.sleep(2)
+        try:
+            back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
+        except:
+            back = None
+        if back != None:
+            back.click()
+
+        thelist = driver.find_elements_by_class_name(tcn)
+        if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
+            thelist = thelist[0:-2]
+        else:
+            pass
+
+        for row in thelist:
+            plist = row.find_elements_by_tag_name("p")
+            where = row.find_elements_by_tag_name("h3")
+            i = len(where)
+            for sth in plist:
+                a = sth.find_elements_by_tag_name("span")
+                for _ in range(i):
+                    now_url = driver.current_url
+                    new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
+                    sub_df_lst.append(new_row)
+                    break
+                break
+        return sub_df_lst
+
+    try:
+        # 進入《館藏系統》頁面
+        driver.get(url)
+        time.sleep(3)
+
+        try: #開始爬蟲
+            editions = driver.find_elements_by_class_name('item-title') 
+            if len(editions) > 1: #如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
+                pass
+            else: #如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
+                time.sleep(2)
+                editions[0].click()
+                time.sleep(5)
+                editions = driver.find_elements_by_class_name('item-title') #這時候是第二層的分版本了！(ex.政大 9789869109321)
+                
+            try: #先找叉叉確定是不是在最裡層了
+                back_check = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple")
+            except:
+                back_check = None
+            if back_check == None: #多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
+                for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
+                    into = editions[i].click()
+                    time.sleep(3)
+                    primo_lst += primo_finding(org, tcn)
+                    try: 
+                        back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
+                    except:
+                        back2 = None
+
+            else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
+                time.sleep(3)
+                primo_lst += primo_finding(org, tcn)
+        except:
+            pass
+    except:
+        pass
+    return pd.DataFrame(primo_lst)
+
+
+# In[240]:
+
+
+# 待測試
+# driver = webdriver.Chrome(options=my_options)
+# primo_crawler(
+#     driver=driver,
+#     org='國立臺灣大學',
+#     url_front='https://ntu.primo.exlibrisgroup.com/discovery/search?query=any,contains,',
+#     ISBN=ISBN,
+#     url_behind='&tab=Everything&search_scope=MyInst_and_CI&vid=886NTU_INST:886NTU_INST&offset=0',
+#     tcn='layout-align-space-between-center.layout-row.flex-100'
+# )
+# primo_crawler(
+#     driver=driver,
+#     org='國立政治大學',
+#     url_front='https://nccu.primo.exlibrisgroup.com/discovery/search?query=any,contains,',
+#     ISBN=ISBN,
+#     url_behind='&tab=Everything&search_scope=MyInst_and_CI&vid=886NCCU_INST:886NCCU_INST',
+#     tcn='layout-align-space-between-center.layout-row.flex-100'
+# )
+# primo_crawler(
+#     driver=driver,
+#     org="銘傳大學",
+#     url_front="https://uco-mcu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+#     ISBN=ISBN,
+#     url_behind="&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_MCU:886MCU_INST&lang=zh-tw&offset=0",
+#     tcn="md-2-line.md-no-proxy._md"
+# )
+# primo_crawler(
+#     driver=driver,
+#     org="東吳大學",
+#     url_front="https://uco-scu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+#     ISBN=ISBN,
+#     url_behind"&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_SCU:886SCU_INST&lang=zh-tw&offset=0",
+#     tcn="md-2-line.md-no-proxy._md"
+# )
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
 # ## 台中科技大學
 
 # In[ ]:
@@ -863,6 +1010,20 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
 
 
 
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# # 這網頁也太爛了吧……
 
 # ## <font color='red'>待維修</font>基隆市公共圖書館(driver, org, org_url, ISBN) 很奇怪
 # - 『最後編輯』：
