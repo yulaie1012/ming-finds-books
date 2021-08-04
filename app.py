@@ -39,7 +39,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     FCU, NSYSU, NKNU, WZU, Tajen, NCU, CUST, CNU, NTUA, UTaipei, NTUT, TMU, NTUB, Miaoli, JUST, CLUT, VNU, UCH, \
     MUST, YDU, CUTE, MMC, ITRI, NTCU, NTUS, THU, PU, OCU, NCUE, YLCCB, TYPL, KSML, PTPL, CYCPL, NHU, FEU, CSU, \
     Meiho, OUK, NPTU, webpac_aspx_crawler, TSU, STU, KSU, NTUNHS, uhtbin_crawler, TTU, NTSU, ugly_crawler, \
-    Matsu, KNU
+    Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -193,6 +193,9 @@ def test1(event):
         NTSUs = ["ntsu","NTSU", "國立體育大學", "國體大", "國體"]
         Matsus = ["matsu","Matsu","連江縣公共圖書館","連江縣圖書館","連江圖書館" "連江縣圖", "馬祖"]
         KNUs = ["knu","KNU", "開南大學", "開南", "開大"]
+        CHPLs = ["chpl","CHPL","彰化縣公共圖書館","彰化縣圖書館","彰化圖書館" "彰化縣圖","彰圖"]
+        KMUs = ["kmu","KMU", "高雄醫學大學", "高雄醫大", "高醫"]
+        NFUs = ["nfu","NFU", "國立虎尾科技大學", "虎尾科技大學", "虎尾科大", "虎科大", "虎尾", "虎科"]
 
         KLCCABs = ["klccab","KLCCAB","kllib","KLLIB","基隆市公共圖書館","基隆市圖","基隆市圖書館", "基隆圖書館"]
         
@@ -200,7 +203,14 @@ def test1(event):
         NCLs = ["ncl","NCL", "國家圖書館", "國圖"]
         NTUs = ["ntu","NTU", "國立臺灣大學", "國立台灣大學", "臺灣大學", "台灣大學", "臺大", "台大"]
         NCCUs = ["nccu","NCCU", "國立政治大學", "政治大學", "政大"]
+        TKUs = ["tku","TKU", "淡江大學", "淡江", "淡大"]
+        MCUs = ["mcu","MCU", "銘傳大學", "銘傳"]
+        SCUs = ["scu","SCU", "東吳大學", "東吳"]
+        NPUSTs = ["npust","NPUST", "國立屏東科技大學", "屏東科技大學", "屏東科大", "屏科大", "屏科"]
+        NKUHTs = ["nkuht","NKUHT", "國立高雄餐旅大學", "高雄餐旅大學", "高餐大", "高餐"]
         CGUs = ["cgu","CGU", "長庚大學", "長庚"]
+        CCUs = ["ccu","CCU", "國立中正大學", "中正大學", "中正大", "中正"]
+        CJCUs = ["cjcu","CJCU", "長榮大學", "長榮", "長榮大"]
 
         MMCs = ["mmc","MMC", "馬偕醫學院", "馬偕醫", "馬偕"]
         ITRIs = ["itri","ITRI", "工業技術研究院", "工研院"]
@@ -336,6 +346,12 @@ def test1(event):
                 Matsu(ISBN)  
             elif str_input[i] in KNUs: # 開南大學
                 KNU(ISBN)  
+            elif str_input[i] in CHPLs: # 彰化縣公共圖書館
+                CHPL(ISBN)  
+            elif str_input[i] in KMUs: # 高雄醫學大學
+                KMU(ISBN)  
+            elif str_input[i] in NFUs: # 國立虎尾科技大學
+                NFU(ISBN)  
 
             elif str_input[i] in KLCCABs: # 基隆市公共圖書館
                 KLCCAB(ISBN)
@@ -345,8 +361,22 @@ def test1(event):
                 NTU(ISBN)
             elif str_input[i] in NCCUs: # 國立政治大學
                 NCCU(ISBN)
+            elif str_input[i] in TKUs: # 淡江大學
+                TKU(ISBN)
+            elif str_input[i] in MCUs: # 銘傳大學
+                MCU(ISBN)
+            elif str_input[i] in SCUs: # 東吳大學
+                SCU(ISBN)                                                
+            elif str_input[i] in NPUSTs: # 國立屏東科技大學
+                NPUST(ISBN)
+            elif str_input[i] in NKUHTs: # 國立高雄餐旅大學
+                NKUHT(ISBN)                
             elif str_input[i] in CGUs: # 長庚大學
                 CGU(ISBN)
+            elif str_input[i] in CCUs: # 國立中正大學
+                CCU(ISBN)   
+            elif str_input[i] in CJCUs: # 長榮大學
+                CJCU(ISBN)                                 
             elif str_input[i] in MMCs: # 馬偕醫學院
                 MMC(ISBN)
             elif str_input[i] in ITRIs: # 工業技術研究院

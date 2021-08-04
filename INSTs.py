@@ -144,7 +144,7 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
     select.select_by_value(option_position)
 
 # ------------------------Primo找書--------------------------
-def primo_finding(org, tcn, driver): #primo爬資訊的def ；#tcn = thelist_class_name
+def primo_finding(driver, org, tcn): #primo爬資訊的def ；#tcn = thelist_class_name
 	sub_df_lst = []
 	time.sleep(10)
 	try:
@@ -175,7 +175,7 @@ def primo_finding(org, tcn, driver): #primo爬資訊的def ；#tcn = thelist_cla
 	return sub_df_lst
 
 # ------------------------綠點點找書--------------------------
-def primo_greendot_finding(org, driver): #primo爬資訊的def
+def primo_greendot_finding(driver, org): #primo爬資訊的def
     sub_df_lst = []
     try:
         time.sleep(1)
@@ -1923,7 +1923,7 @@ def NTSU(ISBN):
 
 
 
-# -----------------------------------醜得清新脫俗------------------------------------------------
+# --------------------------------------醜得清新脫俗------------------------------------------------
 # ugly_crawler()
 # 連江縣|開南
 def ugly_crawler(driver, org, org_url, ISBN):
@@ -1996,6 +1996,138 @@ def KNU(ISBN):
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
+
+
+
+# ---------------------------------------藍藍放大鏡------------------------------------------------
+# toread_crawler()
+# 彰化縣|高醫|虎科
+def toread_crawler(driver, org, org_url, ISBN):
+    try:
+        table = []
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'q')
+
+        if not wait_for_element_present(driver, 'div#results'):
+            print(f'在{org}裡，沒有《{ISBN}》')
+            return
+
+        # 有 div#results，找出所有的＂書目資料＂的網址
+        tgt_urls = []
+        anchors = driver.find_elements(By.CSS_SELECTOR, 'div.img_reslt > a')
+        for anchor in anchors:
+            tgt_urls.append(anchor.get_attribute('href'))
+
+        # 進入各個＂書目資料＂爬取表格
+        for tgt_url in tgt_urls:
+            driver.get(tgt_url)
+
+            tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+            tgt['圖書館'], tgt['連結'] = org, tgt_url
+
+            # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+            filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
+            filtered_tgt.reset_index(drop=True, inplace=True)
+
+            table.append(filtered_tgt)
+            
+            # 換頁：書沒有那麼多吧 XD，土法煉鋼法
+            try:
+                driver.find_element(By.XPATH, '//*[@id="DirectLink_0_0"]').click()
+                
+                time.sleep(2.5)
+                tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+                tgt['圖書館'], tgt['連結'] = org, tgt_url
+                
+                # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+                filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
+                filtered_tgt.reset_index(drop=True, inplace=True)
+                
+                table.append(filtered_tgt)
+            except:
+                pass
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+# 彰化縣公共圖書館 CHPL 
+def CHPL(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawler(
+        driver,
+        '彰化縣公共圖書館',
+        "https://library.toread.bocach.gov.tw/toread/opac",
+        ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 高雄醫學大學 KMU
+def KMU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawler(
+        driver,
+        '高雄醫學大學',
+        "https://toread.kmu.edu.tw/toread/opac",
+        ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立虎尾科技大學 NFU V
+def NFU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawler(
+        driver,
+        '國立虎尾科技大學',
+        "https://toread.lib.nfu.edu.tw/toread/opac",
+        ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
 
 
 
@@ -2127,8 +2259,8 @@ def NCL(ISBN):
 
 # ------------------------------------------Primo-----------------------------------------
 # primo_crawler()
-# 臺大|政大|淡大|東吳
-def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
+# 臺大|政大|淡江|銘傳|東吳
+def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
     url = url_front + ISBN + url_behind
     primo_lst = []
 
@@ -2156,7 +2288,7 @@ def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
                     time.sleep(5)
                     into = editions[i].click()
                     time.sleep(8)
-                    primo_lst += primo_finding(org, tcn, driver)
+                    primo_lst += primo_finding(driver, org, tcn)
                     table = pd.concat(primo_lst, axis=0, ignore_index=True)
                     try: 
                         back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
@@ -2165,7 +2297,7 @@ def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
 
             else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
                 time.sleep(10)
-                primo_lst += primo_finding(org, tcn, driver)
+                primo_lst += primo_finding(driver, org, tcn)
                 
         except:
             pass
@@ -2175,7 +2307,7 @@ def primo_crawler(org, url_front, ISBN ,url_behind, tcn, driver):
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
-# 國立臺灣大學 NTU X
+# 國立臺灣大學 NTU V
 def NTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2187,12 +2319,12 @@ def NTU(ISBN):
     
     output.append(
         primo_crawler(
+        driver,
         '國立臺灣大學',
         "https://ntu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
         ISBN,
         "&tab=Everything&search_scope=MyInst_and_CI&vid=886NTU_INST:886NTU_INST&offset=0",
-        "layout-align-space-between-center.layout-row.flex-100",
-        driver
+        "layout-align-space-between-center.layout-row.flex-100"
         )
     )
     
@@ -2200,7 +2332,7 @@ def NTU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立政治大學 NCCU X
+# 國立政治大學 NCCU V
 def NCCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2213,12 +2345,218 @@ def NCCU(ISBN):
     
     output.append(
         primo_crawler(
+        driver,
         '國立政治大學',
         "https://nccu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
         ISBN,
         "&tab=Everything&search_scope=MyInst_and_CI&vid=886NCCU_INST:886NCCU_INST",
-        "layout-align-space-between-center.layout-row.flex-100",
-        driver
+        "layout-align-space-between-center.layout-row.flex-100"
+        )
+    )
+    
+    driver.close()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 淡江大學 TKU V
+def TKU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    
+    output.append(
+        primo_crawler(
+        driver,
+        '淡江大學',
+        "https://uco-network.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+        ISBN,
+        "&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_TKU:886TKU_INST&lang=zh-tw&offset=0",
+        "neutralized-button.layout-full-width.layout-display-flex.md-button.md-ink-ripple.layout-row"
+        )
+    )
+    
+    driver.close()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 銘傳大學 MCU V(索書號是空的)
+def MCU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    
+    output.append(
+        primo_crawler(
+        driver,
+        '銘傳大學',
+        "https://uco-mcu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+        ISBN,
+        "&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_MCU:886MCU_INST&lang=zh-tw&offset=0",
+        "md-2-line.md-no-proxy._md"
+        )
+    )
+    
+    driver.close()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 東吳大學 SCU V
+def SCU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    
+    output.append(
+        primo_crawler(
+        driver,
+        '東吳大學',
+        "https://uco-scu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+        ISBN,
+        "&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_SCU:886SCU_INST&lang=zh-tw&offset=0",
+        "md-2-line.md-no-proxy._md"
+        )
+    )
+    
+    driver.close()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+
+
+# ------------------------------------------Primo v2-----------------------------------------
+# primo_two() 
+# 屏科大|高餐
+def primo_two_crawler(driver, org, url_front, ISBN ,url_behind):
+    url = url_front + ISBN + url_behind
+    primo_two_lst = []
+    def primo_two_finding(org): #爬資訊的def
+        sub_df_lst = []
+        time.sleep(2)
+        try:
+            back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
+        except:
+            back = None
+        if back != None:
+            back.click()
+
+        similar_xpath = "/html/body/primo-explore/div[3]/div/md-dialog/md-dialog-content/sticky-scroll/prm-full-view/div/div/div[2]/div/div[1]/div[4]/div/prm-full-view-service-container/div[2]/div/prm-opac/md-tabs/md-tabs-content-wrapper/md-tab-content[2]/div/md-content/prm-location-items/div[2]/div[1]/p/span["
+        status = driver.find_element_by_xpath(similar_xpath + "1]")
+        place = driver.find_element_by_xpath(similar_xpath + "3]")
+        num = driver.find_element_by_xpath(similar_xpath + "5]")
+
+        now_url = driver.current_url
+        number = num.text.replace("(", "").replace(")", "")
+        new_row = [org, place.text, number, status.text, now_url]
+        sub_df_lst.append(new_row)
+
+        return sub_df_lst
+
+    try:
+        # 進入《館藏系統》頁面
+        driver.get(url)
+        # 等待＂進階查詢的按鈕＂直到出現：click
+        time.sleep(3)
+
+        try: #開始爬蟲
+            editions = driver.find_elements_by_class_name('item-title') 
+            if len(editions) > 1: #如果最外面有兩x`個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
+                pass
+            else: #如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
+                time.sleep(2)
+                editions[0].click()
+                time.sleep(5)
+                editions = driver.find_elements_by_class_name('item-title') #這時候是第二層的分版本了！(ex.政大 9789869109321)
+                
+            try: #先找叉叉確定是不是在最裡層了
+                back_check = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple")
+            except:
+                back_check = None
+            if back_check == None: #多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
+                for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
+                    into = editions[i].click()
+                    time.sleep(3)
+                    primo_two_lst += primo_two_finding(org)
+                    try: 
+                        back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
+                    except:
+                        back2 = None
+
+            else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
+                time.sleep(3)
+                primo_two_lst += primo_two_finding(org)
+        except:
+            pass
+    except:
+        pass
+
+    table = pd.DataFrame(primo_two_lst)
+    table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
+    return table
+
+# 國立屏東科技大學 NPUST
+def NPUST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        primo_two_crawler(
+        driver,
+        '國立屏東科技大學',
+        "http://primo.lib.npust.edu.tw/primo-explore/search?query=any,contains,",
+        ISBN,
+        "&tab=Everything&search_scope=MyInst_and_CI&vid=886NKUST_INST:86NKUST&lang=zh-tw&offset=0,",
+
+        )
+    )
+    
+    driver.close()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立高雄餐旅大學 NKUHT
+def NKUHT(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        primo_greendot_crawler(
+        driver,
+        '國立高雄餐旅大學',
+        "https://primo.lib.cgu.edu.tw/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=default_tab&indx=1&dum=true&srt=rank&vid=CGU&frbg=&tb=t&vl%2812508471UI0%29=isbn&vl%2812508471UI0%29=title&vl%2812508471UI0%29=isbn&vl%281UIStartWith0%29=contains&vl%28freeText0%29=",
+        ISBN,
+        "&vl%28boolOperator0%29=AND&vl%2812508474UI1%29=creator&vl%2812508474UI1%29=title&vl%2812508474UI1%29=creator&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%28boolOperator1%29=AND&vl%2812508470UI2%29=any&vl%2812508470UI2%29=title&vl%2812508470UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%28boolOperator2%29=AND&vl%2812626940UI3%29=any&vl%2812626940UI3%29=title&vl%2812626940UI3%29=any&vl%281UIStartWith3%29=contains&vl%28freeText3%29=&vl%28boolOperator3%29=AND&vl%28D2240502UI4%29=all_items&vl%2853081356UI5%29=all_items&vl%28D2240500UI6%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
         )
     )
     
@@ -2230,9 +2568,11 @@ def NCCU(ISBN):
 
 
 
+
+
 # ------------------------------------------綠點點----------------------------------------------
 # primo_greendot_crawler()
-# 長庚|中正
+# 長庚|中正|長榮
 def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
     url = url_front + ISBN + url_behind
     primo_greendot_lst = []
@@ -2240,7 +2580,7 @@ def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
     try:
         driver.get(url)
         try: #只有一個版本
-            time.sleep(2)
+            time.sleep(5)
             place_click = driver.find_element_by_id('exlidResult0-LocationsTab').click()
             sub_df_lst = []
             try:
@@ -2269,7 +2609,7 @@ def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
-# 長庚大學 CGU
+# 長庚大學 CGU V
 def CGU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2294,6 +2634,59 @@ def CGU(ISBN):
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
+
+# 國立中正大學 CCU V
+def CCU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        primo_greendot_crawler(
+        driver,
+        '國立中正大學',
+        "http://primo.lib.ccu.edu.tw/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=default_tab&indx=1&dum=true&srt=rank&vid=CCU&frbg=&tb=t&vl%28256032279UI0%29=isbn&vl%28256032279UI0%29=title&vl%28256032279UI0%29=any&vl%281UIStartWith0%29=contains&vl%28freeText0%29=",
+        ISBN,
+        "&vl%282853831UI0%29=AND&vl%28256032278UI1%29=any&vl%28256032278UI1%29=title&vl%28256032278UI1%29=any&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%282853829UI1%29=AND&vl%28256032320UI2%29=any&vl%28256032320UI2%29=title&vl%28256032320UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%282853831UI2%29=AND&vl%28D2853835UI3%29=all_items&vl%28256032346UI4%29=all_items&vl%28D2853833UI5%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
+        )
+    )
+    
+    driver.close()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 長榮大學 CJCU V
+def CJCU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        primo_greendot_crawler(
+        driver,
+        '長榮大學',
+        "http://discovery.lib.cjcu.edu.tw:1701/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=ils_pc&indx=1&dum=true&srt=rank&vid=CJCU&frbg=&tb=t&vl%28D2348462UI0%29=any&vl%28D2348462UI0%29=title&vl%28D2348462UI0%29=any&vl%281UIStartWith0%29=contains&vl%28freeText0%29=,",
+        ISBN,
+        "&vl%28boolOperator0%29=AND&vl%2812508474UI1%29=creator&vl%2812508474UI1%29=title&vl%2812508474UI1%29=creator&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%28boolOperator1%29=AND&vl%2812508470UI2%29=any&vl%2812508470UI2%29=title&vl%2812508470UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%28boolOperator2%29=AND&vl%2812626940UI3%29=any&vl%2812626940UI3%29=title&vl%2812626940UI3%29=any&vl%281UIStartWith3%29=contains&vl%28freeText3%29=&vl%28boolOperator3%29=AND&vl%28D2240502UI4%29=all_items&vl%2853081356UI5%29=all_items&vl%28D2240500UI6%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
+        )
+    )
+    
+    driver.close()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
 
 
 
