@@ -48,7 +48,7 @@ if __name__ == '__main__':
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[258]:
+# In[3]:
 
 
 def organize_columns(df1):
@@ -356,7 +356,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[243]:
+# In[13]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
@@ -552,7 +552,7 @@ def webpac_ajax_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[191]:
+# In[17]:
 
 
 def webpac_aspx_crawler(driver, org, org_url, ISBN):
@@ -602,6 +602,18 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
         return table
 
 
+# In[18]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# webpac_aspx_crawler(
+#     driver=driver,
+#     org='弘光科技大學',
+#     org_url='https://webpac.hk.edu.tw/webopac/',
+#     ISBN='9789869109321'
+# )
+
+
 # ## <mark>完成</mark>uhtbin_crawler(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/03
 # - 『函式完成度』：高
@@ -616,7 +628,7 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[208]:
+# In[19]:
 
 
 def uhtbin_crawler(driver, org, org_url, ISBN):
@@ -648,6 +660,111 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
         return table
 
 
+# In[20]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# uhtbin_crawler(
+#     driver=driver,
+#     org='大同大學',
+#     org_url='http://140.129.23.14/uhtbin/webcat',
+#     ISBN='9789861371955'
+# )
+
+
+# ## <mark>完成</mark>toread_crawler(driver, org, org_url, ISBN)
+# - 『最後編輯』：2021/08/05
+# - 『函式完成度』：高、爆複雜
+
+# ### 函式說明
+# - 『運作的原理』：待輸入
+# - 『適用的機構』：[彰化縣圖書館](https://library.toread.bocach.gov.tw/toread/opac)、toread 系統
+# - 『能處理狀況』：一筆、無、多筆、[翻頁](https://library.toread.bocach.gov.tw/toread/opac/bibliographic_view?NewBookMode=false&id=341724&mps=10&q=986729193X+OR+9789867291936&start=0&view=CONTENT)
+# - 『下一步優化』：
+#     - 待輸入
+
+# ### 函式本體
+
+# In[21]:
+
+
+def toread_crawler(driver, org, org_url, ISBN):
+    try:
+        table = []
+
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'q')
+
+        if not wait_for_element_present(driver, 'div#results'):
+            print(f'在{org}裡，沒有《{ISBN}》')
+            return
+
+        # 有 div#results，找出所有的＂書目資料＂的網址
+        tgt_urls = []
+        anchors = driver.find_elements(By.CSS_SELECTOR, 'div.img_reslt > a')
+        for anchor in anchors:
+            tgt_urls.append(anchor.get_attribute('href'))
+
+        # 進入各個＂書目資料＂爬取表格
+        for tgt_url in tgt_urls:
+            driver.get(tgt_url)
+            
+            # 電子書沒有 table
+            if not wait_for_element_present(driver, 'table.gridTable'):
+                continue
+
+            tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+            tgt['圖書館'], tgt['連結'] = org, tgt_url
+
+            # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+            try:
+                tgt = tgt.dropna(subset=['典藏地名稱'])
+            except:  # 國立高雄大學沒有這個狀況
+                pass
+            tgt.reset_index(drop=True, inplace=True)
+
+            table.append(tgt)
+            
+            # 換頁：書沒有那麼多吧 XD，土法煉鋼法
+            i = 0
+            while True:
+                try:
+                    wait_for_element_clickable(driver, str(2+i)).click()
+                    time.sleep(2.5)
+                    tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+                    tgt['圖書館'], tgt['連結'] = org, tgt_url
+
+                    # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+                    try:
+                        tgt = tgt.dropna(subset=['典藏地名稱'])
+                    except:  # 國立高雄大學沒有這個狀況
+                        pass
+                    tgt.reset_index(drop=True, inplace=True)
+
+                    table.append(tgt)
+                    i += 1
+                except:
+                    break
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+
+# In[22]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# toread_crawler(
+#     driver=driver,
+#     org='高雄醫學大學',
+#     org_url='https://toread.kmu.edu.tw/toread/opac',
+#     ISBN='9789861371955'
+# )
+
+
 # ## <mark>完成</mark>連江縣公共圖書館(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/03
 # - 『函式完成度』：極高
@@ -661,7 +778,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[22]:
+# In[23]:
 
 
 def 連江縣公共圖書館(driver, org, org_url, ISBN):
@@ -689,87 +806,6 @@ def 連江縣公共圖書館(driver, org, org_url, ISBN):
 
 # # 自我獨立的爬蟲程式
 
-# ## <mark>完成</mark>toread_crawler(driver, org, org_url, ISBN)
-# - 『最後編輯』：2021/08/03
-# - 『函式完成度』：高、爆複雜
-
-# ### 函式說明
-# - 『運作的原理』：待輸入
-# - 『適用的機構』：[彰化縣圖書館](https://library.toread.bocach.gov.tw/toread/opac)、toread 系統
-# - 『能處理狀況』：一筆、無、多筆、[翻頁](https://library.toread.bocach.gov.tw/toread/opac/bibliographic_view?NewBookMode=false&id=341724&mps=10&q=986729193X+OR+9789867291936&start=0&view=CONTENT)
-# - 『下一步優化』：
-#     - 待輸入
-
-# ### 函式本體
-
-# In[18]:
-
-
-def toread_crawler(driver, org, org_url, ISBN):
-    try:
-        table = []
-
-        driver.get(org_url)
-        search_ISBN(driver, ISBN, 'q')
-
-        if not wait_for_element_present(driver, 'div#results'):
-            print(f'在{org}裡，沒有《{ISBN}》')
-            return
-
-        # 有 div#results，找出所有的＂書目資料＂的網址
-        tgt_urls = []
-        anchors = driver.find_elements(By.CSS_SELECTOR, 'div.img_reslt > a')
-        for anchor in anchors:
-            tgt_urls.append(anchor.get_attribute('href'))
-
-        # 進入各個＂書目資料＂爬取表格
-        for tgt_url in tgt_urls:
-            driver.get(tgt_url)
-
-            tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
-            tgt['圖書館'], tgt['連結'] = org, tgt_url
-
-            # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-            filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
-            filtered_tgt.reset_index(drop=True, inplace=True)
-
-            table.append(filtered_tgt)
-            
-            # 換頁：書沒有那麼多吧 XD，土法煉鋼法
-            try:
-                driver.find_element(By.XPATH, '//*[@id="DirectLink_0_0"]').click()
-                
-                time.sleep(2.5)
-                tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
-                tgt['圖書館'], tgt['連結'] = org, tgt_url
-                
-                # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-                filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
-                filtered_tgt.reset_index(drop=True, inplace=True)
-                
-                table.append(filtered_tgt)
-            except:
-                pass
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
-
-
-# In[291]:
-
-
-# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-# toread_crawler(
-#     driver=driver,
-#     org='test',
-#     org_url='https://libopac.nuk.edu.tw/toread/opac',
-#     ISBN='9789573317241'
-# )
-
-
 # ## <mark>完成</mark>國家圖書館(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/02
 # - 『函式完成度』：極高
@@ -785,7 +821,7 @@ def toread_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[17]:
+# In[24]:
 
 
 def 國家圖書館(driver, org, org_url, ISBN):
@@ -824,13 +860,13 @@ def 國家圖書館(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[267]:
+# In[25]:
 
 
 def 世新大學(driver, org, org_url, ISBN):
     try:
         driver.get(org_url)
-        search_ISBN(driver, ISBN, 'q')
+        search_ISBN(driver, ISBN, 'request')
 
         table = accurately_find_table_and_read_it(driver, '#holdingst')
         table['圖書館'], table['連結'] = org, driver.current_url
@@ -842,22 +878,49 @@ def 世新大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[ ]:
+# In[26]:
 
 
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# 世新大學(
+#     driver=driver,
+#     org='世新大學',
+#     org_url='https://koha.shu.edu.tw/',
+#     ISBN='9789573317241'
+# )
 
 
+# ## 國立臺灣博物館
 
-# In[ ]:
-
-
-
+# In[27]:
 
 
-# In[ ]:
+# ISBN = 9789865321703  # 少男少女見學中 : 日本時代修學旅行開箱
+# org_url = 'https://lib.moc.gov.tw/F'
 
+# my_options = Options()
+# my_options.add_argument("--incognito")  # 開啟無痕模式
+# # my_options.add_argument("--headless")  # 不開啟實體瀏覽器
+# driver = webdriver.Chrome(options=my_options)
+# driver.get("")
 
+# time.sleep(1)  # 為了等待網頁加載
+# select = Select(driver.find_element_by_name("x"))
+# select.select_by_visible_text(u"ISBN")
 
+# search_input = driver.find_element_by_name("y")
+# search_input.send_keys(ISBN)
+# # search_input.submit()  # 不知道為什麼無法 submit()？
+# submit_input = driver.find_element_by_name("Search")
+# submit_input.click()
+
+# click = driver.find_element_by_xpath("/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/a")
+# click.click()
+
+# html_text = driver.page_source
+# dfs = pd.read_html(html_text, encoding="utf-8")
+# df_ntm = dfs[11]
+# df_ntm
 
 
 # In[ ]:
@@ -887,23 +950,29 @@ def 世新大學(driver, org, org_url, ISBN):
 # # 靖妤的爬蟲程式
 
 # ## <mark>完成</mark>webpac_two_cralwer(driver, org, org_url, ISBN)
-# - 『最後編輯』：2021/08/03
+# - 『最後編輯』：2021/08/05
 # - 『編輯者』：靖妤、仕瑋
-# - 『試用機構』：[國立臺北藝術大學](http://203.64.5.158/webpac/)、[國立勤益科技大學](http://140.128.95.172/webpac/)、[義守大學](http://webpac.isu.edu.tw/webpac/)、[中山醫學大學](http://140.128.138.208/webpac/)
+# - 『運用的機構』：[國立臺北藝術大學](http://203.64.5.158/webpac/)、[國立勤益科技大學](http://140.128.95.172/webpac/)、[義守大學](http://webpac.isu.edu.tw/webpac/)、[中山醫學大學](http://140.128.138.208/webpac/)
 
 # ### 函式本體
 
-# In[225]:
+# In[41]:
 
 
 def webpac_two_cralwer(driver, org, org_url, ISBN):
     try:
         tgt_url = f'{org_url}search/?q={ISBN}&field=isn&op=AND&type='
         driver.get(tgt_url)
-        driver.find_element_by_xpath('/html/body/div/div[1]/div[2]/div/div/div[2]/div[3]/div[1]/div[3]/div/ul/li/div/div[2]/h3/a').click()
+        
+        wait_for_element_clickable(driver, '/html/body/div/div[1]/div[2]/div/div/div[2]/div[3]/div[1]/div[3]/div/ul/li/div/div[2]/h3/a', waiting_time=15, by=By.XPATH).click()
         
         table = accurately_find_table_and_read_it(driver, '#LocalHolding > table')
         table['圖書館'], table['連結'] = org, driver.current_url
+        
+        # 特殊狀況：國家衛生研究院
+        if 'http://webpac.nhri.edu.tw/webpac/' in org_url:
+            table.rename(columns={'館藏狀態': 'wow', '狀態／到期日': '館藏狀態'}, inplace=True)
+        
         table = organize_columns(table)
     except:
         print(f'在「{org}」找不到「{ISBN}」')
@@ -912,12 +981,36 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
         return table
 
 
+# In[42]:
+
+
+driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+webpac_two_cralwer(
+    driver=driver,
+    org='國家衛生研究院',
+    org_url='http://webpac.nhri.edu.tw/webpac/',
+    ISBN='9789861371955'
+)
+
+
+# In[30]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# webpac_two_cralwer(
+#     driver=driver,
+#     org='國立臺北藝術大學',
+#     org_url='http://203.64.5.158/webpac/',
+#     ISBN='9789861371955'
+# )
+
+
 # ## <mark>完成</mark>台北海洋科技大學(driver, org, org_url, ISBN)
 # - 『最後編輯』：2021/08/03
 # - 『編輯者』：靖妤
-# - 『試用機構』：[台北海洋科技大學](http://140.129.253.4/webopac7/bk_seek.php)
+# - 『運用的機構』：[台北海洋科技大學](http://140.129.253.4/webopac7/sim_data2.php?pagerows=15&orderby=BRN&pageno=1&bn=986729193X)
 
-# In[212]:
+# In[31]:
 
 
 def 台北海洋科技大學(driver, org, org_url, ISBN):
@@ -948,60 +1041,79 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
+# In[32]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# 台北海洋科技大學(
+#     driver=driver,
+#     org='台北海洋科技大學',
+#     org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
+#     ISBN='986729193X'
+# )
+
+
 # ## <font color='red'>進行中</font>primo_crawler(driver, org, url_front, ISBN ,url_behind , tcn)
 
 # - 『最後編輯』：2021/08/03
 # - 『編輯者』：靖妤
-# - 『試用機構』：[國立臺灣大學](https://ntu.primo.exlibrisgroup.com/discovery/search?sortby=rank&vid=886NTU_INST:886NTU_INST&lang=zh-tw)
+# - 『運用的機構』：[國立臺灣大學](https://ntu.primo.exlibrisgroup.com/discovery/search?sortby=rank&vid=886NTU_INST:886NTU_INST&lang=zh-tw)
 
-# In[241]:
+# In[33]:
 
 
 #台大、政大、淡江、東吳、然後銘傳沒有索書碼QQ(要另外進去但我懶🙄)
+def primo_finding(driver, org, tcn): #primo爬資訊的def ；#tcn = thelist_class_name
+    sub_df_lst = []
+    time.sleep(5)
+    try:
+        back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
+    except:
+        back = None
+    if back != None:
+        back.click()
+
+    thelist = driver.find_elements_by_class_name(tcn)
+    if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
+        thelist = thelist[0:-2]
+    else:
+        pass
+
+    for row in thelist:
+        plist = row.find_elements_by_tag_name("p")
+        where = row.find_elements_by_tag_name("h3")
+        i = len(where)
+        for sth in plist:
+            a = sth.find_elements_by_tag_name("span")
+            for _ in range(i):
+                now_url = driver.current_url
+                new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
+                sub_df_lst.append(new_row)
+                break
+            break
+    return sub_df_lst
+
+
+# In[34]:
+
+
 def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
+    table = []
+    
     url = url_front + ISBN + url_behind
     primo_lst = []
-    def primo_finding(driver, org, tcn): #primo爬資訊的def ；#tcn = thelist_class_name
-        sub_df_lst = []
-        time.sleep(2)
-        try:
-            back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
-        except:
-            back = None
-        if back != None:
-            back.click()
-
-        thelist = driver.find_elements_by_class_name(tcn)
-        if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
-            thelist = thelist[0:-2]
-        else:
-            pass
-
-        for row in thelist:
-            plist = row.find_elements_by_tag_name("p")
-            where = row.find_elements_by_tag_name("h3")
-            i = len(where)
-            for sth in plist:
-                a = sth.find_elements_by_tag_name("span")
-                for _ in range(i):
-                    now_url = driver.current_url
-                    new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
-                    sub_df_lst.append(new_row)
-                    break
-                break
-        return sub_df_lst
 
     try:
         # 進入《館藏系統》頁面
         driver.get(url)
-        time.sleep(3)
+        time.sleep(8)
 
         try: #開始爬蟲
             editions = driver.find_elements_by_class_name('item-title') 
             if len(editions) > 1: #如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else: #如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
-                time.sleep(2)
+                time.sleep(5)
                 editions[0].click()
                 time.sleep(5)
                 editions = driver.find_elements_by_class_name('item-title') #這時候是第二層的分版本了！(ex.政大 9789869109321)
@@ -1012,37 +1124,59 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
                 back_check = None
             if back_check == None: #多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
+                    time.sleep(5)
                     into = editions[i].click()
-                    time.sleep(3)
-                    primo_lst += primo_finding(org, tcn)
+                    time.sleep(10)
+                    primo_lst += primo_finding(org, tcn, driver)
+                    table = pd.concat(primo_lst, axis=0, ignore_index=True)
                     try: 
                         back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
                     except:
                         back2 = None
 
             else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
-                time.sleep(3)
-                primo_lst += primo_finding(org, tcn)
+                time.sleep(12)
+                primo_lst += primo_finding(driver, org, tcn)
+                table = pd.DataFrame(primo_lst)
+                table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace=True)
         except:
             pass
     except:
         pass
-    return pd.DataFrame(primo_lst)
+    return table
 
 
-# In[240]:
+# In[35]:
 
 
-# 待測試
-# driver = webdriver.Chrome(options=my_options)
-# primo_crawler(
+# # 待測試
+# driver = webdriver.Chrome()
+# table = primo_crawler(
 #     driver=driver,
 #     org='國立臺灣大學',
 #     url_front='https://ntu.primo.exlibrisgroup.com/discovery/search?query=any,contains,',
-#     ISBN=ISBN,
+#     ISBN='9789573317241',
 #     url_behind='&tab=Everything&search_scope=MyInst_and_CI&vid=886NTU_INST:886NTU_INST&offset=0',
 #     tcn='layout-align-space-between-center.layout-row.flex-100'
 # )
+# table
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[36]:
+
+
 # primo_crawler(
 #     driver=driver,
 #     org='國立政治大學',
@@ -1067,18 +1201,6 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
 #     url_behind"&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_SCU:886SCU_INST&lang=zh-tw&offset=0",
 #     tcn="md-2-line.md-no-proxy._md"
 # )
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
@@ -1128,7 +1250,7 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
 
 # ### 函式本體
 
-# In[ ]:
+# In[37]:
 
 
 # def 基隆市公共圖書館(driver, org, org_url, ISBN):
@@ -1168,7 +1290,7 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
 #         print(f'《{ISBN}》在「{url}」無法爬取')
 
 
-# In[ ]:
+# In[38]:
 
 
 # def 基隆市公共圖書館(driver, org, org_url, ISBN):
