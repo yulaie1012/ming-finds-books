@@ -154,33 +154,31 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 
 # ------------------------Primo找書--------------------------
 def primo_finding(driver, org, tcn): # 改wait
-	sub_df_lst = []
-	try:
-        back = wait_for_element_present(driver, "#tab-content-225 > div > div > prm-opac-back-button > button", 20, By.CSS_SELECTOR)
-	except:
-	    back = None
-	if back != None:
-	    back.click()
+    sub_df_lst = []
+    try:
+        back = wait_for_element_clickable(driver, "#tab-content-225 > div > div > prm-opac-back-button > button", 20, By.CSS_SELECTOR).click()
+    except:
+        back = None
 
-	thelist = wait_for_elements_present(driver, tcn, 30, By.CLASS_NAME)
-	if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
-		thelist = thelist[0:-2]
-	else:
-		pass
+    thelist = wait_for_elements_present(driver, tcn, 30, By.CLASS_NAME)
+    if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
+        thelist = thelist[0:-2]
+    else:
+        pass
 
-	for row in thelist:
-		plist = row.find_elements_by_tag_name("p")
-		where = row.find_elements_by_tag_name("h3")
-		i = len(where)
-		for sth in plist:
-			a = sth.find_elements_by_tag_name("span")
-			for _ in range(i):
-				now_url = driver.current_url
-				new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
-				sub_df_lst.append(new_row)
-				break
-			break
-	return sub_df_lst
+    for row in thelist:
+        plist = row.find_elements_by_tag_name("p")
+        where = row.find_elements_by_tag_name("h3")
+        i = len(where)
+        for sth in plist:
+            a = sth.find_elements_by_tag_name("span")
+            for _ in range(i):
+                now_url = driver.current_url
+                new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
+                sub_df_lst.append(new_row)
+                break
+            break
+    return sub_df_lst
 
 def primo_two_finding(driver, org): #改wait了
     sub_df_lst = []
@@ -206,19 +204,20 @@ def primo_two_finding(driver, org): #改wait了
 
     return sub_df_lst
 
+
 # ------------------------綠點點找書--------------------------
 def primo_greendot_finding(driver, org): #改 wait
     sub_df_lst = []
     try:
-		num = wait_for_element_present(driver, 'EXLLocationTableColumn1', 10, By.CLASS_NAME)
-		status = wait_for_element_present(driver, 'EXLLocationTableColumn3', 10, By.CLASS_NAME)
+        num = wait_for_element_present(driver, 'EXLLocationTableColumn1', 10, By.CLASS_NAME)
+        status = wait_for_element_present(driver, 'EXLLocationTableColumn3', 10, By.CLASS_NAME)
         for i in range(0, len(num)):
             now_url = driver.current_url
             new_row = [org, "圖書館總館", num[i].text, status[i].text, now_url]
             sub_df_lst.append(new_row)
     except:
         pass
-	
+    
     return sub_df_lst
 
 #------------------------按載入更多----------------------------
@@ -2669,7 +2668,7 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
                     else:
                         primo_lst += primo_finding(org, tcn, driver)
                     try: 
-                        back2 = wait_for_element_clickable(driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple", 15, By.CLASS_NAME)
+                        back2 = wait_for_element_clickable(driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple", 15, By.CLASS_NAME).click()
                     except:
                         back2 = None
 
@@ -2959,27 +2958,16 @@ def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
     try:
         driver.get(url)
         try: #只有一個版本
-            time.sleep(5)
-            place_click = driver.find_element_by_id('exlidResult0-LocationsTab').click()
-            sub_df_lst = []
-            try:
-                time.sleep(5)
-                num = driver.find_elements_by_class_name('EXLLocationTableColumn1')
-                status = driver.find_elements_by_class_name('EXLLocationTableColumn3')
-                for i in range(0, len(num)):
-                    now_url = driver.current_url
-                    new_row = [org, "圖書館總館", num[i].text, status[i].text, now_url]
-                    sub_df_lst.append(new_row)
-            except:
-                pass
-            primo_greendot_lst += sub_df_lst
+            place_click = wait_for_element_clickable(driver, 'exlidResult0-LocationsTab', 10, By.ID).click()
+
+            primo_greendot_lst += primo_greendot_finding(driver, org)
         except: #有多個版本，所以要點進去再做
-            time.sleep(2)
-            manyeditions = driver.find_element_by_id('titleLink').click()
-            time.sleep(5)
+            manyeditions = wait_for_element_clickable(driver, 'titleLink', 10, By.ID).click()
             for i in range(1, 10): #假設有十個版本吧
                 try:
-                    place_click2 = driver.find_element_by_id('exlidResult' + str(i) + '-LocationsTab').click()
+                    id = 'exlidResult' + str(i) + '-LocationsTab'
+                    place2_click = wait_for_element_clickable(driver, id, 15, By.ID).click()
+                    primo_greendot_lst += primo_greendot_finding(driver, org)
                 except:
                     continue
     except:
