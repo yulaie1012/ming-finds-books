@@ -95,13 +95,22 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
     else:
         return element
 
+def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
+    try:
+        element = WebDriverWait(driver, waiting_time).until(
+            EC.presence_of_all_elements_located((by, elements_position)))
+    except:
+        return False
+    else:
+        return element
+
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
     try:
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.element_to_be_clickable((by, element_position)))
     except:
-        return
+        return False
     else:
         return element
 
@@ -144,17 +153,16 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
     select.select_by_value(option_position)
 
 # ------------------------Primo找書--------------------------
-def primo_finding(driver, org, tcn): #primo爬資訊的def ；#tcn = thelist_class_name
+def primo_finding(driver, org, tcn): # 改wait
 	sub_df_lst = []
-	time.sleep(10)
 	try:
-		back = driver.find_element_by_css_selector(".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple")
+        back = wait_for_element_present(driver, "#tab-content-225 > div > div > prm-opac-back-button > button", 20, By.CSS_SELECTOR)
 	except:
-		back = None
+	    back = None
 	if back != None:
-		back.click()
+	    back.click()
 
-	thelist = driver.find_elements_by_class_name(tcn)
+	thelist = wait_for_elements_present(driver, tcn, 30, By.CLASS_NAME)
 	if tcn == 'md-2-line.md-no-proxy._md': #如果是東吳或銘傳
 		thelist = thelist[0:-2]
 	else:
@@ -174,19 +182,43 @@ def primo_finding(driver, org, tcn): #primo爬資訊的def ；#tcn = thelist_cla
 			break
 	return sub_df_lst
 
-# ------------------------綠點點找書--------------------------
-def primo_greendot_finding(driver, org): #primo爬資訊的def
+def primo_two_finding(driver, org): #改wait了
     sub_df_lst = []
     try:
-        time.sleep(1)
-        num = driver.find_elements_by_class_name('EXLLocationTableColumn1')
-        status = driver.find_elements_by_class_name('EXLLocationTableColumn3')
+        back = wait_for_element_present(driver, ".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple", 20, By.CSS_SELECTOR)
+    except:
+        back = None
+    if back != None:
+        back.click()
+
+    similar_xpath = "/html/body/primo-explore/div[3]/div/md-dialog/md-dialog-content/sticky-scroll/prm-full-view/div/div/div[2]/div/div[1]/div[4]/div/prm-full-view-service-container/div[2]/div/prm-opac/md-tabs/md-tabs-content-wrapper/md-tab-content[2]/div/md-content/prm-location-items/div[2]/div[1]/p/span["
+    status_xpath = similar_xpath + "1]"
+    place_xpath = similar_xpath + "3]"
+    num_xpath = similar_xpath + "5]"
+    status = wait_for_element_present(driver, status_xpath, 20, By.XPATH)
+    place = wait_for_element_present(driver, place_xpath, 20, By.XPATH)
+    num = wait_for_element_present(driver, num_xpath, 20, By.XPATH)
+
+    now_url = driver.current_url
+    number = num.text.replace("(", "").replace(")", "")
+    new_row = [org, place.text, number, status.text, now_url]
+    sub_df_lst.append(new_row)
+
+    return sub_df_lst
+
+# ------------------------綠點點找書--------------------------
+def primo_greendot_finding(driver, org): #改 wait
+    sub_df_lst = []
+    try:
+		num = wait_for_element_present(driver, 'EXLLocationTableColumn1', 10, By.CLASS_NAME)
+		status = wait_for_element_present(driver, 'EXLLocationTableColumn3', 10, By.CLASS_NAME)
         for i in range(0, len(num)):
             now_url = driver.current_url
             new_row = [org, "圖書館總館", num[i].text, status[i].text, now_url]
             sub_df_lst.append(new_row)
     except:
         pass
+	
     return sub_df_lst
 
 #------------------------按載入更多----------------------------
@@ -2553,7 +2585,7 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         time.sleep(2)
         result = driver.find_element_by_id("qresult-content")
         trlist = result.find_elements_by_tag_name('tr')
-        for row in range(2, len(trlist)):
+        for row in range(2, len(trlist)+1):
             css = "#qresult-content > tbody > tr:nth-child(" + str(row) + ") > td:nth-child(3) > a"
             into = driver.find_element_by_css_selector(css).click()
             time.sleep(3)
@@ -2574,7 +2606,7 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
     else:
         return table
 
-# 台北海洋科技大學 TUMT
+# 台北海洋科技大學 TUMT V
 def TUMT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2613,10 +2645,9 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
     try:
         # 進入《館藏系統》頁面
         driver.get(url)
-        time.sleep(8)
 
         try: #開始爬蟲
-            editions = driver.find_elements_by_class_name('item-title') 
+            editions = wait_for_elements_present(driver, 'item-title', 30, By.CLASS_NAME)
             if len(editions) > 1: #如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else: #如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
@@ -2626,24 +2657,27 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
                 editions = driver.find_elements_by_class_name('item-title') #這時候是第二層的分版本了！(ex.政大 9789869109321)
                 
             try: #先找叉叉確定是不是在最裡層了
-                back_check = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple")
+                back_check = wait_for_element_present(driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple", 15, By.CLASS_NAME)
             except:
                 back_check = None
             if back_check == None: #多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
                     time.sleep(5)
                     into = editions[i].click()
-                    time.sleep(8)
-                    primo_lst += primo_finding(driver, org, tcn)
-                    table = pd.concat(primo_lst, axis=0, ignore_index=True)
+                    if org == "屏東科技大學" or org == "高雄餐旅大學":
+                        primo_lst += primo_two_finding(org, tcn, driver)
+                    else:
+                        primo_lst += primo_finding(org, tcn, driver)
                     try: 
-                        back2 = driver.find_element_by_class_name("md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
+                        back2 = wait_for_element_clickable(driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple", 15, By.CLASS_NAME)
                     except:
                         back2 = None
 
             else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
-                time.sleep(10)
-                primo_lst += primo_finding(driver, org, tcn)
+                if org == "屏東科技大學" or org == "高雄餐旅大學":
+                    primo_lst += primo_two_finding(org, tcn, driver)
+                else:
+                    primo_lst += primo_finding(org, tcn, driver)
                 
         except:
             pass
@@ -2870,12 +2904,13 @@ def NPUST(ISBN):
     wait = WebDriverWait(driver, 10)
     
     output.append(
-        primo_two_crawler(
+        primo_crawler(
         driver,
         '國立屏東科技大學',
         "http://primo.lib.npust.edu.tw/primo-explore/search?institution=NPUST&vid=NPUST&tab=default_tab&search_scope=SearchAll&mode=basic&query=any,contains,",
         ISBN,
-        "&displayMode=full&bulkSize=10&highlight=true&dum=true&lang=zh_TW&displayField=all&pcAvailabiltyMode=true"
+        "&displayMode=full&bulkSize=10&highlight=true&dum=true&lang=zh_TW&displayField=all&pcAvailabiltyMode=true",
+        ""
         )
     )
     
@@ -2896,12 +2931,13 @@ def NKUHT(ISBN):
     wait = WebDriverWait(driver, 10)
     
     output.append(
-        primo_two_crawler(
+        primo_crawler(
         driver,
         '國立高雄餐旅大學',
         "https://find.nkuht.edu.tw/primo-explore/search?query=any,contains,",
         ISBN,
-        "&tab=default_tab&search_scope=%E6%9F%A5%E9%A4%A8%E8%97%8F&vid=NKUHT_N&offset=0"
+        "&tab=default_tab&search_scope=%E6%9F%A5%E9%A4%A8%E8%97%8F&vid=NKUHT_N&offset=0",
+        ""
         )
     )
     
