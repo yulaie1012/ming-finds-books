@@ -154,9 +154,11 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 
 # ------------------------Primo找書--------------------------
 def primo_finding(driver, org, tcn): # 改wait
+    print("b")
     sub_df_lst = []
     try:
-        back = wait_for_element_clickable(driver, "#tab-content-225 > div > div > prm-opac-back-button > button", 20, By.CSS_SELECTOR).click()
+        time.sleep(3)
+        back = wait_for_element_clickable(driver, "#tab-content-75 > div > div > prm-opac-back-button > button", 20, By.CSS_SELECTOR).click()
     except:
         back = None
 
@@ -182,12 +184,6 @@ def primo_finding(driver, org, tcn): # 改wait
 
 def primo_two_finding(driver, org): #改wait了
     sub_df_lst = []
-    try:
-        back = wait_for_element_present(driver, ".tab-header .back-button.button-with-icon.zero-margin.md-button.md-primoExplore-theme.md-ink-ripple", 20, By.CSS_SELECTOR)
-    except:
-        back = None
-    if back != None:
-        back.click()
 
     similar_xpath = "/html/body/primo-explore/div[3]/div/md-dialog/md-dialog-content/sticky-scroll/prm-full-view/div/div/div[2]/div/div[1]/div[4]/div/prm-full-view-service-container/div[2]/div/prm-opac/md-tabs/md-tabs-content-wrapper/md-tab-content[2]/div/md-content/prm-location-items/div[2]/div[1]/p/span["
     status_xpath = similar_xpath + "1]"
@@ -209,8 +205,8 @@ def primo_two_finding(driver, org): #改wait了
 def primo_greendot_finding(driver, org): #改 wait
     sub_df_lst = []
     try:
-        num = wait_for_element_present(driver, 'EXLLocationTableColumn1', 10, By.CLASS_NAME)
-        status = wait_for_element_present(driver, 'EXLLocationTableColumn3', 10, By.CLASS_NAME)
+        num = wait_for_elements_present(driver, 'EXLLocationTableColumn1', 10, By.CLASS_NAME)
+        status = wait_for_elements_present(driver, 'EXLLocationTableColumn3', 10, By.CLASS_NAME)
         for i in range(0, len(num)):
             now_url = driver.current_url
             new_row = [org, "圖書館總館", num[i].text, status[i].text, now_url]
@@ -2663,20 +2659,20 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
                 for i in range(0, len(editions)): #有幾個版本就跑幾次，不管哪一層版本都適用
                     time.sleep(5)
                     into = editions[i].click()
-                    if org == "屏東科技大學" or org == "高雄餐旅大學":
-                        primo_lst += primo_two_finding(org, tcn, driver)
+                    if org == "國立屏東科技大學" or org == "國立高雄餐旅大學":
+                        primo_lst += primo_two_finding(driver, org)
                     else:
-                        primo_lst += primo_finding(org, tcn, driver)
+                        primo_lst += primo_finding(driver, org, tcn)
                     try: 
                         back2 = wait_for_element_clickable(driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple", 15, By.CLASS_NAME).click()
                     except:
                         back2 = None
 
             else: #如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
-                if org == "屏東科技大學" or org == "高雄餐旅大學":
-                    primo_lst += primo_two_finding(org, tcn, driver)
+                if org == "國立屏東科技大學" or org == "國立高雄餐旅大學":
+                    primo_lst += primo_two_finding(driver, org)
                 else:
-                    primo_lst += primo_finding(org, tcn, driver)
+                    primo_lst += primo_finding(driver, org, tcn)
                 
         except:
             pass
@@ -2891,7 +2887,7 @@ def primo_two_crawler(driver, org, url_front, ISBN ,url_behind):
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
-# 國立屏東科技大學 NPUST
+# 國立屏東科技大學 NPUST V
 def NPUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2918,7 +2914,7 @@ def NPUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立高雄餐旅大學 NKUHT
+# 國立高雄餐旅大學 NKUHT V
 def NKUHT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2958,8 +2954,9 @@ def primo_greendot_crawler(driver, org, url_front, ISBN ,url_behind):
     try:
         driver.get(url)
         try: #只有一個版本
+            
             place_click = wait_for_element_clickable(driver, 'exlidResult0-LocationsTab', 10, By.ID).click()
-
+            
             primo_greendot_lst += primo_greendot_finding(driver, org)
         except: #有多個版本，所以要點進去再做
             manyeditions = wait_for_element_clickable(driver, 'titleLink', 10, By.ID).click()
