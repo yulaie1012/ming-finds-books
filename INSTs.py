@@ -1749,7 +1749,7 @@ def STU(ISBN):
     wait = WebDriverWait(driver, 10)
     
     output.append(
-        webpac_ajax_crawler(
+        webpac_aspx_crawler(
         driver,
         '樹德科技大學',
         "https://webpac.stu.edu.tw/webopac/",
@@ -1774,7 +1774,7 @@ def TSU(ISBN):
     wait = WebDriverWait(driver, 10)
     
     output.append(
-        webpac_ajax_crawler(
+        webpac_aspx_crawler(
         driver,
         '台灣首府大學',
         "http://120.114.1.19/webopac/Jycx.aspx?dc=1&fc=1&n=7",
@@ -1799,7 +1799,7 @@ def KSU(ISBN):
     wait = WebDriverWait(driver, 10)
     
     output.append(
-        webpac_ajax_crawler(
+        webpac_aspx_crawler(
         driver,
         '崑山科技大學',
         "https://weblis.lib.ksu.edu.tw/webopac/",
@@ -1820,11 +1820,13 @@ def KSU(ISBN):
 def uhtbin_crawler(driver, org, org_url, ISBN):
     try:
         driver.get(org_url)
+        time.sleep(2)
         try:
             select_ISBN_strategy(driver, 'srchfield1', 'GENERAL^SUBJECT^GENERAL^^所有欄位')
         except:
             select_ISBN_strategy(driver, 'srchfield1', '020^SUBJECT^SERIES^Title Processing^ISBN')
         search_ISBN(driver, ISBN, 'searchdata1')
+        time.sleep(2)
         
         if '未在任何圖書館找到' in driver.find_element(By.CSS_SELECTOR, 'table').text:
             print(f'在「{org}」找不到「{ISBN}」')
@@ -1845,7 +1847,8 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
     else:
         return table
 
-# 國立臺北護理健康大學 NTUNHS
+
+# 國立臺北護理健康大學 NTUNHS V
 def NTUNHS(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -1870,7 +1873,7 @@ def NTUNHS(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 大同大學 TTU
+# 大同大學 TTU V
 def TTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -1895,7 +1898,7 @@ def TTU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立體育大學 NTSU
+# 國立體育大學 NTSU V
 def NTSU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2005,6 +2008,7 @@ def KNU(ISBN):
 def toread_crawler(driver, org, org_url, ISBN):
     try:
         table = []
+
         driver.get(org_url)
         search_ISBN(driver, ISBN, 'q')
 
@@ -2021,31 +2025,43 @@ def toread_crawler(driver, org, org_url, ISBN):
         # 進入各個＂書目資料＂爬取表格
         for tgt_url in tgt_urls:
             driver.get(tgt_url)
+            
+            # 電子書沒有 table
+            if not wait_for_element_present(driver, 'table.gridTable'):
+                continue
 
             tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
             tgt['圖書館'], tgt['連結'] = org, tgt_url
 
             # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-            filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
-            filtered_tgt.reset_index(drop=True, inplace=True)
+            try:
+                tgt = tgt.dropna(subset=['典藏地名稱'])
+            except:  # 國立高雄大學沒有這個狀況
+                pass
+            tgt.reset_index(drop=True, inplace=True)
 
-            table.append(filtered_tgt)
+            table.append(tgt)
             
             # 換頁：書沒有那麼多吧 XD，土法煉鋼法
-            try:
-                driver.find_element(By.XPATH, '//*[@id="DirectLink_0_0"]').click()
-                
-                time.sleep(2.5)
-                tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
-                tgt['圖書館'], tgt['連結'] = org, tgt_url
-                
-                # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-                filtered_tgt = tgt.dropna(subset=['典藏地名稱'])
-                filtered_tgt.reset_index(drop=True, inplace=True)
-                
-                table.append(filtered_tgt)
-            except:
-                pass
+            i = 0
+            while True:
+                try:
+                    wait_for_element_clickable(driver, str(2+i)).click()
+                    time.sleep(2.5)
+                    tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
+                    tgt['圖書館'], tgt['連結'] = org, tgt_url
+
+                    # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
+                    try:
+                        tgt = tgt.dropna(subset=['典藏地名稱'])
+                    except:  # 國立高雄大學沒有這個狀況
+                        pass
+                    tgt.reset_index(drop=True, inplace=True)
+
+                    table.append(tgt)
+                    i += 1
+                except:
+                    break
         table = organize_columns(table)
     except Exception as e:
         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
@@ -2053,7 +2069,7 @@ def toread_crawler(driver, org, org_url, ISBN):
     else:
         return table
 
-# 彰化縣公共圖書館 CHPL 
+# 彰化縣公共圖書館 CHPL V
 def CHPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2078,7 +2094,7 @@ def CHPL(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 高雄醫學大學 KMU
+# 高雄醫學大學 KMU V
 def KMU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2443,7 +2459,7 @@ def SCU(ISBN):
 
 
 # ------------------------------------------Primo v2-----------------------------------------
-# primo_two() 
+# primo_two_crawler() 
 # 屏科大|高餐
 def primo_two_crawler(driver, org, url_front, ISBN ,url_behind):
     url = url_front + ISBN + url_behind
@@ -2474,7 +2490,7 @@ def primo_two_crawler(driver, org, url_front, ISBN ,url_behind):
         # 進入《館藏系統》頁面
         driver.get(url)
         # 等待＂進階查詢的按鈕＂直到出現：click
-        time.sleep(3)
+        time.sleep(15)
 
         try: #開始爬蟲
             editions = driver.find_elements_by_class_name('item-title') 
@@ -2527,10 +2543,9 @@ def NPUST(ISBN):
         primo_two_crawler(
         driver,
         '國立屏東科技大學',
-        "http://primo.lib.npust.edu.tw/primo-explore/search?query=any,contains,",
+        "http://primo.lib.npust.edu.tw/primo-explore/search?institution=NPUST&vid=NPUST&tab=default_tab&search_scope=SearchAll&mode=basic&query=any,contains,",
         ISBN,
-        "&tab=Everything&search_scope=MyInst_and_CI&vid=886NKUST_INST:86NKUST&lang=zh-tw&offset=0,",
-
+        "&displayMode=full&bulkSize=10&highlight=true&dum=true&lang=zh_TW&displayField=all&pcAvailabiltyMode=true"
         )
     )
     
@@ -2551,12 +2566,12 @@ def NKUHT(ISBN):
     wait = WebDriverWait(driver, 10)
     
     output.append(
-        primo_greendot_crawler(
+        primo_two_crawler(
         driver,
         '國立高雄餐旅大學',
-        "https://primo.lib.cgu.edu.tw/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=default_tab&indx=1&dum=true&srt=rank&vid=CGU&frbg=&tb=t&vl%2812508471UI0%29=isbn&vl%2812508471UI0%29=title&vl%2812508471UI0%29=isbn&vl%281UIStartWith0%29=contains&vl%28freeText0%29=",
+        "https://find.nkuht.edu.tw/primo-explore/search?query=any,contains,",
         ISBN,
-        "&vl%28boolOperator0%29=AND&vl%2812508474UI1%29=creator&vl%2812508474UI1%29=title&vl%2812508474UI1%29=creator&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%28boolOperator1%29=AND&vl%2812508470UI2%29=any&vl%2812508470UI2%29=title&vl%2812508470UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%28boolOperator2%29=AND&vl%2812626940UI3%29=any&vl%2812626940UI3%29=title&vl%2812626940UI3%29=any&vl%281UIStartWith3%29=contains&vl%28freeText3%29=&vl%28boolOperator3%29=AND&vl%28D2240502UI4%29=all_items&vl%2853081356UI5%29=all_items&vl%28D2240500UI6%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
+        "&tab=default_tab&search_scope=%E6%9F%A5%E9%A4%A8%E8%97%8F&vid=NKUHT_N&offset=0"
         )
     )
     
@@ -2564,8 +2579,6 @@ def NKUHT(ISBN):
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
-
-
 
 
 
@@ -2730,7 +2743,7 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_pl
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
-# 馬偕醫學院 MMC
+# 馬偕醫學院 MMC V
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2758,7 +2771,7 @@ def MMC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 工業技術研究院 ITRI
+# 工業技術研究院 ITRI V
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
