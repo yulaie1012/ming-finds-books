@@ -154,11 +154,9 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 
 # ------------------------Primo找書--------------------------
 def primo_finding(driver, org, tcn): # 改wait
-    print("b")
     sub_df_lst = []
     try:
-        time.sleep(3)
-        back = wait_for_element_clickable(driver, "#tab-content-75 > div > div > prm-opac-back-button > button", 20, By.CSS_SELECTOR).click()
+        back = wait_for_element_clickable(driver, ".tab-header > prm-opac-back-button > button", 20, By.CSS_SELECTOR).click()
     except:
         back = None
 
@@ -275,7 +273,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
     else:
         return table
 
-# 宜蘭縣公共圖書館 ILCCB X(在「宜蘭縣公共圖書館」搜尋「9789861371955」時，發生不明錯誤！)
+# 宜蘭縣公共圖書館 ILCCB V
 def ILCCB(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -382,7 +380,8 @@ def PTPL(ISBN):
 # -----------------------------------------jsp系列-----------------------------------------------------
 # webpac_jsp_crawler()
 # 佛光|宜大|中華|嘉藥|臺北市|臺藝大|北市大|北醫|北商大|苗栗縣|景文|致理
-# 萬能|健行|明新|中國科大|中教大|臺體|東海|靜宜|僑光|彰師|雲林縣
+# 萬能|健行|明新|中國科大|中教大|臺體|東海|靜宜|僑光|彰師|雲林縣|嘉義縣
+# 南華|遠東|正修|美和
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
     try:
         table = []
@@ -2273,7 +2272,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
     else:
         return table
 
-# 國立臺北藝術大學 TNUA
+# 國立臺北藝術大學 TNUA V
 def TNUA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2672,8 +2671,7 @@ def primo_crawler(driver, org, url_front, ISBN ,url_behind, tcn):
                 if org == "國立屏東科技大學" or org == "國立高雄餐旅大學":
                     primo_lst += primo_two_finding(driver, org)
                 else:
-                    primo_lst += primo_finding(driver, org, tcn)
-                
+                    primo_lst += primo_finding(driver, org, tcn)              
         except:
             pass
     except:
@@ -2702,7 +2700,7 @@ def NTU(ISBN):
         "layout-align-space-between-center.layout-row.flex-100"
         )
     )
-    
+    driver.close()
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
