@@ -2154,11 +2154,16 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
     try:
         tgt_url = f'{org_url}search/?q={ISBN}&field=isn&op=AND&type='
         driver.get(tgt_url)
-        time.sleep(4)
-        driver.find_element_by_xpath('/html/body/div/div[1]/div[2]/div/div/div[2]/div[3]/div[1]/div[3]/div/ul/li/div/div[2]/h3/a').click()
-        time.sleep(5)
+        
+        wait_for_element_clickable(driver, '/html/body/div/div[1]/div[2]/div/div/div[2]/div[3]/div[1]/div[3]/div/ul/li/div/div[2]/h3/a', waiting_time=15, by=By.XPATH).click()
+        
         table = accurately_find_table_and_read_it(driver, '#LocalHolding > table')
         table['圖書館'], table['連結'] = org, driver.current_url
+        
+        # 特殊狀況：國家衛生研究院
+        if 'http://webpac.nhri.edu.tw/webpac/' in org_url:
+            table.rename(columns={'館藏狀態': 'wow', '狀態／到期日': '館藏狀態'}, inplace=True)
+        
         table = organize_columns(table)
     except:
         print(f'在「{org}」找不到「{ISBN}」')
