@@ -40,7 +40,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     MUST, YDU, CUTE, MMC, ITRI, NTCU, NTUS, THU, PU, OCU, NCUE, YLCCB, TYPL, KSML, PTPL, CYCPL, NHU, FEU, CSU, \
     Meiho, OUK, NPTU, webpac_aspx_crawler, TSU, STU, KSU, NTUNHS, uhtbin_crawler, TTU, NTSU, ugly_crawler, \
     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
-    世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI
+    世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -189,6 +189,10 @@ def test1(event):
         STUs = ["stu","STU", "樹德科技大學", "樹德科大", "樹德"]
         TSUs = ["TSU", "臺灣首府大學", "台灣首府大學", "首府大學", "首府大", "台首大", "臺首大"]
         KSUs = ["ksu","KSU", "崑山科技大學", "崑山科大", "崑山"]
+        HKUs = ["hku","HKU", "弘光科技大學", "弘光科大", "弘光"]
+        HUSTs = ["hust","HUST", "修平科技大學", "修平科大", "修平"]
+        HWHs = ["hwh","HWH", "華夏科技大學", "華夏科大", "華夏"]
+
         NTUNHSs = ["ntunhs","NTUNHS", "國立臺北護理健康大學", "國立台北護理健康大學", "北護大", "國北護", "北護"]
         TTUs = ["ttu","TTU", "大同大學", "大同"]
         NTSUs = ["ntsu","NTSU", "國立體育大學", "國體大", "國體"]
@@ -345,6 +349,12 @@ def test1(event):
                 TSU(ISBN) 
             elif str_input[i] in KSUs: # 崑山科技大學
                 KSU(ISBN) 
+            elif str_input[i] in HKUs: # 弘光科技大學
+                HKU(ISBN) 
+            elif str_input[i] in HUSTs: # 修平科技大學
+                HUST(ISBN) 
+            elif str_input[i] in HWHs: # 華夏科技大學
+                HWH(ISBN)                                                 
             elif str_input[i] in NTUNHSs: # 國立臺北護理健康大學
                 NTUNHS(ISBN) 
             elif str_input[i] in TTUs: # 大同大學
