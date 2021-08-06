@@ -41,7 +41,8 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     Meiho, OUK, NPTU, webpac_aspx_crawler, TSU, STU, KSU, NTUNHS, uhtbin_crawler, TTU, NTSU, ugly_crawler, \
     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
     世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
-    wait_for_elements_present, primo_two_finding
+    wait_for_elements_present, primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
+    TFAI, AU, USC, HFU, NUU, PHPL
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -135,10 +136,17 @@ def test1(event):
         TYPLs = ["typl","TYPL","桃園市立圖書館","桃園市圖書館","桃園圖書館" "桃園市圖","桃圖"]
         KSMLs = ["ksml","KSML","高雄市立圖書館","高雄市圖書館","高雄圖書館" "高雄市圖","高圖"]
         PTPLs = ["ptpl","PTPL","屏東縣公共圖書館","屏東縣圖書館","屏東圖書館" "屏東縣圖","屏圖"]
+        HLPLs = ["hlpl","HLPL","花蓮縣公共圖書館","花蓮縣圖書館","花蓮圖書館" "花蓮縣圖","花圖"]
+        PHPLs = ["phpl","PHPL","phlib","澎湖縣公共圖書館","澎湖縣圖書館","澎湖圖書館" "澎湖縣圖","澎圖"]
+        NYUSTs = ["nyust","NYUST", "國立雲林科技大學", "雲林科技大學", "雲林科大", "雲科大", "雲科"]
+        TFAIs = ["tfai","TFAI","國家電影及視聽文化中心", "國家影視聽中心", "國家電影中心", "影視聽中心"]
 
         FGUs = ["fgu","FGU", "佛光大學", "佛光", "佛大"]
+        CKUs = ["cku","CKU", "經國管理暨健康學院", "經國學院"]
         NIUs = ["niu","NIU", "國立宜蘭大學", "宜蘭大學", "宜大", "宜蘭大"]
         CUSTs = ["cust","CUST", "中華科技大學", "中華科大"]
+        CCTs = ["cct","CCT", "臺北基督學院", "台北基督學院"]
+        HDUTs = ["hdut","HDUT", "宏國德霖科技大學", "宏國德霖科大", "宏國德霖"]
         CNUs = ["cnu", "CNU", "嘉南藥理大學", "嘉藥"]
         TPMLs = ["tpml","TPML", "臺北市立圖書館", "台北市立圖書館", "北市圖"]  
         NTUAs = ["NTUA","ntua", "國立臺灣藝術大學","國立台灣藝術大學", "臺灣藝術大學", "台灣藝術大學", "臺藝大", "台藝大", "臺藝", "台藝"]      
@@ -152,7 +160,9 @@ def test1(event):
         VNUs = ["vnu","VNU", "萬能科技大學", "萬能科大", "萬能"]
         UCHs = ["uch","UCH", "健行科技大學", "健行科大", "健行"]
         MUSTs = ["must","MUST", "明新科技大學", "明新科大", "明新"]
+        NOUs = ["nou","NOU", "國立空中大學", "空中大學", "空大"]
         YDUs = ["ydu","YDU", "育達科技大學", "育達科大", "育達"]
+        Jentes = ["jente","Jente","JENTE", "仁德醫護管理專科學校", "仁德醫護", "仁德醫專"]
         CUTEs = ["cute","CUTE", "中國科技大學", "中國科大"]
         NTCUs = ["ntcu","NTCU", "國立臺中教育大學", "國立台中教育大學", "臺中教育大學", "台中教育大學", "中教大", "中教"]
         NTUSs = ["ntus","NTUS", "國立臺灣體育運動大學","國立台灣體育運動大學","臺灣體育運動大學","台灣體育運動大學","臺體大","台體大","臺體","台體"]
@@ -166,7 +176,8 @@ def test1(event):
         FEUs = ["feu","FEU", "遠東科技大學", "遠東科大", "遠東"]
         CSUs = ["csu","CSU", "正修科技大學", "正修科大", "正修"]
         Meihos = ["meiho","Meiho", "美和科技大學", "美和科大", "美和"]
-
+        NTTUs = ["nttu","NTTU", "國立臺東大學", "國立台東大學", "臺東大學", "台東大學", "臺東大", "台東大", "東大"]
+        NQUs = ["nqu","NQU", "國立金門大學", "金門大學", "金大"]
 
         NDHUs = ["ndhu","NDHU", "國立東華大學", "東華大學","東華"]
         NTOUs = ["ntou","NTOU", "國立臺灣海洋大學", "國立台灣海洋大學", "海大", "海洋大學"]
@@ -193,6 +204,10 @@ def test1(event):
         HKUs = ["hku","HKU", "弘光科技大學", "弘光科大", "弘光"]
         HUSTs = ["hust","HUST", "修平科技大學", "修平科大", "修平"]
         HWHs = ["hwh","HWH", "華夏科技大學", "華夏科大", "華夏"]
+        AUs = ["au","AU", "真理大學", "真理"]
+        USCs = ["usc","USC", "實踐大學", "實踐大", "實踐", "實大"]
+        HFUs = ["hfu","HFU", "華梵大學", "華梵大", "華梵"]
+        NUUs = ["nuu","NUU", "國立聯合大學", "聯合大學", "聯合大", "聯合", "聯大"]
 
         NTUNHSs = ["ntunhs","NTUNHS", "國立臺北護理健康大學", "國立台北護理健康大學", "北護大", "國北護", "北護"]
         TTUs = ["ttu","TTU", "大同大學", "大同"]
@@ -214,12 +229,12 @@ def test1(event):
         SHUs = ["shu","SHU", "世新大學", "世新"]
         TUMTs = ["tumt","TUMT", "臺北海洋科技大學", "台北海洋科技大學", "北海科大"]
 
-
         NTUs = ["ntu","NTU", "國立臺灣大學", "國立台灣大學", "臺灣大學", "台灣大學", "臺大", "台大"]
         NCCUs = ["nccu","NCCU", "國立政治大學", "政治大學", "政大"]
         TKUs = ["tku","TKU", "淡江大學", "淡江", "淡大"]
         MCUs = ["mcu","MCU", "銘傳大學", "銘傳"]
         SCUs = ["scu","SCU", "東吳大學", "東吳"]
+        NKUSTs = ["nkust","NKUST", "國立高雄科技大學", "高雄科技大學", "高雄科大", "高科大", "高科"]
         NPUSTs = ["npust","NPUST", "國立屏東科技大學", "屏東科技大學", "屏東科大", "屏科大", "屏科"]
         NKUHTs = ["nkuht","NKUHT", "國立高雄餐旅大學", "高雄餐旅大學", "高餐大", "高餐"]
         CGUs = ["cgu","CGU", "長庚大學", "長庚"]
@@ -243,15 +258,28 @@ def test1(event):
                 KSML(ISBN)
             elif str_input[i] in PTPLs: # 屏東縣公共圖書館
                 PTPL(ISBN)
-
-
+            elif str_input[i] in HLPLs: # 花蓮縣公共圖書館
+                HLPL(ISBN)
+            elif str_input[i] in PHPLs: # 澎湖縣公共圖書館
+                PHPL(ISBN)
+            elif str_input[i] in NYUSTs: # 國立雲林科技大學
+                NYUST(ISBN)
+            elif str_input[i] in TFAIs: # 國家電影及視聽文化中心
+                TFAI(ISBN)                                                                
 
             elif str_input[i] in FGUs: # 佛光大學
                 FGU(ISBN)
+            elif str_input[i] in CKUs: # 經國管理暨健康學院
+                CKU(ISBN)                
             elif str_input[i] in NIUs: # 國立宜蘭大學
                 NIU(ISBN)  
             elif str_input[i] in CUSTs: # 中華科技大學
-                CUST(ISBN)  
+                CUST(ISBN)
+            elif str_input[i] in CCTs: # 臺北基督學院
+                CCT(ISBN)  
+            elif str_input[i] in HDUTs: # 宏國德霖科技大學
+                HDUT(ISBN)                  
+
             elif str_input[i] in CNUs: # 嘉南藥理大學
                 CNU(ISBN)  
             elif str_input[i] in TPMLs: # 臺北市立圖書館
@@ -278,8 +306,12 @@ def test1(event):
                 UCH(ISBN)
             elif str_input[i] in MUSTs: # 明新科技大學
                 MUST(ISBN)
+            elif str_input[i] in NOUs: # 國立空中大學
+                NOU(ISBN)                
             elif str_input[i] in YDUs: # 育達科技大學
                 YDU(ISBN)
+            elif str_input[i] in Jentes: # 仁德醫護管理專科學校
+                Jente(ISBN)                
             elif str_input[i] in CUTEs: # 中國科技大學
                 CUTE(ISBN)
             elif str_input[i] in NTCUs: # 國立臺中教育大學
@@ -305,8 +337,11 @@ def test1(event):
             elif str_input[i] in CSUs: # 正修科技大學
                 CSU(ISBN)
             elif str_input[i] in Meihos: # 美和科技大學
-                Meiho(ISBN)                
-
+                Meiho(ISBN)
+            elif str_input[i] in NTTUs: # 國立臺東大學
+                NTTU(ISBN)  
+            elif str_input[i] in NQUs: # 國立金門大學
+                NQU(ISBN)                                               
 
             elif str_input[i] in NTOUs: # 國立臺灣海洋大學
                 NTOU(ISBN)                 
@@ -355,7 +390,16 @@ def test1(event):
             elif str_input[i] in HUSTs: # 修平科技大學
                 HUST(ISBN) 
             elif str_input[i] in HWHs: # 華夏科技大學
-                HWH(ISBN)                                                 
+                HWH(ISBN)                     
+            elif str_input[i] in AUs: # 真理大學
+                AU(ISBN)                   
+            elif str_input[i] in USCs: # 實踐大學
+                USC(ISBN)                   
+            elif str_input[i] in HFUs: # 華梵大學
+                HFU(ISBN)   
+            elif str_input[i] in NUUs: # 國立聯合大學
+                NUU(ISBN)                                                                   
+
             elif str_input[i] in NTUNHSs: # 國立臺北護理健康大學
                 NTUNHS(ISBN) 
             elif str_input[i] in TTUs: # 大同大學
@@ -383,10 +427,6 @@ def test1(event):
             elif str_input[i] in NHRIs: # 國家衛生研究院
                 NHRI(ISBN)                                                                  
 
-
-
-
-
             elif str_input[i] in KLCCABs: # 基隆市公共圖書館
                 KLCCAB(ISBN)
             elif str_input[i] in NCLs: # 國家圖書館
@@ -404,7 +444,9 @@ def test1(event):
             elif str_input[i] in MCUs: # 銘傳大學
                 MCU(ISBN)
             elif str_input[i] in SCUs: # 東吳大學
-                SCU(ISBN)                                                
+                SCU(ISBN)      
+            elif str_input[i] in NKUSTs: # 國立高雄科技大學
+                NKUST(ISBN)                                                               
             elif str_input[i] in NPUSTs: # 國立屏東科技大學
                 NPUST(ISBN)
             elif str_input[i] in NKUHTs: # 國立高雄餐旅大學
