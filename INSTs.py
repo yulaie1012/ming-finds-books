@@ -140,16 +140,18 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
 
 # --------------------等待input出現|ISBN----------------------
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
-    time.sleep(1.5)
     search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
+    time.sleep(0.5)
     search_input.send_keys(ISBN)
+    time.sleep(1)
     search_input.send_keys(Keys.ENTER)
 
 # --------------------等待select出現|ISBN----------------------
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
-    time.sleep(0.5)
     search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
+    time.sleep(1)
     select = Select(search_field)
+    time.sleep(1)
     select.select_by_value(option_position)
 
 # ------------------------Primo找書--------------------------
@@ -235,8 +237,10 @@ def click_more_btn(driver):
 def webpac_gov_crawler(driver, org, org_url, ISBN):
     try:
         table = []
+
         driver.get(org_url + 'advanceSearch')
         select_ISBN_strategy(driver, 'searchField', 'ISBN')
+        time.sleep(0.5)
         search_ISBN(driver, ISBN, 'searchInput')
 
         # 一筆
@@ -448,7 +452,7 @@ def NYUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國家電影及視聽文化中心 TFAI
+# 國家電影及視聽文化中心 TFAI V
 def TFAI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -1429,15 +1433,6 @@ def NQU(ISBN):
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.append_rows(gg.values.tolist())
     return gg
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2816,7 +2811,7 @@ def DYU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 建國科技大學 CTU X(連不上...)
+# 建國科技大學 CTU V
 def CTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2841,7 +2836,7 @@ def CTU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 南開科技大學 NKUT V
+# 南開科技大學 NKUT X(連不上...)
 def NKUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
