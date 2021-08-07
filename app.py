@@ -30,7 +30,7 @@ import gspread_dataframe as gd
 import import_ipynb
 import toread
 import INSTs
-from toread import toread, toread_crawlers, NTC, HWU, NDHU
+from toread import toread, toread_crawlers, NTC, HWU
 from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
     search_ISBN, click_more_btn, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
     easy_crawler, NYCU, NTNU, NTUST, PCCU, FJU, SINICA, webpac_pro_crawler, webpac_ajax_crawler, NTPC, KLCCAB, \
@@ -42,7 +42,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
     世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
     wait_for_elements_present, primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
-    TFAI, AU, USC, HFU, NUU, PHPL
+    TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -179,7 +179,7 @@ def test1(event):
         NTTUs = ["nttu","NTTU", "國立臺東大學", "國立台東大學", "臺東大學", "台東大學", "臺東大", "台東大", "東大"]
         NQUs = ["nqu","NQU", "國立金門大學", "金門大學", "金大"]
 
-        NDHUs = ["ndhu","NDHU", "國立東華大學", "東華大學","東華"]
+        
         NTOUs = ["ntou","NTOU", "國立臺灣海洋大學", "國立台灣海洋大學", "海大", "海洋大學"]
         NTNUs = ["ntnu","NTNU", "國立臺灣師範大學","國立台灣師範大學","臺灣師範大學","台灣師範大學","台師大","臺師大", "台師", "臺師"]
         NTUSTs = ["ntust","NTUST", "國立臺灣科技大學","國立台灣科技大學","臺灣科技大學","台灣科技大學","臺灣科大","台灣科大","台科大","臺科大","臺科","台科"]
@@ -217,6 +217,19 @@ def test1(event):
         CHPLs = ["chpl","CHPL","彰化縣公共圖書館","彰化縣圖書館","彰化圖書館" "彰化縣圖","彰圖"]
         KMUs = ["kmu","KMU", "高雄醫學大學", "高雄醫大", "高醫"]
         NFUs = ["nfu","NFU", "國立虎尾科技大學", "虎尾科技大學", "虎尾科大", "虎科大", "虎尾", "虎科"]
+        SJUs = ["sju","SJU", "聖約翰科技大學", "聖約翰科大", "聖約翰"]
+        TNUs = ["tnu","TNU", "東南科技大學", "東南科大", "東南"]
+        HSCs = ["hsc","HSC", "新生醫護管理專科學校", "新生醫專", "新生醫護", "新生護專", "新生專校"]
+        CJCs = ["hsc","CJC", "崇仁醫護管理專科學校", "崇仁醫專", "崇仁醫護", "崇仁護專", "崇仁專校"]
+        YPUs = ["ypu","YPU", "元培醫事科技大學", "元培醫事科大", "元培醫事", "元培"]
+        LTUs = ["ltu","LTU", "嶺東科技大學", "嶺東科大", "嶺東"]
+        MDUs = ["mdu","MDU", "明道大學", "明道大", "明道", "明大"]
+        DYUs = ["dyu","DYU", "大葉大學", "大葉大", "大葉"]
+        CTUs = ["ctu","CTU", "建國科技大學", "建國科大", "建國"]
+        NKUTs = ["nkut","NKUT", "南開科技大學", "南開科大", "南開"]
+        NUKs = ["nuk","NUK", "國立高雄大學", "高雄大學", "高雄大", "高大"]
+        NDHUs = ["ndhu","NDHU", "國立東華大學", "東華大學","東華"]
+
         TNUAs = ["TNUA","tnua", "國立臺北藝術大學","國立台北藝術大學", "臺北藝術大學", "台北藝術大學", "北藝大", "北藝"]
         NCUTs = ["ncut","NCUT", "國立勤益科技大學", "勤益科技大學", "勤益科大", "勤科大", "勤科"]
         ISUs = ["isu","ISU", "義守大學", "義守", "義大"]
@@ -416,6 +429,31 @@ def test1(event):
                 KMU(ISBN)  
             elif str_input[i] in NFUs: # 國立虎尾科技大學
                 NFU(ISBN)  
+            elif str_input[i] in SJUs: # 聖約翰科技大學
+                SJU(ISBN)  
+            elif str_input[i] in TNUs: # 東南科技大學
+                TNU(ISBN)  
+            elif str_input[i] in HSCs: # 新生醫護管理專科學校
+                HSC(ISBN)
+            elif str_input[i] in CJCs: # 崇仁醫護管理專科學校
+                CJC(ISBN)                                     
+            elif str_input[i] in YPUs: # 元培醫事科技大學
+                YPU(ISBN)  
+            elif str_input[i] in LTUs: # 嶺東科技大學
+                LTU(ISBN)
+            elif str_input[i] in MDUs: # 明道大學
+                MDU(ISBN)   
+            elif str_input[i] in DYUs: # 大葉大學
+                DYU(ISBN)                                             
+            elif str_input[i] in CTUs: # 建國科技大學
+                CTU(ISBN)  
+            elif str_input[i] in NKUTs: # 南開科技大學
+                NKUT(ISBN)  
+            elif str_input[i] in NUKs: # 國立高雄大學
+                NUK(ISBN)                                             
+            elif str_input[i] in NDHUs: # 國立東華大學
+                NDHU(ISBN)                 
+
             elif str_input[i] in TNUAs: # 國立臺北藝術大學
                 TNUA(ISBN)  
             elif str_input[i] in NCUTs: # 國立勤益科技大學
