@@ -26,7 +26,7 @@ my_options = Options()
 my_options.add_argument("--incognito")  # 開啟無痕模式
 my_options.add_experimental_option('excludeSwitches', ['enable-automation'])  #把新版google的自動控制提醒關掉
 # my_options.add_argument('--start-maximized')  # 視窗最大化
-# my_options.add_argument('--headless')  # 不開啟實體瀏覽器
+my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 當 html下載完成之後，不等待解析完成，selenium會直接返回
 
@@ -2282,7 +2282,7 @@ def NUU(ISBN):
 
 
 
-# -----------------------------------一直切iframe------------------------------------------------
+# -----------------------------------按館藏地展開table------------------------------------------------
 # uhtbin_crawler()
 # 國北護|大同|國體大
 def uhtbin_crawler(driver, org, org_url, ISBN):
@@ -3065,9 +3065,278 @@ def NHRI(ISBN):
 
 
 
+# ------------------------------------cfm------------------------------------------
+# webpac_cfm_crawler()
+# 北大|城市科大|德明|龍華|臺中市|中國醫|亞洲|臺南市|慈濟|澎科
+def webpac_cfm_crawler(driver, org, org_url, ISBN):
+    try:
+        table = []
+
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'ss_keyword')
+
+        # 一筆：有些網站會直接進入＂書目資料＂
+        if wait_for_element_present(driver, 'table.list_border', 10):
+            tgt = accurately_find_table_and_read_it(driver, 'table.list_border')
+            tgt['圖書館'], tgt['連結'] = org, driver.current_url
+            table.append(tgt)
+        
+            # ＂書目資料＂裡中的表格換頁
+            i = 0
+            while True:
+                try:
+                    wait_for_element_clickable(driver, str(2+i), 2).click()
+
+                    tgt = accurately_find_table_and_read_it(driver, 'table.list_border')
+                    tgt['圖書館'], tgt['連結'] = org, tgt_url
+                    table.append(tgt)
+                    i += 1
+                except:
+                    break
+        # 多筆
+        elif wait_for_element_present(driver, 'div#list', 10):
+            soup = BeautifulSoup(driver.page_source, 'html.parser')
+            tgt_urls = []
+            anchors = soup.find_all('a', string='詳細書目')
+            for anchor in anchors:
+                tgt_urls.append(org_url.replace('search.cfm', '') + anchor['href'])
+
+            for tgt_url in tgt_urls:
+                driver.get(tgt_url)
+
+                tgt = accurately_find_table_and_read_it(driver, 'table.list_border')
+                tgt['圖書館'], tgt['連結'] = org, tgt_url
+                table.append(tgt)
+
+                # ＂書目資料＂裡中的表格換頁
+                i = 0
+                while True:
+                    try:
+                        wait_for_element_clickable(driver, str(2+i), 2).click()
+
+                        tgt = accurately_find_table_and_read_it(driver, 'table.list_border')
+                        tgt['圖書館'], tgt['連結'] = org, tgt_url
+                        table.append(tgt)
+                        i += 1
+                    except:
+                        break
+        # 無
+        elif wait_for_element_present(driver, 'div.msg', 5):
+            message = driver.find_element_by_css_selector('.msg').text
+            if message == '無符合館藏資料':
+                print(f'在「{org}」找不到「{ISBN}」')
+                return
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
+
+# 國立臺北大學 NTPU
+def NTPU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '國立臺北大學',
+        "http://webpac.lib.ntpu.edu.tw/search.cfm",
+        ISBN
+        )
+    )
+
+# 臺北城市科技大學 TPCU
+def TPCU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '臺北城市科技大學',
+        "http://120.102.52.73/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 德明財經科技大學 TMUST
+def TMUST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '德明財經科技大學',
+        "http://140.131.140.11/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 龍華科技大學 LHU
+def LHU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '龍華科技大學',
+        "https://webpac.lhu.edu.tw/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 臺中市立圖書館 TCPL
+def TCPL(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '臺中市立圖書館',
+        "https://ipac.library.taichung.gov.tw/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 中國醫藥大學 CMU
+def CMU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '中國醫藥大學',
+        "http://weblis.cmu.edu.tw/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 亞洲大學 Asia
+def Asia(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '亞洲大學',
+        "http://aulib.asia.edu.tw/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 臺南市立圖書館 TNPL
+def TNPL(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '臺南市立圖書館',
+        "https://lib.tnml.tn.edu.tw/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 慈濟大學 TCU
+def TCU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '慈濟大學',
+        "http://www.webpac.tcu.edu.tw/webpac/search.cfm",
+        ISBN
+        )
+    )
+
+# 國立澎湖科技大學 NPU
+def NPU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        webpac_cfm_crawler(
+        driver,
+        '國立澎湖科技大學',
+        "https://inspire.npu.edu.tw/webpac/search.cfm",
+        ISBN
+        )
+    )
 
 
-# ------------------------------被獨立出來的基隆--------------------------------
+
+
+# ------------------------------被獨立出來的基隆---------------------------------------
 def 基隆市公共圖書館(org, org_url, ISBN, driver, wait):
     try:
         # 進入＂搜尋主頁＂
@@ -3746,41 +4015,49 @@ def CJCU(ISBN):
 
 # ----------------------------------------要一直點進去------------------------------------------
 # clickclick_crawler()
-# 馬偕醫學院|工研院
-def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_place):
-    clickclick_lst = []
+# 馬偕醫|工研院|明志|長庚科大|清華|暨南|臺南大
+def clickclick_crawler(driver, org, url_front, ISBN, url_behind, xpath_num, xpath_detail, table_xpath):
+    clickclick_lst = [] 
     ISBN_xpath = "/html/body/table[6]/tbody/tr/td[1]/form/fieldset[1]/select/option[" + xpath_num + "]"
     try:
-        driver.get(url)
-        time.sleep(8)
-        use_ISBN = driver.find_element_by_xpath(ISBN_xpath).click()
-        search_input = driver.find_element_by_name("y")
-        search_input.send_keys(ISBN)
-        gogo = driver.find_element_by_name("Search").click()
-        time.sleep(4)
+        # 分三類的進入方式
+        if org == "馬偕醫學院" or org == "工業技術研究院":
+            driver.get(url_front)
+            use_ISBN = wait_for_element_clickable(driver, ISBN_xpath, 5, By.XPATH).click()
+            search_input = wait_for_element_clickable(driver, "y", 5, By.NAME)
+            search_input.send_keys(ISBN)
+            gogo = wait_for_element_clickable(driver, "Search", 5, By.NAME).click()
+        elif org == "國立暨南國際大學":
+            driver.get(url_front)
+            search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
+            search_input.send_keys(ISBN)
+            gogo = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[9]/td/input", 5, By.XPATH).click()
+            click_result = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[3]/td[4]/a", 5, By.XPATH).click()
+        else:
+            driver.get(url_front + ISBN +url_behind)
         
-        where2 = driver.find_element_by_class_name("brieftit").click()
-        time.sleep(2) 
-        where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail
-        where3 = driver.find_element_by_xpath(where3_xpath).click()
-        time.sleep(10)      
-        table = driver.find_element_by_css_selector(table_place)       
-        time.sleep(5)
-        now_url = driver.current_url
+        where2 = wait_for_element_clickable(driver, "brieftit", 5, By.CLASS_NAME).click() 
+        if org == "國立暨南國際大學":
+            where3_xpath = "/html/body/table[9]/tbody/tr[1]/td[2]/a"
+        else:
+            where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail
+        where3 = wait_for_element_clickable(driver, where3_xpath, 5, By.XPATH).click()
+        table = wait_for_element_clickable(driver, table_xpath, 5, By.XPATH)
         trlist = table.find_elements_by_tag_name('tr')
         for row in trlist:
             tdlist = row.find_elements_by_tag_name('td')
             for sth in tdlist:
                 if org != "工業技術研究院":
+                    now_url = driver.current_url
                     new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[7].text, now_url]
                 else:
-                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]     
+                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]
                 clickclick_lst.append(new_row)
-                break       
+                break
     except:
         pass
+    
     table = pd.DataFrame(clickclick_lst)
-    print(table)
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
@@ -3800,7 +4077,8 @@ def MMC(ISBN):
         driver, 
         '馬偕醫學院',
         "http://aleph.library.mmc.edu.tw/F?func=find-b&adjacent=Y&find_code=WRD&local_base=TOP02&request=&TY=",
-        ISBN, 
+        ISBN,
+        "", 
         "8", 
         "span/a[1]", 
         'body > table:nth-child(16)'
@@ -3829,6 +4107,7 @@ def ITRI(ISBN):
         '工業技術研究院',
         "http://61.61.255.73/F?func=find-b-0",
         ISBN, 
+        "",
         "7", 
         "a/img", 
         'body > table:nth-child(17)'
@@ -3839,3 +4118,149 @@ def ITRI(ISBN):
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
+
+# 明志科技大學 MCUT
+def MCUT(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '明志科技大學',
+        "https://aleph.lib.cgu.edu.tw/F/115MXQUL6JJA3NMRQKYS46V7TV7RPEYHU4GPKJTY6Q8A7GJVTN-00206?func=find-b&adjacent=Y&find_code=WRD&local_base=FLY03&request=&x=28&y=14",
+        ISBN, 
+        "&local%5Fbase=FLY02&SUBMIT=&pds_handle=GUEST",
+        "",  
+        "a", 
+        '/html/body/table[9]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 長庚科技大學 CGUST
+def CGUST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '長庚科技大學',
+        "https://aleph.lib.cgu.edu.tw/F/YTYF5XKLJD2IXL81QMKLJUING12EXNVIX1H24F3573T33UBBMX-00425?func=find-b-0&local_base=fly04&pds_handle=GUEST",
+        ISBN, 
+        "&x=46&y=9",
+        "",  
+        "a", 
+        '/html/body/table[9]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立清華大學 NTHU
+def NTHU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '國立清華大學',
+        "https://webpac.lib.nthu.edu.tw/F/565451PAXB6B344BQDEEH47P14L259Y142SFU1R64T2N6VAXI2-07348?RN=740687675&pds_handle=GUEST",
+        ISBN, 
+        "",
+        "8",
+        "span/a",
+        '/html/body/table[12]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立暨南國際大學 NCNU
+def NCNU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '國立暨南國際大學',
+        "https://aleph.lib.ncnu.edu.tw/F/C7L4RDTXBXUC8KMQ9ND8G39IRNDEI4C4JMQEDA9DY8T1U21ALK-11719?func=find-d-0",
+        ISBN, 
+        "",
+        "", 
+        "", 
+        '/html/body/table[11]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立臺南大學 NUTN
+def NUTN(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '國立臺南大學',
+        "https://aleph.nutn.edu.tw/F/UNFHNA81756YVB79GVQX9KVJG9HYHFV3TED6CX5RRYX91MYGBM-10040?func=find-b&find%5Fcode=ISBN&request=",
+        ISBN, 
+        "&local%5Fbase=FLY02&SUBMIT=&pds_handle=GUEST",
+        "", 
+        "a", 
+        '/html/body/table[9]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+

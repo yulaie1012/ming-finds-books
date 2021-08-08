@@ -42,7 +42,8 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
     世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
     wait_for_elements_present, primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
-    TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK
+    TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
+    NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -189,7 +190,7 @@ def test1(event):
         NSYSUs = ["nsysu","NSYSU", "國立中山大學", "中山大學","中山大", "中山"]
         NKNUs = ["nknu","NKNU", "國立高雄師範大學", "高雄師範大學", "高師大", "高師"]
         WZUs = ["wzu","WZU", "文藻外語大學", "文藻外語大","文藻外大", "文藻"]
-        Tajens = ["tajen","Tajen", "大仁科技大學", "大仁科大", "大仁"]
+        Tajens = ["tj","TJ","tajen","Tajen", "大仁科技大學", "大仁科大", "大仁"]
         NCUs = ["ncu","NCU", "國立中央大學", "中央大學", "中央", "中大"]
         PCCUs = ["pccu","PCCU", "中國文化大學", "文化大學","文化", "文大"]
         FJUs = ["fju", "FJU", "輔仁大學", "輔仁", "輔大"]
@@ -236,6 +237,17 @@ def test1(event):
         CSMUs = ["csmu","CSMU", "中山醫學大學", "中山醫大", "中山醫"]
         NHRIs = ["nhri","NHRI", "國家衛生研究院", "國衛院"]
 
+        TPCUs = ["tpcu","TPCU", "臺北城市科技大學","台北城市科技大學","城市科技大學","北城科大","城市科大","城科大","城科","城大","北城"]
+        NTPUs = ["ntpu","NTPU", "國立臺北大學", "國立台北大學", "臺北大學", "台北大學", "臺北大", "台北大", "北大"]
+        TMUSTs = ["tmust","TMUST", "德明財經科技大學", "德明科大", "德明"]
+        LHUs = ["lhu","LHU", "龍華科技大學", "龍華科大", "龍華"]
+        TCPLs = ["tcpl","TCPL","臺中市立圖書館","台中市立圖書館","臺中市圖書館","台中市圖書館","臺中圖書館","台中圖書館","臺中市圖","台中市圖","中圖"]
+        CMUs = ["cmu","CMU", "中國醫藥大學", "中國醫"]
+        Asias = ["asia","Asia", "亞洲大學", "亞洲大", "亞洲", "亞洲大"]
+        TNPLs = ["tnpl","TNPL", "臺南市立圖書館", "台南市立圖書館", "臺南市圖書館", "台南市圖書館", "臺南市圖", "台南市圖", "南圖"]
+        TCUs = ["tcu","TCU", "慈濟大學", "慈濟", "慈大"]
+        NPUs = ["npu","NPU", "國立澎湖科技大學", "澎湖科技大學", "澎湖科大", "澎科大", "澎科"]
+
         KLCCABs = ["klccab","KLCCAB","kllib","KLLIB","基隆市公共圖書館","基隆市圖","基隆市圖書館", "基隆圖書館"]
         
         NCLs = ["ncl","NCL", "國家圖書館", "國圖"]
@@ -256,8 +268,12 @@ def test1(event):
 
         MMCs = ["mmc","MMC", "馬偕醫學院", "馬偕醫", "馬偕"]
         ITRIs = ["itri","ITRI", "工業技術研究院", "工研院"]
+        MCUTs = ["mcut","MCUT", "明志科技大學", "明志科大", "明志"]
+        CGUSTs = ["cgust","CGUST", "長庚科技大學", "長庚科大"]
+        NTHUs = ["nthu","NTHU", "國立清華大學", "清華大學", "清華大", "清華", "清大"]
+        NCNUs = ["ncnu","NCNU","國立暨南國際大學", "暨南國際大學","暨南大學", "暨大"]
+        NUTNs = ["nutn","NUTN", "國立臺南大學", "國立台南大學", "臺南大學", "台南大學", "臺南大", "台南大", "南大"]
         
-
         for i in range(1, len(str_input)):
             if str_input[i] in NTCs: # 國立臺東專科學校              
                 NTC(ISBN)
@@ -463,7 +479,28 @@ def test1(event):
             elif str_input[i] in CSMUs: # 中山醫學大學
                 CSMU(ISBN)  
             elif str_input[i] in NHRIs: # 國家衛生研究院
-                NHRI(ISBN)                                                                  
+                NHRI(ISBN) 
+
+            elif str_input[i] in NTPUs: # 國立臺北大學
+                NTPU(ISBN)  
+            elif str_input[i] in TPCUs: # 臺北城市科技大學
+                TPCU(ISBN)  
+            elif str_input[i] in TMUSTs: # 德明財經科技大學
+                TMUST(ISBN)  
+            elif str_input[i] in LHUs: # 龍華科技大學
+                LHU(ISBN)                                                                                                                                   
+            elif str_input[i] in TCPLs: # 臺中市立圖書館
+                TCPL(ISBN)                  
+            elif str_input[i] in CMUs: # 中國醫藥大學
+                CMU(ISBN)
+            elif str_input[i] in Asias: # 亞洲大學
+                Asia(ISBN)
+            elif str_input[i] in TNPLs: # 臺南市立圖書館
+                TNPL(ISBN)
+            elif str_input[i] in TCUs: # 慈濟大學
+                TCU(ISBN)
+            elif str_input[i] in NPUs: # 國立澎湖科技大學
+                NPU(ISBN)                                                                  
 
             elif str_input[i] in KLCCABs: # 基隆市公共圖書館
                 KLCCAB(ISBN)
@@ -499,6 +536,18 @@ def test1(event):
                 MMC(ISBN)
             elif str_input[i] in ITRIs: # 工業技術研究院
                 ITRI(ISBN)
+            elif str_input[i] in MCUTs: # 明志科技大學
+                MCUT(ISBN)
+            elif str_input[i] in CGUSTs: # 長庚科技大學
+                CGUST(ISBN)
+            elif str_input[i] in NTHUs: # 國立清華大學
+                NTHU(ISBN)
+            elif str_input[i] in NCNUs: # 國立暨南國際大學
+                NCNU(ISBN)
+            elif str_input[i] in NUTNs: # 國立臺南大學
+                NUTN(ISBN)
+                
+
             else:
                 print("nono")
             
