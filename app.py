@@ -43,7 +43,8 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
     wait_for_elements_present, primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
-    NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU
+    NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
+    HCLIB, CYLIB, HCPL
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -149,12 +150,14 @@ def test1(event):
         CCTs = ["cct","CCT", "臺北基督學院", "台北基督學院"]
         HDUTs = ["hdut","HDUT", "宏國德霖科技大學", "宏國德霖科大", "宏國德霖"]
         CNUs = ["cnu", "CNU", "嘉南藥理大學", "嘉藥"]
-        TPMLs = ["tpml","TPML", "臺北市立圖書館", "台北市立圖書館", "北市圖"]  
+        TPMLs = ["tpml","TPML", "臺北市立圖書館", "台北市立圖書館", "臺北市圖書館", "台北市圖書館", "臺北市圖", "台北市圖", "北市圖", "北圖"]  
         NTUAs = ["NTUA","ntua", "國立臺灣藝術大學","國立台灣藝術大學", "臺灣藝術大學", "台灣藝術大學", "臺藝大", "台藝大", "臺藝", "台藝"]      
         UTaipeis = ["UTaipei", "臺北市立大學", "台北市立大學", "臺北市大", "台北市大", "北市大"]
         NTUTs = ["ntut","NTUT", "國立臺北科技大學", "國立台北科技大學", "臺北科技大學", "台北科技大學", "臺北科大", "台北科大", "北科大", "北科"]
         TMUs = ["tmu","TMU","臺北醫學大學","台北醫學大學","北醫"]
         NTUBs = ["ntub","NTUB", "國立臺北商業大學", "國立台北商業大學", "臺北商業大學", "台北商業大學", "臺北商大", "台北商大", "北商大", "北商"]
+        HCLIBs = ["hclib","HCLIB", "新竹市文化局圖書館", "新竹市立圖書館", "新竹市圖書館", "新竹市圖", "竹市圖"]
+        HCPLs = ["hcpl","HCPL", "新竹縣公共圖書館", "新竹縣立圖書館", "新竹縣圖書館", "新竹縣圖", "竹縣圖"]
         Miaolis = ["Miaoli","miaoli","苗栗縣立圖書館","苗栗縣公共圖書館","苗栗縣圖書館", "苗栗縣圖", "苗栗圖書館", "苗栗"]
         JUSTs = ["just","JUST", "景文科技大學", "景文科大", "景文"]
         CLUTs = ["clut","CLUT", "致理科技大學", "致理科大", "致理"]
@@ -172,14 +175,16 @@ def test1(event):
         OCUs = ["ocu","OCU", "僑光科技大學", "僑光科大", "僑光"]
         NCUEs = ["ncue","NCUE", "國立彰化師範大學","彰化師範大學","彰化師大","彰師大"]
         YLCCBs = ["ylccb","YLCCB","雲林縣公共圖書館","雲林縣圖書館","雲林圖書館" "雲林縣圖","雲圖"]
-        CYCPLs = ["cycpl","CYCPL","嘉義縣圖書館","嘉義縣圖書館","嘉義圖書館" "嘉義縣圖"]
+        CYLIBs = ["cylib","CYLIB", "嘉義市文化局圖書館", "嘉義市立圖書館", "嘉義市圖書館", "嘉義市圖", "嘉市圖"]
+        CYCPLs = ["cycpl","cypl","CYCPL","CYPL","嘉義縣圖書館","嘉義縣圖書館","嘉義圖書館", "嘉義縣圖", "嘉縣圖"]
         NHUs = ["nhu","NHU", "南華大學", "南華"]
         FEUs = ["feu","FEU", "遠東科技大學", "遠東科大", "遠東"]
         CSUs = ["csu","CSU", "正修科技大學", "正修科大", "正修"]
         Meihos = ["meiho","Meiho", "美和科技大學", "美和科大", "美和"]
         NTTUs = ["nttu","NTTU", "國立臺東大學", "國立台東大學", "臺東大學", "台東大學", "臺東大", "台東大", "東大"]
+        TTCPLs = ["ttcpl","TTCPL", "臺東縣立圖書館", "臺東縣圖書館","臺東圖書館", "臺東縣圖", "東圖"]
         NQUs = ["nqu","NQU", "國立金門大學", "金門大學", "金大"]
-
+        KMCPLs = ["kmcpl","KMCPL", "金門縣立圖書館", "金門縣圖書館", "金門圖書館", "金門縣圖", "金圖"]
         
         NTOUs = ["ntou","NTOU", "國立臺灣海洋大學", "國立台灣海洋大學", "海大", "海洋大學"]
         NTNUs = ["ntnu","NTNU", "國立臺灣師範大學","國立台灣師範大學","臺灣師範大學","台灣師範大學","台師大","臺師大", "台師", "臺師"]
@@ -323,6 +328,10 @@ def test1(event):
                 TMU(ISBN) 
             elif str_input[i] in NTUBs: # 國立臺北商業大學
                 NTUB(ISBN) 
+            elif str_input[i] in HCLIBs: # 新竹市立圖書館
+                HCLIB(ISBN) 
+            elif str_input[i] in HCPLs: # 新竹縣公共圖書館
+                HCPL(ISBN)                                 
             elif str_input[i] in Miaolis: # 苗栗縣立圖書館
                 Miaoli(ISBN) 
             elif str_input[i] in JUSTs: # 景文科技大學
@@ -357,6 +366,8 @@ def test1(event):
                 NCUE(ISBN)
             elif str_input[i] in YLCCBs: # 雲林縣公共圖書館
                 YLCCB(ISBN)
+            elif str_input[i] in CYLIBs: # 嘉義市立圖書館
+                CYLIB(ISBN)                 
             elif str_input[i] in CYCPLs: # 嘉義縣圖書館
                 CYCPL(ISBN)
             elif str_input[i] in NHUs: # 南華大學
@@ -368,9 +379,13 @@ def test1(event):
             elif str_input[i] in Meihos: # 美和科技大學
                 Meiho(ISBN)
             elif str_input[i] in NTTUs: # 國立臺東大學
-                NTTU(ISBN)  
+                NTTU(ISBN)
+            elif str_input[i] in TTCPLs: # 臺東縣立圖書館
+                TTCPL(ISBN)                    
             elif str_input[i] in NQUs: # 國立金門大學
-                NQU(ISBN)                                               
+                NQU(ISBN)
+            elif str_input[i] in KMCPLs: # 金門縣立圖書館
+                KMCPL(ISBN)                                                                
 
             elif str_input[i] in NTOUs: # 國立臺灣海洋大學
                 NTOU(ISBN)                 
@@ -546,8 +561,6 @@ def test1(event):
                 NCNU(ISBN)
             elif str_input[i] in NUTNs: # 國立臺南大學
                 NUTN(ISBN)
-                
-
             else:
                 print("nono")
             
