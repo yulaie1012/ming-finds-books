@@ -4188,50 +4188,58 @@ def CJCU(ISBN):
 
 # ----------------------------------------要一直點進去------------------------------------------
 # clickclick_crawler()
-# 馬偕醫|工研院|明志|長庚科大|清華|暨南|臺南大
+# 馬偕醫|工研院|明志|長庚科大|清華|暨南|臺南大|兩廳院|史前館|台神
 def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xpath):
     clickclick_lst = [] 
-    ISBN_xpath = "/html/body/table[6]/tbody/tr/td[1]/form/fieldset[1]/select/option[" + xpath_num + "]"
-
 
     try: 
         # 分三類的進入方式
-        into_if_lst = ["馬偕醫學院", "工業技術研究院", "國立清華大學", "國家兩廳院"] #要進第一種方法的機構lst
+        into_1_lst = ["馬偕醫學院", "工業技術研究院", "國立清華大學", "國立臺灣美術館","國立臺灣史前文化博物館"] #要進第一種方法的機構lst
+        into_2_lst = ["明志科技大學", "國立臺南大學", "台灣神學研究學院" ] #要進第二種方法的機構lst
+        into_3_lst = ["國立暨南國際大學", "高苑科技大學" ]
         driver.get(url)
-        if org in into_if_lst:
-            use_ISBN = wait_for_element_clickable(driver, ISBN_xpath, 5, By.XPATH).click()
+        if org in into_1_lst:
+            ISBN_xpath1 = "/html/body/table[6]/tbody/tr/td[1]/form/fieldset[1]/select/option[" + xpath_num + "]"
+            if org == "國立臺灣美術館" or org == "國立臺灣史前文化博物館":
+                use_ISBN = wait_for_element_clickable(driver, "/html/body/table[6]/tbody/tr[2]/td[2]/form/fieldset[1]/select/option[7]", 5, By.XPATH).click()
+            else:
+                use_ISBN = wait_for_element_clickable(driver, ISBN_xpath1, 5, By.XPATH).click()
             search_input = wait_for_element_clickable(driver, "y", 5, By.NAME)
             search_input.send_keys(ISBN)
             gogo = wait_for_element_clickable(driver, "Search", 5, By.NAME).click()
-        elif org == "明志科技大學": #可，但要改館藏地index
+        elif org in into_2_lst: 
+            search_input = wait_for_element_clickable(driver, "request", 5, By.NAME).clear()
+            search_input.send_keys(ISBN)
+            gogo = wait_for_element_clickable(driver, "/html/body/table[6]/tbody/tr[2]/td[2]/div/input[2]", 5, By.XPATH).click()
+        elif org in into_3_lst:
+            ISBN_xpath3 = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
+            use_ISBN = wait_for_element_clickable(driver, ISBN_xpath3, 5, By.XPATH)
             search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
             search_input.send_keys(ISBN)
-            gogo = wait_for_element_clickable(driver, "Submit", 5, By.NAME).click()
-        elif org == "國立臺南大學":
-            search_place = wait_for_element_clickable(driver, "sm_a8aff2c83160b8b4b2067cbaf3549584a_1", 5, By.ID).click()
-            chooseISBN = wait_for_element_clickable(driver, "/html/body/div[1]/div[2]/div[1]/div/div/div/div[1]/div[2]/div/div/section/div/div[2]/div/div/div/section/div/div/div/form/table/tbody/tr/td/select[1]/option[8]", 5, By.XPATH).click()
-            search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
-            search_input.send_keys(ISBN)
-            gogo = wait_for_element_clickable(driver, "SUBMIT", 5, By.NAME).click()
-        elif org == "台灣神學研究院":
-            search_input = wait_for_element_clickable(driver, "allkeyword", 5, By.ID)
-            search_input.send_keys(ISBN)
-            gogo = wait_for_element_clickable(driver, "submitbn", 5, By.CLASS_NAME).click()
+            if org == "國立暨南國際大學":
+                gogo = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[9]/td/input", 5, By.XPATH).click()
+            else:
+                gogo = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[8]/td/input", 5, By.XPATH).click()
+            click_result = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[2]/td[4]/a", 5, By.XPATH).click()
+
  
         #終於結束前面的輸入可以開始爬蟲了
-        where2 = wait_for_element_clickable(driver, "brieftit", 5, By.CLASS_NAME).click() 
+        try: #暨南有"直接進去書的頁面"的案例，所以先用try避開看看
+            where2 = wait_for_element_clickable(driver, "brieftit", 5, By.CLASS_NAME).click() 
+        except:
+            pass
         if org == "國立暨南國際大學":
             where3_xpath = "/html/body/table[9]/tbody/tr[1]/td[2]/a"
-        else:
+        else: 
             where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail
         where3 = wait_for_element_clickable(driver, where3_xpath, 5, By.XPATH).click()
         table = wait_for_element_clickable(driver, table_xpath, 5, By.XPATH)
         trlist = table.find_elements_by_tag_name('tr')
+        now_url = driver.current_url
         for row in trlist:
             tdlist = row.find_elements_by_tag_name('td')
             for sth in tdlist:
                 if org != "工業技術研究院":
-                    now_url = driver.current_url
                     new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[7].text, now_url]
                 else:
                     new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]
@@ -4239,6 +4247,7 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xp
                 break
     except:
         pass
+    
     table = pd.DataFrame(clickclick_lst)
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
@@ -4271,7 +4280,7 @@ def MMC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 工業技術研究院 ITRI 
+# 工業技術研究院 ITRI  V
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -4314,7 +4323,7 @@ def MCUT(ISBN):
         clickclick_crawler(
         driver, 
         '明志科技大學',
-        "https://lis.mcut.edu.tw/?Lang=zh-tw",
+        "https://aleph.lib.cgu.edu.tw/F",
         ISBN, 
         "",  
         "a", 
@@ -4342,9 +4351,8 @@ def CGUST(ISBN):
         clickclick_crawler(
         driver, 
         '長庚科技大學',
-        "https://aleph.lib.cgu.edu.tw/F/YTYF5XKLJD2IXL81QMKLJUING12EXNVIX1H24F3573T33UBBMX-00425?func=find-b-0&local_base=fly04&pds_handle=GUEST",
+        "https://aleph.lib.cgu.edu.tw/F",
         ISBN, 
-        "&x=46&y=9",
         "",  
         "a", 
         '/html/body/table[9]'
@@ -4399,10 +4407,9 @@ def NCNU(ISBN):
         clickclick_crawler(
         driver, 
         '國立暨南國際大學',
-        "https://aleph.lib.ncnu.edu.tw/F/C7L4RDTXBXUC8KMQ9ND8G39IRNDEI4C4JMQEDA9DY8T1U21ALK-11719?func=find-d-0",
+        "https://aleph.lib.ncnu.edu.tw/F/?func=find-d-0",
         ISBN, 
-        "",
-        "", 
+        "7", 
         "", 
         '/html/body/table[11]'
         )
@@ -4413,7 +4420,7 @@ def NCNU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立臺南大學 NUTN V
+# 國立臺南大學 NUTN
 def NUTN(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -4428,11 +4435,151 @@ def NUTN(ISBN):
         clickclick_crawler(
         driver, 
         '國立臺南大學',
-        "https://lib.nutn.edu.tw/p/403-1001-28.php?Lang=zh-tw",
+        "https://aleph.nutn.edu.tw/F",
         ISBN,
         "", 
         "a", 
         '/html/body/table[9]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國家兩廳院 NTCH
+def NTCH(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '國家兩廳院',
+        "https://opac.npac-ntch.org/F",
+        ISBN,
+        "", 
+        "a[1]", 
+        '/html/body/table[9]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立臺灣史前文化博物館 NMP
+def NMP(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '國立臺灣史前文化博物館',
+        "http://lib.moc.gov.tw/F?func=find-b-0&local_base=THM04",
+        ISBN,
+        "", 
+        "a", 
+        '/html/body/table[9]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 台灣神學研究學院 TGST
+def TGST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '台灣神學研究學院',
+        "http://aleph.flysheet.com.tw/F",
+        ISBN,
+        "", 
+        "a", 
+        '/html/body/table[10]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立臺灣美術館 NTMOFA V
+def NTMOFA(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '國立臺灣美術館',
+        "http://lib.moc.gov.tw/F?func=find-b-0&local_base=THM06",
+        ISBN,
+        "", 
+        "a", 
+        '/html/body/table[9]'
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 高苑科技大學 KYU
+def KYU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        clickclick_crawler(
+        driver, 
+        '高苑科技大學',
+        "http://210.60.92.160/F/?func=find-d-0",
+        ISBN,
+        "6", 
+        "a", 
+        '/html/body/table[8]'
         )
     )
     

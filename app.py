@@ -44,7 +44,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     wait_for_elements_present, primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
-    HCLIB, CYLIB, HCPL
+    HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -278,6 +278,12 @@ def test1(event):
         NTHUs = ["nthu","NTHU", "國立清華大學", "清華大學", "清華大", "清華", "清大"]
         NCNUs = ["ncnu","NCNU","國立暨南國際大學", "暨南國際大學","暨南大學", "暨大"]
         NUTNs = ["nutn","NUTN", "國立臺南大學", "國立台南大學", "臺南大學", "台南大學", "臺南大", "台南大", "南大"]
+        NTCHs = ["ntch","NTCH", "國家兩廳院", "兩廳院"]
+        NMPs = ["nmp","NMP","國立臺灣史前文化博物館","國立台灣史前文化博物館","臺灣史前文化博物館","台灣史前文化博物館","史前文化博物館","史前館"]
+        TGSTs = ["tgst","TGST", "台灣神學研究學院", "台灣神學院", "台神研", "台神"]
+        NTMOFAs = ["ntmpfa","NTMOFA", "國立臺灣美術館", "國立台灣美術館", "國美館"]
+        KYUs = ["kyu","KYU", "高苑科技大學", "高苑科大", "高苑"]
+
         
         for i in range(1, len(str_input)):
             if str_input[i] in NTCs: # 國立臺東專科學校              
@@ -561,11 +567,18 @@ def test1(event):
                 NCNU(ISBN)
             elif str_input[i] in NUTNs: # 國立臺南大學
                 NUTN(ISBN)
+            elif str_input[i] in NTCHs: # 國家兩廳院
+                NTCH(ISBN)
+            elif str_input[i] in NMPs: # 國立臺灣史前文化博物館
+                NMP(ISBN)
+            elif str_input[i] in TGSTs: # 台灣神學研究學院
+                TGST(ISBN)
+            elif str_input[i] in NTMOFAs: # 國立臺灣美術館
+                NTMOFA(ISBN)
+            elif str_input[i] in KYUs: # 高苑科技大學
+                KYU(ISBN)                                                                                
             else:
-                print("nono")
-            
-
-    
+                print("nono")  
 
 if __name__ == "__main__":
     app.run(debug=True)
