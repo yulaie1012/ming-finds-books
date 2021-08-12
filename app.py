@@ -44,7 +44,8 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     wait_for_elements_present, primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
-    HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU
+    HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, crawl_all_tables_on_page, \
+    get_all_tgt_urls
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -283,6 +284,8 @@ def test1(event):
         TGSTs = ["tgst","TGST", "台灣神學研究學院", "台灣神學院", "台神研", "台神"]
         NTMOFAs = ["ntmpfa","NTMOFA", "國立臺灣美術館", "國立台灣美術館", "國美館"]
         KYUs = ["kyu","KYU", "高苑科技大學", "高苑科大", "高苑"]
+        CTUSTs = ["ctust","CTUST", "中臺科技大學", "中台科技大學", "中臺科大", "中台科大", "中臺", "中台"]
+        CCUSTs = ["ccust","CCUST", "中州科技大學", "中州科大", "中州"]
 
         
         for i in range(1, len(str_input)):
@@ -576,7 +579,11 @@ def test1(event):
             elif str_input[i] in NTMOFAs: # 國立臺灣美術館
                 NTMOFA(ISBN)
             elif str_input[i] in KYUs: # 高苑科技大學
-                KYU(ISBN)                                                                                
+                KYU(ISBN)
+            elif str_input[i] in CTUSTs: # 中臺科技大學
+                CTUST(ISBN)    
+            elif str_input[i] in CCUSTs: # 中州科技大學
+                CCUST(ISBN)                                                                                                                    
             else:
                 print("nono")  
 

@@ -41,7 +41,7 @@ def organize_columns(df1):
     # 處理 column 2：館藏地
     c2 = [
         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
-        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置'
+        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置', '典藏地點', '典藏區域'
     ]
     df1['c2'] = ''
     for c in c2:
@@ -116,6 +116,15 @@ def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.L
     else:
         return element
 
+def get_all_tgt_urls(driver, link_text):
+    tgt_urls = []
+
+    anchors = driver.find_elements_by_link_text(link_text)
+    for anchor in anchors:
+        tgt_urls.append(anchor.get_attribute('href'))
+    
+    return tgt_urls
+
 # ------------------------等待網址改變--------------------------
 def wait_for_url_changed(driver, old_url, waiting_time=5):
     try:
@@ -139,6 +148,23 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         return
     else:
         return tgt
+
+def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
+    table = []
+    
+    i = 0
+    while True:
+        try:
+            tgt = accurately_find_table_and_read_it(driver, table_position)
+            tgt['圖書館'], tgt['連結'] = org, url_pattern
+            table.append(tgt)
+
+            wait_for_element_clickable(driver, str(2+i), 2).click()
+            i += 1
+        except:
+            break
+    
+    return table
 
 # --------------------等待input出現|ISBN----------------------
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
@@ -2972,7 +2998,7 @@ def CTU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 南開科技大學 NKUT X(連不上...)
+# 南開科技大學 NKUT V
 def NKUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -2987,7 +3013,7 @@ def NKUT(ISBN):
         toread_crawler(
         driver,
         '南開科技大學',
-        "https://webpac.nkut.edu.tw:8443/toread/opac",
+        "http://webpac.nkut.edu.tw/toread/opac",
         ISBN
         )
     )
@@ -3207,6 +3233,9 @@ def NHRI(ISBN):
 def webpac_cfm_crawler(driver, org, org_url, ISBN):
     try:
         table = []
+        table_position = 'table.list_border'  
+        if 'ntpu' in org_url:  # ＂國立臺北大學＂的 table_position 是 table.book_location
+            table_position = 'div.book_location > table.list'
 
         driver.get(org_url)
         
@@ -3215,54 +3244,37 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
         select_ISBN_strategy(driver, 'as_type_1', 'i')
         search_ISBN(driver, ISBN, 'as_keyword_1')
 
-        # 是否 driver 在＂書目資料＂的頁面？
+        # Case1. 是否 driver 在＂書目資料＂的頁面？
         if wait_for_element_present(driver, 'div.info_box', 10):
-            i = 0
-            while True:
-                try:
-                    tgt = accurately_find_table_and_read_it(driver, 'table.list_border')
-                    tgt['圖書館'], tgt['連結'] = org, driver.current_url
-                    table.append(tgt)
-
-                    wait_for_element_clickable(driver, str(2+i), 2).click()
-                    i += 1
-                except:
-                    break
-        # 是否 driver 在＂查詢結果＂的頁面？
+            table += crawl_all_tables_on_page(driver, table_position, org, driver.current_url)
+        
+        # Case2. 是否 driver 在＂查詢結果＂的頁面？且有搜尋結果。
         elif wait_for_element_present(driver, 'div#list'):
-            soup = BeautifulSoup(driver.page_source, 'html.parser')
-            tgt_urls = []
-            anchors = soup.find_all('a', string='詳細書目')
-            for anchor in anchors:
-                tgt_urls.append(org_url.replace('search.cfm', '') + anchor['href'])
+            tgt_urls = get_all_tgt_urls(driver, '詳細書目')
 
             for tgt_url in tgt_urls:
                 driver.get(tgt_url)
                 
                 # 是否 driver 在＂書目資料＂的頁面？
-                if wait_for_element_present(driver, 'div.info_box', 10):
-                    i = 0
-                    while True:
-                        try:
-                            tgt = accurately_find_table_and_read_it(driver, 'table.list_border')
-                            tgt['圖書館'], tgt['連結'] = org, driver.current_url
-                            table.append(tgt)
-
-                            wait_for_element_clickable(driver, str(2+i), 2).click()
-                            i += 1
-                        except:
-                            break
-                else:
-                    break
-        # 無，會顯示訊息「無符合館藏資料」
+                if wait_for_element_present(driver, 'div.info_box'):
+                    table += crawl_all_tables_on_page(driver, table_position, org, driver.current_url)
+        
+        # Case3. 無搜尋結果，driver 會在＂查詢結果＂，並顯示訊息「無符合館藏資料」
         elif wait_for_element_present(driver, 'div.msg'):
             print(f'在「{org}」找不到「{ISBN}」')
             return
-        table = organize_columns(table)
+        
+        # Case. 抓不到 table，離開 function
+        if table == []:
+            print(f'在「{org}」爬取「{ISBN}」時，抓取不到 table')
+            return
+        
     except Exception as e:
         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
+    
     else:
+        table = organize_columns(table)
         return table
 
 # 國立臺北大學 NTPU X(卡在進table前的頁面)
@@ -4194,8 +4206,8 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xp
 
     try: 
         # 分三類的進入方式
-        into_1_lst = ["馬偕醫學院", "工業技術研究院", "國立清華大學", "國立臺灣美術館","國立臺灣史前文化博物館"] #要進第一種方法的機構lst
-        into_2_lst = ["明志科技大學", "國立臺南大學", "台灣神學研究學院" ] #要進第二種方法的機構lst
+        into_1_lst = ["馬偕醫學院", "工業技術研究院", "國立清華大學", "國立臺灣美術館", "國立臺灣史前文化博物館"] #要進第一種方法的機構lst
+        into_2_lst = ["明志科技大學", "長庚科技大學", "國立臺南大學", "台灣神學研究學院","國家兩廳院" ] #要進第二種方法的機構lst
         into_3_lst = ["國立暨南國際大學", "高苑科技大學" ]
         driver.get(url)
         if org in into_1_lst:
@@ -4208,12 +4220,12 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xp
             search_input.send_keys(ISBN)
             gogo = wait_for_element_clickable(driver, "Search", 5, By.NAME).click()
         elif org in into_2_lst: 
-            search_input = wait_for_element_clickable(driver, "request", 5, By.NAME).clear()
+            search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
             search_input.send_keys(ISBN)
             gogo = wait_for_element_clickable(driver, "/html/body/table[6]/tbody/tr[2]/td[2]/div/input[2]", 5, By.XPATH).click()
         elif org in into_3_lst:
             ISBN_xpath3 = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
-            use_ISBN = wait_for_element_clickable(driver, ISBN_xpath3, 5, By.XPATH)
+            use_ISBN = wait_for_element_clickable(driver, ISBN_xpath3, 5, By.XPATH).click()
             search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
             search_input.send_keys(ISBN)
             if org == "國立暨南國際大學":
@@ -4323,7 +4335,7 @@ def MCUT(ISBN):
         clickclick_crawler(
         driver, 
         '明志科技大學',
-        "https://aleph.lib.cgu.edu.tw/F",
+        "https://aleph.lib.cgu.edu.tw/F?func=find-b&ccl_term=WRD&adjacent=Y&local_base=FLY03",
         ISBN, 
         "",  
         "a", 
@@ -4351,7 +4363,7 @@ def CGUST(ISBN):
         clickclick_crawler(
         driver, 
         '長庚科技大學',
-        "https://aleph.lib.cgu.edu.tw/F",
+        "https://aleph.lib.cgu.edu.tw/F?func=find-b-0&local_base=fly04",
         ISBN, 
         "",  
         "a", 
@@ -4392,7 +4404,7 @@ def NTHU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立暨南國際大學 NCNU
+# 國立暨南國際大學 NCNU V
 def NCNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
@@ -4588,3 +4600,69 @@ def KYU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
+
+
+# ---------------------------------------難以形容|很有特色------------------------------------------------
+# chungchung_crawler()
+# 中臺|中州
+def chungchung_crawler(driver, org, org_url, ISBN) :
+    driver.get(org_url)
+    search_input = wait_for_element_clickable(driver, "input", 5, By.NAME)
+    search_input.send_keys(ISBN)
+    gogo = wait_for_element_clickable(driver, "query", 5, By.NAME).click()
+
+    where = wait_for_element_clickable(driver, "body > div > font > font > form > center:nth-child(1) > table > tbody > tr:nth-child(2) > td:nth-child(4) > font > a", 5, By.CSS_SELECTOR).click()
+    table = accurately_find_table_and_read_it(driver, "table", table_index=3)
+    table = organize_columns(table)
+    return table
+
+# 中臺科技大學 CTUST
+def CTUST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        chungchung_crawler(
+        driver, 
+        '中臺科技大學',
+        "http://120.107.56.24/isbn1.htm",
+        ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 中州科技大學 CCUST
+def CCUST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        chungchung_crawler(
+        driver, 
+        '中州科技大學',
+        "http://163.23.234.194/isbn1.htm",
+        ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
