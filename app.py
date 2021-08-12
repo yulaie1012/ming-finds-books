@@ -48,7 +48,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     get_all_tgt_urls
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
-creds = Credentials.from_service_account_file("C:\\Users\mayda\Downloads\\books-319701-17701ae5510b.json", scopes=scope)
+creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
 gs = gspread.authorize(creds)
 sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
 worksheet = sheet.get_worksheet(0)
@@ -67,8 +67,8 @@ e_dict = dict.fromkeys(east, ("東","east"))
 app = Flask(__name__)
 
 # LINE 聊天機器人的基本資料
-line_bot_api = LineBotApi('rtut2oGaCBibk5DTObwKuFgQgD8rC7JazGdF9f68BIP/2lXU+bBWjm3JgHQtvh0iHySthUi2We1XPVlGTMCh9s8Q1IZZL58osZBRvyHz8GXOnp4cd959MMyh/bXZkpaqdOepM0vcrSXXZvHSzcolLQdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('5fecbae22c9e1492decda139bd70fd70')
+line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
+handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
 parser = WebhookParser('5fecbae22c9e1492decda139bd70fd70')
 
 # 打個招呼 :)
