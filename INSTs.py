@@ -591,7 +591,7 @@ def FGU(ISBN):
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = webdriver.Chrome("C:\\Users\mayda\Downloads\chromedriver", options=my_options, desired_capabilities=my_capabilities)
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
     
     output.append(
