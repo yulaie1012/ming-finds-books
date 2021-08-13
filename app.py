@@ -45,7 +45,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, crawl_all_tables_on_page, \
-    get_all_tgt_urls
+    get_all_tgt_urls, 國立臺中科技大學, NUTC
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -255,7 +255,7 @@ def test1(event):
         NPUs = ["npu","NPU", "國立澎湖科技大學", "澎湖科技大學", "澎湖科大", "澎科大", "澎科"]
 
         KLCCABs = ["klccab","KLCCAB","kllib","KLLIB","基隆市公共圖書館","基隆市圖","基隆市圖書館", "基隆圖書館"]
-        
+        NUTCs = ["nutc","NUTC", "國立臺中科技大學","國立台中科技大學","臺中科技大學","台中科技大學","臺中科大","台中科大","中科大","中科"]
         NCLs = ["ncl","NCL", "國家圖書館", "國圖"]
         SHUs = ["shu","SHU", "世新大學", "世新"]
         TUMTs = ["tumt","TUMT", "臺北海洋科技大學", "台北海洋科技大學", "北海科大"]
@@ -530,6 +530,8 @@ def test1(event):
                 KLCCAB(ISBN)
             elif str_input[i] in NCLs: # 國家圖書館
                 NCL(ISBN)
+            elif str_input[i] in NUTCs: # 國立臺中科技大學
+                NUTC(ISBN)                
             elif str_input[i] in SHUs: # 世新大學
                 SHU(ISBN) 
             elif str_input[i] in TUMTs: # 台北海洋科技大學
