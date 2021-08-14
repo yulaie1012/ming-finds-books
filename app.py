@@ -22,15 +22,18 @@ from selenium.webdriver.support.ui import WebDriverWait  # 等待機制
 from selenium.webdriver.support import expected_conditions as EC  # 預期事件
 from selenium.webdriver.common.by import By  # 找尋元素的方法
 #---------------------------------------
+'''
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
 import gspread
 import gspread_dataframe as gd
+'''
 #---------------------------------------
 import import_ipynb
 import toread
-import INSTs
 from toread import toread, toread_crawlers, NTC, HWU
+import INSTs
+'''
 from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
     search_ISBN, click_more_btn, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
     easy_crawler, NYCU, NTNU, NTUST, PCCU, FJU, SINICA, webpac_pro_crawler, webpac_ajax_crawler, NTPC, KLCCAB, \
@@ -46,13 +49,17 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, crawl_all_tables_on_page, \
     get_all_tgt_urls, 國立臺中科技大學, NUTC, 敏實科技大學, MITUST
+'''
+from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
+    search_ISBN, click_more_btn, webpac_jsp_crawler, FGU, select_ISBN_strategy, wait_for_element_clickable
 
+'''
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
 gs = gspread.authorize(creds)
 sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
 worksheet = sheet.get_worksheet(0)
-
+'''
 
 #----------------用來做縣市對應region字典-----------------
 north = ["台北市","新北市","基隆市","桃園市","苗栗縣","新竹縣","新竹市","臺北市", "連江縣"]

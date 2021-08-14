@@ -585,11 +585,13 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 
 # 佛光大學 FGU V
 def FGU(ISBN):
+    '''
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
+    '''
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
@@ -604,9 +606,12 @@ def FGU(ISBN):
     )
     
     driver.quit()
+    
     gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    '''
     worksheet.append_rows(gg.values.tolist())
-    return gg
+    '''
+    return "abc"
 
 # 經國管理暨健康學院 CKU V
 def CKU(ISBN):
