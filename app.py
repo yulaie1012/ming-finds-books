@@ -67,8 +67,10 @@ e_dict = dict.fromkeys(east, ("東","east"))
 app = Flask(__name__)
 
 # LINE 聊天機器人的基本資料
-line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
-handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
+# line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
+# handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
+line_bot_api = LineBotApi('rtut2oGaCBibk5DTObwKuFgQgD8rC7JazGdF9f68BIP/2lXU+bBWjm3JgHQtvh0iHySthUi2We1XPVlGTMCh9s8Q1IZZL58osZBRvyHz8GXOnp4cd959MMyh/bXZkpaqdOepM0vcrSXXZvHSzcolLQdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('5fecbae22c9e1492decda139bd70fd70')
 parser = WebhookParser('5fecbae22c9e1492decda139bd70fd70')
 
 # 打個招呼 :)
