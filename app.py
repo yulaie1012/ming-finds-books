@@ -134,7 +134,9 @@ def test1(event):
     
     #----------------爬蟲----------------- 
     else: 
+        '''
         worksheet.clear()
+        '''
         str_input = event.message.text.split(' ')
         ISBN = str_input[0]
         line_bot_api.reply_message(
