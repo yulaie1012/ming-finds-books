@@ -50,6 +50,8 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, crawl_all_tables_on_page, \
     get_all_tgt_urls, 國立臺中科技大學, NUTC, 敏實科技大學, MITUST
 
+from INSTs import my_options, my_capabilities
+
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
 gs = gspread.authorize(creds)
