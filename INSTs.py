@@ -3819,6 +3819,44 @@ def TUMT(ISBN):
 
 
 
+# ---------------------------------被獨立出來的敏實科大----------------------------------------
+def 敏實科技大學(driver, org, org_url, ISBN):
+    driver.get(url)
+    search_input = wait_for_element_clickable(driver, "DB.IN1", 5, By.NAME)
+    search_input.send_keys(ISBN)
+    gogo = wait_for_element_clickable(driver, "btn.btn-primary", 5, By.CLASS_NAME).click()
+
+    where = wait_for_element_clickable(driver, "/html/body/table[3]/tbody/tr[2]/td[2]/a", 5, By.XPATH).click()
+    time.sleep(3)
+    table = accurately_find_table_and_read_it("table", 3)
+    table = organize_columns(table)
+    return table
+
+# 敏實科技大學 MITUST
+def MITUST(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        敏實科技大學(
+        driver,
+        '敏實科技大學',
+        'http://120.105.200.52/xsearch-b.html',
+        ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
 
 # ------------------------------------------Primo-----------------------------------------
 # primo_crawler()
@@ -4687,6 +4725,7 @@ def chungchung_crawler(driver, org, org_url, ISBN) :
     where = wait_for_element_clickable(driver, "body > div > font > font > form > center:nth-child(1) > table > tbody > tr:nth-child(2) > td:nth-child(4) > font > a", 5, By.CSS_SELECTOR).click()
     table = accurately_find_table_and_read_it(driver, "table", table_index=3)
     table = organize_columns(table)
+    table.drop([0], inplace=True)
     return table
 
 # 中臺科技大學 CTUST

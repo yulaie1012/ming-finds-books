@@ -45,7 +45,7 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, crawl_all_tables_on_page, \
-    get_all_tgt_urls, 國立臺中科技大學, NUTC
+    get_all_tgt_urls, 國立臺中科技大學, NUTC, 敏實科技大學, MITUST
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -259,6 +259,7 @@ def test1(event):
         NCLs = ["ncl","NCL", "國家圖書館", "國圖"]
         SHUs = ["shu","SHU", "世新大學", "世新"]
         TUMTs = ["tumt","TUMT", "臺北海洋科技大學", "台北海洋科技大學", "北海科大"]
+        MITUSTs = ["mitust","MITUST", "敏實科技大學", "敏實科大", "敏實"]
 
         NTUs = ["ntu","NTU", "國立臺灣大學", "國立台灣大學", "臺灣大學", "台灣大學", "臺大", "台大"]
         NCCUs = ["nccu","NCCU", "國立政治大學", "政治大學", "政大"]
@@ -535,7 +536,9 @@ def test1(event):
             elif str_input[i] in SHUs: # 世新大學
                 SHU(ISBN) 
             elif str_input[i] in TUMTs: # 台北海洋科技大學
-                TUMT(ISBN)                                  
+                TUMT(ISBN)  
+            elif str_input[i] in MITUSTs: # 敏實科技大學
+                MITUST(ISBN)                                
             elif str_input[i] in NTUs: # 國立臺灣大學
                 NTU(ISBN)
             elif str_input[i] in NCCUs: # 國立政治大學
