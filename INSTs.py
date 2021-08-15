@@ -4463,7 +4463,7 @@ def MCUT(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 長庚科技大學 CGUST
+# 長庚科技大學 CGUST V
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4575,7 +4575,7 @@ def NUTN(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國家兩廳院 NTCH
+# 國家兩廳院 NTCH 9573308436
 def NTCH(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4631,7 +4631,7 @@ def NMP(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 台灣神學研究學院 TGST
+# 台灣神學研究學院 TGST 9867282736
 def TGST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
