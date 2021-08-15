@@ -31,159 +31,159 @@ my_options.add_experimental_option('excludeSwitches', ['enable-automation'])  #�
 my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 當 html下載完成之後，不等待解析完成，selenium會直接返回
 
-# # --------------------------處理欄位----------------------------
-# def organize_columns(df1):
-#     # 合併全部的 DataFrame
-#     try:
-#         df1 = pd.concat(df1, axis=0, ignore_index=True)
-#     except:
-#         df1.reset_index(drop=True, inplace=True)
+# --------------------------處理欄位----------------------------
+def organize_columns(df1):
+    # 合併全部的 DataFrame
+    try:
+        df1 = pd.concat(df1, axis=0, ignore_index=True)
+    except:
+        df1.reset_index(drop=True, inplace=True)
 
-#     # 處理 column 2：館藏地
-#     c2 = [
-#         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
-#         '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置', '典藏地點',
-#         '典藏區域', '書架位置'
-#     ]
-#     df1['c2'] = ''
-#     for c in c2:
-#         try:
-#             df1['c2'] += df1[c]
-#         except:
-#             pass
+    # 處理 column 2：館藏地
+    c2 = [
+        '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
+        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置', '典藏地點',
+        '典藏區域', '書架位置'
+    ]
+    df1['c2'] = ''
+    for c in c2:
+        try:
+            df1['c2'] += df1[c]
+        except:
+            pass
 
-#     # 處理 column 3：索書號
-#     c3 = ['索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)']
-#     df1['c3'] = ''
-#     for c in c3:
-#         try:
-#             df1['c3'] += df1[c]
-#         except:
-#             pass
+    # 處理 column 3：索書號
+    c3 = ['索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)']
+    df1['c3'] = ''
+    for c in c3:
+        try:
+            df1['c3'] += df1[c]
+        except:
+            pass
 
-#     # 處理 column 4：館藏狀態
-#     c4 = [
-#         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
-#         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
-#         '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24',
-#         '圖書狀況Book Status', '館藏狀況(月-日-西元年)', '現況', '借閱狀況'
-#     ]
-#     df1['c4'] = ''
-#     for c in c4:
-#         try:
-#             df1['c4'] += df1[c]
-#         except:
-#             pass
+    # 處理 column 4：館藏狀態
+    c4 = [
+        '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
+        '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
+        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24',
+        '圖書狀況Book Status', '館藏狀況(月-日-西元年)', '現況', '借閱狀況'
+    ]
+    df1['c4'] = ''
+    for c in c4:
+        try:
+            df1['c4'] += df1[c]
+        except:
+            pass
 
-#     # 直接生成另一個 DataFrame
-#     df2 = pd.DataFrame()
-#     df2['圖書館'] = df1['圖書館']
-#     df2['館藏地'] = df1['c2']
-#     df2['索書號'] = df1['c3']
-#     df2['館藏狀態'] = df1['c4']
-#     df2['連結'] = df1['連結']
+    # 直接生成另一個 DataFrame
+    df2 = pd.DataFrame()
+    df2['圖書館'] = df1['圖書館']
+    df2['館藏地'] = df1['c2']
+    df2['索書號'] = df1['c3']
+    df2['館藏狀態'] = df1['c4']
+    df2['連結'] = df1['連結']
 
-#     # 遇到值為 NaN時，將前一列的值填補進來
-#     df2.fillna(method="ffill", axis=0, inplace=True)
+    # 遇到值為 NaN時，將前一列的值填補進來
+    df2.fillna(method="ffill", axis=0, inplace=True)
 
-#     return df2
+    return df2
 
-# # -------------------------等待ele出現--------------------------
-# def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
-#     try:
-#         time.sleep(0.3)
-#         element = WebDriverWait(driver, waiting_time).until(
-#             EC.presence_of_element_located((by, element_position)))
-#     except:
-#         return False
-#     else:
-#         return element
+# -------------------------等待ele出現--------------------------
+def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
+    try:
+        time.sleep(0.3)
+        element = WebDriverWait(driver, waiting_time).until(
+            EC.presence_of_element_located((by, element_position)))
+    except:
+        return False
+    else:
+        return element
 
-# def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
-#     try:
-#         time.sleep(0.5)
-#         element = WebDriverWait(driver, waiting_time).until(
-#             EC.presence_of_all_elements_located((by, elements_position)))
-#     except:
-#         return False
-#     else:
-#         return element
+def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
+    try:
+        time.sleep(0.5)
+        element = WebDriverWait(driver, waiting_time).until(
+            EC.presence_of_all_elements_located((by, elements_position)))
+    except:
+        return False
+    else:
+        return element
 
-# def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
-#     try:
-#         time.sleep(0.5)
-#         element = WebDriverWait(driver, waiting_time).until(
-#             EC.element_to_be_clickable((by, element_position)))
-#     except:
-#         return False
-#     else:
-#         return element
+def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
+    try:
+        time.sleep(0.5)
+        element = WebDriverWait(driver, waiting_time).until(
+            EC.element_to_be_clickable((by, element_position)))
+    except:
+        return False
+    else:
+        return element
 
-# def get_all_tgt_urls(driver, link_text):
-#     tgt_urls = []
+def get_all_tgt_urls(driver, link_text):
+    tgt_urls = []
 
-#     anchors = driver.find_elements_by_link_text(link_text)
-#     for anchor in anchors:
-#         tgt_urls.append(anchor.get_attribute('href'))
+    anchors = driver.find_elements_by_link_text(link_text)
+    for anchor in anchors:
+        tgt_urls.append(anchor.get_attribute('href'))
     
-#     return tgt_urls
+    return tgt_urls
 
-# # ------------------------等待網址改變--------------------------
-# def wait_for_url_changed(driver, old_url, waiting_time=5):
-#     try:
-#         WebDriverWait(driver, waiting_time).until(EC.url_changes(old_url))
-#     except:
-#         return False
-#     else:
-#         return True
+# ------------------------等待網址改變--------------------------
+def wait_for_url_changed(driver, old_url, waiting_time=5):
+    try:
+        WebDriverWait(driver, waiting_time).until(EC.url_changes(old_url))
+    except:
+        return False
+    else:
+        return True
 
-# # ------------------------精準定位table-------------------------
-# def accurately_find_table_and_read_it(driver, table_position, table_index=0):
-#     try:
-#         if not wait_for_element_present(driver, table_position):
-#             print(f'找不到 {table_position}！')
-#             return
-#         soup = BeautifulSoup(driver.page_source, 'html.parser')
-#         table_innerHTML = soup.select(table_position)[table_index]
-#         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
-#         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#     except:
-#         return
-#     else:
-#         return tgt
+# ------------------------精準定位table-------------------------
+def accurately_find_table_and_read_it(driver, table_position, table_index=0):
+    try:
+        if not wait_for_element_present(driver, table_position):
+            print(f'找不到 {table_position}！')
+            return
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        table_innerHTML = soup.select(table_position)[table_index]
+        tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
+        # tgt['圖書館'], tgt['連結'] = org, driver.current_url
+    except:
+        return
+    else:
+        return tgt
 
-# def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
-#     table = []
+def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
+    table = []
     
-#     i = 0
-#     while True:
-#         try:
-#             tgt = accurately_find_table_and_read_it(driver, table_position)
-#             tgt['圖書館'], tgt['連結'] = org, url_pattern
-#             table.append(tgt)
+    i = 0
+    while True:
+        try:
+            tgt = accurately_find_table_and_read_it(driver, table_position)
+            tgt['圖書館'], tgt['連結'] = org, url_pattern
+            table.append(tgt)
 
-#             wait_for_element_clickable(driver, str(2+i), 2).click()
-#             i += 1
-#         except:
-#             break
+            wait_for_element_clickable(driver, str(2+i), 2).click()
+            i += 1
+        except:
+            break
     
-#     return table
+    return table
 
-# # --------------------等待input出現|ISBN----------------------
-# def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
-#     search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
-#     time.sleep(0.5)
-#     search_input.send_keys(ISBN)
-#     time.sleep(0.5)
-#     search_input.send_keys(Keys.ENTER)
+# --------------------等待input出現|ISBN----------------------
+def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
+    search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
+    time.sleep(0.5)
+    search_input.send_keys(ISBN)
+    time.sleep(0.5)
+    search_input.send_keys(Keys.ENTER)
 
-# # --------------------等待select出現|ISBN----------------------
-# def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
-#     search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
-#     time.sleep(0.5)
-#     select = Select(search_field)
-#     time.sleep(0.5)
-#     select.select_by_value(option_position)
+# --------------------等待select出現|ISBN----------------------
+def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
+    search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
+    time.sleep(0.5)
+    select = Select(search_field)
+    time.sleep(0.5)
+    select.select_by_value(option_position)
 
 # ------------------------Primo找書--------------------------
 def primo_finding(driver, org, tcn): # 改wait
@@ -248,17 +248,17 @@ def primo_greendot_finding(driver, org): #改 wait
     
     return sub_df_lst
 
-# #------------------------按載入更多----------------------------
-# def click_more_btn(driver):
-#     try:
-#         while True:
-#             more_btn = wait_for_element_clickable(driver, '載入更多')
-#             if not more_btn:
-#                 return
-#             more_btn.click()
-#             time.sleep(2)  # 不得已的強制等待
-#     except:
-#         return
+#------------------------按載入更多----------------------------
+def click_more_btn(driver):
+    try:
+        while True:
+            more_btn = wait_for_element_clickable(driver, '載入更多')
+            if not more_btn:
+                return
+            more_btn.click()
+            time.sleep(2)  # 不得已的強制等待
+    except:
+        return
 
 
 
@@ -266,48 +266,47 @@ def primo_greendot_finding(driver, org): #改 wait
 # ----------------------------------------載入更多系列----------------------------------------
 # webpac_gov_crawler() 
 # 宜蘭|桃園|高雄|屏東|花蓮|澎湖|雲科|影視中心
-# def webpac_gov_crawler(driver, org, org_url, ISBN):
-#     try:
-#         table = []
+def webpac_gov_crawler(driver, org, org_url, ISBN):
+    try:
+        table = []
 
-#         driver.get(org_url + 'advanceSearch')
-#         select_ISBN_strategy(driver, 'searchField', 'ISBN')
-#         time.sleep(0.5)
-#         search_ISBN(driver, ISBN, 'searchInput')
+        driver.get(org_url + 'advanceSearch')
+        select_ISBN_strategy(driver, 'searchField', 'ISBN')
+        search_ISBN(driver, ISBN, 'searchInput')
 
-#         # 一筆
-#         if wait_for_element_present(driver, '.bookplace_list > table', 10):
-#             click_more_btn(driver)
-#             tgt = accurately_find_table_and_read_it(driver, '.bookplace_list > table')
-#             tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#             table.append(tgt)
-#         # 多筆
-#         elif wait_for_element_present(driver, '.data_all .data_quantity2 em', 5):
-#             # 取得多個連結
-#             tgt_urls = []
-#             soup = BeautifulSoup(driver.page_source, 'html.parser')
-#             anchors = soup.select('.bookdata > h2 > a')
-#             for anchor in anchors:
-#                 tgt_urls.append(org_url + anchor['href'])
-#             # 進入不同的連結
-#             for tgt_url in tgt_urls:
-#                 driver.get(tgt_url)
-#                 if wait_for_element_present(driver, '.bookplace_list > table', 10):
-#                     click_more_btn(driver)
-#                     tgt = accurately_find_table_and_read_it(driver, '.bookplace_list > table')
-#                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#                     table.append(tgt)
-#         # 無
-#         else:
-#             print(f'在「{org}」找不到「{ISBN}」')
-#             return
+        # 一筆
+        if wait_for_element_present(driver, '.bookplace_list > table', 10):
+            click_more_btn(driver)
+            tgt = accurately_find_table_and_read_it(driver, '.bookplace_list > table')
+            tgt['圖書館'], tgt['連結'] = org, driver.current_url
+            table.append(tgt)
+        # 多筆
+        elif wait_for_element_present(driver, '.data_all .data_quantity2 em', 5):
+            # 取得多個連結
+            tgt_urls = []
+            soup = BeautifulSoup(driver.page_source, 'html.parser')
+            anchors = soup.select('.bookdata > h2 > a')
+            for anchor in anchors:
+                tgt_urls.append(org_url + anchor['href'])
+            # 進入不同的連結
+            for tgt_url in tgt_urls:
+                driver.get(tgt_url)
+                if wait_for_element_present(driver, '.bookplace_list > table', 10):
+                    click_more_btn(driver)
+                    tgt = accurately_find_table_and_read_it(driver, '.bookplace_list > table')
+                    tgt['圖書館'], tgt['連結'] = org, driver.current_url
+                    table.append(tgt)
+        # 無
+        else:
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
 
-#         table = organize_columns(table)
-#     except:
-#         print(f'在「{org}」搜尋「{ISBN}」時，發生不明錯誤！')
-#         return
-#     else:
-#         return table
+        table = organize_columns(table)
+    except:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生不明錯誤！')
+        return
+    else:
+        return table
 
 # 宜蘭縣公共圖書館 ILCCB V
 def ILCCB(ISBN):
@@ -518,74 +517,74 @@ def TFAI(ISBN):
 # 佛光|經國學院|宜大|中華|北基督|宏國德霖|嘉藥|臺北市|臺藝大|北市大|北醫|北商大|新竹市|新竹縣|苗栗縣
 # 育達|仁德醫專|景文|致理|萬能|健行|明新|空大|中國科大|中教大|臺體|東海|靜宜|僑光|彰師
 # 雲林縣|嘉義市|嘉義縣|南華|遠東|正修|美和|臺東|臺東縣|金門|金門縣
-# def webpac_jsp_crawler(driver, org, org_url, ISBN):
-#     try:
-#         table = []
+def webpac_jsp_crawler(driver, org, org_url, ISBN):
+    try:
+        table = []
         
-#         driver.get(org_url)
-#         try:
-#             select_ISBN_strategy(driver, 'search_field', 'ISBN')
-#         except:
-#             select_ISBN_strategy(driver, 'search_field', 'STANDARDNO')  # 北科大
-#         search_ISBN(driver, ISBN, 'search_input')
+        driver.get(org_url)
+        try:
+            select_ISBN_strategy(driver, 'search_field', 'ISBN')
+        except:
+            select_ISBN_strategy(driver, 'search_field', 'STANDARDNO')  # 北科大
+        search_ISBN(driver, ISBN, 'search_input')
         
-#         # 一筆
-#         if wait_for_element_present(driver, 'table.order'):
-#             i = 0
-#             while True:
-#                 try:
-#                     tgt = accurately_find_table_and_read_it(driver, 'table.order')
-#                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#                     table.append(tgt)
+        # 一筆
+        if wait_for_element_present(driver, 'table.order'):
+            i = 0
+            while True:
+                try:
+                    tgt = accurately_find_table_and_read_it(driver, 'table.order')
+                    tgt['圖書館'], tgt['連結'] = org, driver.current_url
+                    table.append(tgt)
 
-#                     wait_for_element_clickable(driver, str(2+i), 2).click()
-#                     i += 1
-#                     time.sleep(0.5)
-#                 except:
-#                     break
-#         # 多筆、零筆
-#         elif wait_for_element_present(driver, 'iframe#leftFrame'):
-#             iframe = driver.find_element_by_id('leftFrame')
-#             driver.switch_to.frame(iframe)
-#             time.sleep(1)  # 切換到 <frame> 需要時間，否則會無法讀取
+                    wait_for_element_clickable(driver, str(2+i), 2).click()
+                    i += 1
+                    time.sleep(0.5)
+                except:
+                    break
+        # 多筆、零筆
+        elif wait_for_element_present(driver, 'iframe#leftFrame'):
+            iframe = driver.find_element_by_id('leftFrame')
+            driver.switch_to.frame(iframe)
+            time.sleep(1)  # 切換到 <frame> 需要時間，否則會無法讀取
             
-#             # 判斷是不是＂零筆＂查詢結果
-#             if wait_for_element_present(driver, '#totalpage').text == '0':
-#                 print(f'在「{org}」找不到「{ISBN}」')
-#                 return
+            # 判斷是不是＂零筆＂查詢結果
+            if wait_for_element_present(driver, '#totalpage').text == '0':
+                print(f'在「{org}」找不到「{ISBN}」')
+                return
             
-#             # ＂多筆＂查詢結果
-#             tgt_urls = []
-#             anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
-#             if anchors == []:
-#                 anchors = driver.find_elements(By.LINK_TEXT, '內容')
-#             for anchor in anchors:
-#                 tgt_urls.append(anchor.get_attribute('href'))
+            # ＂多筆＂查詢結果
+            tgt_urls = []
+            anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
+            if anchors == []:
+                anchors = driver.find_elements(By.LINK_TEXT, '內容')
+            for anchor in anchors:
+                tgt_urls.append(anchor.get_attribute('href'))
 
-#             for tgt_url in tgt_urls:
-#                 driver.get(tgt_url)
-#                 # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
-#                 if wait_for_element_present(driver, 'table.order'):
-#                     i = 0
-#                     while True:
-#                         try:
-#                             tgt = accurately_find_table_and_read_it(driver, 'table.order')
-#                             tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#                             table.append(tgt)
+            for tgt_url in tgt_urls:
+                driver.get(tgt_url)
+                # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
+                if wait_for_element_present(driver, 'table.order'):
+                    i = 0
+                    while True:
+                        try:
+                            tgt = accurately_find_table_and_read_it(driver, 'table.order')
+                            tgt['圖書館'], tgt['連結'] = org, driver.current_url
+                            table.append(tgt)
 
-#                             wait_for_element_clickable(driver, str(2+i), 2).click()
-#                             i += 1
-#                             time.sleep(0.5)
-#                         except:
-#                             break
-#                 else:
-#                     continue
-#         table = organize_columns(table)
-#     except Exception as e:
-#         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-#         return
-#     else:
-#         return table
+                            wait_for_element_clickable(driver, str(2+i), 2).click()
+                            i += 1
+                            time.sleep(0.5)
+                        except:
+                            break
+                else:
+                    continue
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
 
 # 佛光大學 FGU V
 def FGU(ISBN):
@@ -1608,23 +1607,23 @@ def KMCPL(ISBN):
 # ------------------------------------最簡單的那種------------------------------------------
 # easy_crawler()
 # 海大|台科大|台師大|中原|逢甲|朝陽|中山|高師|文藻|大仁|中央
-# def easy_crawler(driver, org, org_url, ISBN):
-#     try:
-#         driver.get(org_url)
-#         search_ISBN(driver, ISBN, 'SEARCH')
+def easy_crawler(driver, org, org_url, ISBN):
+    try:
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'SEARCH')
 
-#         if not wait_for_element_present(driver, 'table.bibItems'):
-#             print(f'在「{org}」找不到「{ISBN}」')
-#             return
+        if not wait_for_element_present(driver, 'table.bibItems'):
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
 
-#         table = accurately_find_table_and_read_it(driver, 'table.bibItems')
-#         table['圖書館'], table['連結'] = org, driver.current_url
-#         table = organize_columns(table)
-#     except Exception as e:
-#         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-#         return
-#     else:
-#         return table
+        table = accurately_find_table_and_read_it(driver, 'table.bibItems')
+        table['圖書館'], table['連結'] = org, driver.current_url
+        table = organize_columns(table)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        return table
 
 # 國立臺灣海洋大學 NTOU V
 def NTOU(ISBN):
@@ -2456,13 +2455,11 @@ def NUU(ISBN):
 def uhtbin_crawler(driver, org, org_url, ISBN):
     try:
         driver.get(org_url)
-        
         try:
             select_ISBN_strategy(driver, 'srchfield1', 'GENERAL^SUBJECT^GENERAL^^所有欄位')
         except:
             select_ISBN_strategy(driver, 'srchfield1', '020^SUBJECT^SERIES^Title Processing^ISBN')
         search_ISBN(driver, ISBN, 'searchdata1')
-        time.sleep(2)
         
         if '未在任何圖書館找到' in driver.find_element(By.CSS_SELECTOR, 'table').text:
             print(f'在「{org}」找不到「{ISBN}」')
