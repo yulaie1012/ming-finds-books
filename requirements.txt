@@ -35,7 +35,7 @@ certifi==2020.12.5
 backcall==0.2.0
 bleach==3.3.0
 
-# chardet==3.0.4
+chardet==3.0.4
 # colorama==0.4.4
 # cycler==0.10.0
 # decorator==4.4.2
