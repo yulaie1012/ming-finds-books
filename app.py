@@ -29,7 +29,7 @@ import gspread
 import gspread_dataframe as gd
 
 #---------------------------------------
-import import_ipynb
+# import import_ipynb
 import toread
 from toread import toread, toread_crawlers, NTC, HWU
 import INSTs
