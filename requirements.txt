@@ -26,3 +26,8 @@ urllib3==1.21.1
 click==8.0.1
 html5lib==1.1
 csvsorter==1.4
+idna==2.5
+defusedxml==0.6.0
+cachetools==4.2.2
+certifi==2020.12.5
+cffi==1.14.5
