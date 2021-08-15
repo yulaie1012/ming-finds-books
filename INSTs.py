@@ -3824,7 +3824,7 @@ def TUMT(ISBN):
 
 # ---------------------------------被獨立出來的敏實科大----------------------------------------
 def 敏實科技大學(driver, org, org_url, ISBN):
-    driver.get(url)
+    driver.get(org_url)
     search_input = wait_for_element_clickable(driver, "DB.IN1", 5, By.NAME)
     search_input.send_keys(ISBN)
     gogo = wait_for_element_clickable(driver, "btn.btn-primary", 5, By.CLASS_NAME).click()
