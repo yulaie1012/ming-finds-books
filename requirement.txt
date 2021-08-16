@@ -1,7 +1,0 @@
-idna==2.10
-itsdangerous==1.1.0
-jinja2==2.11.2
-line-bot-sdk==1.19.0
-markupsafe==1.1.1
-psycopg2==2.8.6
-psycopg2-binary==2.8.6

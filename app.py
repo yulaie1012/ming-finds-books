@@ -538,7 +538,7 @@ def test1(event):
             elif str_input[i] in TNNUAs: # 國立臺南藝術大學
                 TNNUA(ISBN)
             elif str_input[i] in NTCPLs: # 南投縣圖書館
-                NTCPL(ISMN)
+                NTCPL(ISBN)
             elif str_input[i] in SHUs: # 世新大學
                 SHU(ISBN) 
             elif str_input[i] in TUMTs: # 台北海洋科技大學
