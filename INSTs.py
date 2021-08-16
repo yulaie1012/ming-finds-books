@@ -22,7 +22,6 @@ from urllib.request import HTTPError  # 載入 HTTPError
 from bs4 import BeautifulSoup
 import time  # 強制等待
 
-
 my_options = Options()
 my_options.add_argument("--incognito")  # 開啟無痕模式
 my_options.add_experimental_option('excludeSwitches', ['enable-automation'])  #把新版google的自動控制提醒關掉
@@ -42,8 +41,7 @@ def organize_columns(df1):
     # 處理 column 2：館藏地
     c2 = [
         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
-        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置', '典藏地點',
-        '典藏區域', '書架位置'
+        '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置'
     ]
     df1['c2'] = ''
     for c in c2:
@@ -53,7 +51,7 @@ def organize_columns(df1):
             pass
 
     # 處理 column 3：索書號
-    c3 = ['索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)']
+    c3 = ['索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.']
     df1['c3'] = ''
     for c in c3:
         try:
@@ -65,8 +63,7 @@ def organize_columns(df1):
     c4 = [
         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
-        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24',
-        '圖書狀況Book Status', '館藏狀況(月-日-西元年)', '現況', '借閱狀況'
+        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status', '館藏狀況(月-日-西元年)'
     ]
     df1['c4'] = ''
     for c in c4:
@@ -146,6 +143,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         table_innerHTML = soup.select(table_position)[table_index]
         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
+        print('table 抓取成功！')
         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
     except:
         return
