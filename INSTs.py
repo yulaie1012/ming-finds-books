@@ -3770,7 +3770,7 @@ def NMP(ISBN):
         moc_thm_crawler(
         driver, 
         '國立臺灣史前文化博物館',
-        "http://lib.moc.gov.tw/F?func=find-b-0&local_base=THM04",
+        "https://lib.moc.gov.tw/F?func=find-d-0&local_base=THM04",
         ISBN
         )
     )
@@ -4488,7 +4488,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號', 3: '館藏狀態', 4: '連結'}, inplace = True)
     return table
 
-# 馬偕醫學院 MMC X
+# 馬偕醫學院 MMC V
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4518,7 +4518,7 @@ def MMC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 工業技術研究院 ITRI 待測
+# 工業技術研究院 ITRI V
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4548,7 +4548,7 @@ def ITRI(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 明志科技大學 MCUT 待測
+# 明志科技大學 MCUT V
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4578,7 +4578,7 @@ def MCUT(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 長庚科技大學 CGUST 待測
+# 長庚科技大學 CGUST V
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4608,7 +4608,7 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立清華大學 NTHU X (=MMC)
+# 國立清華大學 NTHU 待測
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4623,7 +4623,7 @@ def NTHU(ISBN):
         clickclick_crawler(
         driver, 
         '國立清華大學',
-        "https://webpac.lib.nthu.edu.tw/F/?func=find-d-0",
+        "https://webpac.lib.nthu.edu.tw/F/?func=find-b-0",
         ISBN, 
         "7",
         "/html/body/form/table[1]/tbody/tr[7]/td/input",
@@ -4668,7 +4668,7 @@ def NCNU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立臺南大學 NUTN
+# 國立臺南大學 NUTN V
 def NUTN(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4698,7 +4698,7 @@ def NUTN(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國家兩廳院 NTCH 9573308436
+# 國家兩廳院 NTCH 9573308436 待測但應該可
 def NTCH(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
@@ -4719,7 +4719,7 @@ def NTCH(ISBN):
         "/html/body/form/table[3]/tbody/tr/td/input", 
         "a[1]", 
         '/html/body/table[9]',
-        [3, 4, 8]
+        [3, 4, 7]
         )
     )
     
@@ -4786,7 +4786,7 @@ def NTMOFA(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 高苑科技大學 KYU X (=MMC)
+# 高苑科技大學 KYU X (您所想要連結的資料庫目前維護中)
 def KYU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
