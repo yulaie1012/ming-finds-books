@@ -3595,13 +3595,14 @@ def KLCCAB(ISBN):
     return gg
 
 
-
-# ---------------------------------被獨立出來的中科大----------------------------------------
-def 國立臺中科技大學(driver, org, org_url, ISBN):
+# ------------------------------------難形容的特殊------------------------------------------
+# sirsidynix_crawler()
+# 中科大|南投縣|南藝大
+def sirsidynix_crawler(driver, org, org_url, ISBN):
     try:
         table = []
 
-        driver.get('https://ntit.ent.sirsidynix.net/client/zh_TW/NUTC')
+        driver.get(org_url)
         select_ISBN_strategy(driver, 'restrictionDropDown', 'false|||ISBN|||ISBN（國際標準書號）')
         search_ISBN(driver, ISBN, 'q')
 
@@ -3611,28 +3612,33 @@ def 國立臺中科技大學(driver, org, org_url, ISBN):
 
             tgt = accurately_find_table_and_read_it(driver, 'table.detailItemTable')
 
-            tgt['館藏地'] = tgt['圖書館'].str.rsplit('-', expand=True)[2]
+            if 'ntit' in org_url:
+                tgt['館藏地'] = tgt['圖書館'].str.rsplit('-', expand=True)[2]
+            elif 'tnnua' in org_url:
+                tgt['館藏地'] = tgt['狀態'].str.rsplit('-', expand=True)[1]
             tgt['圖書館'], tgt['連結'] = org, driver.current_url
             table.append(tgt)
         # ＂查詢結果＂
         elif wait_for_element_present(driver, 'div#results_wrapper'):
-            tgt_elements = wait_for_elements_present(driver, 'a.hideIE')
-
-            for tgt_element in tgt_elements:
-                tgt_element.click()
-
-                if wait_for_element_present(driver, 'div.detailItems'):
+            wait_for_element_present(driver, 'a.hideIE').click()
+            
+            if wait_for_element_present(driver, 'div.detailItems'):
+                while True:
                     time.sleep(0.5)
 
-                    tgt = accurately_find_table_and_read_it(driver, 'table.detailItemTable')
+                    tgt = accurately_find_table_and_read_it(driver, 'table.detailItemTable', -1)
 
-                    tgt['館藏地'] = tgt['圖書館'].str.rsplit('-', expand=True)[2]
+                    if 'ntit' in org_url:
+                        tgt['館藏地'] = tgt['圖書館'].str.rsplit('-', expand=True)[2]
+                    elif 'tnnua' in org_url:
+                        tgt['館藏地'] = tgt['狀態'].str.rsplit('-', expand=True)[1]
+                        
                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
                     table.append(tgt)
-                    
-                    # 第二次無法正常關閉
+
                     try:
-                        wait_for_element_present(driver, 'button[title="關閉"]').click()
+                        wait_for_elements_present(driver, '.nextArrowRight')[-1].click()
+                        time.sleep(3.5)
                     except:
                         break
         else:
@@ -3660,13 +3666,121 @@ def NUTC(ISBN):
     wait = WebDriverWait(driver, 10)
     
     output.append(
-        國立臺中科技大學(
+        sirsidynix_crawler(
         driver,
         '國立臺中科技大學',
         "https://ntit.ent.sirsidynix.net/client/zh_TW/NUTC",
         ISBN
         )
+    )  
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg    
+
+# 南投縣圖書館 NTCPL
+def NTCPL(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        sirsidynix_crawler(
+        driver,
+        '南投縣圖書館',
+        'https://nccc.ent.sirsi.net/client/zh_TW/main',
+        ISBN
+        )
+    )  
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg 
+
+# 國立臺南藝術大學 TNNUA
+def TNNUA(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    worksheet.get_all_values()
+    output = []
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        sirsidynix_crawler(
+        driver,
+        '國立臺南藝術大學',
+        'https://tnnua.ent.sirsi.net/client/zh_TW/tnnua/?',
+        ISBN
+        )
+    )  
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg 
+
+
+# ------------------------------------文化局旗下------------------------------------------
+# moc_thm_crawler()
+# 臺史館|臺文館|史前館|
+def moc_thm_crawler(driver, org, org_url, ISBN):
+    try:
+        driver.get(org_url)
+
+        select_ISBN_strategy(driver, 'find_code', 'ISBN')
+        search_ISBN(driver, ISBN, 'request')
+
+        try:
+            wait_for_element_present(driver, '/html/body/form/table[1]/tbody/tr[8]/td[3]/a', by=By.XPATH).click()
+        except:
+            print(f'在「{org}」找不到「{ISBN}」')
+            return
+        wait_for_element_present(driver, '/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/a', by=By.XPATH).click()
+
+        table = accurately_find_table_and_read_it(driver, 'table', -2)
+        table['圖書館'], table['連結'] = org, driver.current_url
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        table = organize_columns(table)
+        return table
+
+# 國立臺灣史前文化博物館 NMP
+def NMP(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    output = []
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        moc_thm_crawler(
+        driver, 
+        '國立臺灣史前文化博物館',
+        "http://lib.moc.gov.tw/F?func=find-b-0&local_base=THM04",
+        ISBN
+        )
     )
+    
+    driver.quit()
+    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+
 
 
 
@@ -3824,16 +3938,31 @@ def TUMT(ISBN):
 
 # ---------------------------------被獨立出來的敏實科大----------------------------------------
 def 敏實科技大學(driver, org, org_url, ISBN):
-    driver.get(org_url)
-    search_input = wait_for_element_clickable(driver, "DB.IN1", 5, By.NAME)
-    search_input.send_keys(ISBN)
-    gogo = wait_for_element_clickable(driver, "btn.btn-primary", 5, By.CLASS_NAME).click()
+    try:
+        table = []
 
-    where = wait_for_element_clickable(driver, "/html/body/table[3]/tbody/tr[2]/td[2]/a", 5, By.XPATH).click()
-    time.sleep(3)
-    table = accurately_find_table_and_read_it("table", 3)
-    table = organize_columns(table)
-    return table
+        driver.get(org_url)
+        search_ISBN(driver, ISBN, 'DB.IN1')
+
+        if wait_for_element_present(driver, 'span.sm9'):
+            search_result_message = BeautifulSoup(driver.page_source, 'html.parser').find_all('span', 'sm9')[-2].text
+            search_result_regex = re.compile(r'\d')
+            mo = search_result_regex.search(search_result_message)
+            if int(mo.group()) == 0:
+                print(f'在「{org}」找不到「{ISBN}」')
+                return
+
+        driver.find_elements_by_tag_name('a')[1].click()
+
+        tgt = accurately_find_table_and_read_it(driver, 'table', -1)
+        tgt['圖書館'], tgt['連結'] = org, driver.current_url
+        table.append(tgt)
+    except Exception as e:
+        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        return
+    else:
+        table = organize_columns(table)
+        return table
 
 # 敏實科技大學 MITUST
 def MITUST(ISBN):
@@ -4315,39 +4444,22 @@ def CJCU(ISBN):
 
 # ----------------------------------------要一直點進去------------------------------------------
 # clickclick_crawler()
-# 馬偕醫|工研院|明志|長庚科大|清華|暨南|臺南大|兩廳院|史前館|台神
-def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xpath):
+# 馬偕醫|工研院|明志|長庚科大|清華|暨南|臺南大|兩廳院|台神
+def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_detail, table_xpath, index_lst):
     clickclick_lst = [] 
+    into_1_lst = ["馬偕醫學院", "工業技術研究院", "國立清華大學", "國立臺灣美術館", "國立臺灣史前文化博物館"]
 
     try: 
         # 分三類的進入方式
-        into_1_lst = ["馬偕醫學院", "工業技術研究院", "國立清華大學", "國立臺灣美術館", "國立臺灣史前文化博物館"] #要進第一種方法的機構lst
-        into_2_lst = ["明志科技大學", "長庚科技大學", "國立臺南大學", "台灣神學研究學院","國家兩廳院" ] #要進第二種方法的機構lst
-        into_3_lst = ["國立暨南國際大學", "高苑科技大學" ]
-        driver.get(url)
-        if org in into_1_lst:
-            ISBN_xpath1 = "/html/body/table[6]/tbody/tr/td[1]/form/fieldset[1]/select/option[" + xpath_num + "]"
-            if org == "國立臺灣美術館" or org == "國立臺灣史前文化博物館":
-                use_ISBN = wait_for_element_clickable(driver, "/html/body/table[6]/tbody/tr[2]/td[2]/form/fieldset[1]/select/option[7]", 5, By.XPATH).click()
-            else:
-                use_ISBN = wait_for_element_clickable(driver, ISBN_xpath1, 5, By.XPATH).click()
-            search_input = wait_for_element_clickable(driver, "y", 5, By.NAME)
-            search_input.send_keys(ISBN)
-            gogo = wait_for_element_clickable(driver, "Search", 5, By.NAME).click()
-        elif org in into_2_lst: 
-            search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
-            search_input.send_keys(ISBN)
-            gogo = wait_for_element_clickable(driver, "/html/body/table[6]/tbody/tr[2]/td[2]/div/input[2]", 5, By.XPATH).click()
-        elif org in into_3_lst:
-            ISBN_xpath3 = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
-            use_ISBN = wait_for_element_clickable(driver, ISBN_xpath3, 5, By.XPATH).click()
-            search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
-            search_input.send_keys(ISBN)
-            if org == "國立暨南國際大學":
-                gogo = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[9]/td/input", 5, By.XPATH).click()
-            else:
-                gogo = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[8]/td/input", 5, By.XPATH).click()
-            click_result = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[2]/td[4]/a", 5, By.XPATH).click()
+        driver.get(org_url) 
+        if org in into_1_lst: #那種類型的沒辦改網址進進階搜尋QQ
+            pro_search = wait_for_element_clickable(driver, "進階查詢", 5, By.LINK_TEXT).click()
+        ISBN_xpath = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"  #換成ISBN搜尋，xpath_num
+        use_ISBN = wait_for_element_clickable(driver, ISBN_xpath, 5, By.XPATH).click()
+        search_input = wait_for_element_clickable(driver, "request", 5, By.NAME)
+        search_input.send_keys(ISBN) 
+        gogo = wait_for_element_clickable(driver, gogo_xpath, 5, By.XPATH).click() #按下確定，gogo_xpath
+        click_result = wait_for_element_clickable(driver, "/html/body/form/table[1]/tbody/tr[2]/td[4]/a", 10, By.XPATH).click()
 
  
         #終於結束前面的輸入可以開始爬蟲了
@@ -4358,18 +4470,15 @@ def clickclick_crawler(driver, org, url, ISBN, xpath_num, xpath_detail, table_xp
         if org == "國立暨南國際大學":
             where3_xpath = "/html/body/table[9]/tbody/tr[1]/td[2]/a"
         else: 
-            where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail
+            where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail #按下書在哪裡?，xpath_detail
         where3 = wait_for_element_clickable(driver, where3_xpath, 5, By.XPATH).click()
-        table = wait_for_element_clickable(driver, table_xpath, 5, By.XPATH)
+        table = wait_for_element_clickable(driver, table_xpath, 5, By.XPATH) # 找表格位置，table_xpath
         trlist = table.find_elements_by_tag_name('tr')
         now_url = driver.current_url
         for row in trlist:
             tdlist = row.find_elements_by_tag_name('td')
             for sth in tdlist:
-                if org != "工業技術研究院":
-                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[7].text, now_url]
-                else:
-                    new_row = [org, tdlist[2].text, tdlist[4].text, tdlist[8].text, now_url]
+                new_row = [org, tdlist[index_lst[0]].text, tdlist[index_lst[1]].text, tdlist[index_lst[2]].text, now_url]
                 clickclick_lst.append(new_row)
                 break
     except:
@@ -4394,11 +4503,13 @@ def MMC(ISBN):
         clickclick_crawler(
         driver, 
         '馬偕醫學院',
-        "http://aleph.library.mmc.edu.tw/F",
+        "http://aleph.library.mmc.edu.tw/F?func=find-b&adjacent=Y&find_code=WRD&local_base=TOP02&request=&TY=",
         ISBN,
-        "8", 
+        "7",
+        "/html/body/form/table[1]/tbody/tr[7]/td/input", 
         "span/a[1]", 
-        '/html/body/table[10]'
+        '/html/body/table[10]',
+        [2, 4, 7]
         )
     )
     
@@ -4426,7 +4537,8 @@ def ITRI(ISBN):
         ISBN, 
         "7", 
         "a/img", 
-        '/html/body/table[10]'
+        '/html/body/table[10]',
+        [5, 2, 8]
         )
     )
     
@@ -4450,11 +4562,13 @@ def MCUT(ISBN):
         clickclick_crawler(
         driver, 
         '明志科技大學',
-        "https://aleph.lib.cgu.edu.tw/F?func=find-b&ccl_term=WRD&adjacent=Y&local_base=FLY03",
+        "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY03",
         ISBN, 
-        "",  
+        "7", 
+        "/html/body/form/table[1]/tbody/tr[9]/td/input",  
         "a", 
-        '/html/body/table[9]'
+        '/html/body/table[9]',
+        [3, 4, 8]
         )
     )
     
@@ -4478,11 +4592,13 @@ def CGUST(ISBN):
         clickclick_crawler(
         driver, 
         '長庚科技大學',
-        "https://aleph.lib.cgu.edu.tw/F?func=find-b-0&local_base=fly04",
+        "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY02",
         ISBN, 
-        "",  
+        "7", 
+        "/html/body/form/table[1]/tbody/tr[9]/td/input", 
         "a", 
-        '/html/body/table[9]'
+        '/html/body/table[9]',
+        [3, 4, 8]
         )
     )
     
@@ -4506,11 +4622,13 @@ def NTHU(ISBN):
         clickclick_crawler(
         driver, 
         '國立清華大學',
-        "https://webpac.lib.nthu.edu.tw/F",
+        "https://webpac.lib.nthu.edu.tw/F/?func=find-d-0",
         ISBN, 
-        "8",
+        "7",
+        "/html/body/form/table[1]/tbody/tr[7]/td/input",
         "span/a",
-        '/html/body/table[12]'
+        '/html/body/table[12]',
+        [2, 4, 8]
         )
     )
     
@@ -4537,8 +4655,10 @@ def NCNU(ISBN):
         "https://aleph.lib.ncnu.edu.tw/F/?func=find-d-0",
         ISBN, 
         "7", 
+        "/html/body/form/table[1]/tbody/tr[9]/td/input",
         "", 
-        '/html/body/table[11]'
+        '/html/body/table[11]',
+        [2, 4, 7]
         )
     )
     
@@ -4562,11 +4682,13 @@ def NUTN(ISBN):
         clickclick_crawler(
         driver, 
         '國立臺南大學',
-        "https://aleph.nutn.edu.tw/F",
+        "https://aleph.nutn.edu.tw/F/?func=find-d-0",
         ISBN,
-        "", 
+        "7",
+        "/html/body/form/table[1]/tbody/tr[9]/td/input", 
         "a", 
-        '/html/body/table[9]'
+        '/html/body/table[9]',
+        [2, 4, 8]
         )
     )
     
@@ -4590,39 +4712,13 @@ def NTCH(ISBN):
         clickclick_crawler(
         driver, 
         '國家兩廳院',
-        "https://opac.npac-ntch.org/F",
+        "https://opac.npac-ntch.org/F/?func=find-d-0",
         ISBN,
-        "", 
+        "13",
+        "/html/body/form/table[3]/tbody/tr/td/input", 
         "a[1]", 
-        '/html/body/table[9]'
-        )
-    )
-    
-    driver.quit()
-    gg = organize_columns(pd.concat(output, axis=0, ignore_index=True).fillna(""))
-    worksheet.append_rows(gg.values.tolist())
-    return gg
-
-# 國立臺灣史前文化博物館 NMP
-def NMP(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-    worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
-    
-    output.append(
-        clickclick_crawler(
-        driver, 
-        '國立臺灣史前文化博物館',
-        "http://lib.moc.gov.tw/F?func=find-b-0&local_base=THM04",
-        ISBN,
-        "", 
-        "a", 
-        '/html/body/table[9]'
+        '/html/body/table[9]',
+        [3, 4, 8]
         )
     )
     
@@ -4646,11 +4742,13 @@ def TGST(ISBN):
         clickclick_crawler(
         driver, 
         '台灣神學研究學院',
-        "http://aleph.flysheet.com.tw/F",
+        "http://aleph.flysheet.com.tw/F/?func=find-d-0",
         ISBN,
-        "", 
+        "7", 
+        "/html/body/form/table[1]/tbody/tr[9]/td/input",
         "a", 
-        '/html/body/table[10]'
+        '/html/body/table[10]',
+        [3, 4, 8]
         )
     )
     
@@ -4702,11 +4800,13 @@ def KYU(ISBN):
         clickclick_crawler(
         driver, 
         '高苑科技大學',
-        "http://210.60.92.160/F/?func=find-d-0",
+        "http://210.60.92.160/F/?func=find-d-0&local_base=FLY04",
         ISBN,
         "6", 
+        "/html/body/form/table[1]/tbody/tr[8]/td/input",
         "a", 
-        '/html/body/table[8]'
+        '/html/body/table[8]',
+        [2, 4, 8]
         )
     )
     
