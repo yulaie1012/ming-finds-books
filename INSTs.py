@@ -21,8 +21,6 @@ requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 from urllib.request import HTTPError  # 載入 HTTPError
 from bs4 import BeautifulSoup
 import time  # 強制等待
-from crawlers import *
-
 
 my_options = Options()
 my_options.add_argument("--incognito")  # 開啟無痕模式
