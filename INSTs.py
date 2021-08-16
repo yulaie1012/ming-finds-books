@@ -21,6 +21,7 @@ requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 from urllib.request import HTTPError  # 載入 HTTPError
 from bs4 import BeautifulSoup
 import time  # 強制等待
+from crawlers import *
 
 
 my_options = Options()
@@ -146,6 +147,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         table_innerHTML = soup.select(table_position)[table_index]
         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
+        print('table 抓取成功！')
         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
     except:
         return
