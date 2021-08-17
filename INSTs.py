@@ -161,7 +161,8 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
         print('table 抓取成功！')
         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
-    except:
+    except Exception as e:
+        print(f'在「accurately_find_table_and_read_it」，發生錯誤，錯誤訊息為：「{e}」！')
         return
     else:
         return tgt
