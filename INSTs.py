@@ -2594,8 +2594,6 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
         return table
 
 # 樹德科技大學 STU V
-
-
 def STU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2625,8 +2623,6 @@ def STU(ISBN):
     return gg
 
 # 台灣首府大學 TSU V
-
-
 def TSU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2656,8 +2652,6 @@ def TSU(ISBN):
     return gg
 
 # 崑山科技大學 KSU V
-
-
 def KSU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2687,8 +2681,6 @@ def KSU(ISBN):
     return gg
 
 # 弘光科技大學 HKU V
-
-
 def HKU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2718,8 +2710,6 @@ def HKU(ISBN):
     return gg
 
 # 修平科技大學 HUST V
-
-
 def HUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2749,8 +2739,6 @@ def HUST(ISBN):
     return gg
 
 # 華夏科技大學 HWH V
-
-
 def HWH(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2779,9 +2767,7 @@ def HWH(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 真理大學 AU V
-
-
+# 真理大學 AU V OK
 def AU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2810,7 +2796,7 @@ def AU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 實踐大學 USC V
+# 實踐大學 USC V OK
 def USC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2839,7 +2825,7 @@ def USC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 華梵大學 HFU V
+# 華梵大學 HFU V OK
 def HFU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2868,7 +2854,7 @@ def HFU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立聯合大學 NUU V
+# 國立聯合大學 NUU V X
 def NUU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
