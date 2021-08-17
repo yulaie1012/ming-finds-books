@@ -2546,24 +2546,39 @@ def NPTU(ISBN):
 # 樹德|首府|崑山|弘光|修平|華夏|真理|實踐|華梵|聯合
 def webpac_aspx_crawler(driver, org, org_url, ISBN):
     try:
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行1')
         table = []
 
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行2')
         driver.get(org_url)
 
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行3')
         time.sleep(1.5)
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行4')
         iframe = wait_for_element_present(driver, 'default', by=By.NAME)
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行5')
         driver.switch_to.frame(iframe)
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行6')
         select_ISBN_strategy(
             driver, 'ctl00$ContentPlaceHolder1$ListBox1', 'Info000076')
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行7')
         search_ISBN(driver, ISBN, 'ctl00$ContentPlaceHolder1$TextBox1')
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行8')
         driver.switch_to.default_content()
 
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行9')
         i = 0
+        print('（./INSTs.py/webpac_aspx_crawler()）執行這行10')
         while True:
+            print('（./INSTs.py/webpac_aspx_crawler()）執行這行11')
             time.sleep(1.5)
+            print('（./INSTs.py/webpac_aspx_crawler()）執行這行12')
             iframe = wait_for_element_present(driver, 'default', by=By.NAME)
+            print('（./INSTs.py/webpac_aspx_crawler()）執行這行13')
             driver.switch_to.frame(iframe)
+            print('（./INSTs.py/webpac_aspx_crawler()）執行這行14')
             try:
+                print('（./INSTs.py/webpac_aspx_crawler()）執行這行15')
                 wait_for_element_present(
                     driver, f'//*[@id="ctl00_ContentPlaceHolder1_dg_ctl0{i+2}_lbtgcd2"]', by=By.XPATH).click()
             except:
