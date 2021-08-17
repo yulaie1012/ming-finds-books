@@ -1900,52 +1900,72 @@ def KMCPL(ISBN):
 # 海大|台科大|台師大|中原|逢甲|朝陽|中山|高師|文藻|大仁|中央
 def easy_crawler(driver, org, org_url, ISBN):
     try:
+        print('（./INSTs.py/easy_crawler()）執行這行1')
         driver.get(org_url)
+        print('（./INSTs.py/easy_crawler()）執行這行2')
         search_ISBN(driver, ISBN, 'SEARCH')
 
         if not wait_for_element_present(driver, 'table.bibItems'):
             print(f'在「{org}」找不到「{ISBN}」')
             return
 
+        print('（./INSTs.py/easy_crawler()）執行這行3')
         table = accurately_find_table_and_read_it(driver, 'table.bibItems')
+        print('（./INSTs.py/easy_crawler()）執行這行4')
         table['圖書館'], table['連結'] = org, driver.current_url
+        print('（./INSTs.py/easy_crawler()）執行這行5')
         table = organize_columns(table)
     except Exception as e:
         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
     else:
+        print('（./INSTs.py/easy_crawler()）執行這行6')
         return table
 
 # 國立臺灣海洋大學 NTOU V
 
 
 def NTOU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-    worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    try:
+        print('（./INSTs.py/NTOU()）執行這行1')
+        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        print('（./INSTs.py/NTOU()）執行這行2')
+        creds = Credentials.from_service_account_file(
+            "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+        print('（./INSTs.py/NTOU()）執行這行3')
+        gs = gspread.authorize(creds)
+        print('（./INSTs.py/NTOU()）執行這行4')
+        sheet = gs.open_by_url(
+            'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+        print('（./INSTs.py/NTOU()）執行這行5')
+        worksheet = sheet.get_worksheet(0)
+        print('（./INSTs.py/NTOU()）執行這行6')
+        output = []
+        print('（./INSTs.py/NTOU()）執行這行7')
+        driver = webdriver.Chrome(
+            options=my_options, desired_capabilities=my_capabilities)
+        print('（./INSTs.py/NTOU()）執行這行8')
+        wait = WebDriverWait(driver, 10)
 
-    output.append(
-        easy_crawler(
-            driver,
-            '國立臺灣海洋大學',
-            'https://ocean.ntou.edu.tw/search*cht/i?SEARCH=',
-            ISBN
+        print('（./INSTs.py/NTOU()）執行這行9')
+        output.append(
+            easy_crawler(
+                driver,
+                '國立臺灣海洋大學',
+                'https://ocean.ntou.edu.tw/search*cht/i?SEARCH=',
+                ISBN
+            )
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
-    worksheet.append_rows(gg.values.tolist())
-    return gg
+        driver.quit()
+        gg = organize_columns(
+            pd.concat(output, axis=0, ignore_index=True).fillna(""))
+        worksheet.append_rows(gg.values.tolist())
+    except Exception as e:
+        print(f'在 NTOU()，發生錯誤：「{e}」')
+        return
+    else:
+        return gg
 
 # 國立臺灣科技大學 NTUST V
 
@@ -2831,6 +2851,7 @@ def AU(ISBN):
         worksheet.append_rows(gg.values.tolist())
     except Exception as e:
         print(f'函式 AU() 發生錯誤：{e}')
+        return
     else:
         return gg
 
