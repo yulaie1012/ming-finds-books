@@ -150,14 +150,12 @@ def wait_for_url_changed(driver, old_url, waiting_time=5):
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
     try:
-        print('執行這行a')
         if not wait_for_element_present(driver, table_position):
             print(f'找不到 {table_position}！')
             return
+        
         soup = BeautifulSoup(driver.page_source, 'html.parser')
-        print('執行這行b')
         table_innerHTML = soup.select(table_position)[table_index]
-        print('執行這行c')
         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
         print('table 抓取成功！')
         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
