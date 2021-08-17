@@ -1909,12 +1909,16 @@ def easy_crawler(driver, org, org_url, ISBN):
             return
 
         table = accurately_find_table_and_read_it(driver, 'table.bibItems')
+        print('執行這行4')
         table['圖書館'], table['連結'] = org, driver.current_url
+        print('執行這行5')
         table = organize_columns(table)
+        print('執行這行6')
     except Exception as e:
         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
     else:
+        print('執行這行7')
         return table
 
 # 國立臺灣海洋大學 NTOU V
