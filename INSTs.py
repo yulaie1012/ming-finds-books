@@ -153,7 +153,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         if not wait_for_element_present(driver, table_position):
             print(f'找不到 {table_position}！')
             return
-        
+
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         table_innerHTML = soup.select(table_position)[table_index]
         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
@@ -2783,34 +2783,40 @@ def HWH(ISBN):
 
 
 def AU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-    worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    try:
+        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        creds = Credentials.from_service_account_file(
+            "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+        gs = gspread.authorize(creds)
+        sheet = gs.open_by_url(
+            'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+        worksheet = sheet.get_worksheet(0)
+        output = []
+        driver = webdriver.Chrome(
+            options=my_options, desired_capabilities=my_capabilities)
+        wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_aspx_crawler(
-            driver,
-            '真理大學',
-            "https://lib.au.edu.tw/webopac/",
-            ISBN
+        output.append(
+            webpac_aspx_crawler(
+                driver,
+                '真理大學',
+                "https://lib.au.edu.tw/webopac/",
+                ISBN
+            )
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
-    worksheet.append_rows(gg.values.tolist())
-    return gg
+        driver.quit()
+        gg = organize_columns(
+            pd.concat(output, axis=0, ignore_index=True).fillna(""))
+        worksheet.append_rows(gg.values.tolist())
+    except Exception as e:
+        print(f'函式 AU() 發生錯誤：{e}')
+    else:
+        return gg
 
 # 實踐大學 USC V
+
+
 def USC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2840,6 +2846,8 @@ def USC(ISBN):
     return gg
 
 # 華梵大學 HFU V
+
+
 def HFU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2869,6 +2877,8 @@ def HFU(ISBN):
     return gg
 
 # 國立聯合大學 NUU V
+
+
 def NUU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
