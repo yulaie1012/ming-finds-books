@@ -27,7 +27,7 @@ my_options.add_argument("--incognito")  # 開啟無痕模式
 my_options.add_experimental_option(
     'excludeSwitches', ['enable-automation'])  # 把新版google的自動控制提醒關掉
 # my_options.add_argument('--start-maximized')  # 視窗最大化
-# my_options.add_argument('--headless')  # 不開啟實體瀏覽器
+my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
 # 當 html下載完成之後，不等待解析完成，selenium會直接返回
 my_capabilities['pageLoadStrategy'] = 'eager'
