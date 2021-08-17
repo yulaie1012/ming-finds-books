@@ -2780,18 +2780,27 @@ def HWH(ISBN):
 
 def AU(ISBN):
     try:
+        print('（./INSTs.py）執行這行1')
         scope = ['https://www.googleapis.com/auth/spreadsheets']
+        print('（./INSTs.py）執行這行2')
         creds = Credentials.from_service_account_file(
             "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+        print('（./INSTs.py）執行這行3')
         gs = gspread.authorize(creds)
+        print('（./INSTs.py）執行這行4')
         sheet = gs.open_by_url(
             'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+        print('（./INSTs.py）執行這行5')
         worksheet = sheet.get_worksheet(0)
+        print('（./INSTs.py）執行這行6')
         output = []
+        print('（./INSTs.py）執行這行7')
         driver = webdriver.Chrome(
             options=my_options, desired_capabilities=my_capabilities)
+        print('（./INSTs.py）執行這行8')
         wait = WebDriverWait(driver, 10)
 
+        print('（./INSTs.py）執行這行9')
         output.append(
             webpac_aspx_crawler(
                 driver,
