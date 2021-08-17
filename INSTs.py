@@ -2818,8 +2818,6 @@ def AU(ISBN):
     return gg
 
 # 實踐大學 USC V
-
-
 def USC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2849,8 +2847,6 @@ def USC(ISBN):
     return gg
 
 # 華梵大學 HFU V
-
-
 def HFU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2880,8 +2876,6 @@ def HFU(ISBN):
     return gg
 
 # 國立聯合大學 NUU V
-
-
 def NUU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
