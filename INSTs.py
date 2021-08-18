@@ -5183,9 +5183,7 @@ def primo_greendot_crawler(driver, org, url_front, ISBN, url_behind):
                  3: '館藏狀態', 4: '連結'}, inplace=True)
     return table
 
-# 長庚大學 CGU V
-
-
+# 長庚大學 CGU V OK
 def CGU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5215,9 +5213,7 @@ def CGU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立中正大學 CCU V
-
-
+# 國立中正大學 CCU V OK
 def CCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5247,9 +5243,7 @@ def CCU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 長榮大學 CJCU V
-
-
+# 長榮大學 CJCU V OK
 def CJCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5294,7 +5288,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
         if org in into_1_lst:  # 那種類型的沒辦改網址進進階搜尋QQ
             pro_search = wait_for_element_clickable(
                 driver, "進階查詢", 5, By.LINK_TEXT).click()
-        print("222")
+            print("222")
         # 換成ISBN搜尋，xpath_num
         ISBN_xpath = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
         use_ISBN = wait_for_element_clickable(
@@ -5400,7 +5394,7 @@ def ITRI(ISBN):
         clickclick_crawler(
             driver,
             '工業技術研究院',
-            "http://61.61.255.73/F?func=find-b-0",
+            "http://61.61.255.73/F?func=find-d-0",
             ISBN,
             "7",
             "/html/body/form/table[1]/tbody/tr[9]/td/input",
@@ -5416,7 +5410,7 @@ def ITRI(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 明志科技大學 MCUT X
+# 明志科技大學 MCUT V OK
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5450,7 +5444,7 @@ def MCUT(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 長庚科技大學 CGUST V
+# 長庚科技大學 CGUST V OK
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5484,7 +5478,7 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立清華大學 NTHU 待測
+# 國立清華大學 NTHU X
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5502,7 +5496,7 @@ def NTHU(ISBN):
         clickclick_crawler(
             driver,
             '國立清華大學',
-            "https://webpac.lib.nthu.edu.tw/F/?func=find-b-0",
+            "https://webpac.lib.nthu.edu.tw/F/?func=find-d-0",
             ISBN,
             "7",
             "/html/body/form/table[1]/tbody/tr[7]/td/input",
@@ -5518,7 +5512,7 @@ def NTHU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立暨南國際大學 NCNU V
+# 國立暨南國際大學 NCNU V OK
 def NCNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5552,7 +5546,7 @@ def NCNU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立臺南大學 NUTN V
+# 國立臺南大學 NUTN V OK
 def NUTN(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5586,7 +5580,7 @@ def NUTN(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國家兩廳院 NTCH 9573308436 待測但應該可
+# 國家兩廳院 NTCH 9573308436 V OK
 def NTCH(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5620,7 +5614,7 @@ def NTCH(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 台灣神學研究學院 TGST 9867282736 V
+# 台灣神學研究學院 TGST V OK
 def TGST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5654,7 +5648,7 @@ def TGST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立臺灣美術館 NTMOFA V
+# 國立臺灣美術館 NTMOFA 9784897376547
 def NTMOFA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
