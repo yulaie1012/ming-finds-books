@@ -5727,8 +5727,6 @@ def chungchung_crawler(driver, org, org_url, ISBN):
     return table
 
 # 中臺科技大學 CTUST
-
-
 def CTUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5758,8 +5756,6 @@ def CTUST(ISBN):
     return gg
 
 # 中州科技大學 CCUST
-
-
 def CCUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
