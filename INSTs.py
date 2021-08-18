@@ -5290,25 +5290,33 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     try:
         # 分三類的進入方式
         driver.get(org_url)
+        print("111")
         if org in into_1_lst:  # 那種類型的沒辦改網址進進階搜尋QQ
             pro_search = wait_for_element_clickable(
                 driver, "進階查詢", 5, By.LINK_TEXT).click()
+        print("222")
         # 換成ISBN搜尋，xpath_num
         ISBN_xpath = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
         use_ISBN = wait_for_element_clickable(
             driver, ISBN_xpath, 5, By.XPATH).click()
+        print("333")
         search_input = wait_for_element_clickable(
             driver, "request", 5, By.NAME)
+        print("444")
         search_input.send_keys(ISBN)
+        print("555")
         gogo = wait_for_element_clickable(
             driver, gogo_xpath, 5, By.XPATH).click()  # 按下確定，gogo_xpath
+        print("666")
         click_result = wait_for_element_clickable(
             driver, "/html/body/form/table[1]/tbody/tr[2]/td[4]/a", 10, By.XPATH).click()
+        print("777")
 
         # 終於結束前面的輸入可以開始爬蟲了
         try:  # 暨南有"直接進去書的頁面"的案例，所以先用try避開看看
             where2 = wait_for_element_clickable(
                 driver, "brieftit", 5, By.CLASS_NAME).click()
+            print("888")
         except:
             pass
         if org == "國立暨南國際大學":
@@ -5318,8 +5326,10 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
             where3_xpath = "/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/" + xpath_detail
         where3 = wait_for_element_clickable(
             driver, where3_xpath, 5, By.XPATH).click()
+        print("999")
         table = wait_for_element_clickable(
             driver, table_xpath, 5, By.XPATH)  # 找表格位置，table_xpath
+        print("101010")
         trlist = table.find_elements_by_tag_name('tr')
         now_url = driver.current_url
         for row in trlist:
@@ -5331,13 +5341,14 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
                 break
     except:
         pass
-
+    print("RRRRR")
     table = pd.DataFrame(clickclick_lst)
+    print("YOYOYO")
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
     return table
 
-# 馬偕醫學院 MMC V
+# 馬偕醫學院 MMC V OK
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5371,7 +5382,7 @@ def MMC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 工業技術研究院 ITRI V
+# 工業技術研究院 ITRI X
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5405,7 +5416,7 @@ def ITRI(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 明志科技大學 MCUT V
+# 明志科技大學 MCUT X
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
