@@ -818,8 +818,6 @@ def CCT(ISBN):
     return gg
 
 # 宏國德霖科技大學 HDUT V
-
-
 def HDUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -849,8 +847,6 @@ def HDUT(ISBN):
     return gg
 
 # 嘉南藥理大學 CNU V
-
-
 def CNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -880,8 +876,6 @@ def CNU(ISBN):
     return gg
 
 # 臺北市立圖書館 TPML V
-
-
 def TPML(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5344,8 +5338,6 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     return table
 
 # 馬偕醫學院 MMC V
-
-
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5380,8 +5372,6 @@ def MMC(ISBN):
     return gg
 
 # 工業技術研究院 ITRI V
-
-
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5416,8 +5406,6 @@ def ITRI(ISBN):
     return gg
 
 # 明志科技大學 MCUT V
-
-
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5452,8 +5440,6 @@ def MCUT(ISBN):
     return gg
 
 # 長庚科技大學 CGUST V
-
-
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5488,8 +5474,6 @@ def CGUST(ISBN):
     return gg
 
 # 國立清華大學 NTHU 待測
-
-
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5524,8 +5508,6 @@ def NTHU(ISBN):
     return gg
 
 # 國立暨南國際大學 NCNU V
-
-
 def NCNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5560,8 +5542,6 @@ def NCNU(ISBN):
     return gg
 
 # 國立臺南大學 NUTN V
-
-
 def NUTN(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5596,8 +5576,6 @@ def NUTN(ISBN):
     return gg
 
 # 國家兩廳院 NTCH 9573308436 待測但應該可
-
-
 def NTCH(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5632,8 +5610,6 @@ def NTCH(ISBN):
     return gg
 
 # 台灣神學研究學院 TGST 9867282736 V
-
-
 def TGST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5668,8 +5644,6 @@ def TGST(ISBN):
     return gg
 
 # 國立臺灣美術館 NTMOFA V
-
-
 def NTMOFA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5702,8 +5676,6 @@ def NTMOFA(ISBN):
     return gg
 
 # 高苑科技大學 KYU X (您所想要連結的資料庫目前維護中)
-
-
 def KYU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
