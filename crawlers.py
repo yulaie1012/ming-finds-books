@@ -478,16 +478,30 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[58]:
+# In[ ]:
+
+
+driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+webpac_jsp_crawler(
+    driver=driver, 
+    org='國立宜蘭大學', 
+    org_url='https://lib.niu.edu.tw/webpacIndex.jsp', 
+    ISBN='9789573317241'
+)
+
+
+# In[ ]:
+
+
+# import requests
+# requests.get('http://webpac.isu.edu.tw/webpac/')
+
+
+# In[ ]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-# webpac_jsp_crawler(
-#     driver=driver, 
-#     org='新竹市圖書館', 
-#     org_url='https://webpac.hcml.gov.tw/webpacIndex.jsp', 
-#     ISBN='9789868879348'
-# )
+# driver.get('http://webpac.isu.edu.tw/webpac/')
 
 
 # ## <mark>完成</mark>easy_crawler(driver, org, org_url, ISBN)

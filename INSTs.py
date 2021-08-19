@@ -25,10 +25,6 @@ import os
 # import requests.packages.urllib3
 # requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 
-import os
-from selenium import webdriver
-
-
 # driver plus
 def get_chrome():
     print('（./INSTs.py）執行 get_chrome() 函式')
@@ -4415,7 +4411,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
 
         try:  # 開始爬蟲
             editions = wait_for_elements_present(
-                driver, 'item-title', 30, By.CLASS_NAME)
+                driver, 'item-title', 15, By.CLASS_NAME)
             if len(editions) > 1:  # 如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else:  # 如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
@@ -4423,7 +4419,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 editions[0].click()
                 time.sleep(5)
                 editions = driver.find_elements_by_class_name(
-                    'item-title')  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                    'item-title', 3)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
@@ -4686,7 +4682,7 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
         time.sleep(15)
 
         try:  # 開始爬蟲
-            editions = driver.find_elements_by_class_name('item-title')
+            editions = driver.find_elements_by_class_name('item-title', 3)
             if len(editions) > 1:  # 如果最外面有兩x`個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else:  # 如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
@@ -4694,7 +4690,7 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
                 editions[0].click()
                 time.sleep(5)
                 editions = driver.find_elements_by_class_name(
-                    'item-title')  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                    'item-title', 3)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = driver.find_element_by_class_name(
