@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from crawlers import *
 import time  # 強制等待
 from bs4 import BeautifulSoup
 from urllib.request import HTTPError  # 載入 HTTPError
@@ -22,7 +23,6 @@ import requests
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 
-from crawlers import *
 
 my_options = Options()
 my_options.add_argument("--incognito")  # 開啟無痕模式
@@ -34,182 +34,8 @@ my_capabilities = DesiredCapabilities.CHROME
 # 當 html下載完成之後，不等待解析完成，selenium會直接返回
 my_capabilities['pageLoadStrategy'] = 'eager'
 
-# # --------------------------處理欄位----------------------------
-
-
-# def organize_columns(df1):
-#     # 合併全部的 DataFrame
-#     try:
-#         df1 = pd.concat(df1, axis=0, ignore_index=True)
-#     except:
-#         df1.reset_index(drop=True, inplace=True)
-
-#     # 處理 column 2：館藏地
-#     c2 = [
-#         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
-#         '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置'
-#     ]
-#     df1['c2'] = ''
-#     for c in c2:
-#         try:
-#             df1['c2'] += df1[c]
-#         except:
-#             pass
-
-#     # 處理 column 3：索書號
-#     c3 = ['索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.']
-#     df1['c3'] = ''
-#     for c in c3:
-#         try:
-#             df1['c3'] += df1[c]
-#         except:
-#             pass
-
-#     # 處理 column 4：館藏狀態
-#     c4 = [
-#         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
-#         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
-#         '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status', '館藏狀況(月-日-西元年)'
-#     ]
-#     df1['c4'] = ''
-#     for c in c4:
-#         try:
-#             df1['c4'] += df1[c]
-#         except:
-#             pass
-
-#     # 直接生成另一個 DataFrame
-#     df2 = pd.DataFrame()
-#     df2['圖書館'] = df1['圖書館']
-#     df2['館藏地'] = df1['c2']
-#     df2['索書號'] = df1['c3']
-#     df2['館藏狀態'] = df1['c4']
-#     df2['連結'] = df1['連結']
-
-#     # 遇到值為 NaN時，將前一列的值填補進來
-#     df2.fillna(method="ffill", axis=0, inplace=True)
-
-#     return df2
-
-# # -------------------------等待ele出現--------------------------
-
-
-# def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
-#     try:
-#         time.sleep(0.3)
-#         element = WebDriverWait(driver, waiting_time).until(
-#             EC.presence_of_element_located((by, element_position)))
-#     except:
-#         return False
-#     else:
-#         return element
-
-
-# def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
-#     try:
-#         time.sleep(0.5)
-#         element = WebDriverWait(driver, waiting_time).until(
-#             EC.presence_of_all_elements_located((by, elements_position)))
-#     except:
-#         return False
-#     else:
-#         return element
-
-
-# def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
-#     try:
-#         time.sleep(0.5)
-#         element = WebDriverWait(driver, waiting_time).until(
-#             EC.element_to_be_clickable((by, element_position)))
-#     except:
-#         return False
-#     else:
-#         return element
-
-
-# def get_all_tgt_urls(driver, link_text):
-#     tgt_urls = []
-
-#     anchors = driver.find_elements_by_link_text(link_text)
-#     for anchor in anchors:
-#         tgt_urls.append(anchor.get_attribute('href'))
-
-#     return tgt_urls
-
-# # ------------------------等待網址改變--------------------------
-
-
-# def wait_for_url_changed(driver, old_url, waiting_time=5):
-#     try:
-#         WebDriverWait(driver, waiting_time).until(EC.url_changes(old_url))
-#     except:
-#         return False
-#     else:
-#         return True
-
-# # ------------------------精準定位table-------------------------
-
-
-# def accurately_find_table_and_read_it(driver, table_position, table_index=0):
-#     try:
-#         if not wait_for_element_present(driver, table_position):
-#             print(f'找不到 {table_position}！')
-#             return
-
-#         soup = BeautifulSoup(driver.page_source, 'html.parser')
-#         table_innerHTML = soup.select(table_position)[table_index]
-#         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
-#         print('table 抓取成功！')
-#         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#     except Exception as e:
-#         print(f'在「accurately_find_table_and_read_it」，發生錯誤，錯誤訊息為：「{e}」！')
-#         return
-#     else:
-#         return tgt
-
-
-# def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
-#     table = []
-
-#     i = 0
-#     while True:
-#         try:
-#             tgt = accurately_find_table_and_read_it(driver, table_position)
-#             tgt['圖書館'], tgt['連結'] = org, url_pattern
-#             table.append(tgt)
-
-#             wait_for_element_clickable(driver, str(2+i), 2).click()
-#             i += 1
-#         except:
-#             break
-
-#     return table
-
-# # --------------------等待input出現|ISBN----------------------
-
-
-# def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
-#     search_input = WebDriverWait(driver, waiting_time).until(
-#         EC.presence_of_element_located((by, input_position)))
-#     time.sleep(0.5)
-#     search_input.send_keys(ISBN)
-#     time.sleep(0.5)
-#     search_input.send_keys(Keys.ENTER)
-
-# # --------------------等待select出現|ISBN----------------------
-
-
-# def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
-#     search_field = WebDriverWait(driver, waiting_time).until(
-#         EC.presence_of_element_located((by, select_position)))
-#     time.sleep(0.5)
-#     select = Select(search_field)
-#     time.sleep(0.5)
-#     select.select_by_value(option_position)
 
 # ------------------------Primo找書--------------------------
-
-
 def primo_finding(driver, org, tcn):  # 改wait
     sub_df_lst = []
     try:
@@ -275,71 +101,9 @@ def primo_greendot_finding(driver, org):  # 改 wait
 
     return sub_df_lst
 
-# # ------------------------按載入更多----------------------------
 
-
-# def click_more_btn(driver):
-#     try:
-#         while True:
-#             more_btn = wait_for_element_clickable(driver, '載入更多')
-#             if not more_btn:
-#                 return
-#             more_btn.click()
-#             time.sleep(2)  # 不得已的強制等待
-#     except:
-#         return
-
-
-# ----------------------------------------載入更多系列----------------------------------------
-# webpac_gov_crawler()
-# 宜蘭|桃園|高雄|屏東|花蓮|澎湖|雲科|影視中心
-# def webpac_gov_crawler(driver, org, org_url, ISBN):
-#     try:
-#         table = []
-
-#         driver.get(org_url + 'advanceSearch')
-#         select_ISBN_strategy(driver, 'searchField', 'ISBN')
-#         search_ISBN(driver, ISBN, 'searchInput')
-
-#         # 一筆
-#         if wait_for_element_present(driver, '.bookplace_list > table', 10):
-#             click_more_btn(driver)
-#             tgt = accurately_find_table_and_read_it(
-#                 driver, '.bookplace_list > table')
-#             tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#             table.append(tgt)
-#         # 多筆
-#         elif wait_for_element_present(driver, '.data_all .data_quantity2 em', 5):
-#             # 取得多個連結
-#             tgt_urls = []
-#             soup = BeautifulSoup(driver.page_source, 'html.parser')
-#             anchors = soup.select('.bookdata > h2 > a')
-#             for anchor in anchors:
-#                 tgt_urls.append(org_url + anchor['href'])
-#             # 進入不同的連結
-#             for tgt_url in tgt_urls:
-#                 driver.get(tgt_url)
-#                 if wait_for_element_present(driver, '.bookplace_list > table', 10):
-#                     click_more_btn(driver)
-#                     tgt = accurately_find_table_and_read_it(
-#                         driver, '.bookplace_list > table')
-#                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#                     table.append(tgt)
-#         # 無
-#         else:
-#             print(f'在「{org}」找不到「{ISBN}」')
-#             return
-
-#         table = organize_columns(table)
-#     except:
-#         print(f'在「{org}」搜尋「{ISBN}」時，發生不明錯誤！')
-#         return
-#     else:
-#         return table
-
+# webpac_gov_crawler(driver, org, org_url, ISBN)
 # 宜蘭縣公共圖書館 ILCCB V
-
-
 def ILCCB(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -368,9 +132,8 @@ def ILCCB(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 桃園市立圖書館 TYPL V
-
-
 def TYPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -399,9 +162,8 @@ def TYPL(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 高雄市立圖書館 KSML V
-
-
 def KSML(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -430,9 +192,8 @@ def KSML(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 屏東縣公共圖書館 PTPL V
-
-
 def PTPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -461,9 +222,8 @@ def PTPL(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 花蓮縣公共圖書館 HLPL V
-
-
 def HLPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -492,9 +252,8 @@ def HLPL(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 澎湖縣公共圖書館 PHPL V
-
-
 def PHPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -523,9 +282,8 @@ def PHPL(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 國立雲林科技大學 NYUST V
-
-
 def NYUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -554,9 +312,8 @@ def NYUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 國家電影及視聽文化中心 TFAI V
-
-
 def TFAI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -820,6 +577,8 @@ def CCT(ISBN):
     return gg
 
 # 宏國德霖科技大學 HDUT V
+
+
 def HDUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -849,6 +608,8 @@ def HDUT(ISBN):
     return gg
 
 # 嘉南藥理大學 CNU V
+
+
 def CNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -878,6 +639,8 @@ def CNU(ISBN):
     return gg
 
 # 臺北市立圖書館 TPML V
+
+
 def TPML(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5186,6 +4949,8 @@ def primo_greendot_crawler(driver, org, url_front, ISBN, url_behind):
     return table
 
 # 長庚大學 CGU V OK
+
+
 def CGU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5216,6 +4981,8 @@ def CGU(ISBN):
     return gg
 
 # 國立中正大學 CCU V OK
+
+
 def CCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5246,6 +5013,8 @@ def CCU(ISBN):
     return gg
 
 # 長榮大學 CJCU V OK
+
+
 def CJCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5345,6 +5114,8 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     return table
 
 # 馬偕醫學院 MMC V OK
+
+
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5379,6 +5150,8 @@ def MMC(ISBN):
     return gg
 
 # 工業技術研究院 ITRI X
+
+
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5413,6 +5186,8 @@ def ITRI(ISBN):
     return gg
 
 # 明志科技大學 MCUT V OK
+
+
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5447,6 +5222,8 @@ def MCUT(ISBN):
     return gg
 
 # 長庚科技大學 CGUST V OK
+
+
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5481,6 +5258,8 @@ def CGUST(ISBN):
     return gg
 
 # 國立清華大學 NTHU X
+
+
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5515,6 +5294,8 @@ def NTHU(ISBN):
     return gg
 
 # 國立暨南國際大學 NCNU V OK
+
+
 def NCNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5549,6 +5330,8 @@ def NCNU(ISBN):
     return gg
 
 # 國立臺南大學 NUTN V OK
+
+
 def NUTN(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5583,6 +5366,8 @@ def NUTN(ISBN):
     return gg
 
 # 國家兩廳院 NTCH 9573308436 V OK
+
+
 def NTCH(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5617,6 +5402,8 @@ def NTCH(ISBN):
     return gg
 
 # 台灣神學研究學院 TGST V OK
+
+
 def TGST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5651,6 +5438,8 @@ def TGST(ISBN):
     return gg
 
 # 國立臺灣美術館 NTMOFA 9784897376547
+
+
 def NTMOFA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5683,6 +5472,8 @@ def NTMOFA(ISBN):
     return gg
 
 # 高苑科技大學 KYU X (您所想要連結的資料庫目前維護中)
+
+
 def KYU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5734,6 +5525,8 @@ def chungchung_crawler(driver, org, org_url, ISBN):
     return table
 
 # 中臺科技大學 CTUST
+
+
 def CTUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5763,6 +5556,8 @@ def CTUST(ISBN):
     return gg
 
 # 中州科技大學 CCUST
+
+
 def CCUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
