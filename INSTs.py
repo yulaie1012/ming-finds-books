@@ -32,8 +32,8 @@ def get_chrome():
     my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     my_options.add_argument("--incognito")  # 開啟無痕模式
     my_options.add_argument("--headless")  # 不開啟實體瀏覽器
-    my_options.add_argument("--disable-dev-shm-usage")
-    my_options.add_argument("--no-sandbox")
+    # my_options.add_argument("--disable-dev-shm-usage")
+    # my_options.add_argument("--no-sandbox")
 
     # my_options.add_argument('--disable-infobars')
     # my_options.add_experimental_option('useAutomationExtension', False)
@@ -354,81 +354,80 @@ def TFAI(ISBN):
 # 佛光|經國學院|宜大|中華|北基督|宏國德霖|嘉藥|臺北市|臺藝大|北市大|北醫|北商大|新竹市|新竹縣|苗栗縣
 # 育達|仁德醫專|景文|致理|萬能|健行|明新|空大|中國科大|中教大|臺體|東海|靜宜|僑光|彰師
 # 雲林縣|嘉義市|嘉義縣|南華|遠東|正修|美和|臺東|臺東縣|金門|金門縣
-def webpac_jsp_crawler(driver, org, org_url, ISBN):
-    try:
-        table = []
+# def webpac_jsp_crawler(driver, org, org_url, ISBN):
+#     try:
+#         table = []
 
-        driver.get(org_url)
-        try:
-            select_ISBN_strategy(driver, 'search_field', 'ISBN')
-        except:
-            select_ISBN_strategy(driver, 'search_field', 'STANDARDNO')  # 北科大
-        search_ISBN(driver, ISBN, 'search_input')
+#         driver.get(org_url)
+#         try:
+#             select_ISBN_strategy(driver, 'search_field', 'ISBN')
+#         except:
+#             select_ISBN_strategy(driver, 'search_field', 'STANDARDNO')  # 北科大
+#         search_ISBN(driver, ISBN, 'search_input')
 
-        # 一筆
-        if wait_for_element_present(driver, 'table.order'):
-            i = 0
-            while True:
-                try:
-                    tgt = accurately_find_table_and_read_it(
-                        driver, 'table.order')
-                    tgt['圖書館'], tgt['連結'] = org, driver.current_url
-                    table.append(tgt)
+#         # 一筆
+#         if wait_for_element_present(driver, 'table.order'):
+#             i = 0
+#             while True:
+#                 try:
+#                     tgt = accurately_find_table_and_read_it(
+#                         driver, 'table.order')
+#                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
+#                     table.append(tgt)
 
-                    wait_for_element_clickable(driver, str(2+i), 2).click()
-                    i += 1
-                    time.sleep(0.5)
-                except:
-                    break
-        # 多筆、零筆
-        elif wait_for_element_present(driver, 'iframe#leftFrame'):
-            iframe = driver.find_element_by_id('leftFrame')
-            driver.switch_to.frame(iframe)
-            time.sleep(1)  # 切換到 <frame> 需要時間，否則會無法讀取
+#                     wait_for_element_clickable(driver, str(2+i), 2).click()
+#                     i += 1
+#                     time.sleep(0.5)
+#                 except:
+#                     break
+#         # 多筆、零筆
+#         elif wait_for_element_present(driver, 'iframe#leftFrame'):
+#             iframe = driver.find_element_by_id('leftFrame')
+#             driver.switch_to.frame(iframe)
+#             time.sleep(1)  # 切換到 <frame> 需要時間，否則會無法讀取
 
-            # 判斷是不是＂零筆＂查詢結果
-            if wait_for_element_present(driver, '#totalpage').text == '0':
-                print(f'在「{org}」找不到「{ISBN}」')
-                return
+#             # 判斷是不是＂零筆＂查詢結果
+#             if wait_for_element_present(driver, '#totalpage').text == '0':
+#                 print(f'在「{org}」找不到「{ISBN}」')
+#                 return
 
-            # ＂多筆＂查詢結果
-            tgt_urls = []
-            anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
-            if anchors == []:
-                anchors = driver.find_elements(By.LINK_TEXT, '內容')
-            for anchor in anchors:
-                tgt_urls.append(anchor.get_attribute('href'))
+#             # ＂多筆＂查詢結果
+#             tgt_urls = []
+#             anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
+#             if anchors == []:
+#                 anchors = driver.find_elements(By.LINK_TEXT, '內容')
+#             for anchor in anchors:
+#                 tgt_urls.append(anchor.get_attribute('href'))
 
-            for tgt_url in tgt_urls:
-                driver.get(tgt_url)
-                # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
-                if wait_for_element_present(driver, 'table.order'):
-                    i = 0
-                    while True:
-                        try:
-                            tgt = accurately_find_table_and_read_it(
-                                driver, 'table.order')
-                            tgt['圖書館'], tgt['連結'] = org, driver.current_url
-                            table.append(tgt)
+#             for tgt_url in tgt_urls:
+#                 driver.get(tgt_url)
+#                 # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
+#                 if wait_for_element_present(driver, 'table.order'):
+#                     i = 0
+#                     while True:
+#                         try:
+#                             tgt = accurately_find_table_and_read_it(
+#                                 driver, 'table.order')
+#                             tgt['圖書館'], tgt['連結'] = org, driver.current_url
+#                             table.append(tgt)
 
-                            wait_for_element_clickable(
-                                driver, str(2+i), 2).click()
-                            i += 1
-                            time.sleep(0.5)
-                        except:
-                            break
-                else:
-                    continue
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
+#                             wait_for_element_clickable(
+#                                 driver, str(2+i), 2).click()
+#                             i += 1
+#                             time.sleep(0.5)
+#                         except:
+#                             break
+#                 else:
+#                     continue
+#         table = organize_columns(table)
+#     except Exception as e:
+#         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+#         return
+#     else:
+#         return table
+
 
 # 佛光大學 FGU V
-
-
 def FGU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
