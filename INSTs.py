@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import re
 from crawlers import *
 import time  # 強制等待
 from bs4 import BeautifulSoup
@@ -4037,7 +4038,7 @@ def 基隆市公共圖書館(driver, org, org_url, ISBN):
         table = organize_columns(table)
         return table
     except:
-        print(f'《{ISBN}》在「{url}」無法爬取')
+        print(f'《{ISBN}》在「{org_url}」無法爬取')
 
 # 基隆市公共圖書館 KLCCAB X(無館藏資料時會掛掉)
 
@@ -5139,6 +5140,8 @@ def MMC(ISBN):
     return gg
 
 # 工業技術研究院 ITRI V OK
+
+
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5243,6 +5246,7 @@ def CGUST(ISBN):
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
+
 
 # 國立清華大學 NTHU V OK
 def NTHU(ISBN):
