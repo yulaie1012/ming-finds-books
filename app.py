@@ -50,8 +50,6 @@ from INSTs import organize_columns, wait_for_element_present, wait_for_url_chang
     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, crawl_all_tables_on_page, \
     get_all_tgt_urls, NUTC, 敏實科技大學, MITUST, sirsidynix_crawler, TNNUA, NTCPL, moc_thm_crawler
 
-from INSTs import my_options, my_capabilities
-
 NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
 HWUs = ["hwu", "HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
 ILCCBs = ["ilccb", "ILCCB", "宜蘭縣公共圖書館", "宜蘭縣圖書館", "宜蘭圖書館" "宜蘭縣圖", "宜圖"]
