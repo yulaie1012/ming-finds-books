@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
 
 def organize_columns(df1):
-    print('執行 organize_columns() 函式')
+    print('（./crawlers）執行 organize_columns() 函式')
     # 合併全部的 DataFrame
     try:
         df1 = pd.concat(df1, axis=0, ignore_index=True)
@@ -154,7 +154,7 @@ def set_excel(df, directory):
 
 
 def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
-    print(f'執行 wait_for_element_present({element_position})')
+    print(f'（./crawlers）執行 wait_for_element_present({element_position}) 函式')
     try:
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
@@ -171,7 +171,7 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
 
 
 def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
-    print(f'執行 wait_for_elements_present({elements_position})')
+    print(f'（./crawlers）執行 wait_for_elements_present({elements_position})')
     try:
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
@@ -189,7 +189,7 @@ def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.C
 
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
-    print(f'執行 wait_for_element_clickable({element_position})')
+    print(f'（./crawlers）執行 wait_for_element_clickable({element_position}) 函式')
     try:
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
@@ -231,7 +231,7 @@ def wait_for_url_changed(driver, old_url, waiting_time=5):
 
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
-    print(f'執行 accurately_find_table_and_read_it({table_position})')
+    print(f'（./crawlers）執行 accurately_find_table_and_read_it({table_position}) 函式')
     try:
         if not wait_for_element_present(driver, table_position):
             print(f'找不到 {table_position}！')
@@ -260,7 +260,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
 
 
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
-    print('執行 select_ISBN_strategy()')
+    print('（./crawlers）執行 select_ISBN_strategy() 函式')
     search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
     select = Select(search_field)
     time.sleep(0.5)
@@ -280,7 +280,7 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 
 
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
-    print('執行 search_ISBN()')
+    print('（./crawlers）執行 search_ISBN() 函式')
     search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
     search_input.send_keys(ISBN)
     time.sleep(0.5)
@@ -306,7 +306,7 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
 
 
 def click_more_btn(driver):
-    print(f'執行「click_more_btn()」函式')
+    print(f'（./crawlers.py）執行「click_more_btn()」函式')
     try:
         while True:
             more_btn = wait_for_element_clickable(driver, '載入更多')
