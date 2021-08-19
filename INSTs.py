@@ -4038,7 +4038,7 @@ def 基隆市公共圖書館(driver, org, org_url, ISBN):
         table = organize_columns(table)
         return table
     except:
-        print(f'《{ISBN}》在「{url}」無法爬取')
+        print(f'《{ISBN}》在「{org_url}」無法爬取')
 
 # 基隆市公共圖書館 KLCCAB X(無館藏資料時會掛掉)
 
@@ -5247,9 +5247,8 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 國立清華大學 NTHU V OK
-
-
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
