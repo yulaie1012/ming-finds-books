@@ -39,10 +39,10 @@ def get_chrome():
     my_options.add_argument("--disable-dev-shm-usage")
     my_options.add_argument("--no-sandbox")
 
-    my_options.add_argument('--disable-infobars')
-    my_options.add_experimental_option('useAutomationExtension', False)
-    my_options.add_experimental_option(
-        "excludeSwitches", ["enable-automation"])  # 把新版 google 的自動控制提醒關掉
+    # my_options.add_argument('--disable-infobars')
+    # my_options.add_experimental_option('useAutomationExtension', False)
+    # my_options.add_experimental_option(
+    #     "excludeSwitches", ["enable-automation"])  # 把新版 google 的自動控制提醒關掉
 
     # 當 html下載完成之後，不等待解析完成，selenium 會直接返回
     my_capabilities = DesiredCapabilities.CHROME
