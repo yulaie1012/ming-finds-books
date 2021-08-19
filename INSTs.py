@@ -5244,13 +5244,7 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-<<<<<<< HEAD
 # 國立清華大學 NTHU V OK
-=======
-# 國立清華大學 NTHU X
-
-
->>>>>>> d9568b086080f87880f8341d08e33522bea4fb7b
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
