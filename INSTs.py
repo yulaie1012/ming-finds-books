@@ -275,19 +275,19 @@ def primo_greendot_finding(driver, org):  # 改 wait
 
     return sub_df_lst
 
-# ------------------------按載入更多----------------------------
+# # ------------------------按載入更多----------------------------
 
 
-def click_more_btn(driver):
-    try:
-        while True:
-            more_btn = wait_for_element_clickable(driver, '載入更多')
-            if not more_btn:
-                return
-            more_btn.click()
-            time.sleep(2)  # 不得已的強制等待
-    except:
-        return
+# def click_more_btn(driver):
+#     try:
+#         while True:
+#             more_btn = wait_for_element_clickable(driver, '載入更多')
+#             if not more_btn:
+#                 return
+#             more_btn.click()
+#             time.sleep(2)  # 不得已的強制等待
+#     except:
+#         return
 
 
 # ----------------------------------------載入更多系列----------------------------------------
