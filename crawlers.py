@@ -52,11 +52,11 @@ if __name__ == '__main__':
 
 
 def organize_columns(df1):
+    print('執行 organize_columns 函式')
     # 合併全部的 DataFrame
-    try:
-        df1 = pd.concat(df1, axis=0, ignore_index=True)
-    except:
-        df1.reset_index(drop=True, inplace=True)
+    df1 = pd.concat(df1, axis=0, ignore_index=True)
+#     except:
+#         df1.reset_index(drop=True, inplace=True)
 
     # 處理 column 2：館藏地
     c2 = [
@@ -154,6 +154,7 @@ def set_excel(df, directory):
 
 def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
     try:
+        print(f'執行 wait_for_element_present({element_position})')
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.presence_of_element_located((by, element_position)))
@@ -170,6 +171,7 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
 
 def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
     try:
+        print(f'執行 wait_for_elements_present({elements_position})')
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.presence_of_all_elements_located((by, elements_position)))
@@ -187,6 +189,7 @@ def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.C
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
     try:
+        print(f'執行 wait_for_element_clickable({element_position})')
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.element_to_be_clickable((by, element_position)))
@@ -228,6 +231,7 @@ def wait_for_url_changed(driver, old_url, waiting_time=5):
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
     try:
+        print(f'執行 accurately_find_table_and_read_it({table_position})')
         if not wait_for_element_present(driver, table_position):
             print(f'找不到 {table_position}！')
             return
@@ -255,6 +259,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
 
 
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
+    print('執行 select_ISBN_strategy()')
     search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
     select = Select(search_field)
     time.sleep(0.5)
@@ -274,6 +279,7 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 
 
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
+    print('執行 search_ISBN()')
     search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
     search_input.send_keys(ISBN)
     time.sleep(0.5)
@@ -342,8 +348,10 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
                 tgt_urls.append(org_url + anchor['href'])
             
             # 進入不同的連結
+            i = 1
             for tgt_url in tgt_urls:
                 driver.get(tgt_url)
+                print(f'進入第 {i} 個頁面')
                 
                 if wait_for_element_present(driver, '.bookplace_list > table', 10):
                     click_more_btn(driver)
@@ -351,20 +359,19 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
                     table.append(tgt)
                     print('抓取 table 成功')
+            print('for 迴圈結束')
         # 無
         else:
             print(f'（./crawlers.py）「webpac_gov_crawler({org})」，找不到「{ISBN}」')
             return
-
-        table = organize_columns(table)
     except Exception as e:
         print(f'（./crawlers.py）「webpac_gov_crawler({org})」，搜尋「{ISBN}」時，發生錯誤：「{e}」！')
         return
     else:
-        return table
+        return organize_columns(table)
 
 
-# In[ ]:
+# In[14]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
