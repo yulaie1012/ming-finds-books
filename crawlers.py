@@ -52,11 +52,12 @@ if __name__ == '__main__':
 
 
 def organize_columns(df1):
-    print('執行 organize_columns 函式')
+    print('執行 organize_columns() 函式')
     # 合併全部的 DataFrame
-    df1 = pd.concat(df1, axis=0, ignore_index=True)
-#     except:
-#         df1.reset_index(drop=True, inplace=True)
+    try:
+        df1 = pd.concat(df1, axis=0, ignore_index=True)
+    except:
+        df1.reset_index(drop=True, inplace=True)
 
     # 處理 column 2：館藏地
     c2 = [
@@ -153,8 +154,8 @@ def set_excel(df, directory):
 
 
 def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
+    print(f'執行 wait_for_element_present({element_position})')
     try:
-        print(f'執行 wait_for_element_present({element_position})')
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.presence_of_element_located((by, element_position)))
@@ -170,8 +171,8 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
 
 
 def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
+    print(f'執行 wait_for_elements_present({elements_position})')
     try:
-        print(f'執行 wait_for_elements_present({elements_position})')
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.presence_of_all_elements_located((by, elements_position)))
@@ -188,8 +189,8 @@ def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.C
 
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
+    print(f'執行 wait_for_element_clickable({element_position})')
     try:
-        print(f'執行 wait_for_element_clickable({element_position})')
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.element_to_be_clickable((by, element_position)))
@@ -230,8 +231,8 @@ def wait_for_url_changed(driver, old_url, waiting_time=5):
 
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
+    print(f'執行 accurately_find_table_and_read_it({table_position})')
     try:
-        print(f'執行 accurately_find_table_and_read_it({table_position})')
         if not wait_for_element_present(driver, table_position):
             print(f'找不到 {table_position}！')
             return
