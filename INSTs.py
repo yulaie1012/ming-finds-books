@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import re
 from crawlers import *
 import time  # 強制等待
 from bs4 import BeautifulSoup
@@ -5139,6 +5140,8 @@ def MMC(ISBN):
     return gg
 
 # 工業技術研究院 ITRI V OK
+
+
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5244,13 +5247,9 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-<<<<<<< HEAD
 # 國立清華大學 NTHU V OK
-=======
-# 國立清華大學 NTHU X
 
 
->>>>>>> d9568b086080f87880f8341d08e33522bea4fb7b
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
