@@ -160,7 +160,8 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.presence_of_element_located((by, element_position)))
-    except:
+    except Exception as e:
+        print(f'（./crawlers.py）執行 wait_for_element_present() 函式，發生錯誤：{e}')
         return False
     else:
         return element
@@ -177,7 +178,8 @@ def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.C
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.presence_of_all_elements_located((by, elements_position)))
-    except:
+    except Exception as e:
+        print(f'（./crawlers.py）執行 wait_for_elements_present() 函式，發生錯誤：{e}')
         return False
     else:
         return element
@@ -195,7 +197,8 @@ def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.L
         time.sleep(0.3)
         element = WebDriverWait(driver, waiting_time).until(
             EC.element_to_be_clickable((by, element_position)))
-    except:
+    except Exception as e:
+        print(f'（./crawlers.py）執行 wait_for_element_clickable() 函式，發生錯誤：{e}')
         return False
     else:
         return element
@@ -215,7 +218,8 @@ def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.L
 def wait_for_url_changed(driver, old_url, waiting_time=5):
     try:
         WebDriverWait(driver, waiting_time).until(EC.url_changes(old_url))
-    except:
+    except Exception as e:
+        print(f'（./crawlers.py）執行 wait_for_url_changed() 函式，發生錯誤：{e}')
         return False
     else:
         return True
@@ -241,7 +245,8 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         table_innerHTML = soup.select(table_position)[table_index]
         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
-    except:
+    except Exception as e:
+        print(f'（./crawlers.py）執行 accurately_find_table_and_read_it({table_position}) 函式，發生錯誤：{e}')
         return
     else:
         return tgt
@@ -262,10 +267,14 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
 
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
     print('（./crawlers.py）執行 select_ISBN_strategy() 函式')
-    search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
-    select = Select(search_field)
-    time.sleep(0.5)
-    select.select_by_value(option_position)
+    try:
+        search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
+        select = Select(search_field)
+        time.sleep(0.5)
+        select.select_by_value(option_position)
+    except Exception as e:
+        print(f'（./crawlers.py）執行 accurately_find_table_and_read_it({table_position}) 函式，發生錯誤：{e}')
+        return
 
 
 # ## search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME)
@@ -282,10 +291,14 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
 
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
     print('（./crawlers.py）執行 search_ISBN() 函式')
-    search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
-    search_input.send_keys(ISBN)
-    time.sleep(0.5)
-    search_input.send_keys(Keys.ENTER)
+    try:
+        search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
+        search_input.send_keys(ISBN)
+        time.sleep(0.5)
+        search_input.send_keys(Keys.ENTER)
+    except Exception as e:
+        print(f'（./crawlers.py）執行 accurately_find_table_and_read_it({table_position}) 函式，發生錯誤：{e}')
+        return
 
 
 # # 已完成的爬蟲程式
