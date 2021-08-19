@@ -4428,7 +4428,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
-                    driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple", 15, By.CLASS_NAME)
+                    driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple")
             except:
                 back_check = None
             if back_check == None:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
@@ -4441,7 +4441,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                         primo_lst += primo_finding(driver, org, tcn)
                     try:
                         back2 = wait_for_element_clickable(
-                            driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple", 15, By.CLASS_NAME).click()
+                            driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
                     except:
                         back2 = None
 
