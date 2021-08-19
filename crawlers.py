@@ -325,20 +325,22 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 
         # 一筆
         if wait_for_element_present(driver, '.bookplace_list > table', 10):
-            print('（./crawlers.py）「webpac_gov_crawler({org})」，只有一筆搜尋結果')
+            print(f'（./crawlers.py）「webpac_gov_crawler({org})」，只有一筆搜尋結果')
             click_more_btn(driver)
             tgt = accurately_find_table_and_read_it(driver, '.bookplace_list > table')
             tgt['圖書館'], tgt['連結'] = org, driver.current_url
             table.append(tgt)
+            print('抓取 table 成功')
         # 多筆
         elif wait_for_element_present(driver, '.data_all .data_quantity2 em', 5):
-            print('（./crawlers.py）「webpac_gov_crawler({org})」，有多筆搜尋結果')
+            print(f'（./crawlers.py）「webpac_gov_crawler({org})」，有多筆搜尋結果')
             # 取得多個連結
             tgt_urls = []
             soup = BeautifulSoup(driver.page_source, 'html.parser')
             anchors = soup.select('.bookdata > h2 > a')
             for anchor in anchors:
                 tgt_urls.append(org_url + anchor['href'])
+            
             # 進入不同的連結
             for tgt_url in tgt_urls:
                 driver.get(tgt_url)
@@ -348,14 +350,15 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
                     tgt = accurately_find_table_and_read_it(driver, '.bookplace_list > table')
                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
                     table.append(tgt)
+                    print('抓取 table 成功')
         # 無
         else:
-            print(f'「webpac_gov_crawler({org})」，找不到「{ISBN}」')
+            print(f'（./crawlers.py）「webpac_gov_crawler({org})」，找不到「{ISBN}」')
             return
 
         table = organize_columns(table)
-    except:
-        print(f'「webpac_gov_crawler({org})」，搜尋「{ISBN}」時，發生不明錯誤！')
+    except Exception as e:
+        print(f'（./crawlers.py）「webpac_gov_crawler({org})」，搜尋「{ISBN}」時，發生錯誤：「{e}」！')
         return
     else:
         return table

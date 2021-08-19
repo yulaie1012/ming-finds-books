@@ -37,9 +37,9 @@ def get_chrome():
     my_options.add_argument("--disable-dev-shm-usage")
     my_options.add_argument("--no-sandbox")
 
-    my_options.add_argument('--disable-infobars')
-    my_options.add_experimental_option('useAutomationExtension', False)
-    my_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    # my_options.add_argument('--disable-infobars')
+    # my_options.add_experimental_option('useAutomationExtension', False)
+    # my_options.add_experimental_option("excludeSwitches", ["enable-automation"])
     
     my_capabilities = DesiredCapabilities.CHROME
     my_capabilities['pageLoadStrategy'] = 'eager'
