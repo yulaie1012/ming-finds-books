@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+
 import re
 from crawlers import *
 import time  # 強制等待
 from bs4 import BeautifulSoup
-from urllib.request import HTTPError  # 載入 HTTPError
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
 import gspread
@@ -19,10 +19,32 @@ from selenium.webdriver.support.ui import WebDriverWait  # 等待機制
 from selenium.webdriver.support import expected_conditions as EC  # 預期事件
 from selenium.webdriver.common.by import By  # 找尋元素的方法
 import pandas as pd  # 載入 pandas
-import pandas.io.formats.excel  # 輸出自定義格式 Excel
-import requests
-import requests.packages.urllib3
-requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
+import os
+# import pandas.io.formats.excel  # 輸出自定義格式 Excel
+# import requests
+# import requests.packages.urllib3
+# requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
+
+import os
+from selenium import webdriver
+
+
+# driver plus
+def get_chrome():
+    my_options = webdriver.ChromeOptions()
+    my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    my_options.add_argument("--headless")
+    my_options.add_argument("--disable-dev-shm-usage")
+    my_options.add_argument("--no-sandbox")
+
+    my_options.add_argument('--disable-infobars')
+    my_options.add_experimental_option('useAutomationExtension', False)
+    my_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    
+    my_capabilities = DesiredCapabilities.CHROME
+    my_capabilities['pageLoadStrategy'] = 'eager'
+
+    return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
 
 
 my_options = Options()
@@ -114,16 +136,17 @@ def ILCCB(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    # driver = webdriver.Chrome(
+    #     options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
+    # wait = WebDriverWait(driver, 10)
 
     output.append(
         webpac_gov_crawler(
-            driver,
-            '宜蘭縣公共圖書館',
-            'https://webpac.ilccb.gov.tw/',
-            ISBN
+            driver=driver,
+            org='宜蘭縣公共圖書館',
+            org_url='https://webpac.ilccb.gov.tw/',
+            ISBN=ISBN
         )
     )
 
