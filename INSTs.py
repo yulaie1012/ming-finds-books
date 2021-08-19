@@ -32,8 +32,8 @@ def get_chrome():
     my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     my_options.add_argument("--incognito")  # 開啟無痕模式
     my_options.add_argument("--headless")  # 不開啟實體瀏覽器
-    # my_options.add_argument("--disable-dev-shm-usage")
-    # my_options.add_argument("--no-sandbox")
+    my_options.add_argument("--disable-dev-shm-usage")
+    my_options.add_argument("--no-sandbox")
 
     # my_options.add_argument('--disable-infobars')
     # my_options.add_experimental_option('useAutomationExtension', False)
