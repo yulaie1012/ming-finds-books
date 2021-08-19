@@ -48,16 +48,17 @@ if __name__ == '__main__':
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[3]:
+# In[57]:
 
 
 def organize_columns(df1):
     print('（./crawlers）執行 organize_columns() 函式')
     # 合併全部的 DataFrame
-    try:
-        df1 = pd.concat(df1, axis=0, ignore_index=True)
-    except:
-        df1.reset_index(drop=True, inplace=True)
+    if df1 == []:
+        print('empty list，結束函式')
+        return
+    
+    df1 = pd.concat(df1, axis=0, ignore_index=True)
 
     # 處理 column 2：館藏地
     c2 = [
@@ -318,7 +319,7 @@ def click_more_btn(driver):
         return
 
 
-# In[13]:
+# In[55]:
 
 
 def webpac_gov_crawler(driver, org, org_url, ISBN):
@@ -360,6 +361,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
                     table.append(tgt)
                     print('抓取 table 成功')
+                i += 1
             print('for 迴圈結束')
         # 無
         else:
@@ -476,15 +478,15 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[16]:
+# In[58]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 # webpac_jsp_crawler(
 #     driver=driver, 
-#     org='臺東縣圖書館', 
-#     org_url='http://library.ccl.ttct.edu.tw/webpacIndex.jsp', 
-#     ISBN='9789869109321'
+#     org='新竹市圖書館', 
+#     org_url='https://webpac.hcml.gov.tw/webpacIndex.jsp', 
+#     ISBN='9789868879348'
 # )
 
 

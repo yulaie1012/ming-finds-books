@@ -1641,7 +1641,6 @@ def easy_crawler(driver, org, org_url, ISBN):
         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
         return
     else:
-        print('（./INSTs.py/easy_crawler()）執行這行6')
         return table
 
 # 國立臺灣海洋大學 NTOU V
