@@ -31,6 +31,7 @@ from selenium import webdriver
 
 # driver plus
 def get_chrome():
+    print('（./INSTs.py）執行 get_chrome() 函式')
     my_options = webdriver.ChromeOptions()
     my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     my_options.add_argument("--headless")
@@ -40,7 +41,7 @@ def get_chrome():
     # my_options.add_argument('--disable-infobars')
     # my_options.add_experimental_option('useAutomationExtension', False)
     # my_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    
+
     my_capabilities = DesiredCapabilities.CHROME
     my_capabilities['pageLoadStrategy'] = 'eager'
 
