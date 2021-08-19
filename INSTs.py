@@ -5138,13 +5138,7 @@ def MMC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-<<<<<<< HEAD
 # 工業技術研究院 ITRI V OK
-=======
-# 工業技術研究院 ITRI X
-
-
->>>>>>> d9568b086080f87880f8341d08e33522bea4fb7b
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
