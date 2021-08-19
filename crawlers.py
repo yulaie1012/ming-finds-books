@@ -299,6 +299,7 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
 
 
 def click_more_btn(driver):
+    print(f'執行「click_more_btn()」函式')
     try:
         while True:
             more_btn = wait_for_element_clickable(driver, '載入更多')
@@ -314,6 +315,7 @@ def click_more_btn(driver):
 
 
 def webpac_gov_crawler(driver, org, org_url, ISBN):
+    print(f'在「{org}」，執行「webpac_gov_crawler()」函式')
     try:
         table = []
 
@@ -356,15 +358,16 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[14]:
+# In[57]:
 
 
-# webpac_gov_crawler(
-#     driver=driver,
-#     org='宜蘭縣圖書館館藏查詢',
-#     org_url='https://webpac.ilccb.gov.tw/',
-#     ISBN='9789573317241'
-# )
+driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+webpac_gov_crawler(
+    driver=driver,
+    org='宜蘭縣圖書館',
+    org_url='https://webpac.ilccb.gov.tw/',
+    ISBN='9789869109321'
+)
 
 
 # ## <mark>完成</mark>webpac_jsp_crawler(driver, org, org_url, ISBN)

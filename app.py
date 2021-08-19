@@ -332,7 +332,7 @@ def test1(event):
             TextSendMessage(
                 text="https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing")
         )
-        print('（./app.py）執行這行1')
+        print('（./app.py）執行這行1：判斷輸入的字串中含有哪些機構')
 
         for i in range(1, len(str_input)):
             if str_input[i] in NTCs:  # 國立臺東專科學校
