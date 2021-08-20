@@ -2914,9 +2914,8 @@ def NTC(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-
     output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     wait = WebDriverWait(driver, 10)
     
     output.append(
@@ -2941,10 +2940,8 @@ def HWU(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    
     output = []
-    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     wait = WebDriverWait(driver, 10)
     
     output.append(
@@ -2990,8 +2987,6 @@ def CHPL(ISBN):
     return gg
 
 # 高雄醫學大學 KMU V
-
-
 def KMU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
