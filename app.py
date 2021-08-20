@@ -30,8 +30,6 @@ import gspread_dataframe as gd
 
 # ---------------------------------------
 # import import_ipynb
-import toread
-from toread import toread, toread_crawlers, NTC, HWU
 import INSTs
 
 from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \

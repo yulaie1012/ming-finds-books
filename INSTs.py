@@ -2907,9 +2907,61 @@ def toread_crawler(driver, org, org_url, ISBN):
     else:
         return table
 
+#------------國立臺東專科學校-------------
+def NTC(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+
+    output = []
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawler(
+        driver,
+        '國立臺東專科學校',
+        'https://library.ntc.edu.tw/toread/opac',
+        ISBN=ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+
+#------------醒吾科技大學-------------
+def HWU(ISBN):
+    scope = ['https://www.googleapis.com/auth/spreadsheets']
+    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    gs = gspread.authorize(creds)
+    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    worksheet = sheet.get_worksheet(0)
+    
+    output = []
+    goal = "https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit?usp=sharing"
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    wait = WebDriverWait(driver, 10)
+    
+    output.append(
+        toread_crawler(
+        driver, 
+        org='醒吾科技大學',
+        org_url="http://120.102.129.237/toread/opac",
+        ISBN=ISBN
+        )
+    )
+    
+    driver.quit()
+    gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
 # 彰化縣公共圖書館 CHPL V
-
-
 def CHPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
