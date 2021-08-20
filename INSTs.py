@@ -2932,7 +2932,6 @@ def NTC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-
 #------------醒吾科技大學-------------
 def HWU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -3015,8 +3014,6 @@ def KMU(ISBN):
     return gg
 
 # 國立虎尾科技大學 NFU V
-
-
 def NFU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3045,8 +3042,6 @@ def NFU(ISBN):
     return gg
 
 # 聖約翰科技大學 SJU V
-
-
 def SJU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3075,8 +3070,6 @@ def SJU(ISBN):
     return gg
 
 # 東南科技大學 TNU V
-
-
 def TNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3105,8 +3098,6 @@ def TNU(ISBN):
     return gg
 
 # 新生醫護管理專科學校 HSC V
-
-
 def HSC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3135,8 +3126,6 @@ def HSC(ISBN):
     return gg
 
 # 崇仁醫護管理專科學校 CJC V
-
-
 def CJC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3165,8 +3154,6 @@ def CJC(ISBN):
     return gg
 
 # 元培醫事科技大學 YPU V
-
-
 def YPU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3195,8 +3182,6 @@ def YPU(ISBN):
     return gg
 
 # 嶺東科技大學 LTU V
-
-
 def LTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3225,8 +3210,6 @@ def LTU(ISBN):
     return gg
 
 # 明道大學 MDU V
-
-
 def MDU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3255,8 +3238,6 @@ def MDU(ISBN):
     return gg
 
 # 大葉大學 DYU V
-
-
 def DYU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3285,8 +3266,6 @@ def DYU(ISBN):
     return gg
 
 # 建國科技大學 CTU V
-
-
 def CTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3315,8 +3294,6 @@ def CTU(ISBN):
     return gg
 
 # 南開科技大學 NKUT V
-
-
 def NKUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3345,8 +3322,6 @@ def NKUT(ISBN):
     return gg
 
 # 國立高雄大學 NUK V
-
-
 def NUK(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3375,8 +3350,6 @@ def NUK(ISBN):
     return gg
 
 # 國立東華大學 NDHU V
-
-
 def NDHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
