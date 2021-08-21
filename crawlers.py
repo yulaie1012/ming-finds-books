@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
 def organize_columns(df1):
     print('（./crawlers.py）執行 organize_columns() 函式')
+    print(df1)
     # 合併全部的 DataFrame
     if df1 == []:
         print('empty list，結束函式')
