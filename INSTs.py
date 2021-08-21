@@ -143,7 +143,9 @@ def ILCCB(ISBN):
     driver.quit()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    print("banana")
     worksheet.append_rows(gg.values.tolist())
+    print("+++")
     return gg
 
 
@@ -172,6 +174,7 @@ def TYPL(ISBN):
     driver.quit()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    print("banana")
     worksheet.append_rows(gg.values.tolist())
     return gg
 
