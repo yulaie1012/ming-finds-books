@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
+import os
 import re
-from crawlers import *
 import time  # 強制等待
+from crawlers import *
 from bs4 import BeautifulSoup
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
@@ -19,8 +19,7 @@ from selenium.webdriver.support.ui import WebDriverWait  # 等待機制
 from selenium.webdriver.support import expected_conditions as EC  # 預期事件
 from selenium.webdriver.common.by import By  # 找尋元素的方法
 import pandas as pd  # 載入 pandas
-import os
-# import pandas.io.formats.excel  # 輸出自定義格式 Excel
+import pandas.io.formats.excel  # 輸出自定義格式 Excel
 import requests
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
@@ -33,7 +32,7 @@ def get_chrome():
     my_options.add_argument("--incognito")  # 開啟無痕模式
     my_options.add_argument("--headless")  # 不開啟實體瀏覽器
     my_options.add_argument("--disable-dev-shm-usage")
-    my_options.add_argument("--no-sandbox")
+    # my_options.add_argument("--no-sandbox")
 
     my_options.add_argument('--disable-infobars')
     my_options.add_experimental_option('useAutomationExtension', False)
