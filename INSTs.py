@@ -21,9 +21,9 @@ from selenium.webdriver.common.by import By  # 找尋元素的方法
 import pandas as pd  # 載入 pandas
 import os
 # import pandas.io.formats.excel  # 輸出自定義格式 Excel
-# import requests
-# import requests.packages.urllib3
-# requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
+import requests
+import requests.packages.urllib3
+requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 
 # driver plus
 def get_chrome():
