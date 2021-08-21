@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
 import gspread
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options  # 設定 driver 的行為
 from selenium.webdriver.support.ui import Select  # 選擇＂下拉式選單＂
@@ -23,6 +24,7 @@ import pandas.io.formats.excel  # 輸出自定義格式 Excel
 import requests
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
+from urllib.request import HTTPError  # 載入 HTTPError
 
 # driver plus
 def get_chrome():
@@ -4881,7 +4883,7 @@ def CCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
+    # wait = WebDriverWait(driver, 10)
 
     output.append(
         primo_greendot_crawler(
