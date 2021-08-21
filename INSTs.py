@@ -4326,8 +4326,6 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 # 台北海洋科技大學 TUMT V
-
-
 def TUMT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4339,20 +4337,18 @@ def TUMT(ISBN):
 
     output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
+    # wait = WebDriverWait(driver, 10)
 
-    output.append(
-        台北海洋科技大學(
+
+    gg = 台北海洋科技大學(
             driver,
             '台北海洋科技大學',
             'http://140.129.253.4/webopac7/sim_data2.php?pagerows=15&orderby=BRN&pageno=1&bn=',
             ISBN
         )
-    )
+
 
     driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4870,8 +4866,6 @@ def CGU(ISBN):
     return gg
 
 # 國立中正大學 CCU V OK
-
-
 def CCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4884,19 +4878,15 @@ def CCU(ISBN):
     driver = get_chrome()
     # wait = WebDriverWait(driver, 10)
 
-    output.append(
-        primo_greendot_crawler(
+
+    gg = primo_greendot_crawler(
             driver,
             '國立中正大學',
             "http://primo.lib.ccu.edu.tw/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=default_tab&indx=1&dum=true&srt=rank&vid=CCU&frbg=&tb=t&vl%28256032279UI0%29=isbn&vl%28256032279UI0%29=title&vl%28256032279UI0%29=any&vl%281UIStartWith0%29=contains&vl%28freeText0%29=",
             ISBN,
             "&vl%282853831UI0%29=AND&vl%28256032278UI1%29=any&vl%28256032278UI1%29=title&vl%28256032278UI1%29=any&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%282853829UI1%29=AND&vl%28256032320UI2%29=any&vl%28256032320UI2%29=title&vl%28256032320UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%282853831UI2%29=AND&vl%28D2853835UI3%29=all_items&vl%28256032346UI4%29=all_items&vl%28D2853833UI5%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
         )
-    )
-
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     print("output")
     return gg
