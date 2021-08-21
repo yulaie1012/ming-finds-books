@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
 import gspread
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options  # 設定 driver 的行為
 from selenium.webdriver.support.ui import Select  # 選擇＂下拉式選單＂
