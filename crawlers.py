@@ -352,16 +352,16 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         return organize_columns(table)
 
 
-# In[13]:
+# In[ ]:
 
 
-driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-webpac_gov_crawler(
-    driver=driver,
-    org='宜蘭縣圖書館',
-    org_url='https://webpac.ilccb.gov.tw/',
-    ISBN='9789869109321'
-)
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# webpac_gov_crawler(
+#     driver=driver,
+#     org='宜蘭縣圖書館',
+#     org_url='https://webpac.ilccb.gov.tw/',
+#     ISBN='9789869109321'
+# )
 
 
 # ## <mark>完成</mark>webpac_jsp_crawler(driver, org, org_url, ISBN)
