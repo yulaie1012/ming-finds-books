@@ -4898,6 +4898,7 @@ def CCU(ISBN):
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
+    print("output")
     return gg
 
 # 長榮大學 CJCU V OK
