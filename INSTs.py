@@ -28,23 +28,33 @@ from urllib.request import HTTPError  # 載入 HTTPError
 # driver plus
 def get_chrome():
     print('（./INSTs.py）執行 get_chrome() 函式')
-    my_options = webdriver.ChromeOptions()
-    my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    # my_options = webdriver.ChromeOptions()
+    # my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    # my_options.add_argument("--incognito")  # 開啟無痕模式
+    # my_options.add_argument("--headless")  # 不開啟實體瀏覽器
+    # my_options.add_argument("--disable-dev-shm-usage")
+    # my_options.add_argument("--no-sandbox")
+
+    # my_options.add_argument('--disable-infobars')
+    # my_options.add_experimental_option('useAutomationExtension', False)
+    # my_options.add_experimental_option(
+    #     "excludeSwitches", ["enable-automation"])  # 把新版 google 的自動控制提醒關掉
+
+    # # 當 html下載完成之後，不等待解析完成，selenium 會直接返回
+    # my_capabilities = DesiredCapabilities.CHROME
+    # my_capabilities['pageLoadStrategy'] = 'eager'
+    my_options = Options()
     my_options.add_argument("--incognito")  # 開啟無痕模式
-    my_options.add_argument("--headless")  # 不開啟實體瀏覽器
-    my_options.add_argument("--disable-dev-shm-usage")
-    my_options.add_argument("--no-sandbox")
-
-    my_options.add_argument('--disable-infobars')
-    my_options.add_experimental_option('useAutomationExtension', False)
     my_options.add_experimental_option(
-        "excludeSwitches", ["enable-automation"])  # 把新版 google 的自動控制提醒關掉
-
-    # 當 html下載完成之後，不等待解析完成，selenium 會直接返回
+        'excludeSwitches', ['enable-automation'])  # 把新版google的自動控制提醒關掉
+    # my_options.add_argument('--start-maximized')  # 視窗最大化
+    my_options.add_argument('--headless')  # 不開啟實體瀏覽器
     my_capabilities = DesiredCapabilities.CHROME
+    # 當 html下載完成之後，不等待解析完成，selenium會直接返回
     my_capabilities['pageLoadStrategy'] = 'eager'
+    return  webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
-    return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
+    # return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
 
 
 # ------------------------Primo找書--------------------------
