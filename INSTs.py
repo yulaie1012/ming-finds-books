@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from urllib.request import HTTPError  # 載入 HTTPError
 import os
 import re
 import time  # 強制等待
@@ -23,9 +24,10 @@ import pandas.io.formats.excel  # 輸出自定義格式 Excel
 import requests
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
-from urllib.request import HTTPError  # 載入 HTTPError
 
 # driver plus
+
+
 def get_chrome():
     print('（./INSTs.py）執行 get_chrome() 函式')
     my_options = webdriver.ChromeOptions()
@@ -43,7 +45,6 @@ def get_chrome():
     # 當 html下載完成之後，不等待解析完成，selenium 會直接返回
     my_capabilities = DesiredCapabilities.CHROME
     my_capabilities['pageLoadStrategy'] = 'eager'
-
 
     return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
 
@@ -131,14 +132,12 @@ def ILCCB(ISBN):
     driver = get_chrome()
     # wait = WebDriverWait(driver, 10)
 
-
     gg = webpac_gov_crawler(
         driver,
         '宜蘭縣公共圖書館',
         'https://webpac.ilccb.gov.tw/',
         ISBN
     )
-
 
     driver.quit()
 
@@ -2910,57 +2909,67 @@ def toread_crawler(driver, org, org_url, ISBN):
     else:
         return table
 
-#------------國立臺東專科學校-------------
+# ------------國立臺東專科學校-------------
+
+
 def NTC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    creds = Credentials.from_service_account_file(
+        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
     gs = gspread.authorize(creds)
-    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = gs.open_by_url(
+        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = get_chrome()
     wait = WebDriverWait(driver, 10)
-    
+
     output.append(
         toread_crawler(
-        driver,
-        '國立臺東專科學校',
-        'https://library.ntc.edu.tw/toread/opac',
-        ISBN=ISBN
+            driver,
+            '國立臺東專科學校',
+            'https://library.ntc.edu.tw/toread/opac',
+            ISBN=ISBN
         )
     )
-    
+
     driver.quit()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-#------------醒吾科技大學-------------
+# ------------醒吾科技大學-------------
+
+
 def HWU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file("json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
+    creds = Credentials.from_service_account_file(
+        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
     gs = gspread.authorize(creds)
-    sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = gs.open_by_url(
+        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = get_chrome()
     wait = WebDriverWait(driver, 10)
-    
+
     output.append(
         toread_crawler(
-        driver, 
-        org='醒吾科技大學',
-        org_url="http://120.102.129.237/toread/opac",
-        ISBN=ISBN
+            driver,
+            org='醒吾科技大學',
+            org_url="http://120.102.129.237/toread/opac",
+            ISBN=ISBN
         )
     )
-    
+
     driver.quit()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 彰化縣公共圖書館 CHPL V
+
+
 def CHPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -2989,6 +2998,8 @@ def CHPL(ISBN):
     return gg
 
 # 高雄醫學大學 KMU V
+
+
 def KMU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3017,6 +3028,8 @@ def KMU(ISBN):
     return gg
 
 # 國立虎尾科技大學 NFU V
+
+
 def NFU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3045,6 +3058,8 @@ def NFU(ISBN):
     return gg
 
 # 聖約翰科技大學 SJU V
+
+
 def SJU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3073,6 +3088,8 @@ def SJU(ISBN):
     return gg
 
 # 東南科技大學 TNU V
+
+
 def TNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3101,6 +3118,8 @@ def TNU(ISBN):
     return gg
 
 # 新生醫護管理專科學校 HSC V
+
+
 def HSC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3129,6 +3148,8 @@ def HSC(ISBN):
     return gg
 
 # 崇仁醫護管理專科學校 CJC V
+
+
 def CJC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3157,6 +3178,8 @@ def CJC(ISBN):
     return gg
 
 # 元培醫事科技大學 YPU V
+
+
 def YPU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3185,6 +3208,8 @@ def YPU(ISBN):
     return gg
 
 # 嶺東科技大學 LTU V
+
+
 def LTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3213,6 +3238,8 @@ def LTU(ISBN):
     return gg
 
 # 明道大學 MDU V
+
+
 def MDU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3241,6 +3268,8 @@ def MDU(ISBN):
     return gg
 
 # 大葉大學 DYU V
+
+
 def DYU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3269,6 +3298,8 @@ def DYU(ISBN):
     return gg
 
 # 建國科技大學 CTU V
+
+
 def CTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3297,6 +3328,8 @@ def CTU(ISBN):
     return gg
 
 # 南開科技大學 NKUT V
+
+
 def NKUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3325,6 +3358,8 @@ def NKUT(ISBN):
     return gg
 
 # 國立高雄大學 NUK V
+
+
 def NUK(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3353,6 +3388,8 @@ def NUK(ISBN):
     return gg
 
 # 國立東華大學 NDHU V
+
+
 def NDHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4856,14 +4893,13 @@ def CGU(ISBN):
     driver = get_chrome()
     wait = WebDriverWait(driver, 10)
 
-
     gg = primo_greendot_crawler(
-            driver,
-            '長庚大學',
-            "https://primo.lib.cgu.edu.tw/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=default_tab&indx=1&dum=true&srt=rank&vid=CGU&frbg=&tb=t&vl%2812508471UI0%29=isbn&vl%2812508471UI0%29=title&vl%2812508471UI0%29=isbn&vl%281UIStartWith0%29=contains&vl%28freeText0%29=",
-            ISBN,
-            "&vl%28boolOperator0%29=AND&vl%2812508474UI1%29=creator&vl%2812508474UI1%29=title&vl%2812508474UI1%29=creator&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%28boolOperator1%29=AND&vl%2812508470UI2%29=any&vl%2812508470UI2%29=title&vl%2812508470UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%28boolOperator2%29=AND&vl%2812626940UI3%29=any&vl%2812626940UI3%29=title&vl%2812626940UI3%29=any&vl%281UIStartWith3%29=contains&vl%28freeText3%29=&vl%28boolOperator3%29=AND&vl%28D2240502UI4%29=all_items&vl%2853081356UI5%29=all_items&vl%28D2240500UI6%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
-        )
+        driver,
+        '長庚大學',
+        "https://primo.lib.cgu.edu.tw/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=default_tab&indx=1&dum=true&srt=rank&vid=CGU&frbg=&tb=t&vl%2812508471UI0%29=isbn&vl%2812508471UI0%29=title&vl%2812508471UI0%29=isbn&vl%281UIStartWith0%29=contains&vl%28freeText0%29=",
+        ISBN,
+        "&vl%28boolOperator0%29=AND&vl%2812508474UI1%29=creator&vl%2812508474UI1%29=title&vl%2812508474UI1%29=creator&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%28boolOperator1%29=AND&vl%2812508470UI2%29=any&vl%2812508470UI2%29=title&vl%2812508470UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%28boolOperator2%29=AND&vl%2812626940UI3%29=any&vl%2812626940UI3%29=title&vl%2812626940UI3%29=any&vl%281UIStartWith3%29=contains&vl%28freeText3%29=&vl%28boolOperator3%29=AND&vl%28D2240502UI4%29=all_items&vl%2853081356UI5%29=all_items&vl%28D2240500UI6%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
+    )
 
     driver.close()
     # gg = organize_columns(
