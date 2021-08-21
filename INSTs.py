@@ -125,24 +125,23 @@ def ILCCB(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+
     # driver = webdriver.Chrome(
     #     options=my_options, desired_capabilities=my_capabilities)
     driver = get_chrome()
     # wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
-            driver,
-            '宜蘭縣公共圖書館',
-            'https://webpac.ilccb.gov.tw/',
-            ISBN
-        )
+
+    gg = webpac_gov_crawler(
+        driver,
+        '宜蘭縣公共圖書館',
+        'https://webpac.ilccb.gov.tw/',
+        ISBN
     )
 
+
     driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+
     print("banana")
     worksheet.append_rows(gg.values.tolist())
     print("+++")
