@@ -156,22 +156,20 @@ def TYPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
+    driver = get_chrome()
+    # wait = WebDriverWait(driver, 10)
+
+
+    gg = webpac_gov_crawler(
             driver,
             '桃園市立圖書館',
             'https://webpac.typl.gov.tw/',
             ISBN
         )
-    )
+
 
     driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     print("banana")
     worksheet.append_rows(gg.values.tolist())
     return gg
@@ -4365,8 +4363,6 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 # 台北海洋科技大學 TUMT V
-
-
 def TUMT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4378,20 +4374,18 @@ def TUMT(ISBN):
 
     output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
+    # wait = WebDriverWait(driver, 10)
 
-    output.append(
-        台北海洋科技大學(
+
+    gg = 台北海洋科技大學(
             driver,
             '台北海洋科技大學',
             'http://140.129.253.4/webopac7/sim_data2.php?pagerows=15&orderby=BRN&pageno=1&bn=',
             ISBN
         )
-    )
+
 
     driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4471,6 +4465,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
         try:  # 開始爬蟲
             editions = wait_for_elements_present(
                 driver, 'item-title', 20, By.CLASS_NAME)
+            print("進入搜尋")
             if len(editions) > 1:  # 如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else:  # 如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
@@ -4483,12 +4478,14 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
                     driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple")
+                print("找叉叉的路上")
             except:
                 back_check = None
             if back_check == None:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)):  # 有幾個版本就跑幾次，不管哪一層版本都適用
                     time.sleep(5)
                     into = editions[i].click()
+                    print("進有表格的地方(迴圈)" + str(i))
                     if org == "國立屏東科技大學" or org == "國立高雄餐旅大學":
                         primo_lst += primo_two_finding(driver, org)
                     else:
@@ -4498,12 +4495,15 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                             driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple").click()
                     except:
                         back2 = None
+                    print(primo_lst)
 
             else:  # 如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
+                print("進有表格的地方")
                 if org == "國立屏東科技大學" or org == "國立高雄餐旅大學":
                     primo_lst += primo_two_finding(driver, org)
                 else:
                     primo_lst += primo_finding(driver, org, tcn)
+                print(primo_lst)
         except:
             pass
     except:
@@ -4908,8 +4908,6 @@ def CGU(ISBN):
     return gg
 
 # 國立中正大學 CCU V OK
-
-
 def CCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4922,19 +4920,15 @@ def CCU(ISBN):
     driver = get_chrome()
     # wait = WebDriverWait(driver, 10)
 
-    output.append(
-        primo_greendot_crawler(
+
+    gg = primo_greendot_crawler(
             driver,
             '國立中正大學',
             "http://primo.lib.ccu.edu.tw/primo_library/libweb/action/search.do?fn=search&ct=search&initialSearch=true&mode=Advanced&tab=default_tab&indx=1&dum=true&srt=rank&vid=CCU&frbg=&tb=t&vl%28256032279UI0%29=isbn&vl%28256032279UI0%29=title&vl%28256032279UI0%29=any&vl%281UIStartWith0%29=contains&vl%28freeText0%29=",
             ISBN,
             "&vl%282853831UI0%29=AND&vl%28256032278UI1%29=any&vl%28256032278UI1%29=title&vl%28256032278UI1%29=any&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%282853829UI1%29=AND&vl%28256032320UI2%29=any&vl%28256032320UI2%29=title&vl%28256032320UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%282853831UI2%29=AND&vl%28D2853835UI3%29=all_items&vl%28256032346UI4%29=all_items&vl%28D2853833UI5%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
         )
-    )
-
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     print("output")
     return gg
