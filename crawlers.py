@@ -106,7 +106,7 @@ def organize_columns(df1):
 
     # 遇到值為 NaN時，將前一列的值填補進來
     df2.fillna(method="ffill", axis=0, inplace=True)
-
+    print("yoyoyo")
     return df2
 
 
