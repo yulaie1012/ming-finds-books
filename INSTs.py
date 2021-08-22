@@ -4472,8 +4472,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 time.sleep(5)
                 editions[0].click()
                 time.sleep(5)
-                editions = driver.find_elements_by_class_name(
-                    'item-title', 20)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                # editions = driver.find_elements_by_class_name('item-title', 20)  這時候是第二層的分版本了！(ex.政大 9789869109321)，先註解掉
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
