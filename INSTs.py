@@ -4481,6 +4481,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 print("找叉叉的路上")
             except:
                 back_check = None
+                print("沒有找到叉叉，應該要進表格了")
             if back_check == None:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)):  # 有幾個版本就跑幾次，不管哪一層版本都適用
                     time.sleep(5)
