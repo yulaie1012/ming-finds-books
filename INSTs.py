@@ -4,7 +4,7 @@
 import os
 import re
 import time  # 強制等待
-from crawlers import *
+
 from bs4 import BeautifulSoup
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
@@ -24,7 +24,9 @@ import requests
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 from urllib.request import HTTPError  # 載入 HTTPError
-
+from crawlers import organize_columns, wait_for_element_present, accurately_find_table_and_read_it, \
+    search_ISBN, click_more_btn, select_ISBN_strategy, webpac_gov_crawler, wait_for_element_clickable, crawl_all_tables_on_page, \
+    wait_for_elements_present, get_all_tgt_urls
 # driver plus
 def get_chrome():
     print('（./INSTs.py）執行 get_chrome() 函式')
