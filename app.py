@@ -30,23 +30,24 @@ import gspread_dataframe as gd
 
 # ---------------------------------------
 # import import_ipynb
-import INSTs
-from crawlers import *
-from INSTs import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
-    search_ISBN, click_more_btn, TPML, webpac_jsp_crawler, FGU, select_ISBN_strategy, NTOU, \
-    easy_crawler, NYCU, NTNU, NTUST, PCCU, FJU, SINICA, webpac_pro_crawler, webpac_ajax_crawler, NTPC, KLCCAB, \
-    基隆市公共圖書館, webpac_gov_crawler, ILCCB, wait_for_element_clickable, NIU, 國家圖書館, NCL, CYCU, \
-    primo_crawler, NTU, NCCU, primo_greendot_crawler, CGU, primo_greendot_finding, primo_finding, CYUT, \
-    FCU, NSYSU, NKNU, WZU, Tajen, NCU, CUST, CNU, NTUA, UTaipei, NTUT, TMU, NTUB, Miaoli, JUST, CLUT, VNU, UCH, \
-    MUST, YDU, CUTE, MMC, ITRI, NTCU, NTUS, THU, PU, OCU, NCUE, YLCCB, TYPL, KSML, PTPL, CYCPL, NHU, FEU, CSU, \
-    Meiho, OUK, NPTU, webpac_aspx_crawler, TSU, STU, KSU, NTUNHS, uhtbin_crawler, TTU, NTSU, ugly_crawler, \
-    Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
-    世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
-    wait_for_elements_present, primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
-    TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
-    NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
-    HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, crawl_all_tables_on_page, \
-    get_all_tgt_urls, NUTC, 敏實科技大學, MITUST, sirsidynix_crawler, TNNUA, NTCPL, moc_thm_crawler, get_chrome
+from crawlers import organize_columns, wait_for_element_present, wait_for_url_changed, accurately_find_table_and_read_it, \
+    search_ISBN, click_more_btn, select_ISBN_strategy, webpac_gov_crawler, wait_for_element_clickable, crawl_all_tables_on_page, \
+    wait_for_elements_present, get_all_tgt_urls
+from INSTs import ILCCB, get_chrome
+#     TPML, webpac_jsp_crawler, FGU, NTOU, \
+#     easy_crawler, NYCU, NTNU, NTUST, PCCU, FJU, SINICA, webpac_pro_crawler, webpac_ajax_crawler, NTPC, KLCCAB, \
+#     基隆市公共圖書館, ILCCB,  NIU, 國家圖書館, NCL, CYCU, \
+#     primo_crawler, NTU, NCCU, primo_greendot_crawler, CGU, primo_greendot_finding, primo_finding, CYUT, \
+#     FCU, NSYSU, NKNU, WZU, Tajen, NCU, CUST, CNU, NTUA, UTaipei, NTUT, TMU, NTUB, Miaoli, JUST, CLUT, VNU, UCH, \
+#     MUST, YDU, CUTE, MMC, ITRI, NTCU, NTUS, THU, PU, OCU, NCUE, YLCCB, TYPL, KSML, PTPL, CYCPL, NHU, FEU, CSU, \
+#     Meiho, OUK, NPTU, webpac_aspx_crawler, TSU, STU, KSU, NTUNHS, uhtbin_crawler, TTU, NTSU, ugly_crawler, \
+#     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
+#     世新大學, SHU, 台北海洋科技大學, TUMT, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
+#     primo_two_finding, CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
+#     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
+#     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
+#     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, \
+#     NUTC, 敏實科技大學, MITUST, sirsidynix_crawler, TNNUA, NTCPL, moc_thm_crawler, 
 
 NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
 HWUs = ["hwu", "HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
@@ -258,15 +259,11 @@ handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
 parser = WebhookParser('5fecbae22c9e1492decda139bd70fd70')
 
 # 打個招呼 :)
-
-
 @app.route("/", methods=['GET'])
 def hello():
     return "Hi! Wanna find some InTeREsTInG books?"
 
 # 接收 LINE 的資訊
-
-
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -280,8 +277,6 @@ def callback():
     return 'OK'
 
 # ----------------設定回覆訊息介面-----------------
-
-
 @handler.add(MessageEvent, message=TextMessage)
 def test1(event):
     # ----------------取得userid-----------------

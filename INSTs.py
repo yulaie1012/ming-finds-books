@@ -34,7 +34,6 @@ def get_chrome():
     my_options.add_argument("--headless")  # 不開啟實體瀏覽器
     my_options.add_argument("--disable-dev-shm-usage")
     my_options.add_argument("--no-sandbox")
-
     my_options.add_argument('--disable-infobars')
     my_options.add_experimental_option('useAutomationExtension', False)
     my_options.add_experimental_option(
