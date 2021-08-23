@@ -4845,7 +4845,7 @@ def CGU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
+    # wait = WebDriverWait(driver, 10)
     gg = primo_greendot_crawler(
             driver,
             '長庚大學',
@@ -4869,7 +4869,7 @@ def CCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    # output = []
     driver = get_chrome()
     # wait = WebDriverWait(driver, 10)
 
