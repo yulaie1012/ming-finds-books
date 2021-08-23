@@ -27,6 +27,10 @@ from urllib.request import HTTPError  # 載入 HTTPError
 from crawlers import organize_columns, wait_for_element_present, accurately_find_table_and_read_it, \
     search_ISBN, click_more_btn, select_ISBN_strategy, webpac_gov_crawler, wait_for_element_clickable, crawl_all_tables_on_page, \
     wait_for_elements_present, get_all_tgt_urls
+
+def test_sleep():
+    for sec in range(1, 121):
+        print(f'第 {sec} 秒')
 # driver plus
 def get_chrome():
     print('（./INSTs.py）執行 get_chrome() 函式')
