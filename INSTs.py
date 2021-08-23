@@ -30,6 +30,7 @@ from crawlers import organize_columns, wait_for_element_present, accurately_find
 
 def test_sleep():
     for sec in range(1, 121):
+        time.sleep(1)
         print(f'第 {sec} 秒')
 # driver plus
 def get_chrome():
