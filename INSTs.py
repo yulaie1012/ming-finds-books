@@ -145,9 +145,7 @@ def ILCCB(ISBN):
         ISBN
     )
 
-
-    driver.quit()
-
+    driver.close()
     print("banana")
     worksheet.append_rows(gg.values.tolist())
     print("+++")
@@ -262,7 +260,7 @@ def PHPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
-     gg = webpac_gov_crawler(
+    gg = webpac_gov_crawler(
             driver,
             '澎湖縣公共圖書館',
             'https://webpac.phlib.nat.gov.tw/',
@@ -275,7 +273,7 @@ def PHPL(ISBN):
 
 
 # 國立雲林科技大學 NYUST V
-def NYUST(ISBN):
+def (ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
         "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
