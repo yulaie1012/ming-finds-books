@@ -273,7 +273,7 @@ def PHPL(ISBN):
 
 
 # 國立雲林科技大學 NYUST V
-def (ISBN):
+def NYUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
         "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
