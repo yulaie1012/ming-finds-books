@@ -35,7 +35,7 @@ from crawlers import organize_columns, wait_for_element_present, accurately_find
     wait_for_elements_present, get_all_tgt_urls
 from INSTs import ILCCB, CCU, CGU, CJCU, primo_greendot_crawler,  primo_greendot_finding, \
     test_sleep, KSML, TYPL, PTPL, HLPL, PHPL, NYUST, TFAI, primo_crawler, primo_finding, primo_two_finding, \
-    NTU, NCCU, TKU, MCU, SCU, 台北海洋科技大學, TUMT
+    NTU, NCCU, TKU, MCU, SCU, 台北海洋科技大學, TUMT, NKUST, NPUST, NKUHT
 #     TPML, webpac_jsp_crawler, FGU, NTOU, \
 #     easy_crawler, NYCU, NTNU, NTUST, PCCU, FJU, SINICA, webpac_pro_crawler, webpac_ajax_crawler, NTPC, KLCCAB, \
 #     基隆市公共圖書館, ILCCB,  NIU, 國家圖書館, NCL, CYCU, \
@@ -43,9 +43,9 @@ from INSTs import ILCCB, CCU, CGU, CJCU, primo_greendot_crawler,  primo_greendot
 #     FCU, NSYSU, NKNU, WZU, Tajen, NCU, CUST, CNU, NTUA, UTaipei, NTUT, TMU, NTUB, Miaoli, JUST, CLUT, VNU, UCH, \
 #     MUST, YDU, CUTE, MMC, ITRI, NTCU, NTUS, THU, PU, OCU, NCUE, YLCCB, TYPL, KSML, PTPL, CYCPL, NHU, FEU, CSU, \
 #     Meiho, OUK, NPTU, webpac_aspx_crawler, TSU, STU, KSU, NTUNHS, uhtbin_crawler, TTU, NTSU, ugly_crawler, \
-#     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, NPUST, NKUHT, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
+#     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
 #     世新大學, SHU, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
-#     CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, NKUST, HLPL, NYUST, \
+#     CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, HLPL, NYUST, \
 #     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
 #     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
 #     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, \
