@@ -176,8 +176,7 @@ def TYPL(ISBN):
         )
 
 
-    driver.quit()
-    print("banana")
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -191,22 +190,16 @@ def KSML(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
+    gg = webpac_gov_crawler(
             driver,
             '高雄市立圖書館',
             'https://webpacx.ksml.edu.tw/',
             ISBN
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -220,22 +213,17 @@ def PTPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
+
+    gg = webpac_gov_crawler(
             driver,
             '屏東縣公共圖書館',
             'https://library.pthg.gov.tw/',
             ISBN
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -249,22 +237,16 @@ def HLPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
+    gg = webpac_gov_crawler(
             driver,
             '花蓮縣公共圖書館',
             'https://center.hccc.gov.tw/',
             ISBN
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -278,22 +260,16 @@ def PHPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
+     gg = webpac_gov_crawler(
             driver,
             '澎湖縣公共圖書館',
             'https://webpac.phlib.nat.gov.tw/',
             ISBN
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -307,22 +283,16 @@ def NYUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
+     gg = webpac_gov_crawler(
             driver,
             '國立雲林科技大學',
             'https://www.libwebpac.yuntech.edu.tw/',
             ISBN
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -336,22 +306,16 @@ def TFAI(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = get_chrome()
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        webpac_gov_crawler(
+    gg = webpac_gov_crawler(
             driver,
             '國家電影及視聽文化中心',
             'https://lib.tfi.org.tw/',
             ISBN
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
