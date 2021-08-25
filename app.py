@@ -33,7 +33,7 @@ import gspread_dataframe as gd
 from crawlers import organize_columns, wait_for_element_present, accurately_find_table_and_read_it, \
     search_ISBN, click_more_btn, select_ISBN_strategy, webpac_gov_crawler, wait_for_element_clickable, crawl_all_tables_on_page, \
     wait_for_elements_present, get_all_tgt_urls
-from INSTs import ILCCB, get_chrome, CCU, CGU, CJCU, primo_greendot_crawler,  primo_greendot_finding, \
+from INSTs import ILCCB, CCU, CGU, CJCU, primo_greendot_crawler,  primo_greendot_finding, \
     test_sleep, KSML, TYPL, PTPL, HLPL, PHPL, NYUST, TFAI, primo_crawler, primo_finding, primo_two_finding, \
     NTU, NCCU, TKU, MCU, SCU, 台北海洋科技大學, TUMT
 #     TPML, webpac_jsp_crawler, FGU, NTOU, \
