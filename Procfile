@@ -1,2 +1,2 @@
 web: gunicorn app:app –preload
---timeout 15
+gunicorn hello:app --timeout 120
