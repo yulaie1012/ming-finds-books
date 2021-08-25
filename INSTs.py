@@ -77,7 +77,10 @@ def primo_finding(driver, org, tcn):  # 改wait
             a = sth.find_elements_by_tag_name("span")
             for _ in range(i):
                 now_url = driver.current_url
-                new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
+                if org == "銘傳大學":
+                    new_row = [org, where[_].text, "沒有索書號喔QQ", a[0].text, now_url]
+                else:
+                    new_row = [org, where[_].text, a[4].text, a[0].text, now_url]
                 sub_df_lst.append(new_row)
                 break
             break
@@ -4393,7 +4396,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 time.sleep(5)
                 editions[0].click()
                 time.sleep(5)
-                # editions = driver.find_elements_by_class_name('item-title', 20)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                editions = driver.find_elements_by_class_name('item-title', 20)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
