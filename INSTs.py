@@ -406,7 +406,7 @@ def FGU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     # 
     gg = webpac_jsp_crawler(
@@ -429,7 +429,7 @@ def CKU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -443,8 +443,7 @@ def CKU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -459,7 +458,7 @@ def NIU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -473,8 +472,7 @@ def NIU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -489,7 +487,7 @@ def CUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -503,8 +501,7 @@ def CUST(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -519,7 +516,7 @@ def CCT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -533,8 +530,7 @@ def CCT(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -549,7 +545,7 @@ def HDUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -563,8 +559,7 @@ def HDUT(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -579,7 +574,7 @@ def CNU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -593,8 +588,7 @@ def CNU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -609,7 +603,7 @@ def TPML(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -637,7 +631,7 @@ def NTUA(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -665,7 +659,7 @@ def UTaipei(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -693,7 +687,7 @@ def NTUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -721,7 +715,7 @@ def TMU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -749,7 +743,7 @@ def NTUB(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -777,7 +771,7 @@ def JUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -805,7 +799,7 @@ def CLUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -833,7 +827,7 @@ def VNU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -861,7 +855,7 @@ def UCH(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -889,7 +883,7 @@ def MUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -917,7 +911,7 @@ def NOU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -945,7 +939,7 @@ def HCLIB(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -973,7 +967,7 @@ def HCPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1001,7 +995,7 @@ def Miaoli(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1029,7 +1023,7 @@ def YDU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1057,7 +1051,7 @@ def Jente(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1085,7 +1079,7 @@ def CUTE(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1113,7 +1107,7 @@ def NTCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1141,7 +1135,7 @@ def NTUS(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1169,7 +1163,7 @@ def THU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1197,7 +1191,7 @@ def PU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1225,7 +1219,7 @@ def OCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1253,7 +1247,7 @@ def NCUE(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1281,7 +1275,7 @@ def YLCCB(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1309,7 +1303,7 @@ def CYLIB(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1337,7 +1331,7 @@ def CYCPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1365,7 +1359,7 @@ def NHU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1393,7 +1387,7 @@ def FEU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1421,7 +1415,7 @@ def CSU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1449,7 +1443,7 @@ def Meiho(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1477,7 +1471,7 @@ def NTTU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1505,7 +1499,7 @@ def TTCPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1533,7 +1527,7 @@ def NQU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1561,7 +1555,7 @@ def KMCPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1637,7 +1631,7 @@ def NTUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1649,8 +1643,7 @@ def NTUST(ISBN):
         )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1666,7 +1659,7 @@ def NTNU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1693,7 +1686,7 @@ def CYCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1707,8 +1700,7 @@ def CYCU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1723,7 +1715,7 @@ def FCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1737,8 +1729,7 @@ def FCU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1753,7 +1744,7 @@ def CYUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1767,8 +1758,7 @@ def CYUT(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1783,7 +1773,7 @@ def NSYSU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1797,8 +1787,7 @@ def NSYSU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1813,7 +1802,7 @@ def NKNU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1827,8 +1816,7 @@ def NKNU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1843,7 +1831,7 @@ def WZU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1857,8 +1845,7 @@ def WZU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1873,7 +1860,7 @@ def Tajen(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1887,8 +1874,7 @@ def Tajen(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1903,7 +1889,7 @@ def NCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1917,8 +1903,7 @@ def NCU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1956,7 +1941,7 @@ def SINICA(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -1970,8 +1955,7 @@ def SINICA(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1986,7 +1970,7 @@ def PCCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2000,8 +1984,7 @@ def PCCU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2016,7 +1999,7 @@ def FJU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2030,8 +2013,7 @@ def FJU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2046,7 +2028,7 @@ def NYCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2060,8 +2042,7 @@ def NYCU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2117,7 +2098,7 @@ def NTPC(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2131,8 +2112,7 @@ def NTPC(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2147,7 +2127,7 @@ def OUK(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2161,8 +2141,7 @@ def OUK(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2177,7 +2156,7 @@ def NPTU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2191,8 +2170,7 @@ def NPTU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2275,7 +2253,7 @@ def STU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2289,8 +2267,7 @@ def STU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2305,7 +2282,7 @@ def TSU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2319,8 +2296,7 @@ def TSU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2334,7 +2310,7 @@ def KSU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2348,8 +2324,7 @@ def KSU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2363,7 +2338,7 @@ def HKU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2377,8 +2352,7 @@ def HKU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2392,7 +2366,7 @@ def HUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2406,8 +2380,7 @@ def HUST(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2421,7 +2394,7 @@ def HWH(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2435,8 +2408,7 @@ def HWH(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2458,7 +2430,7 @@ def AU(ISBN):
         print('（./INSTs.py）執行這行5')
         worksheet = sheet.get_worksheet(0)
         print('（./INSTs.py）執行這行6')
-        output = []
+        
         print('（./INSTs.py）執行這行7')
         driver = webdriver.Chrome(
             options=my_options, desired_capabilities=my_capabilities)
@@ -2496,7 +2468,7 @@ def USC(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2510,8 +2482,7 @@ def USC(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2526,7 +2497,7 @@ def HFU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2540,8 +2511,7 @@ def HFU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2556,7 +2526,7 @@ def NUU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2570,8 +2540,7 @@ def NUU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2620,7 +2589,7 @@ def NTUNHS(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2634,8 +2603,7 @@ def NTUNHS(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2650,7 +2618,7 @@ def TTU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2664,8 +2632,7 @@ def TTU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2680,7 +2647,7 @@ def NTSU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2694,8 +2661,7 @@ def NTSU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2735,7 +2701,7 @@ def Matsu(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2749,8 +2715,7 @@ def Matsu(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2765,7 +2730,7 @@ def KNU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2779,8 +2744,7 @@ def KNU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2860,7 +2824,7 @@ def NTC(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
     
@@ -2885,7 +2849,7 @@ def HWU(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
     
@@ -2912,7 +2876,7 @@ def CHPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2926,8 +2890,7 @@ def CHPL(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2940,7 +2903,7 @@ def KMU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2954,8 +2917,7 @@ def KMU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2968,7 +2930,7 @@ def NFU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -2982,8 +2944,7 @@ def NFU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -2996,7 +2957,7 @@ def SJU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3010,8 +2971,7 @@ def SJU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3024,7 +2984,7 @@ def TNU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3038,8 +2998,7 @@ def TNU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3052,7 +3011,7 @@ def HSC(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3066,8 +3025,7 @@ def HSC(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3080,7 +3038,7 @@ def CJC(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3094,8 +3052,7 @@ def CJC(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3108,7 +3065,7 @@ def YPU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3122,8 +3079,7 @@ def YPU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3136,7 +3092,7 @@ def LTU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3150,8 +3106,7 @@ def LTU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3164,7 +3119,7 @@ def MDU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3178,8 +3133,7 @@ def MDU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3192,7 +3146,7 @@ def DYU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3206,8 +3160,7 @@ def DYU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3220,7 +3173,7 @@ def CTU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3234,8 +3187,7 @@ def CTU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3248,7 +3200,7 @@ def NKUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3262,8 +3214,7 @@ def NKUT(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3276,7 +3227,7 @@ def NUK(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3290,8 +3241,7 @@ def NUK(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3304,7 +3254,7 @@ def NDHU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3318,8 +3268,7 @@ def NDHU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3362,7 +3311,7 @@ def TNUA(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3376,8 +3325,7 @@ def TNUA(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3392,7 +3340,7 @@ def NCUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3406,8 +3354,7 @@ def NCUT(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3422,7 +3369,7 @@ def ISU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3436,8 +3383,7 @@ def ISU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3452,7 +3398,7 @@ def CSMU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3466,8 +3412,7 @@ def CSMU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3482,7 +3427,7 @@ def NHRI(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3496,8 +3441,7 @@ def NHRI(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3565,7 +3509,7 @@ def NTPU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3578,8 +3522,7 @@ def NTPU(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3594,7 +3537,7 @@ def TPCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3607,8 +3550,7 @@ def TPCU(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3623,7 +3565,7 @@ def TMUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3636,8 +3578,7 @@ def TMUST(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3652,7 +3593,7 @@ def LHU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3665,8 +3606,7 @@ def LHU(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3681,7 +3621,7 @@ def TCPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3694,8 +3634,7 @@ def TCPL(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3710,7 +3649,7 @@ def CMU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3723,8 +3662,7 @@ def CMU(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3739,7 +3677,7 @@ def Asia(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3752,8 +3690,7 @@ def Asia(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3768,7 +3705,7 @@ def TNPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3781,8 +3718,7 @@ def TNPL(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3797,7 +3733,7 @@ def TCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3810,8 +3746,7 @@ def TCU(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3826,7 +3761,7 @@ def NPU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3839,8 +3774,7 @@ def NPU(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3904,7 +3838,7 @@ def KLCCAB(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -3918,8 +3852,7 @@ def KLCCAB(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -3998,7 +3931,7 @@ def NUTC(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -4011,8 +3944,7 @@ def NUTC(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4028,7 +3960,7 @@ def NTCPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -4041,8 +3973,7 @@ def NTCPL(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4058,7 +3989,7 @@ def TNNUA(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -4071,8 +4002,7 @@ def TNNUA(ISBN):
         )
     )
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4116,7 +4046,7 @@ def NMP(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -4130,8 +4060,7 @@ def NMP(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4170,7 +4099,7 @@ def NCL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -4184,8 +4113,7 @@ def NCL(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4217,7 +4145,7 @@ def SHU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -4231,8 +4159,7 @@ def SHU(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4280,7 +4207,7 @@ def TUMT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     # 
 
@@ -4339,7 +4266,7 @@ def MITUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    output = []
+    
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
@@ -4353,8 +4280,7 @@ def MITUST(ISBN):
     )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+    
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4538,7 +4464,7 @@ def SCU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立高雄科技大學 NKUST V
+# 國立高雄科技大學 NKUST V OK
 def NKUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4874,9 +4800,7 @@ def MMC(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 工業技術研究院 ITRI V OK
-
-
+# 工業技術研究院 ITRI V 
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4885,12 +4809,9 @@ def ITRI(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '工業技術研究院',
             "http://61.61.255.73/F?func=find-d-0",
@@ -4901,17 +4822,12 @@ def ITRI(ISBN):
             '/html/body/table[10]',
             [5, 2, 8]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 明志科技大學 MCUT V OK
-
-
+# 明志科技大學 MCUT V 
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4920,12 +4836,9 @@ def MCUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    
 
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '明志科技大學',
             "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY03",
@@ -4936,17 +4849,12 @@ def MCUT(ISBN):
             '/html/body/table[9]',
             [3, 4, 7]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 長庚科技大學 CGUST V OK
-
-
+# 長庚科技大學 CGUST V 
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4955,12 +4863,10 @@ def CGUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '長庚科技大學',
             "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY02",
@@ -4971,16 +4877,13 @@ def CGUST(ISBN):
             '/html/body/table[9]',
             [3, 4, 7]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 
-# 國立清華大學 NTHU V OK
+# 國立清華大學 NTHU V 
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4989,12 +4892,9 @@ def NTHU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '國立清華大學',
             "https://webpac.lib.nthu.edu.tw/F/?func=find-d-0",
@@ -5005,17 +4905,12 @@ def NTHU(ISBN):
             '/html/body/table[12]',
             [2, 4, 8]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立暨南國際大學 NCNU V OK
-
-
+# 國立暨南國際大學 NCNU V 
 def NCNU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5024,12 +4919,9 @@ def NCNU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    
 
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '國立暨南國際大學',
             "https://aleph.lib.ncnu.edu.tw/F/?func=find-d-0",
@@ -5040,17 +4932,12 @@ def NCNU(ISBN):
             '/html/body/table[11]',
             [3, 4, 7]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立臺南大學 NUTN V OK
-
-
+# 國立臺南大學 NUTN V 
 def NUTN(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5059,12 +4946,9 @@ def NUTN(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '國立臺南大學',
             "https://aleph.nutn.edu.tw/F/?func=find-d-0",
@@ -5075,17 +4959,12 @@ def NUTN(ISBN):
             '/html/body/table[9]',
             [2, 4, 8]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國家兩廳院 NTCH 9573308436 V OK
-
-
+# 國家兩廳院 NTCH 9573308436 V 
 def NTCH(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5094,12 +4973,9 @@ def NTCH(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-
-    output.append(
-        clickclick_crawler(
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    gg = clickclick_crawler(
             driver,
             '國家兩廳院',
             "https://opac.npac-ntch.org/F/?func=find-d-0",
@@ -5110,17 +4986,12 @@ def NTCH(ISBN):
             '/html/body/table[9]',
             [3, 4, 7]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 台灣神學研究學院 TGST V OK
-
-
+# 台灣神學研究學院 TGST V 
 def TGST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5129,12 +5000,9 @@ def TGST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-
-    output.append(
-        clickclick_crawler(
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    gg = clickclick_crawler(
             driver,
             '台灣神學研究學院',
             "http://aleph.flysheet.com.tw/F/?func=find-d-0",
@@ -5145,17 +5013,12 @@ def TGST(ISBN):
             '/html/body/table[10]',
             [3, 4, 8]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 國立臺灣美術館 NTMOFA 9784897376547
-
-
 def NTMOFA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5164,12 +5027,9 @@ def NTMOFA(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-
-    output.append(
-        clickclick_crawler(
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    gg = clickclick_crawler(
             driver,
             '國立臺灣美術館',
             "http://lib.moc.gov.tw/F?func=find-b-0&local_base=THM06",
@@ -5178,17 +5038,12 @@ def NTMOFA(ISBN):
             "a",
             '/html/body/table[9]'
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 高苑科技大學 KYU X (您所想要連結的資料庫目前維護中)
-
-
 def KYU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5197,12 +5052,10 @@ def KYU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '高苑科技大學',
             "http://210.60.92.160/F/?func=find-d-0&local_base=FLY04",
@@ -5213,11 +5066,8 @@ def KYU(ISBN):
             '/html/body/table[8]',
             [2, 4, 8]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -5239,8 +5089,6 @@ def chungchung_crawler(driver, org, org_url, ISBN):
     return table
 
 # 中臺科技大學 CTUST
-
-
 def CTUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5249,28 +5097,20 @@ def CTUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    
 
-    output.append(
-        chungchung_crawler(
+    gg = chungchung_crawler(
             driver,
             '中臺科技大學',
             "http://120.107.56.24/isbn1.htm",
             ISBN
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 中州科技大學 CCUST
-
-
 def CCUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -5279,21 +5119,14 @@ def CCUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    
-
-    output.append(
-        chungchung_crawler(
+    gg = chungchung_crawler(
             driver,
             '中州科技大學',
             "http://163.23.234.194/isbn1.htm",
             ISBN
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
