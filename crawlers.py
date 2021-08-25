@@ -28,6 +28,7 @@ import time  # 強制等待
 
 # In[2]:
 
+
 my_options = Options()
 my_options.add_argument('--incognito')  # 開啟無痕模式
 # my_options.add_argument('--start-maximized')  # 視窗最大化
@@ -54,13 +55,18 @@ def organize_columns(df_list):
     print('PRINT df_list, WHERE df_list IS A DATAFRAME LIST')
     print(df_list)
     print('==============================================================================')
+    
 
     if df_list == []:
         print('NO df_list, STOP organize_columns() FUNCTION')
         print(('=============================================================================='))
         return
 
-    df1 = pd.concat(df_list, axis=0, ignore_index=True)
+    try:
+        df1 = pd.concat(df_list, axis=0, ignore_index=True)
+    except:
+        df1.reset_index(drop=True, inplace=True)
+    
     print('==============================================================================')
     print('PRINT df1, WHERE df1 IS AN INITIAL DATAFRAME')
     print(df1)
@@ -354,7 +360,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         return organize_columns(table)
 
 
-# In[12]:
+# In[ ]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -539,6 +545,33 @@ def easy_crawler2(driver, org, org_url, ISBN):
         return
     else:
         return table
+
+
+# In[ ]:
+
+
+driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+easy_crawler(
+    driver=driver,
+    org='國立臺灣師範大學',
+    org_url='https://opac.lib.ntnu.edu.tw/search*cht/i',
+    ISBN='9789573317241'
+)
+
+
+# In[59]:
+
+
+table = accurately_find_table_and_read_it(driver, 'table.bibItems')
+table['圖書館'], table['連結'] = '台師大', driver.current_url
+table = organize_columns(table)
+table
+
+
+# In[ ]:
+
+
+
 
 
 # ## <mark>完成</mark>webpac_pro_crawler(driver, org, org_url, ISBN)
@@ -1494,6 +1527,8 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
 # - 『編輯者』：靖妤
 # - 『運用的機構』：[台北海洋科技大學](http://140.129.253.4/webopac7/sim_data2.php?pagerows=15&orderby=BRN&pageno=1&bn=986729193X)
 
+# ### Unable to coerce to Series
+
 # In[52]:
 
 
@@ -1525,7 +1560,7 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[53]:
+# In[55]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1535,4 +1570,22 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
 #     org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
 #     ISBN='986729193X'
 # )
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
