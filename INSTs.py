@@ -51,8 +51,7 @@ import re
 #     return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
 my_options = Options()
 my_options.add_argument('--incognito')  # 開啟無痕模式
-# my_options.add_argument('--start-maximized')  # 視窗最大化
-# my_options.add_argument('--headless')  # 不開啟實體瀏覽器
+my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
