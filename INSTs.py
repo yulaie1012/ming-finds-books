@@ -4386,24 +4386,27 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
         try:  # 開始爬蟲
             editions = wait_for_elements_present(
                 driver, 'item-title', 20, By.CLASS_NAME)
+            print("進入搜尋")
             if len(editions) > 1:  # 如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else:  # 如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
                 time.sleep(5)
                 editions[0].click()
                 time.sleep(5)
-                editions = driver.find_elements_by_class_name(
-                    'item-title', 20)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                # editions = driver.find_elements_by_class_name('item-title', 20)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
                     driver, "md-icon-button.close-button.full-view-navigation.md-button.md-primoExplore-theme.md-ink-ripple")
+                print("找叉叉成功，準備找表格")
             except:
                 back_check = None
+                print("沒有叉叉，進版本迴圈")
             if back_check == None:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)):  # 有幾個版本就跑幾次，不管哪一層版本都適用
                     time.sleep(5)
                     into = editions[i].click()
+                    print("版本" + str(i))
                     if org == "國立屏東科技大學" or org == "國立高雄餐旅大學":
                         primo_lst += primo_two_finding(driver, org)
                     else:
@@ -4419,10 +4422,11 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                     primo_lst += primo_two_finding(driver, org)
                 else:
                     primo_lst += primo_finding(driver, org, tcn)
+                    print(primo_lst)
         except:
-            pass
+            print("爬蟲失敗")
     except:
-        pass
+        print("沒進網址")
     table = pd.DataFrame(primo_lst)
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
