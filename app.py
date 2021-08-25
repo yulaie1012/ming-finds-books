@@ -315,8 +315,6 @@ def test1(event):
 
         f_region.close()
     # ----------------test-----------------
-    elif event.message.text == "test":
-        print('test')
 
     # ----------------爬蟲-----------------
     else:
