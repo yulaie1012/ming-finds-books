@@ -290,11 +290,6 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
         print('=============================================================================================')
         return
 
-
-def test_sleep():
-    for sec in range(1, 121):
-        print(f'第 {sec} 秒')
-
 # # 已完成的爬蟲程式
 
 # ## <mark>完成</mark>webpac_gov_crawler(driver, org, org_url, ISBN)
