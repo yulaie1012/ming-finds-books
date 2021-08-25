@@ -21,12 +21,13 @@ from selenium.webdriver.common.by import By  # 找尋元素的方法
 import pandas as pd  # 載入 pandas
 import pandas.io.formats.excel  # 輸出自定義格式 Excel
 import requests
-import requests.packages.urllib3
+# import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 from urllib.request import HTTPError  # 載入 HTTPError
 from crawlers import organize_columns, wait_for_element_present, accurately_find_table_and_read_it, \
     search_ISBN, click_more_btn, select_ISBN_strategy, webpac_gov_crawler, wait_for_element_clickable, crawl_all_tables_on_page, \
-    wait_for_elements_present, get_all_tgt_urls
+    wait_for_elements_present, get_all_tgt_urls, webpac_jsp_crawler
+import re
 
 # driver plus
 # def get_chrome():
@@ -124,7 +125,7 @@ def primo_greendot_finding(driver, org):  # 改 wait
 
 
 # webpac_gov_crawler(driver, org, org_url, ISBN)
-# 宜蘭縣公共圖書館 ILCCB V
+# 宜蘭縣公共圖書館 ILCCB V OK
 def ILCCB(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -151,7 +152,7 @@ def ILCCB(ISBN):
     return gg
 
 
-# 桃園市立圖書館 TYPL V
+# 桃園市立圖書館 TYPL V OK
 def TYPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -178,7 +179,7 @@ def TYPL(ISBN):
     return gg
 
 
-# 高雄市立圖書館 KSML V
+# 高雄市立圖書館 KSML V OK
 def KSML(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -201,7 +202,7 @@ def KSML(ISBN):
     return gg
 
 
-# 屏東縣公共圖書館 PTPL V
+# 屏東縣公共圖書館 PTPL V OK
 def PTPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4431,8 +4432,6 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
     return table
 
 # 國立臺灣大學 NTU V
-
-
 def NTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4441,11 +4440,9 @@ def NTU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
-    output.append(
-        primo_crawler(
+    gg = primo_crawler(
             driver,
             '國立臺灣大學',
             "https://ntu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
@@ -4453,16 +4450,12 @@ def NTU(ISBN):
             "&tab=Everything&search_scope=MyInst_and_CI&vid=886NTU_INST:886NTU_INST&offset=0",
             "layout-align-space-between-center.layout-row.flex-100"
         )
-    )
+
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 國立政治大學 NCCU V
-
-
 def NCCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4471,12 +4464,9 @@ def NCCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
-    output.append(
-        primo_crawler(
+    gg = primo_crawler(
             driver,
             '國立政治大學',
             "https://nccu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
@@ -4484,17 +4474,12 @@ def NCCU(ISBN):
             "&tab=Everything&search_scope=MyInst_and_CI&vid=886NCCU_INST:886NCCU_INST",
             "layout-align-space-between-center.layout-row.flex-100"
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 淡江大學 TKU V
-
-
 def TKU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4503,12 +4488,9 @@ def TKU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
-    output.append(
-        primo_crawler(
+    gg = primo_crawler(
             driver,
             '淡江大學',
             "https://uco-network.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
@@ -4516,17 +4498,12 @@ def TKU(ISBN):
             "&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_TKU:886TKU_INST&lang=zh-tw&offset=0",
             "neutralized-button.layout-full-width.layout-display-flex.md-button.md-ink-ripple.layout-row"
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 銘傳大學 MCU V(索書號是空的)
-
-
 def MCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4535,12 +4512,8 @@ def MCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-
-    output.append(
-        primo_crawler(
+    gg = primo_crawler(
             driver,
             '銘傳大學',
             "https://uco-mcu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
@@ -4548,17 +4521,12 @@ def MCU(ISBN):
             "&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_MCU:886MCU_INST&lang=zh-tw&offset=0",
             "md-2-line.md-no-proxy._md"
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 東吳大學 SCU V
-
-
 def SCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4567,12 +4535,9 @@ def SCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
-    output.append(
-        primo_crawler(
+    gg = primo_crawler(
             driver,
             '東吳大學',
             "https://uco-scu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
@@ -4580,11 +4545,8 @@ def SCU(ISBN):
             "&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_SCU:886SCU_INST&lang=zh-tw&offset=0",
             "md-2-line.md-no-proxy._md"
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
