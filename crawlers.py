@@ -341,8 +341,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         if wait_for_element_present(driver, '.bookplace_list > table', 10):
             print(f'「webpac_gov_crawler({org})」，只有一筆搜尋結果')
             click_more_btn(driver)
-            tgt = accurately_find_table_and_read_it(
-                driver, '.bookplace_list > table')
+            tgt = accurately_find_table_and_read_it(driver, '.bookplace_list > table')
             tgt['圖書館'], tgt['連結'] = org, driver.current_url
             table.append(tgt)
             print('抓取 table 成功')

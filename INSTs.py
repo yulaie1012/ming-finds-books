@@ -28,30 +28,32 @@ from crawlers import organize_columns, wait_for_element_present, accurately_find
     search_ISBN, click_more_btn, select_ISBN_strategy, webpac_gov_crawler, wait_for_element_clickable, crawl_all_tables_on_page, \
     wait_for_elements_present, get_all_tgt_urls
 
-def test_sleep():
-    for sec in range(1, 121):
-        time.sleep(1)
-        print(f'第 {sec} 秒')
 # driver plus
-def get_chrome():
-    print('（./INSTs.py）執行 get_chrome() 函式')
-    my_options = webdriver.ChromeOptions()
-    my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    my_options.add_argument("--incognito")  # 開啟無痕模式
-    my_options.add_argument("--headless")  # 不開啟實體瀏覽器
-    my_options.add_argument("--disable-dev-shm-usage")
-    my_options.add_argument("--no-sandbox")
-    my_options.add_argument('--disable-infobars')
-    my_options.add_experimental_option('useAutomationExtension', False)
-    my_options.add_experimental_option(
-        "excludeSwitches", ["enable-automation"])  # 把新版 google 的自動控制提醒關掉
+# def get_chrome():
+#     print('（./INSTs.py）執行 get_chrome() 函式')
+#     my_options = webdriver.ChromeOptions()
+#     my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+#     my_options.add_argument("--incognito")  # 開啟無痕模式
+#     my_options.add_argument("--headless")  # 不開啟實體瀏覽器
+#     my_options.add_argument("--disable-dev-shm-usage")
+#     my_options.add_argument("--no-sandbox")
+#     my_options.add_argument('--disable-infobars')
+#     my_options.add_experimental_option('useAutomationExtension', False)
+#     my_options.add_experimental_option(
+#         "excludeSwitches", ["enable-automation"])  # 把新版 google 的自動控制提醒關掉
 
-    # 當 html下載完成之後，不等待解析完成，selenium 會直接返回
-    my_capabilities = DesiredCapabilities.CHROME
-    my_capabilities['pageLoadStrategy'] = 'eager'
+#     # 當 html下載完成之後，不等待解析完成，selenium 會直接返回
+#     my_capabilities = DesiredCapabilities.CHROME
+#     my_capabilities['pageLoadStrategy'] = 'eager'
 
 
-    return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
+#     return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
+my_options = Options()
+my_options.add_argument('--incognito')  # 開啟無痕模式
+# my_options.add_argument('--start-maximized')  # 視窗最大化
+# my_options.add_argument('--headless')  # 不開啟實體瀏覽器
+my_capabilities = DesiredCapabilities.CHROME
+my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
 
 # ------------------------Primo找書--------------------------
@@ -134,7 +136,7 @@ def ILCCB(ISBN):
 
     # driver = webdriver.Chrome(
     #     options=my_options, desired_capabilities=my_capabilities)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     gg = webpac_gov_crawler(
         driver,
         '宜蘭縣公共圖書館',
@@ -159,7 +161,7 @@ def TYPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     # wait = WebDriverWait(driver, 10)
 
 
@@ -185,7 +187,7 @@ def KSML(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     gg = webpac_gov_crawler(
             driver,
@@ -208,7 +210,7 @@ def PTPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
 
     gg = webpac_gov_crawler(
@@ -232,7 +234,7 @@ def HLPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     gg = webpac_gov_crawler(
             driver,
@@ -255,7 +257,7 @@ def PHPL(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     gg = webpac_gov_crawler(
             driver,
@@ -278,7 +280,7 @@ def NYUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     gg = webpac_gov_crawler(
             driver,
@@ -301,7 +303,7 @@ def TFAI(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     gg = webpac_gov_crawler(
             driver,
@@ -404,7 +406,7 @@ def FGU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     # wait = WebDriverWait(driver, 10)
     gg = webpac_jsp_crawler(
         driver,
@@ -427,7 +429,7 @@ def CKU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -457,7 +459,7 @@ def NIU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -487,7 +489,7 @@ def CUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -517,7 +519,7 @@ def CCT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -547,7 +549,7 @@ def HDUT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -577,7 +579,7 @@ def CNU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -607,7 +609,7 @@ def TPML(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -635,7 +637,7 @@ def NTUA(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -663,7 +665,7 @@ def UTaipei(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -691,7 +693,7 @@ def NTUT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -719,7 +721,7 @@ def TMU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -747,7 +749,7 @@ def NTUB(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -775,7 +777,7 @@ def JUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -803,7 +805,7 @@ def CLUT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -831,7 +833,7 @@ def VNU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -859,7 +861,7 @@ def UCH(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -887,7 +889,7 @@ def MUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -915,7 +917,7 @@ def NOU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -943,7 +945,7 @@ def HCLIB(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -971,7 +973,7 @@ def HCPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -999,7 +1001,7 @@ def Miaoli(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1027,7 +1029,7 @@ def YDU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1055,7 +1057,7 @@ def Jente(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1083,7 +1085,7 @@ def CUTE(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1111,7 +1113,7 @@ def NTCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1139,7 +1141,7 @@ def NTUS(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1167,7 +1169,7 @@ def THU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1195,7 +1197,7 @@ def PU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1223,7 +1225,7 @@ def OCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1251,7 +1253,7 @@ def NCUE(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1279,7 +1281,7 @@ def YLCCB(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1307,7 +1309,7 @@ def CYLIB(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1335,7 +1337,7 @@ def CYCPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1363,7 +1365,7 @@ def NHU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1391,7 +1393,7 @@ def FEU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1419,7 +1421,7 @@ def CSU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1447,7 +1449,7 @@ def Meiho(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1475,7 +1477,7 @@ def NTTU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1503,7 +1505,7 @@ def TTCPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1531,7 +1533,7 @@ def NQU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1559,7 +1561,7 @@ def KMCPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1611,7 +1613,7 @@ def NTOU(ISBN):
         worksheet = sheet.get_worksheet(0)
 
         output = []
-        driver = get_chrome()
+        driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
         wait = WebDriverWait(driver, 10)
 
         output.append(
@@ -1646,7 +1648,7 @@ def NTUST(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1677,7 +1679,7 @@ def NTNU(ISBN):
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1707,7 +1709,7 @@ def CYCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1737,7 +1739,7 @@ def FCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1767,7 +1769,7 @@ def CYUT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1797,7 +1799,7 @@ def NSYSU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1827,7 +1829,7 @@ def NKNU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1857,7 +1859,7 @@ def WZU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1887,7 +1889,7 @@ def Tajen(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1917,7 +1919,7 @@ def NCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -1970,7 +1972,7 @@ def SINICA(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2000,7 +2002,7 @@ def PCCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2030,7 +2032,7 @@ def FJU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2060,7 +2062,7 @@ def NYCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2131,7 +2133,7 @@ def NTPC(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2161,7 +2163,7 @@ def OUK(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2191,7 +2193,7 @@ def NPTU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2289,7 +2291,7 @@ def STU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2319,7 +2321,7 @@ def TSU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2348,7 +2350,7 @@ def KSU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2377,7 +2379,7 @@ def HKU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2406,7 +2408,7 @@ def HUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2435,7 +2437,7 @@ def HWH(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2510,7 +2512,7 @@ def USC(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2540,7 +2542,7 @@ def HFU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2570,7 +2572,7 @@ def NUU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2634,7 +2636,7 @@ def NTUNHS(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2664,7 +2666,7 @@ def TTU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2694,7 +2696,7 @@ def NTSU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2749,7 +2751,7 @@ def Matsu(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2779,7 +2781,7 @@ def KNU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2874,7 +2876,7 @@ def NTC(ISBN):
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
     
     output.append(
@@ -2899,7 +2901,7 @@ def HWU(ISBN):
     sheet = gs.open_by_url('https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
     
     output.append(
@@ -2926,7 +2928,7 @@ def CHPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2954,7 +2956,7 @@ def KMU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -2982,7 +2984,7 @@ def NFU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3010,7 +3012,7 @@ def SJU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3038,7 +3040,7 @@ def TNU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3066,7 +3068,7 @@ def HSC(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3094,7 +3096,7 @@ def CJC(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3122,7 +3124,7 @@ def YPU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3150,7 +3152,7 @@ def LTU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3178,7 +3180,7 @@ def MDU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3206,7 +3208,7 @@ def DYU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3234,7 +3236,7 @@ def CTU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3262,7 +3264,7 @@ def NKUT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3290,7 +3292,7 @@ def NUK(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3318,7 +3320,7 @@ def NDHU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3376,7 +3378,7 @@ def TNUA(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3406,7 +3408,7 @@ def NCUT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3436,7 +3438,7 @@ def ISU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3466,7 +3468,7 @@ def CSMU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3496,7 +3498,7 @@ def NHRI(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3579,7 +3581,7 @@ def NTPU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3608,7 +3610,7 @@ def TPCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3637,7 +3639,7 @@ def TMUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3666,7 +3668,7 @@ def LHU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3695,7 +3697,7 @@ def TCPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3724,7 +3726,7 @@ def CMU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3753,7 +3755,7 @@ def Asia(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3782,7 +3784,7 @@ def TNPL(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3811,7 +3813,7 @@ def TCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3840,7 +3842,7 @@ def NPU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -3918,7 +3920,7 @@ def KLCCAB(ISBN):
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4012,7 +4014,7 @@ def NUTC(ISBN):
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4042,7 +4044,7 @@ def NTCPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4072,7 +4074,7 @@ def TNNUA(ISBN):
     worksheet = sheet.get_worksheet(0)
     worksheet.get_all_values()
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4130,7 +4132,7 @@ def NMP(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4184,7 +4186,7 @@ def NCL(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4231,7 +4233,7 @@ def SHU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4294,7 +4296,7 @@ def TUMT(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     # wait = WebDriverWait(driver, 10)
 
 
@@ -4353,7 +4355,7 @@ def MITUST(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4440,7 +4442,7 @@ def NTU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     output.append(
         primo_crawler(
@@ -4471,7 +4473,7 @@ def NCCU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     output.append(
         primo_crawler(
@@ -4503,7 +4505,7 @@ def TKU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     output.append(
         primo_crawler(
@@ -4535,7 +4537,7 @@ def MCU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     output.append(
         primo_crawler(
@@ -4567,7 +4569,7 @@ def SCU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     output.append(
         primo_crawler(
@@ -4598,7 +4600,7 @@ def NKUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4707,7 +4709,7 @@ def NPUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4739,7 +4741,7 @@ def NKUHT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4803,7 +4805,7 @@ def CGU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     # wait = WebDriverWait(driver, 10)
     gg = primo_greendot_crawler(
             driver,
@@ -4829,7 +4831,7 @@ def CCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     # output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     # wait = WebDriverWait(driver, 10)
 
 
@@ -4854,7 +4856,7 @@ def CJCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     gg = primo_greendot_crawler(
@@ -4940,7 +4942,7 @@ def MMC(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -4975,7 +4977,7 @@ def ITRI(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5010,7 +5012,7 @@ def MCUT(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5045,7 +5047,7 @@ def CGUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5079,7 +5081,7 @@ def NTHU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5114,7 +5116,7 @@ def NCNU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5149,7 +5151,7 @@ def NUTN(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5184,7 +5186,7 @@ def NTCH(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5219,7 +5221,7 @@ def TGST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5254,7 +5256,7 @@ def NTMOFA(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5287,7 +5289,7 @@ def KYU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5339,7 +5341,7 @@ def CTUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
@@ -5369,7 +5371,7 @@ def CCUST(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     output = []
-    driver = get_chrome()
+    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     wait = WebDriverWait(driver, 10)
 
     output.append(
