@@ -4847,8 +4847,6 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     return table
 
 # 馬偕醫學院 MMC V OK
-
-
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4857,12 +4855,10 @@ def MMC(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
 
-    output.append(
-        clickclick_crawler(
+    gg = clickclick_crawler(
             driver,
             '馬偕醫學院',
             "http://aleph.library.mmc.edu.tw/F?func=find-b&adjacent=Y&find_code=WRD&local_base=TOP02&request=&TY=",
@@ -4873,11 +4869,8 @@ def MMC(ISBN):
             '/html/body/table[10]',
             [2, 4, 7]
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
