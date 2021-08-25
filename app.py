@@ -35,7 +35,7 @@ from crawlers import organize_columns, wait_for_element_present, accurately_find
     wait_for_elements_present, get_all_tgt_urls
 from INSTs import ILCCB, get_chrome, CCU, CGU, CJCU, primo_greendot_crawler,  primo_greendot_finding, \
     test_sleep, KSML, TYPL, PTPL, HLPL, PHPL, NYUST, TFAI, primo_crawler, primo_finding, primo_two_finding, \
-    NTU, NCCU, TKU, , MCU, SCU, 台北海洋科技大學, TUMT
+    NTU, NCCU, TKU, MCU, SCU, 台北海洋科技大學, TUMT
 #     TPML, webpac_jsp_crawler, FGU, NTOU, \
 #     easy_crawler, NYCU, NTNU, NTUST, PCCU, FJU, SINICA, webpac_pro_crawler, webpac_ajax_crawler, NTPC, KLCCAB, \
 #     基隆市公共圖書館, ILCCB,  NIU, 國家圖書館, NCL, CYCU, \
