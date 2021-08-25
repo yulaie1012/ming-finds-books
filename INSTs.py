@@ -135,9 +135,6 @@ def ILCCB(ISBN):
     # driver = webdriver.Chrome(
     #     options=my_options, desired_capabilities=my_capabilities)
     driver = get_chrome()
-    # wait = WebDriverWait(driver, 10)
-
-
     gg = webpac_gov_crawler(
         driver,
         '宜蘭縣公共圖書館',
