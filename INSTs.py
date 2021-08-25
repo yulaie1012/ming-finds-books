@@ -21,12 +21,10 @@ from selenium.webdriver.common.by import By  # 找尋元素的方法
 import pandas as pd  # 載入 pandas
 import pandas.io.formats.excel  # 輸出自定義格式 Excel
 import requests
-# import requests.packages.urllib3
+import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 from urllib.request import HTTPError  # 載入 HTTPError
-from crawlers import organize_columns, wait_for_element_present, accurately_find_table_and_read_it, \
-    search_ISBN, click_more_btn, select_ISBN_strategy, webpac_gov_crawler, wait_for_element_clickable, crawl_all_tables_on_page, \
-    wait_for_elements_present, get_all_tgt_urls, webpac_jsp_crawler
+from crawlers import *
 import re
 
 # driver plus
