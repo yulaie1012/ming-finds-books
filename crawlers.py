@@ -22,6 +22,7 @@ import pandas as pd  # 載入 pandas
 import requests
 from bs4 import BeautifulSoup
 import time  # 強制等待
+import re
 
 
 # ## 設定 driver 的參數：options、desired_capabilities
