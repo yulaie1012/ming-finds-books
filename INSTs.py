@@ -163,7 +163,7 @@ def TYPL(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    # wait = WebDriverWait(driver, 10)
+    # 
 
 
     gg = webpac_gov_crawler(
@@ -408,7 +408,7 @@ def FGU(ISBN):
 
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    # wait = WebDriverWait(driver, 10)
+    # 
     gg = webpac_jsp_crawler(
         driver,
         '佛光大學',
@@ -431,7 +431,7 @@ def CKU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -442,7 +442,7 @@ def CKU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -461,7 +461,7 @@ def NIU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -472,7 +472,7 @@ def NIU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -491,7 +491,7 @@ def CUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -502,7 +502,7 @@ def CUST(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -521,7 +521,7 @@ def CCT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -532,7 +532,7 @@ def CCT(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -551,7 +551,7 @@ def HDUT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -562,7 +562,7 @@ def HDUT(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -581,7 +581,7 @@ def CNU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -592,7 +592,7 @@ def CNU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -611,7 +611,7 @@ def TPML(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -639,7 +639,7 @@ def NTUA(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -667,7 +667,7 @@ def UTaipei(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -695,7 +695,7 @@ def NTUT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -723,7 +723,7 @@ def TMU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -751,7 +751,7 @@ def NTUB(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -779,7 +779,7 @@ def JUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -807,7 +807,7 @@ def CLUT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -835,7 +835,7 @@ def VNU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -863,7 +863,7 @@ def UCH(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -891,7 +891,7 @@ def MUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -919,7 +919,7 @@ def NOU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -947,7 +947,7 @@ def HCLIB(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -975,7 +975,7 @@ def HCPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1003,7 +1003,7 @@ def Miaoli(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1031,7 +1031,7 @@ def YDU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1059,7 +1059,7 @@ def Jente(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1087,7 +1087,7 @@ def CUTE(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1115,7 +1115,7 @@ def NTCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1143,7 +1143,7 @@ def NTUS(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1171,7 +1171,7 @@ def THU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1199,7 +1199,7 @@ def PU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1227,7 +1227,7 @@ def OCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1255,7 +1255,7 @@ def NCUE(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1283,7 +1283,7 @@ def YLCCB(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1311,7 +1311,7 @@ def CYLIB(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1339,7 +1339,7 @@ def CYCPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1367,7 +1367,7 @@ def NHU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1395,7 +1395,7 @@ def FEU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1423,7 +1423,7 @@ def CSU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1451,7 +1451,7 @@ def Meiho(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1479,7 +1479,7 @@ def NTTU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1507,7 +1507,7 @@ def TTCPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1535,7 +1535,7 @@ def NQU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1563,7 +1563,7 @@ def KMCPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_jsp_crawler(
@@ -1601,8 +1601,6 @@ def easy_crawler(driver, org, org_url, ISBN):
         return table
 
 # 國立臺灣海洋大學 NTOU V
-
-
 def NTOU(ISBN):
     try:
         scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -1612,23 +1610,16 @@ def NTOU(ISBN):
         sheet = gs.open_by_url(
             'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
         worksheet = sheet.get_worksheet(0)
-
-        output = []
         driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-        wait = WebDriverWait(driver, 10)
 
-        output.append(
-            easy_crawler(
+        gg = easy_crawler(
                 driver,
                 '國立臺灣海洋大學',
                 'https://ocean.ntou.edu.tw/search*cht/i?SEARCH=',
                 ISBN
             )
-        )
 
-        driver.quit()
-        gg = organize_columns(
-            pd.concat(output, axis=0, ignore_index=True).fillna(""))
+        driver.close()
         worksheet.append_rows(gg.values.tolist())
     except Exception as e:
         print(f'在 NTOU()，發生錯誤：「{e}」')
@@ -1637,8 +1628,6 @@ def NTOU(ISBN):
         return gg
 
 # 國立臺灣科技大學 NTUST V
-
-
 def NTUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -1650,18 +1639,16 @@ def NTUST(ISBN):
 
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
-    output.append(
-        easy_crawler(
+    gg = easy_crawler(
             driver,
             '國立臺灣科技大學',
             "https://sierra.lib.ntust.edu.tw/search*cht/i?SEARCH=",
             ISBN
         )
-    )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1681,20 +1668,17 @@ def NTNU(ISBN):
     worksheet.get_all_values()
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
-    output.append(
-        easy_crawler(
+    gg = easy_crawler(
             driver,
             '國立臺灣師範大學',
             "https://opac.lib.ntnu.edu.tw/search*cht/i?SEARCH=",
             ISBN
         )
-    )
 
-    driver.quit()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
+
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -1711,7 +1695,7 @@ def CYCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1722,7 +1706,7 @@ def CYCU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1741,7 +1725,7 @@ def FCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1752,7 +1736,7 @@ def FCU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1771,7 +1755,7 @@ def CYUT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1782,7 +1766,7 @@ def CYUT(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1801,7 +1785,7 @@ def NSYSU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1812,7 +1796,7 @@ def NSYSU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1831,7 +1815,7 @@ def NKNU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1842,7 +1826,7 @@ def NKNU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1861,7 +1845,7 @@ def WZU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1872,7 +1856,7 @@ def WZU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1891,7 +1875,7 @@ def Tajen(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1902,7 +1886,7 @@ def Tajen(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1921,7 +1905,7 @@ def NCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         easy_crawler(
@@ -1932,7 +1916,7 @@ def NCU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -1974,7 +1958,7 @@ def SINICA(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_pro_crawler(
@@ -1985,7 +1969,7 @@ def SINICA(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2004,7 +1988,7 @@ def PCCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_pro_crawler(
@@ -2015,7 +1999,7 @@ def PCCU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2034,7 +2018,7 @@ def FJU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_pro_crawler(
@@ -2045,7 +2029,7 @@ def FJU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2064,7 +2048,7 @@ def NYCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_pro_crawler(
@@ -2075,7 +2059,7 @@ def NYCU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2135,7 +2119,7 @@ def NTPC(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_ajax_crawler(
@@ -2146,7 +2130,7 @@ def NTPC(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2165,7 +2149,7 @@ def OUK(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_ajax_crawler(
@@ -2176,7 +2160,7 @@ def OUK(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2195,7 +2179,7 @@ def NPTU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_ajax_crawler(
@@ -2206,7 +2190,7 @@ def NPTU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2293,7 +2277,7 @@ def STU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2304,7 +2288,7 @@ def STU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2323,7 +2307,7 @@ def TSU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2334,7 +2318,7 @@ def TSU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2352,7 +2336,7 @@ def KSU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2363,7 +2347,7 @@ def KSU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2381,7 +2365,7 @@ def HKU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2392,7 +2376,7 @@ def HKU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2410,7 +2394,7 @@ def HUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2421,7 +2405,7 @@ def HUST(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2439,7 +2423,7 @@ def HWH(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2450,7 +2434,7 @@ def HWH(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2479,7 +2463,7 @@ def AU(ISBN):
         driver = webdriver.Chrome(
             options=my_options, desired_capabilities=my_capabilities)
         print('（./INSTs.py）執行這行8')
-        wait = WebDriverWait(driver, 10)
+        
 
         print('（./INSTs.py）執行這行9')
         output.append(
@@ -2491,7 +2475,7 @@ def AU(ISBN):
             )
         )
 
-        driver.quit()
+        driver.close()
         gg = organize_columns(
             pd.concat(output, axis=0, ignore_index=True).fillna(""))
         worksheet.append_rows(gg.values.tolist())
@@ -2514,7 +2498,7 @@ def USC(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2525,7 +2509,7 @@ def USC(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2544,7 +2528,7 @@ def HFU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2555,7 +2539,7 @@ def HFU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2574,7 +2558,7 @@ def NUU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_aspx_crawler(
@@ -2585,7 +2569,7 @@ def NUU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2638,7 +2622,7 @@ def NTUNHS(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         uhtbin_crawler(
@@ -2649,7 +2633,7 @@ def NTUNHS(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2668,7 +2652,7 @@ def TTU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         uhtbin_crawler(
@@ -2679,7 +2663,7 @@ def TTU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2698,7 +2682,7 @@ def NTSU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         uhtbin_crawler(
@@ -2709,7 +2693,7 @@ def NTSU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2753,7 +2737,7 @@ def Matsu(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         ugly_crawler(
@@ -2764,7 +2748,7 @@ def Matsu(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2783,7 +2767,7 @@ def KNU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         ugly_crawler(
@@ -2794,7 +2778,7 @@ def KNU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2878,7 +2862,7 @@ def NTC(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
     
     output.append(
         toread_crawler(
@@ -2889,7 +2873,7 @@ def NTC(ISBN):
         )
     )
     
-    driver.quit()
+    driver.close()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.append_rows(gg.values.tolist())
     return gg
@@ -2903,7 +2887,7 @@ def HWU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
     
     output.append(
         toread_crawler(
@@ -2914,7 +2898,7 @@ def HWU(ISBN):
         )
     )
     
-    driver.quit()
+    driver.close()
     gg = pd.concat(output, axis=0, ignore_index=True).fillna("")
     worksheet.append_rows(gg.values.tolist())
     return gg
@@ -2930,7 +2914,7 @@ def CHPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -2941,7 +2925,7 @@ def CHPL(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2958,7 +2942,7 @@ def KMU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -2969,7 +2953,7 @@ def KMU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -2986,7 +2970,7 @@ def NFU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -2997,7 +2981,7 @@ def NFU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3014,7 +2998,7 @@ def SJU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3025,7 +3009,7 @@ def SJU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3042,7 +3026,7 @@ def TNU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3053,7 +3037,7 @@ def TNU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3070,7 +3054,7 @@ def HSC(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3081,7 +3065,7 @@ def HSC(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3098,7 +3082,7 @@ def CJC(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3109,7 +3093,7 @@ def CJC(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3126,7 +3110,7 @@ def YPU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3137,7 +3121,7 @@ def YPU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3154,7 +3138,7 @@ def LTU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3165,7 +3149,7 @@ def LTU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3182,7 +3166,7 @@ def MDU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3193,7 +3177,7 @@ def MDU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3210,7 +3194,7 @@ def DYU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3221,7 +3205,7 @@ def DYU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3238,7 +3222,7 @@ def CTU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3249,7 +3233,7 @@ def CTU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3266,7 +3250,7 @@ def NKUT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3277,7 +3261,7 @@ def NKUT(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3294,7 +3278,7 @@ def NUK(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3305,7 +3289,7 @@ def NUK(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3322,7 +3306,7 @@ def NDHU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         toread_crawler(
@@ -3333,7 +3317,7 @@ def NDHU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3380,7 +3364,7 @@ def TNUA(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_two_cralwer(
@@ -3391,7 +3375,7 @@ def TNUA(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3410,7 +3394,7 @@ def NCUT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_two_cralwer(
@@ -3421,7 +3405,7 @@ def NCUT(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3440,7 +3424,7 @@ def ISU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_two_cralwer(
@@ -3451,7 +3435,7 @@ def ISU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3470,7 +3454,7 @@ def CSMU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_two_cralwer(
@@ -3481,7 +3465,7 @@ def CSMU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3500,7 +3484,7 @@ def NHRI(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_two_cralwer(
@@ -3511,7 +3495,7 @@ def NHRI(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3583,7 +3567,7 @@ def NTPU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3593,7 +3577,7 @@ def NTPU(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3612,7 +3596,7 @@ def TPCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3622,7 +3606,7 @@ def TPCU(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3641,7 +3625,7 @@ def TMUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3651,7 +3635,7 @@ def TMUST(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3670,7 +3654,7 @@ def LHU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3680,7 +3664,7 @@ def LHU(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3699,7 +3683,7 @@ def TCPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3709,7 +3693,7 @@ def TCPL(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3728,7 +3712,7 @@ def CMU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3738,7 +3722,7 @@ def CMU(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3757,7 +3741,7 @@ def Asia(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3767,7 +3751,7 @@ def Asia(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3786,7 +3770,7 @@ def TNPL(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3796,7 +3780,7 @@ def TNPL(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3815,7 +3799,7 @@ def TCU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3825,7 +3809,7 @@ def TCU(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3844,7 +3828,7 @@ def NPU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         webpac_cfm_crawler(
@@ -3854,7 +3838,7 @@ def NPU(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -3922,7 +3906,7 @@ def KLCCAB(ISBN):
     worksheet.get_all_values()
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         基隆市公共圖書館(
@@ -3933,7 +3917,7 @@ def KLCCAB(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4016,7 +4000,7 @@ def NUTC(ISBN):
     worksheet.get_all_values()
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         sirsidynix_crawler(
@@ -4026,7 +4010,7 @@ def NUTC(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4046,7 +4030,7 @@ def NTCPL(ISBN):
     worksheet.get_all_values()
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         sirsidynix_crawler(
@@ -4056,7 +4040,7 @@ def NTCPL(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4076,7 +4060,7 @@ def TNNUA(ISBN):
     worksheet.get_all_values()
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         sirsidynix_crawler(
@@ -4086,7 +4070,7 @@ def TNNUA(ISBN):
             ISBN
         )
     )
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4134,7 +4118,7 @@ def NMP(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         moc_thm_crawler(
@@ -4145,7 +4129,7 @@ def NMP(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4188,7 +4172,7 @@ def NCL(ISBN):
 
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         國家圖書館(
@@ -4199,7 +4183,7 @@ def NCL(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4235,7 +4219,7 @@ def SHU(ISBN):
 
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         世新大學(
@@ -4246,7 +4230,7 @@ def SHU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4298,7 +4282,7 @@ def TUMT(ISBN):
 
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    # wait = WebDriverWait(driver, 10)
+    # 
 
 
     gg = 台北海洋科技大學(
@@ -4309,7 +4293,7 @@ def TUMT(ISBN):
         )
 
 
-    driver.quit()
+    driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4357,7 +4341,7 @@ def MITUST(ISBN):
 
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         敏實科技大學(
@@ -4368,7 +4352,7 @@ def MITUST(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4435,7 +4419,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                  3: '館藏狀態', 4: '連結'}, inplace=True)
     return table
 
-# 國立臺灣大學 NTU V
+# 國立臺灣大學 NTU V 
 def NTU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4483,7 +4467,7 @@ def NCCU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 淡江大學 TKU V
+# 淡江大學 TKU V OK
 def TKU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4507,7 +4491,7 @@ def TKU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 銘傳大學 MCU V(索書號是空的)
+# 銘傳大學 MCU V(索書號是空的) OK
 def MCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4530,7 +4514,7 @@ def MCU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 東吳大學 SCU V
+# 東吳大學 SCU V OK
 def SCU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4555,8 +4539,6 @@ def SCU(ISBN):
     return gg
 
 # 國立高雄科技大學 NKUST V
-
-
 def NKUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4565,12 +4547,9 @@ def NKUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
-
-    output.append(
-        primo_crawler(
+    
+    gg = primo_crawler(
             driver,
             '國立高雄科技大學',
             "https://nkust.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
@@ -4578,11 +4557,8 @@ def NKUST(ISBN):
             "&tab=Everything&search_scope=MyInst_and_CI&vid=886NKUST_INST:86NKUST&lang=zh-tw&offset=0,",
             "layout-align-space-between-center.layout-row.flex-100"
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4664,8 +4640,6 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
     return table
 
 # 國立屏東科技大學 NPUST V
-
-
 def NPUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4674,12 +4648,9 @@ def NPUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        primo_crawler(
+    gg = primo_crawler(
             driver,
             '國立屏東科技大學',
             "http://primo.lib.npust.edu.tw/primo-explore/search?institution=NPUST&vid=NPUST&tab=default_tab&search_scope=SearchAll&mode=basic&query=any,contains,",
@@ -4687,17 +4658,12 @@ def NPUST(ISBN):
             "&displayMode=full&bulkSize=10&highlight=true&dum=true&lang=zh_TW&displayField=all&pcAvailabiltyMode=true",
             ""
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
 # 國立高雄餐旅大學 NKUHT V
-
-
 def NKUHT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4706,12 +4672,9 @@ def NKUHT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
 
-    output.append(
-        primo_crawler(
+    gg = primo_crawler(
             driver,
             '國立高雄餐旅大學',
             "https://find.nkuht.edu.tw/primo-explore/search?query=any,contains,",
@@ -4719,11 +4682,8 @@ def NKUHT(ISBN):
             "&tab=default_tab&search_scope=%E6%9F%A5%E9%A4%A8%E8%97%8F&vid=NKUHT_N&offset=0",
             ""
         )
-    )
 
     driver.close()
-    gg = organize_columns(
-        pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4772,7 +4732,6 @@ def CGU(ISBN):
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    # wait = WebDriverWait(driver, 10)
     gg = primo_greendot_crawler(
             driver,
             '長庚大學',
@@ -4782,8 +4741,6 @@ def CGU(ISBN):
         )
 
     driver.close()
-    # gg = organize_columns(
-    #     pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
     return gg
 
@@ -4796,11 +4753,7 @@ def CCU(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
-    # output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    # wait = WebDriverWait(driver, 10)
-
-
     gg = primo_greendot_crawler(
             driver,
             '國立中正大學',
@@ -4810,7 +4763,6 @@ def CCU(ISBN):
         )
     driver.close()
     worksheet.append_rows(gg.values.tolist())
-    print("output")
     return gg
 
 # 長榮大學 CJCU V OK
@@ -4823,8 +4775,7 @@ def CJCU(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
-
+    
     gg = primo_greendot_crawler(
         driver,
         '長榮大學',
@@ -4832,7 +4783,6 @@ def CJCU(ISBN):
         ISBN,
         "&vl%28boolOperator0%29=AND&vl%2812508474UI1%29=creator&vl%2812508474UI1%29=title&vl%2812508474UI1%29=creator&vl%281UIStartWith1%29=contains&vl%28freeText1%29=&vl%28boolOperator1%29=AND&vl%2812508470UI2%29=any&vl%2812508470UI2%29=title&vl%2812508470UI2%29=any&vl%281UIStartWith2%29=contains&vl%28freeText2%29=&vl%28boolOperator2%29=AND&vl%2812626940UI3%29=any&vl%2812626940UI3%29=title&vl%2812626940UI3%29=any&vl%281UIStartWith3%29=contains&vl%28freeText3%29=&vl%28boolOperator3%29=AND&vl%28D2240502UI4%29=all_items&vl%2853081356UI5%29=all_items&vl%28D2240500UI6%29=all_items&Submit=%E6%AA%A2%E7%B4%A2"
     )
-
 
     driver.close()
     worksheet.append_rows(gg.values.tolist())
@@ -4909,7 +4859,7 @@ def MMC(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -4925,7 +4875,7 @@ def MMC(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4944,7 +4894,7 @@ def ITRI(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -4960,7 +4910,7 @@ def ITRI(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -4979,7 +4929,7 @@ def MCUT(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -4995,7 +4945,7 @@ def MCUT(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5014,7 +4964,7 @@ def CGUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5030,7 +4980,7 @@ def CGUST(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5048,7 +4998,7 @@ def NTHU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5064,7 +5014,7 @@ def NTHU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5083,7 +5033,7 @@ def NCNU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5099,7 +5049,7 @@ def NCNU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5118,7 +5068,7 @@ def NUTN(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5134,7 +5084,7 @@ def NUTN(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5153,7 +5103,7 @@ def NTCH(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5169,7 +5119,7 @@ def NTCH(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5188,7 +5138,7 @@ def TGST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5204,7 +5154,7 @@ def TGST(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5223,7 +5173,7 @@ def NTMOFA(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5237,7 +5187,7 @@ def NTMOFA(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5256,7 +5206,7 @@ def KYU(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         clickclick_crawler(
@@ -5272,7 +5222,7 @@ def KYU(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5308,7 +5258,7 @@ def CTUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         chungchung_crawler(
@@ -5319,7 +5269,7 @@ def CTUST(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
@@ -5338,7 +5288,7 @@ def CCUST(ISBN):
     worksheet = sheet.get_worksheet(0)
     output = []
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    wait = WebDriverWait(driver, 10)
+    
 
     output.append(
         chungchung_crawler(
@@ -5349,7 +5299,7 @@ def CCUST(ISBN):
         )
     )
 
-    driver.quit()
+    driver.close()
     gg = organize_columns(
         pd.concat(output, axis=0, ignore_index=True).fillna(""))
     worksheet.append_rows(gg.values.tolist())
