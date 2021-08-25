@@ -64,8 +64,10 @@ def organize_columns(df_list):
 
     try:
         df1 = pd.concat(df_list, axis=0, ignore_index=True)
-    except:
+    except Exception as e:
+        print(f'STOP organize_columns() FUNCTION, ERROR MESSAGE: "{e}"')
         df1.reset_index(drop=True, inplace=True)
+        return df1
     
     print('==============================================================================')
     print('PRINT df1, WHERE df1 IS AN INITIAL DATAFRAME')
@@ -360,7 +362,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         return organize_columns(table)
 
 
-# In[ ]:
+# In[12]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -528,50 +530,13 @@ def easy_crawler(driver, org, org_url, ISBN):
 # In[16]:
 
 
-def easy_crawler2(driver, org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-        search_ISBN(driver, ISBN, 'SEARCH')
-
-        if not wait_for_element_present(driver, 'table.bibItems'):
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-
-        table = accurately_find_table_and_read_it(driver, 'table.bibItems')
-        table['圖書館'], table['連結'] = org, driver.current_url
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
-
-
-# In[ ]:
-
-
-driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-easy_crawler(
-    driver=driver,
-    org='國立臺灣師範大學',
-    org_url='https://opac.lib.ntnu.edu.tw/search*cht/i',
-    ISBN='9789573317241'
-)
-
-
-# In[59]:
-
-
-table = accurately_find_table_and_read_it(driver, 'table.bibItems')
-table['圖書館'], table['連結'] = '台師大', driver.current_url
-table = organize_columns(table)
-table
-
-
-# In[ ]:
-
-
-
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# easy_crawler(
+#     driver=driver,
+#     org='國立臺灣師範大學',
+#     org_url='https://opac.lib.ntnu.edu.tw/search*cht/i',
+#     ISBN='9789573317241'
+# )
 
 
 # ## <mark>完成</mark>webpac_pro_crawler(driver, org, org_url, ISBN)
@@ -1560,7 +1525,7 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[55]:
+# In[53]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
