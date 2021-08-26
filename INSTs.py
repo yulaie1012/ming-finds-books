@@ -87,16 +87,17 @@ def primo_finding(driver, org, tcn):  # 改wait
     return sub_df_lst
 
 
-def primo_two_finding(driver, org):  # 改wait了
+def primo_two_finding(driver, org):
+    print("進two_finding了")
     sub_df_lst = []
 
     similar_xpath = "/html/body/primo-explore/div[3]/div/md-dialog/md-dialog-content/sticky-scroll/prm-full-view/div/div/div[2]/div/div[1]/div[4]/div/prm-full-view-service-container/div[2]/div/prm-opac/md-tabs/md-tabs-content-wrapper/md-tab-content[2]/div/md-content/prm-location-items/div[2]/div[1]/p/span["
     status_xpath = similar_xpath + "1]"
     place_xpath = similar_xpath + "3]"
     num_xpath = similar_xpath + "5]"
-    status = wait_for_element_present(driver, status_xpath, 20, By.XPATH)
-    place = wait_for_element_present(driver, place_xpath, 20, By.XPATH)
-    num = wait_for_element_present(driver, num_xpath, 20, By.XPATH)
+    status = wait_for_element_present(driver, status_xpath, 10, By.XPATH)
+    place = wait_for_element_present(driver, place_xpath, 10, By.XPATH)
+    num = wait_for_element_present(driver, num_xpath, 10, By.XPATH)
 
     now_url = driver.current_url
     number = num.text.replace("(", "").replace(")", "")
@@ -4333,6 +4334,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             else:  # 如果只有一個版本(有叉叉的意思)，那前面已經click過了不能再做
                 if org == "國立屏東科技大學" or org == "國立高雄餐旅大學":
                     primo_lst += primo_two_finding(driver, org)
+                    print(primo_lst)
                 else:
                     primo_lst += primo_finding(driver, org, tcn)
                     print(primo_lst)
