@@ -99,7 +99,7 @@ def primo_two_finding(driver, org):
     print(all)
     status = all.split(",")[0]
     place = (all.split(",")[1]).split("(")[0]
-    number = (all.split(",")[1]).split("(")[1]..strip(')')
+    number = (all.split(",")[1]).split("(")[1].strip(')')
 
     now_url = driver.current_url
 
