@@ -95,15 +95,15 @@ def primo_two_finding(driver, org):
     status_xpath = similar_xpath + "1]"
     place_xpath = similar_xpath + "3]"
     num_xpath = similar_xpath + "5]"
-    status = wait_for_element_present(driver, status_xpath, 10, By.XPATH)
-    place = wait_for_element_present(driver, place_xpath, 10, By.XPATH)
-    num = wait_for_element_present(driver, num_xpath, 10, By.XPATH)
+    status = wait_for_element_clickable(driver, status_xpath, 20, By.XPATH)
+    place = wait_for_element_clickable(driver, place_xpath, 20, By.XPATH)
+    num = wait_for_element_clickable(driver, num_xpath, 20, By.XPATH)
 
     now_url = driver.current_url
     number = num.text.replace("(", "").replace(")", "")
     new_row = [org, place.text, number, status.text, now_url]
     sub_df_lst.append(new_row)
-
+    print(sub_df_lst)
     return sub_df_lst
 
 
@@ -4306,8 +4306,11 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             else:  # 如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
                 time.sleep(5)
                 editions[0].click()
-                time.sleep(5)
-                # editions = driver.find_elements_by_class_name('item-title', 20)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                if org == "國立政治大學":
+                    try:
+                        editions = driver.find_elements_by_class_name('item-title', 10)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                    except:
+                        pass
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
