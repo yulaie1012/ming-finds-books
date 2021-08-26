@@ -32,7 +32,7 @@ import time  # 強制等待
 my_options = Options()
 my_options.add_argument('--incognito')  # 開啟無痕模式
 # my_options.add_argument('--start-maximized')  # 視窗最大化
-my_options.add_argument('--headless')  # 不開啟實體瀏覽器
+# my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
@@ -49,68 +49,60 @@ my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解�
 # In[3]:
 
 
-def organize_columns(df_list):
-    print('PERFORM organize_columns() FUNCTION')
-    print('==============================================================================')
-    print('PRINT df_list, WHERE df_list IS A DATAFRAME LIST')
-    print(df_list)
-    print('==============================================================================')
-    
-
-    if df_list == []:
-        print('NO df_list, STOP organize_columns() FUNCTION')
-        print(('=============================================================================='))
-        return
-
+def organize_columns(df1):
+    # 合併全部的 DataFrame
     try:
-        df1 = pd.concat(df_list, axis=0, ignore_index=True)
-    except Exception as e:
-        print(f'STOP organize_columns() FUNCTION, ERROR MESSAGE: "{e}"')
+        df1 = pd.concat(df1, axis=0, ignore_index=True)
+    except:
         df1.reset_index(drop=True, inplace=True)
-        return df1
-    
-    print('==============================================================================')
-    print('PRINT df1, WHERE df1 IS AN INITIAL DATAFRAME')
-    print(df1)
-    print('==============================================================================')
-    df1_columns = set(df1.columns)
-    df2 = pd.DataFrame(columns=['圖書館', '館藏地', '索書號', '館藏狀態', '連結'])
-
-    # 處理 column 1：圖書館
-    df2['圖書館'] = df1['圖書館']
 
     # 處理 column 2：館藏地
-    c2 = {
+    c2 = [
         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
         '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置', '典藏地點',
         '典藏區域', '書架位置'
-    }
-    for c in (c2 & df1_columns):
-        df2['館藏地'] = df1[c]
+    ]
+    df1['c2'] = ''
+    for c in c2:
+        try:
+            df1['c2'] += df1[c]
+        except:
+            pass
 
     # 處理 column 3：索書號
-    c3 = {'索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)'}
-    for c in (c3 & df1_columns):
-        df2['索書號'] = df1[c]
+    c3 = ['索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)']
+    df1['c3'] = ''
+    for c in c3:
+        try:
+            df1['c3'] += df1[c]
+        except:
+            pass
 
     # 處理 column 4：館藏狀態
-    c4 = {
+    c4 = [
         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
         '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24',
-        '圖書狀況Book Status', '館藏狀況(月-日-西元年)', '現況', '借閱狀況'
-    }
-    for c in (c4 & df1_columns):
-        df2['館藏狀態'] = df1[c]
+        '圖書狀況Book Status', '館藏狀況(月-日-西元年)', '現況'
+    ]
+    df1['c4'] = ''
+    for c in c4:
+        try:
+            df1['c4'] += df1[c]
+        except:
+            pass
 
-    # 處理 column 5：連結
+    # 直接生成另一個 DataFrame
+    df2 = pd.DataFrame()
+    df2['圖書館'] = df1['圖書館']
+    df2['館藏地'] = df1['c2']
+    df2['索書號'] = df1['c3']
+    df2['館藏狀態'] = df1['c4']
     df2['連結'] = df1['連結']
 
     # 遇到值為 NaN時，將前一列的值填補進來
     df2.fillna(method="ffill", axis=0, inplace=True)
 
-    print('RETURN df2, WHERE df2 IS AN ORGANIZED DATAFRAME')
-    print('==============================================================================')
     return df2
 
 
@@ -1535,22 +1527,4 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
 #     org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
 #     ISBN='986729193X'
 # )
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
