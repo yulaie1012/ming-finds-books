@@ -95,13 +95,15 @@ def primo_two_finding(driver, org):
     status_xpath = similar_xpath + "1]"
     place_xpath = similar_xpath + "3]"
     num_xpath = similar_xpath + "5]"
-    status = wait_for_element_clickable(driver, status_xpath, 20, By.XPATH)
-    place = wait_for_element_clickable(driver, place_xpath, 20, By.XPATH)
-    num = wait_for_element_clickable(driver, num_xpath, 20, By.XPATH)
+    all = wait_for_element_present(driver, "ng-binding.ng-scope.zero-margin", 20, By.CLASS_NAME).text
+    print(all)
+    status = all.split(",")[0]
+    place = (all.split(",")[1]).split("(")[0]
+    number = (all.split(",")[1]).split("(")[1]
 
     now_url = driver.current_url
-    number = num.text.replace("(", "").replace(")", "")
-    new_row = [org, place.text, number, status.text, now_url]
+
+    new_row = [org, place, number, status, now_url]
     sub_df_lst.append(new_row)
     print(sub_df_lst)
     return sub_df_lst
