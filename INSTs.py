@@ -3044,13 +3044,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
     else:
         return table
 
-<<<<<<< HEAD
 # 國立臺北藝術大學 TNUA V OK
-=======
-# 國立臺北藝術大學 TNUA V
-
-
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 def TNUA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3073,13 +3067,7 @@ def TNUA(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-<<<<<<< HEAD
 # 國立勤益科技大學 NCUT V OK
-=======
-# 國立勤益科技大學 NCUT V
-
-
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 def NCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3456,13 +3444,7 @@ def TCU(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-<<<<<<< HEAD
 # 國立澎湖科技大學 NPU V OK
-=======
-# 國立澎湖科技大學 NPU V
-
-
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 def NPU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3671,13 +3653,7 @@ def NTCPL(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-<<<<<<< HEAD
 # 國立臺南藝術大學 TNNUA OK
-=======
-# 國立臺南藝術大學 TNNUA
-
-
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 def TNNUA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3818,13 +3794,7 @@ def 世新大學(driver, org, org_url, ISBN):
     else:
         return table
 
-<<<<<<< HEAD
 # 世新大學 SHU V OK
-=======
-# 世新大學 SHU V
-
-
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 def SHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4462,15 +4432,9 @@ def MMC(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-<<<<<<< HEAD
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-=======
-    worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 
     gg = clickclick_crawler(
         driver,
@@ -4498,16 +4462,9 @@ def ITRI(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-<<<<<<< HEAD
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
-=======
-    worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
-
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
     gg = clickclick_crawler(
         driver,
         '工業技術研究院',
@@ -4534,14 +4491,8 @@ def MCUT(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-<<<<<<< HEAD
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-=======
-    worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 
     gg = clickclick_crawler(
         driver,
@@ -4569,15 +4520,8 @@ def CGUST(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-<<<<<<< HEAD
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-=======
-    worksheet = sheet.get_worksheet(0)
-
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 
     gg = clickclick_crawler(
         driver,
@@ -4595,12 +4539,7 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-<<<<<<< HEAD
 # 國立清華大學 NTHU V 
-=======
-
-# 國立清華大學 NTHU V
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4834,14 +4773,8 @@ def CTUST(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-<<<<<<< HEAD
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-=======
-    worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
 
     gg = chungchung_crawler(
         driver,
@@ -4864,14 +4797,8 @@ def CCUST(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-<<<<<<< HEAD
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-=======
-    worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
->>>>>>> 245350a5b7a054f95fc7fa71513847c2ea9d4784
     gg = chungchung_crawler(
         driver,
         '中州科技大學',
