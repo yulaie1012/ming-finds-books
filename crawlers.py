@@ -46,7 +46,7 @@ my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解�
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[3]:
+# In[58]:
 
 
 def organize_columns(df1):
@@ -57,11 +57,11 @@ def organize_columns(df1):
         df1.reset_index(drop=True, inplace=True)
 
     # 處理 column 2：館藏地
-    c2 = [
+    c2 = {
         '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
         '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置', '典藏地點',
         '典藏區域', '書架位置'
-    ]
+    }
     df1['c2'] = ''
     for c in c2:
         try:
@@ -82,8 +82,8 @@ def organize_columns(df1):
     c4 = [
         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
-        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24',
-        '圖書狀況Book Status', '館藏狀況(月-日-西元年)', '現況'
+        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status',
+        '館藏狀況(月-日-西元年)', '現況', '處理狀態 (狀態說明)', '狀態／到期日'
     ]
     df1['c4'] = ''
     for c in c4:
@@ -104,6 +104,22 @@ def organize_columns(df1):
     df2.fillna(method="ffill", axis=0, inplace=True)
 
     return df2
+
+
+# In[59]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+
+# driver.get('https://webpac.isu.edu.tw/webpac/detail/344897/')
+
+# accurately_find_table_and_read_it(driver, 'table.table-bordered')
+
+
+# In[ ]:
+
+
+
 
 
 # ## wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR)
@@ -1517,14 +1533,14 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[53]:
+# In[54]:
 
 
-# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-# 台北海洋科技大學(
-#     driver=driver,
-#     org='台北海洋科技大學',
-#     org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
-#     ISBN='986729193X'
-# )
+driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+台北海洋科技大學(
+    driver=driver,
+    org='台北海洋科技大學',
+    org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
+    ISBN='986729193X'
+)
 
