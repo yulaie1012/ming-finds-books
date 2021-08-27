@@ -4432,7 +4432,7 @@ def MMC(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-    sheet.add_worksheet(title='worksheet_2')
+    sheet.add_worksheet(title='worksheet_2', rows='100', cols='20')
     worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
@@ -4463,7 +4463,7 @@ def ITRI(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-    sheet.add_worksheet(title='worksheet_2')
+    sheet.add_worksheet(title='worksheet_2', rows='100', cols='20')
     worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
     
@@ -4493,7 +4493,7 @@ def MCUT(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-    sheet.add_worksheet(title='worksheet_2')
+    sheet.add_worksheet(title='worksheet_2', rows='100', cols='20')
     worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
@@ -4523,7 +4523,8 @@ def CGUST(ISBN):
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-    worksheet = sheet.get_worksheet(1)
+    sheet.add_worksheet(title='worksheet_2', rows='100', cols='20')
+    worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 
     gg = clickclick_crawler(
