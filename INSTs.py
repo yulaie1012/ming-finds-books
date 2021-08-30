@@ -4377,12 +4377,12 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
         driver.get(org_url)
         if org in into_1_lst:  # 那種類型的沒辦改網址進進階搜尋QQ
             pro_search = wait_for_element_clickable(
-                driver, "進階查詢", 5, By.LINK_TEXT).click()
+                driver, "進階查詢", 10, By.LINK_TEXT).click()
             print("進入進階查詢")
         # 換成ISBN搜尋，xpath_num
         ISBN_xpath = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
         use_ISBN = wait_for_element_clickable(
-            driver, ISBN_xpath, 5, By.XPATH).click()
+            driver, ISBN_xpath, 10, By.XPATH).click()
         print("下拉選單改ISBN")
         search_input = wait_for_element_clickable(
             driver, "request", 5, By.NAME)
@@ -4422,11 +4422,15 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
                            tdlist[index_lst[1]].text, tdlist[index_lst[2]].text, now_url]
                 clickclick_lst.append(new_row)
                 break
+        print(clickclick_lst)
     except:
-        pass
+        print("總之是失敗了")
+
     table = pd.DataFrame(clickclick_lst)
+    print("做成表格")
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
+    print("rename成功")
     return table
 
 # 馬偕醫學院 MMC V OK
@@ -4524,7 +4528,7 @@ def CGUST(ISBN):
     gg = clickclick_crawler(
         driver,
         '長庚科技大學',
-        "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY02",
+        "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY04",
         ISBN,
         "7",
         "/html/body/form/table[1]/tbody/tr[9]/td/input",
@@ -4731,7 +4735,7 @@ def KYU(ISBN):
     gg = clickclick_crawler(
         driver,
         '高苑科技大學',
-        "http://210.60.92.160/F/?func=find-d-0&local_base=FLY04",
+        "http://210.60.92.160/F?func=find-d-0",
         ISBN,
         "6",
         "/html/body/form/table[1]/tbody/tr[8]/td/input",
