@@ -4735,7 +4735,7 @@ def KYU(ISBN):
     gg = clickclick_crawler(
         driver,
         '高苑科技大學',
-        "http://210.60.92.160/F/?func=find-d-0&local_base=FLY04",
+        "http://210.60.92.160/F?func=find-d-0",
         ISBN,
         "6",
         "/html/body/form/table[1]/tbody/tr[8]/td/input",
