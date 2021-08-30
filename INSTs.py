@@ -4430,8 +4430,6 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     return table
 
 # 馬偕醫學院 MMC V OK
-
-
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4441,7 +4439,6 @@ def MMC(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    
 
     gg = clickclick_crawler(
         driver,
@@ -4460,8 +4457,6 @@ def MMC(ISBN):
     return gg
 
 # 工業技術研究院 ITRI V
-
-
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4489,8 +4484,6 @@ def ITRI(ISBN):
     return gg
 
 # 明志科技大學 MCUT V
-
-
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4518,8 +4511,6 @@ def MCUT(ISBN):
     return gg
 
 # 長庚科技大學 CGUST V
-
-
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
