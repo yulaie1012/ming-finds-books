@@ -234,6 +234,7 @@ gs = gspread.authorize(creds)
 sheet = gs.open_by_url(
     'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
 worksheet1 = sheet.get_worksheet(0)
+sheet.add_worksheet(title='worksheet_2', rows='100', cols='20')
 worksheet2 = sheet.worksheet('worksheet_2')
 
 
