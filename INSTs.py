@@ -4422,11 +4422,15 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
                            tdlist[index_lst[1]].text, tdlist[index_lst[2]].text, now_url]
                 clickclick_lst.append(new_row)
                 break
+        print(clickclick_lst)
     except:
-        pass
+        print("總之是失敗了")
+
     table = pd.DataFrame(clickclick_lst)
+    print("做成表格")
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
+    print("rename成功")
     return table
 
 # 馬偕醫學院 MMC V OK
