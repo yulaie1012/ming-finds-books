@@ -233,7 +233,8 @@ creds = Credentials.from_service_account_file(
 gs = gspread.authorize(creds)
 sheet = gs.open_by_url(
     'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
-worksheet = sheet.get_worksheet(0)
+worksheet1 = sheet.get_worksheet(0)
+worksheet2 = sheet.worksheet('worksheet_2')
 
 
 # ----------------用來做縣市對應region字典-----------------
@@ -314,7 +315,8 @@ def test1(event):
 
     # ----------------爬蟲-----------------
     else:
-        worksheet.clear()
+        worksheet1.clear()
+        worksheet2.clear()
         str_input = event.message.text.split(' ')
         ISBN = str_input[0]
         line_bot_api.reply_message(
