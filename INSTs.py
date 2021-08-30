@@ -4377,7 +4377,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
         driver.get(org_url)
         if org in into_1_lst:  # 那種類型的沒辦改網址進進階搜尋QQ
             pro_search = wait_for_element_clickable(
-                driver, "進階查詢", 5, By.LINK_TEXT).click()
+                driver, "進階查詢", 10, By.LINK_TEXT).click()
             print("進入進階查詢")
         # 換成ISBN搜尋，xpath_num
         ISBN_xpath = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
