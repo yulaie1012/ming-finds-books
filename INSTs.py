@@ -4382,7 +4382,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
         # 換成ISBN搜尋，xpath_num
         ISBN_xpath = "/html/body/form/table[1]/tbody/tr[2]/td[1]/select/option[" + xpath_num + "]"
         use_ISBN = wait_for_element_clickable(
-            driver, ISBN_xpath, 5, By.XPATH).click()
+            driver, ISBN_xpath, 10, By.XPATH).click()
         print("下拉選單改ISBN")
         search_input = wait_for_element_clickable(
             driver, "request", 5, By.NAME)
@@ -4528,7 +4528,7 @@ def CGUST(ISBN):
     gg = clickclick_crawler(
         driver,
         '長庚科技大學',
-        "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY02",
+        "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY04",
         ISBN,
         "7",
         "/html/body/form/table[1]/tbody/tr[9]/td/input",
