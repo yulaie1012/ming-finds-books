@@ -140,12 +140,7 @@ def ILCCB(ISBN):
 
 # 桃園市立圖書館 TYPL V OK
 def TYPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -164,12 +159,7 @@ def TYPL(ISBN):
 
 # 高雄市立圖書館 KSML V OK
 def KSML(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -188,12 +178,7 @@ def KSML(ISBN):
 
 # 屏東縣公共圖書館 PTPL V OK
 def PTPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -213,12 +198,7 @@ def PTPL(ISBN):
 
 
 def HLPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -238,12 +218,7 @@ def HLPL(ISBN):
 
 
 def PHPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -263,12 +238,7 @@ def PHPL(ISBN):
 
 
 def NYUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -288,12 +258,7 @@ def NYUST(ISBN):
 
 
 def TFAI(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -318,12 +283,7 @@ def TFAI(ISBN):
 
 # 佛光大學 FGU V
 def FGU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -343,12 +303,7 @@ def FGU(ISBN):
 
 
 def CKU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -368,12 +323,7 @@ def CKU(ISBN):
 
 
 def NIU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -393,12 +343,7 @@ def NIU(ISBN):
 
 
 def CUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -418,12 +363,7 @@ def CUST(ISBN):
 
 
 def CCT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -443,12 +383,7 @@ def CCT(ISBN):
 
 
 def HDUT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -468,12 +403,7 @@ def HDUT(ISBN):
 
 
 def CNU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -493,12 +423,7 @@ def CNU(ISBN):
 
 
 def TPML(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -518,12 +443,7 @@ def TPML(ISBN):
 
 
 def NTUA(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -543,12 +463,7 @@ def NTUA(ISBN):
 
 
 def UTaipei(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -568,12 +483,7 @@ def UTaipei(ISBN):
 
 
 def NTUT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -594,12 +504,7 @@ def NTUT(ISBN):
 
 
 def TMU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -619,12 +524,7 @@ def TMU(ISBN):
 
 
 def NTUB(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -644,12 +544,7 @@ def NTUB(ISBN):
 
 
 def JUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -669,12 +564,7 @@ def JUST(ISBN):
 
 
 def CLUT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -694,12 +584,7 @@ def CLUT(ISBN):
 
 
 def VNU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -719,12 +604,7 @@ def VNU(ISBN):
 
 
 def UCH(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -744,12 +624,7 @@ def UCH(ISBN):
 
 
 def MUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -769,12 +644,7 @@ def MUST(ISBN):
 
 
 def NOU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -794,12 +664,7 @@ def NOU(ISBN):
 
 
 def HCLIB(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -819,12 +684,7 @@ def HCLIB(ISBN):
 
 
 def HCPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -844,12 +704,7 @@ def HCPL(ISBN):
 
 
 def Miaoli(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -869,12 +724,7 @@ def Miaoli(ISBN):
 
 
 def YDU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -894,12 +744,7 @@ def YDU(ISBN):
 
 
 def Jente(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -919,12 +764,7 @@ def Jente(ISBN):
 
 
 def CUTE(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -944,12 +784,7 @@ def CUTE(ISBN):
 
 
 def NTCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -969,12 +804,7 @@ def NTCU(ISBN):
 
 
 def NTUS(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -994,12 +824,7 @@ def NTUS(ISBN):
 
 
 def THU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1019,12 +844,7 @@ def THU(ISBN):
 
 
 def PU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1044,12 +864,7 @@ def PU(ISBN):
 
 
 def OCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1069,12 +884,7 @@ def OCU(ISBN):
 
 
 def NCUE(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1094,12 +904,7 @@ def NCUE(ISBN):
 
 
 def YLCCB(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1119,12 +924,7 @@ def YLCCB(ISBN):
 
 
 def CYLIB(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1144,12 +944,7 @@ def CYLIB(ISBN):
 
 
 def CYCPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1169,12 +964,7 @@ def CYCPL(ISBN):
 
 
 def NHU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1194,12 +984,7 @@ def NHU(ISBN):
 
 
 def FEU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1219,12 +1004,7 @@ def FEU(ISBN):
 
 
 def CSU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1244,12 +1024,7 @@ def CSU(ISBN):
 
 
 def Meiho(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1269,12 +1044,7 @@ def Meiho(ISBN):
 
 
 def NTTU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1294,12 +1064,7 @@ def NTTU(ISBN):
 
 
 def TTCPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1319,12 +1084,7 @@ def TTCPL(ISBN):
 
 
 def NQU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1344,12 +1104,7 @@ def NQU(ISBN):
 
 
 def KMCPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1402,12 +1157,7 @@ def NTOU(ISBN):
 
 
 def NTUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1427,12 +1177,7 @@ def NTUST(ISBN):
 
 
 def NTNU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1452,12 +1197,7 @@ def NTNU(ISBN):
 
 
 def CYCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1477,12 +1217,7 @@ def CYCU(ISBN):
 
 
 def FCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1502,12 +1237,7 @@ def FCU(ISBN):
 
 
 def CYUT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1527,12 +1257,7 @@ def CYUT(ISBN):
 
 
 def NSYSU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1552,12 +1277,7 @@ def NSYSU(ISBN):
 
 
 def NKNU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1577,12 +1297,7 @@ def NKNU(ISBN):
 
 
 def WZU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1602,12 +1317,7 @@ def WZU(ISBN):
 
 
 def Tajen(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1627,12 +1337,7 @@ def Tajen(ISBN):
 
 
 def NCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1672,15 +1377,8 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
         return table
 
 # 中央研究院 SINICA V
-
-
 def SINICA(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1697,15 +1395,8 @@ def SINICA(ISBN):
     return gg
 
 # 中國文化大學 PCCU V
-
-
 def PCCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1722,8 +1413,6 @@ def PCCU(ISBN):
     return gg
 
 # 輔仁大學 FJU V
-
-
 def FJU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1742,15 +1431,8 @@ def FJU(ISBN):
     return gg
 
 # 國立陽明交通大學 NYCU V
-
-
 def NYCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1775,12 +1457,7 @@ def NYCU(ISBN):
 
 
 def NTPC(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1800,12 +1477,7 @@ def NTPC(ISBN):
 
 
 def OUK(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -1826,12 +1498,7 @@ def OUK(ISBN):
 
 
 def NPTU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1855,12 +1522,7 @@ def NPTU(ISBN):
 
 
 def STU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1880,12 +1542,7 @@ def STU(ISBN):
 
 
 def TSU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1905,12 +1562,7 @@ def TSU(ISBN):
 
 
 def KSU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1930,12 +1582,7 @@ def KSU(ISBN):
 
 
 def HKU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -1956,12 +1603,7 @@ def HKU(ISBN):
 
 
 def HUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -1981,12 +1623,7 @@ def HUST(ISBN):
 
 
 def HWH(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2046,12 +1683,7 @@ def AU(ISBN):
 
 
 def USC(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -2072,12 +1704,7 @@ def USC(ISBN):
 
 
 def HFU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2097,12 +1724,7 @@ def HFU(ISBN):
 
 
 def NUU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2127,12 +1749,7 @@ def NUU(ISBN):
 
 
 def NTUNHS(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2152,12 +1769,7 @@ def NTUNHS(ISBN):
 
 
 def TTU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -2178,12 +1790,7 @@ def TTU(ISBN):
 
 
 def NTSU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -2229,12 +1836,7 @@ def ugly_crawler(driver, org, org_url, ISBN):
 
 
 def Matsu(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2254,12 +1856,7 @@ def Matsu(ISBN):
 
 
 def KNU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2284,12 +1881,7 @@ def KNU(ISBN):
 
 
 def NTC(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2309,12 +1901,7 @@ def NTC(ISBN):
 
 
 def HWU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -2335,12 +1922,7 @@ def HWU(ISBN):
 
 
 def CHPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2360,12 +1942,7 @@ def CHPL(ISBN):
 
 
 def KMU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2385,12 +1962,7 @@ def KMU(ISBN):
 
 
 def NFU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2410,12 +1982,7 @@ def NFU(ISBN):
 
 
 def SJU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2435,12 +2002,7 @@ def SJU(ISBN):
 
 
 def TNU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2460,12 +2022,7 @@ def TNU(ISBN):
 
 
 def HSC(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2485,12 +2042,7 @@ def HSC(ISBN):
 
 
 def CJC(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2510,12 +2062,7 @@ def CJC(ISBN):
 
 
 def YPU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2535,12 +2082,7 @@ def YPU(ISBN):
 
 
 def LTU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2560,12 +2102,7 @@ def LTU(ISBN):
 
 
 def MDU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2585,12 +2122,7 @@ def MDU(ISBN):
 
 
 def DYU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2610,12 +2142,7 @@ def DYU(ISBN):
 
 
 def CTU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2635,12 +2162,7 @@ def CTU(ISBN):
 
 
 def NKUT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2660,12 +2182,7 @@ def NKUT(ISBN):
 
 
 def NUK(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2685,12 +2202,7 @@ def NUK(ISBN):
 
 
 def NDHU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -2715,12 +2227,7 @@ def NDHU(ISBN):
 
 
 def TNUA(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2740,12 +2247,7 @@ def TNUA(ISBN):
 
 
 def NCUT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -2766,12 +2268,7 @@ def NCUT(ISBN):
 
 
 def ISU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2791,12 +2288,7 @@ def ISU(ISBN):
 
 
 def CSMU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2816,12 +2308,7 @@ def CSMU(ISBN):
 
 
 def NHRI(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2846,12 +2333,7 @@ def NHRI(ISBN):
 
 
 def NTPU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2871,12 +2353,7 @@ def NTPU(ISBN):
 
 
 def TPCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2896,12 +2373,7 @@ def TPCU(ISBN):
 
 
 def TMUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2921,12 +2393,7 @@ def TMUST(ISBN):
 
 
 def LHU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2946,12 +2413,7 @@ def LHU(ISBN):
 
 
 def TCPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2971,12 +2433,7 @@ def TCPL(ISBN):
 
 
 def CMU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -2996,12 +2453,7 @@ def CMU(ISBN):
 
 
 def Asia(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3021,12 +2473,7 @@ def Asia(ISBN):
 
 
 def TNPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3046,12 +2493,7 @@ def TNPL(ISBN):
 
 
 def TCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3071,12 +2513,7 @@ def TCU(ISBN):
 
 
 def NPU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3144,12 +2581,7 @@ def 基隆市公共圖書館(driver, org, org_url, ISBN):
 
 
 def KLCCAB(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3174,12 +2606,7 @@ def KLCCAB(ISBN):
 
 
 def NUTC(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3199,12 +2626,7 @@ def NUTC(ISBN):
 
 
 def NTCPL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3224,12 +2646,7 @@ def NTCPL(ISBN):
 
 
 def TNNUA(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3254,12 +2671,7 @@ def TNNUA(ISBN):
 
 
 def NMP(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -3302,12 +2714,7 @@ def 國家圖書館(driver, org, org_url, ISBN):
 
 
 def NCL(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -3343,12 +2750,7 @@ def 世新大學(driver, org, org_url, ISBN):
 
 
 def SHU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -3367,12 +2769,7 @@ def SHU(ISBN):
 
 # 台北海洋科技大學 TUMT V
 def TUMT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3422,12 +2819,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
 
 
 def MITUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3513,12 +2905,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
 
 
 def NTU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3540,12 +2927,7 @@ def NTU(ISBN):
 
 
 def NCCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3567,12 +2949,7 @@ def NCCU(ISBN):
 
 
 def TKU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3594,12 +2971,7 @@ def TKU(ISBN):
 
 
 def MCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3620,12 +2992,7 @@ def MCU(ISBN):
 
 
 def SCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3647,12 +3014,7 @@ def SCU(ISBN):
 
 
 def NKUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3751,12 +3113,7 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
 
 
 def NPUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3778,12 +3135,7 @@ def NPUST(ISBN):
 
 
 def NKUHT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3839,12 +3191,7 @@ def primo_greendot_crawler(driver, org, url_front, ISBN, url_behind):
 
 
 def CGU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -3865,12 +3212,7 @@ def CGU(ISBN):
 
 
 def CCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3889,12 +3231,7 @@ def CCU(ISBN):
 
 
 def CJCU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -3984,12 +3321,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
 
 
 def MMC(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4014,12 +3346,7 @@ def MMC(ISBN):
 
 
 def ITRI(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4044,12 +3371,7 @@ def ITRI(ISBN):
 
 
 def MCUT(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4074,12 +3396,7 @@ def MCUT(ISBN):
 
 
 def CGUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4104,12 +3421,7 @@ def CGUST(ISBN):
 
 
 def NTHU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4134,12 +3446,7 @@ def NTHU(ISBN):
 
 
 def NCNU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4164,12 +3471,7 @@ def NCNU(ISBN):
 
 
 def NUTN(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4194,12 +3496,7 @@ def NUTN(ISBN):
 
 
 def NTCH(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -4224,12 +3521,7 @@ def NTCH(ISBN):
 
 
 def TGST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -4254,12 +3546,7 @@ def TGST(ISBN):
 
 
 def NTMOFA(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -4282,12 +3569,7 @@ def NTMOFA(ISBN):
 
 
 def KYU(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
@@ -4330,12 +3612,7 @@ def chungchung_crawler(driver, org, org_url, ISBN):
 
 
 def CTUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
@@ -4355,12 +3632,7 @@ def CTUST(ISBN):
 
 
 def CCUST(ISBN):
-    scope = ['https://www.googleapis.com/auth/spreadsheets']
-    creds = Credentials.from_service_account_file(
-        "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
-    gs = gspread.authorize(creds)
-    sheet = gs.open_by_url(
-        'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
