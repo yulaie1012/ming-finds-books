@@ -121,7 +121,7 @@ def ggSheet():
 # webpac_gov_crawler(driver, org, org_url, ISBN)
 # 宜蘭縣公共圖書館 ILCCB V OK
 def ILCCB(ISBN):
-    ggSheet()
+    sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
