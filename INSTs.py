@@ -1357,24 +1357,6 @@ def NCU(ISBN):
 # -------------------------------------改版?------------------------------------------
 # webpac_pro_crawler()
 # 中研院|文化|輔仁|陽交大
-def webpac_pro_crawler(driver, org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-        select_ISBN_strategy(driver, 'searchtype', 'i')
-        search_ISBN(driver, ISBN, 'searcharg')
-
-        if not wait_for_element_present(driver, 'table.bibItems'):
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-
-        table = accurately_find_table_and_read_it(driver, 'table.bibItems')
-        table['圖書館'], table['連結'] = org, driver.current_url
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
 
 # 中央研究院 SINICA V
 def SINICA(ISBN):

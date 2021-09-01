@@ -111,7 +111,7 @@ def organize_columns(df1):
 
 # ## DEFINED FUNCTIONS
 
-# In[4]:
+# In[54]:
 
 
 def plot_horizontal_line():
@@ -119,8 +119,8 @@ def plot_horizontal_line():
 
 def alert_execution_report(function):
     plot_horizontal_line()
-    print(f'PERFORM {function.__name__} FUNCTION!')
-    print(inspect.signature(function))
+    print(f'EXECUTE {function.__name__} FUNCTION!')
+    print(f'ARGUMENTS: {inspect.signature(function)}')
 
 def alert_exception_report(function, exception):
     print(f'STOP {function.__name__} FUNCTION, ERROR MESSAGE: "{exception}"'.replace('\n', ''))
