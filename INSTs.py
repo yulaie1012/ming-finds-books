@@ -32,8 +32,6 @@ my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
 # ------------------------Primo找書--------------------------
-
-
 def primo_finding(driver, org, tcn):  # 改wait
     sub_df_lst = []
     try:
@@ -67,7 +65,6 @@ def primo_finding(driver, org, tcn):  # 改wait
             break
     return sub_df_lst
 
-
 def primo_two_finding(driver, org):
     print("進two_finding了")
     sub_df_lst = []
@@ -91,6 +88,7 @@ def primo_two_finding(driver, org):
     return sub_df_lst
 
 
+
 # ------------------------綠點點找書--------------------------
 def primo_greendot_finding(driver, org):  # 改 wait
     sub_df_lst = []
@@ -109,15 +107,21 @@ def primo_greendot_finding(driver, org):  # 改 wait
     return sub_df_lst
 
 
-# webpac_gov_crawler(driver, org, org_url, ISBN)
-# 宜蘭縣公共圖書館 ILCCB V OK
-def ILCCB(ISBN):
+# ------------------------Google Sheet--------------------------
+def ggSheet():
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
         "json_files_for_robot/books-319701-17701ae5510b.json", scopes=scope)
     gs = gspread.authorize(creds)
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
+    return sheet
+
+
+# webpac_gov_crawler(driver, org, org_url, ISBN)
+# 宜蘭縣公共圖書館 ILCCB V OK
+def ILCCB(ISBN):
+    ggSheet()
     worksheet = sheet.get_worksheet(0)
 
     driver = webdriver.Chrome(
