@@ -25,34 +25,15 @@ import requests
 # from urllib.request import HTTPError  # 載入 HTTPError
 from crawlers import *
 
-# driver plus
-# def get_chrome():
-#     print('（./INSTs.py）執行 get_chrome() 函式')
-#     my_options = webdriver.ChromeOptions()
-#     my_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-#     my_options.add_argument("--incognito")  # 開啟無痕模式
-#     my_options.add_argument("--headless")  # 不開啟實體瀏覽器
-#     my_options.add_argument("--disable-dev-shm-usage")
-#     my_options.add_argument("--no-sandbox")
-#     my_options.add_argument('--disable-infobars')
-#     my_options.add_experimental_option('useAutomationExtension', False)
-#     my_options.add_experimental_option(
-#         "excludeSwitches", ["enable-automation"])  # 把新版 google 的自動控制提醒關掉
-
-#     # 當 html下載完成之後，不等待解析完成，selenium 會直接返回
-#     my_capabilities = DesiredCapabilities.CHROME
-#     my_capabilities['pageLoadStrategy'] = 'eager'
-
-
-#     return webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=my_options, desired_capabilities=my_capabilities)
 my_options = Options()
 my_options.add_argument('--incognito')  # 開啟無痕模式
 my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
-
 # ------------------------Primo找書--------------------------
+
+
 def primo_finding(driver, org, tcn):  # 改wait
     sub_df_lst = []
     try:
@@ -139,8 +120,6 @@ def ILCCB(ISBN):
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(0)
 
-    # driver = webdriver.Chrome(
-    #     options=my_options, desired_capabilities=my_capabilities)
     driver = webdriver.Chrome(
         options=my_options, desired_capabilities=my_capabilities)
     gg = webpac_gov_crawler(
@@ -151,14 +130,11 @@ def ILCCB(ISBN):
     )
 
     driver.close()
-    print("banana")
     worksheet.append_rows(gg.values.tolist())
-    print("+++")
     return gg
 
+
 # 桃園市立圖書館 TYPL V OK
-
-
 def TYPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -181,9 +157,8 @@ def TYPL(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 高雄市立圖書館 KSML V OK
-
-
 def KSML(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -206,9 +181,8 @@ def KSML(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+
 # 屏東縣公共圖書館 PTPL V OK
-
-
 def PTPL(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -337,78 +311,6 @@ def TFAI(ISBN):
 # 佛光|經國學院|宜大|中華|北基督|宏國德霖|嘉藥|臺北市|臺藝大|北市大|北醫|北商大|新竹市|新竹縣|苗栗縣
 # 育達|仁德醫專|景文|致理|萬能|健行|明新|空大|中國科大|中教大|臺體|東海|靜宜|僑光|彰師
 # 雲林縣|嘉義市|嘉義縣|南華|遠東|正修|美和|臺東|臺東縣|金門|金門縣
-# def webpac_jsp_crawler(driver, org, org_url, ISBN):
-#     try:
-#         table = []
-
-#         driver.get(org_url)
-#         try:
-#             select_ISBN_strategy(driver, 'search_field', 'ISBN')
-#         except:
-#             select_ISBN_strategy(driver, 'search_field', 'STANDARDNO')  # 北科大
-#         search_ISBN(driver, ISBN, 'search_input')
-
-#         # 一筆
-#         if wait_for_element_present(driver, 'table.order'):
-#             i = 0
-#             while True:
-#                 try:
-#                     tgt = accurately_find_table_and_read_it(
-#                         driver, 'table.order')
-#                     tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#                     table.append(tgt)
-
-#                     wait_for_element_clickable(driver, str(2+i), 2).click()
-#                     i += 1
-#                     time.sleep(0.5)
-#                 except:
-#                     break
-#         # 多筆、零筆
-#         elif wait_for_element_present(driver, 'iframe#leftFrame'):
-#             iframe = driver.find_element_by_id('leftFrame')
-#             driver.switch_to.frame(iframe)
-#             time.sleep(1)  # 切換到 <frame> 需要時間，否則會無法讀取
-
-#             # 判斷是不是＂零筆＂查詢結果
-#             if wait_for_element_present(driver, '#totalpage').text == '0':
-#                 print(f'在「{org}」找不到「{ISBN}」')
-#                 return
-
-#             # ＂多筆＂查詢結果
-#             tgt_urls = []
-#             anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
-#             if anchors == []:
-#                 anchors = driver.find_elements(By.LINK_TEXT, '內容')
-#             for anchor in anchors:
-#                 tgt_urls.append(anchor.get_attribute('href'))
-
-#             for tgt_url in tgt_urls:
-#                 driver.get(tgt_url)
-#                 # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
-#                 if wait_for_element_present(driver, 'table.order'):
-#                     i = 0
-#                     while True:
-#                         try:
-#                             tgt = accurately_find_table_and_read_it(
-#                                 driver, 'table.order')
-#                             tgt['圖書館'], tgt['連結'] = org, driver.current_url
-#                             table.append(tgt)
-
-#                             wait_for_element_clickable(
-#                                 driver, str(2+i), 2).click()
-#                             i += 1
-#                             time.sleep(0.5)
-#                         except:
-#                             break
-#                 else:
-#                     continue
-#         table = organize_columns(table)
-#     except Exception as e:
-#         print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-#         return
-#     else:
-#         return table
-
 
 # 佛光大學 FGU V
 def FGU(ISBN):
@@ -1463,27 +1365,8 @@ def KMCPL(ISBN):
 # ------------------------------------最簡單的那種------------------------------------------
 # easy_crawler()
 # 海大|台科大|台師大|中原|逢甲|朝陽|中山|高師|文藻|大仁|中央
-def easy_crawler(driver, org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-        search_ISBN(driver, ISBN, 'SEARCH')
-
-        if not wait_for_element_present(driver, 'table.bibItems'):
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-
-        table = accurately_find_table_and_read_it(driver, 'table.bibItems')
-        table['圖書館'], table['連結'] = org, driver.current_url
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
 
 # 國立臺灣海洋大學 NTOU V
-
-
 def NTOU(ISBN):
     try:
         scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -1888,41 +1771,6 @@ def NYCU(ISBN):
 # -----------------------------------ajax_page------------------------------------------------
 # webpac_ajax_crawler()
 # 新北市|高空大|屏大
-def webpac_ajax_crawler(driver, org, org_url, ISBN):
-    try:
-        table = []
-        driver.get(org_url)
-        wait_for_element_clickable(driver, '進階查詢').click()  # 點擊＂進階查詢＂
-        select_ISBN_strategy(driver, 'as_type_1', 'i', by=By.ID)
-        search_ISBN(driver, ISBN, 'as_keyword_1', by=By.ID)
-
-        org_url = org_url.replace('/search.cfm', '')
-        if wait_for_element_present(driver, '詳細書目', by=By.LINK_TEXT):
-            tgt_urls = []
-            anchors = driver.find_elements_by_link_text('詳細書目')
-            for anchor in anchors:
-                tgt_urls.append(anchor.get_attribute('href'))
-
-            for tgt_url in tgt_urls:
-                mid = tgt_url.split('mid=')[-1].split('&')[0]
-                ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
-                tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
-                tgt['圖書館'], tgt['連結'] = org, tgt_url
-                table.append(tgt)
-        # 高雄市立空中大學、國立屏東大學才會遇到跳轉
-        elif wait_for_element_present(driver, 'div.book-detail'):
-            tgt_url = driver.current_url
-            mid = tgt_url.split('mid=')[-1].split('&')[0]
-            ajax_page_url = f'{org_url}/ajax_page/get_content_area.cfm?mid={mid}&i_list_number=250&i_page=1&i_sory_by=1'
-            tgt = pd.read_html(ajax_page_url, encoding='utf-8')[0]
-            tgt['圖書館'], tgt['連結'] = org, tgt_url
-            table.append(tgt)
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
 
 # 新北市立圖書館 NTPC V
 
@@ -2004,70 +1852,6 @@ def NPTU(ISBN):
 # -----------------------------------一直切iframe------------------------------------------------
 # webpac_aspx_crawler()
 # 樹德|首府|崑山|弘光|修平|華夏|真理|實踐|華梵|聯合
-def webpac_aspx_crawler(driver, org, org_url, ISBN):
-    try:
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行1')
-        table = []
-
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行2')
-        driver.get(org_url)
-
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行3')
-        time.sleep(1.5)
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行4')
-        iframe = wait_for_element_present(driver, 'default', by=By.NAME)
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行5')
-        driver.switch_to.frame(iframe)
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行6')
-        select_ISBN_strategy(
-            driver, 'ctl00$ContentPlaceHolder1$ListBox1', 'Info000076')
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行7')
-        search_ISBN(driver, ISBN, 'ctl00$ContentPlaceHolder1$TextBox1')
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行8')
-        driver.switch_to.default_content()
-
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行9')
-        i = 0
-        print('（./INSTs.py/webpac_aspx_crawler()）執行這行10')
-        while True:
-            print('（./INSTs.py/webpac_aspx_crawler()）執行這行11')
-            time.sleep(1.5)
-            print('（./INSTs.py/webpac_aspx_crawler()）執行這行12')
-            iframe = wait_for_element_present(driver, 'default', by=By.NAME)
-            print('（./INSTs.py/webpac_aspx_crawler()）執行這行13')
-            driver.switch_to.frame(iframe)
-            print('（./INSTs.py/webpac_aspx_crawler()）執行這行14')
-            try:
-                print('（./INSTs.py/webpac_aspx_crawler()）執行這行15')
-                wait_for_element_present(
-                    driver, f'//*[@id="ctl00_ContentPlaceHolder1_dg_ctl0{i+2}_lbtgcd2"]', by=By.XPATH).click()
-            except:
-                break
-            driver.switch_to.default_content()
-
-            time.sleep(1.5)
-            iframe = wait_for_element_present(driver, 'default', by=By.NAME)
-            driver.switch_to.frame(iframe)
-            tgt = accurately_find_table_and_read_it(
-                driver, '#ctl00_ContentPlaceHolder1_dg')
-            tgt['圖書館'], tgt['連結'] = org, driver.current_url
-            table.append(tgt)
-            driver.switch_to.default_content()
-
-            driver.back()
-            i += 1
-
-        try:
-            table = organize_columns(table)
-        except:
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
-
 # 樹德科技大學 STU V
 
 
@@ -2339,35 +2123,6 @@ def NUU(ISBN):
 # -----------------------------------按館藏地展開table------------------------------------------------
 # uhtbin_crawler()
 # 國北護|大同|國體大
-def uhtbin_crawler(driver, org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-        try:
-            select_ISBN_strategy(driver, 'srchfield1',
-                                 'GENERAL^SUBJECT^GENERAL^^所有欄位')
-        except:
-            select_ISBN_strategy(driver, 'srchfield1',
-                                 '020^SUBJECT^SERIES^Title Processing^ISBN')
-        search_ISBN(driver, ISBN, 'searchdata1')
-
-        if '未在任何圖書館找到' in driver.find_element(By.CSS_SELECTOR, 'table').text:
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-
-        table = accurately_find_table_and_read_it(driver, 'table')
-
-        # 特殊處理
-        table.drop([0, 1, 2], inplace=True)
-        table.drop([1, 2, 4], axis='columns', inplace=True)
-        table.rename(columns={0: '索書號', 3: '館藏狀態'}, inplace=True)
-        table['圖書館'], table['連結'], table['館藏地'] = org, driver.current_url, table['館藏狀態']
-
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
 
 # 國立臺北護理健康大學 NTUNHS V
 
@@ -2525,70 +2280,6 @@ def KNU(ISBN):
 # ---------------------------------------藍藍放大鏡------------------------------------------------
 # toread_crawler()
 # 東專|醒吾|彰化縣|高醫|虎科|聖約翰|東南|新生|崇仁|元培
-def toread_crawler(driver, org, org_url, ISBN):
-    try:
-        table = []
-
-        driver.get(org_url)
-        search_ISBN(driver, ISBN, 'q')
-
-        if not wait_for_element_present(driver, 'div#results'):
-            print(f'在{org}裡，沒有《{ISBN}》')
-            return
-
-        # 有 div#results，找出所有的＂書目資料＂的網址
-        tgt_urls = []
-        anchors = driver.find_elements(By.CSS_SELECTOR, 'div.img_reslt > a')
-        for anchor in anchors:
-            tgt_urls.append(anchor.get_attribute('href'))
-
-        # 進入各個＂書目資料＂爬取表格
-        for tgt_url in tgt_urls:
-            driver.get(tgt_url)
-
-            # 電子書沒有 table
-            if not wait_for_element_present(driver, 'table.gridTable'):
-                continue
-
-            tgt = accurately_find_table_and_read_it(driver, 'table.gridTable')
-            tgt['圖書館'], tgt['連結'] = org, tgt_url
-
-            # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-            try:
-                tgt = tgt.dropna(subset=['典藏地名稱'])
-            except:  # 國立高雄大學沒有這個狀況
-                pass
-            tgt.reset_index(drop=True, inplace=True)
-
-            table.append(tgt)
-
-            # 換頁：書沒有那麼多吧 XD，土法煉鋼法
-            i = 0
-            while True:
-                try:
-                    wait_for_element_clickable(driver, str(2+i)).click()
-                    time.sleep(2.5)
-                    tgt = accurately_find_table_and_read_it(
-                        driver, 'table.gridTable')
-                    tgt['圖書館'], tgt['連結'] = org, tgt_url
-
-                    # 以下兩行，是＂彰化縣公共圖書館＂有多餘的 row，須要特別篩選調 NaN
-                    try:
-                        tgt = tgt.dropna(subset=['典藏地名稱'])
-                    except:  # 國立高雄大學沒有這個狀況
-                        pass
-                    tgt.reset_index(drop=True, inplace=True)
-
-                    table.append(tgt)
-                    i += 1
-                except:
-                    break
-        table = organize_columns(table)
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        return table
 
 # ------------國立臺東專科學校-------------
 
@@ -3020,31 +2711,10 @@ def NDHU(ISBN):
 # ---------------------------------------Webpac2.0------------------------------------------------
 # webpac_two_cralwer()
 # 北藝大|勤益|義守|中山醫|國衛院
-def webpac_two_cralwer(driver, org, org_url, ISBN):
-    try:
-        tgt_url = f'{org_url}search/?q={ISBN}&field=isn&op=AND&type='
-        driver.get(tgt_url)
-
-        wait_for_element_clickable(
-            driver, '/html/body/div/div[1]/div[2]/div/div/div[2]/div[3]/div[1]/div[3]/div/ul/li/div/div[2]/h3/a', waiting_time=15, by=By.XPATH).click()
-
-        table = accurately_find_table_and_read_it(
-            driver, '#LocalHolding > table')
-        table['圖書館'], table['連結'] = org, driver.current_url
-
-        # 特殊狀況：國家衛生研究院
-        if 'http://webpac.nhri.edu.tw/webpac/' in org_url:
-            table.rename(
-                columns={'館藏狀態': 'wow', '狀態／到期日': '館藏狀態'}, inplace=True)
-
-        table = organize_columns(table)
-    except:
-        print(f'在「{org}」找不到「{ISBN}」')
-        return
-    else:
-        return table
 
 # 國立臺北藝術大學 TNUA V OK
+
+
 def TNUA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3068,6 +2738,8 @@ def TNUA(ISBN):
     return gg
 
 # 國立勤益科技大學 NCUT V OK
+
+
 def NCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3170,54 +2842,6 @@ def NHRI(ISBN):
 # ------------------------------------cfm------------------------------------------
 # webpac_cfm_crawler()
 # 北大|城市科大|德明|龍華|臺中市|中國醫|亞洲|臺南市|慈濟|澎科
-def webpac_cfm_crawler(driver, org, org_url, ISBN):
-    try:
-        table = []
-        table_position = 'table.list_border'
-        if 'ntpu' in org_url:  # ＂國立臺北大學＂的 table_position 是 table.book_location
-            table_position = 'div.book_location > table.list'
-
-        driver.get(org_url)
-
-        wait_for_element_clickable(driver, '進階檢索').click()
-        time.sleep(1)
-        select_ISBN_strategy(driver, 'as_type_1', 'i')
-        search_ISBN(driver, ISBN, 'as_keyword_1')
-
-        # Case1. 是否 driver 在＂書目資料＂的頁面？
-        if wait_for_element_present(driver, 'div.info_box', 10):
-            table += crawl_all_tables_on_page(driver,
-                                              table_position, org, driver.current_url)
-
-        # Case2. 是否 driver 在＂查詢結果＂的頁面？且有搜尋結果。
-        elif wait_for_element_present(driver, 'div#list'):
-            tgt_urls = get_all_tgt_urls(driver, '詳細書目')
-
-            for tgt_url in tgt_urls:
-                driver.get(tgt_url)
-
-                # 是否 driver 在＂書目資料＂的頁面？
-                if wait_for_element_present(driver, 'div.info_box'):
-                    table += crawl_all_tables_on_page(driver,
-                                                      table_position, org, driver.current_url)
-
-        # Case3. 無搜尋結果，driver 會在＂查詢結果＂，並顯示訊息「無符合館藏資料」
-        elif wait_for_element_present(driver, 'div.msg'):
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-
-        # Case. 抓不到 table，離開 function
-        if table == []:
-            print(f'在「{org}」爬取「{ISBN}」時，抓取不到 table')
-            return
-
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-
-    else:
-        table = organize_columns(table)
-        return table
 
 # 國立臺北大學 NTPU X(卡在進table前的頁面)
 
@@ -3445,6 +3069,8 @@ def TCU(ISBN):
     return gg
 
 # 國立澎湖科技大學 NPU V OK
+
+
 def NPU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3544,64 +3170,6 @@ def KLCCAB(ISBN):
 # ------------------------------------難形容的特殊------------------------------------------
 # sirsidynix_crawler()
 # 中科大|南投縣|南藝大
-def sirsidynix_crawler(driver, org, org_url, ISBN):
-    try:
-        table = []
-
-        driver.get(org_url)
-        select_ISBN_strategy(driver, 'restrictionDropDown',
-                             'false|||ISBN|||ISBN（國際標準書號）')
-        search_ISBN(driver, ISBN, 'q')
-
-        # ＂書目資料＂
-        if wait_for_element_present(driver, 'div.detailItems'):
-            time.sleep(0.5)
-
-            tgt = accurately_find_table_and_read_it(
-                driver, 'table.detailItemTable')
-
-            if 'ntit' in org_url:
-                tgt['館藏地'] = tgt['圖書館'].str.rsplit('-', expand=True)[2]
-            elif 'tnnua' in org_url:
-                tgt['館藏地'] = tgt['狀態'].str.rsplit('-', expand=True)[1]
-            tgt['圖書館'], tgt['連結'] = org, driver.current_url
-            table.append(tgt)
-        # ＂查詢結果＂
-        elif wait_for_element_present(driver, 'div#results_wrapper'):
-            wait_for_element_present(driver, 'a.hideIE').click()
-
-            if wait_for_element_present(driver, 'div.detailItems'):
-                while True:
-                    time.sleep(0.5)
-
-                    tgt = accurately_find_table_and_read_it(
-                        driver, 'table.detailItemTable', -1)
-
-                    if 'ntit' in org_url:
-                        tgt['館藏地'] = tgt['圖書館'].str.rsplit('-', expand=True)[2]
-                    elif 'tnnua' in org_url:
-                        tgt['館藏地'] = tgt['狀態'].str.rsplit('-', expand=True)[1]
-
-                    tgt['圖書館'], tgt['連結'] = org, driver.current_url
-                    table.append(tgt)
-
-                    try:
-                        wait_for_elements_present(
-                            driver, '.nextArrowRight')[-1].click()
-                        time.sleep(3.5)
-                    except:
-                        break
-        else:
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-
-    else:
-        table = organize_columns(table)
-        return table
 
 # 國立臺中科技大學 NUTC
 
@@ -3654,6 +3222,8 @@ def NTCPL(ISBN):
     return gg
 
 # 國立臺南藝術大學 TNNUA OK
+
+
 def TNNUA(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -3680,30 +3250,6 @@ def TNNUA(ISBN):
 # ------------------------------------文化局旗下------------------------------------------
 # moc_thm_crawler()
 # 臺史館|臺文館|史前館|
-def moc_thm_crawler(driver, org, org_url, ISBN):
-    try:
-        driver.get(org_url)
-
-        select_ISBN_strategy(driver, 'find_code', 'ISBN')
-        search_ISBN(driver, ISBN, 'request')
-
-        try:
-            wait_for_element_present(
-                driver, '/html/body/form/table[1]/tbody/tr[8]/td[3]/a', by=By.XPATH).click()
-        except:
-            print(f'在「{org}」找不到「{ISBN}」')
-            return
-        wait_for_element_present(
-            driver, '/html/body/table[9]/tbody/tr/td[1]/table/tbody/tr[1]/td[2]/a', by=By.XPATH).click()
-
-        table = accurately_find_table_and_read_it(driver, 'table', -2)
-        table['圖書館'], table['連結'] = org, driver.current_url
-    except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
-        return
-    else:
-        table = organize_columns(table)
-        return table
 
 # 國立臺灣史前文化博物館 NMP
 
@@ -3795,6 +3341,8 @@ def 世新大學(driver, org, org_url, ISBN):
         return table
 
 # 世新大學 SHU V OK
+
+
 def SHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4434,6 +3982,8 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     return table
 
 # 馬偕醫學院 MMC V OK
+
+
 def MMC(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4442,7 +3992,8 @@ def MMC(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.worksheet('worksheet_2')
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
 
     gg = clickclick_crawler(
         driver,
@@ -4461,6 +4012,8 @@ def MMC(ISBN):
     return gg
 
 # 工業技術研究院 ITRI V
+
+
 def ITRI(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4469,8 +4022,9 @@ def ITRI(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.worksheet('worksheet_2')
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-    
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
+
     gg = clickclick_crawler(
         driver,
         '工業技術研究院',
@@ -4488,6 +4042,8 @@ def ITRI(ISBN):
     return gg
 
 # 明志科技大學 MCUT V
+
+
 def MCUT(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4496,7 +4052,8 @@ def MCUT(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.worksheet('worksheet_2')
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
 
     gg = clickclick_crawler(
         driver,
@@ -4515,6 +4072,8 @@ def MCUT(ISBN):
     return gg
 
 # 長庚科技大學 CGUST V
+
+
 def CGUST(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4523,7 +4082,8 @@ def CGUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(1)
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
 
     gg = clickclick_crawler(
         driver,
@@ -4541,7 +4101,9 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立清華大學 NTHU V 
+# 國立清華大學 NTHU V
+
+
 def NTHU(ISBN):
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -4776,7 +4338,8 @@ def CTUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(1)
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
 
     gg = chungchung_crawler(
         driver,
@@ -4800,7 +4363,8 @@ def CCUST(ISBN):
     sheet = gs.open_by_url(
         'https://docs.google.com/spreadsheets/d/17fJuHSGHnjHbyKJzTgzKpp1pe2J6sirK5QVjg2-8fFo/edit#gid=0')
     worksheet = sheet.get_worksheet(1)
-    driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
     gg = chungchung_crawler(
         driver,
         '中州科技大學',
