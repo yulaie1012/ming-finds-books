@@ -23,11 +23,12 @@ import requests
 # import requests.packages.urllib3
 # requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 # from urllib.request import HTTPError  # 載入 HTTPError
+import import_ipynb
 from crawlers import *
 
 my_options = Options()
 my_options.add_argument('--incognito')  # 開啟無痕模式
-my_options.add_argument('--headless')  # 不開啟實體瀏覽器
+# my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 

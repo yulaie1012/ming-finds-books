@@ -12,40 +12,12 @@ from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from linebot.models import *
 # ---------------------------------------
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options  # 設定 driver 的行為
-from selenium.webdriver.support.ui import Select  # 選擇＂下拉式選單＂
-from selenium.webdriver.common.keys import Keys  # 鍵盤操作
-from selenium.common.exceptions import NoSuchElementException, TimeoutException  # 載入常見錯誤
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities  # 更改載入策略
-from selenium.webdriver.support.ui import WebDriverWait  # 等待機制
-from selenium.webdriver.support import expected_conditions as EC  # 預期事件
-from selenium.webdriver.common.by import By  # 找尋元素的方法
-# ---------------------------------------
-
 from google.oauth2 import service_account
 from google.oauth2.service_account import Credentials
 import gspread
 import gspread_dataframe as gd
-
 # ---------------------------------------
-# import import_ipynb
-from crawlers import *
 from INSTs import *
-#     TPML, webpac_jsp_crawler, FGU, NTOU, \
-#     easy_crawler, NYCU, NTNU, NTUST, PCCU, FJU, SINICA, webpac_pro_crawler, webpac_ajax_crawler, NTPC, KLCCAB, \
-#     基隆市公共圖書館, ILCCB,  NIU, 國家圖書館, NCL, CYCU, \
-#     CYUT, \
-#     FCU, NSYSU, NKNU, WZU, Tajen, NCU, CUST, CNU, NTUA, UTaipei, NTUT, TMU, NTUB, Miaoli, JUST, CLUT, VNU, UCH, \
-#     MUST, YDU, CUTE, MMC, ITRI, NTCU, NTUS, THU, PU, OCU, NCUE, YLCCB, TYPL, KSML, PTPL, CYCPL, NHU, FEU, CSU, \
-#     Meiho, OUK, NPTU, webpac_aspx_crawler, TSU, STU, KSU, NTUNHS, uhtbin_crawler, TTU, NTSU, ugly_crawler, \
-#     Matsu, KNU, toread_crawler, CHPL, KMU, NFU, primo_two_crawler, TKU, MCU, SCU, CCU, CJCU, \
-#     世新大學, SHU, webpac_two_cralwer, TNUA, NCUT, ISU, CSMU, NHRI, HKU, HUST, HWH, \
-#     CKU, CCT, HDUT, NOU, Jente, NTTU, NQU, HLPL, NYUST, \
-#     TFAI, AU, USC, HFU, NUU, PHPL, SJU, TNU, YPU, LTU, CTU, NKUT, MDU, DYU, HSC, CJC, NDHU, NUK, MCUT, CGUST, \
-#     NTHU, NCNU, NUTN, TPCU, webpac_cfm_crawler, NTPU, TMUST, LHU, TCPL, CMU, Asia, TNPL, TCU, NPU, KMCPL, TTCPL, \
-#     HCLIB, CYLIB, HCPL, NTCH, NMP, TGST, NTMOFA, KYU, chungchung_crawler, CTUST, CCUST, \
-#     NUTC, 敏實科技大學, MITUST, sirsidynix_crawler, TNNUA, NTCPL, moc_thm_crawler, 
 
 NTCs = ["ntc", "NTC", "國立臺東專科學校", "臺東專科學校", "東專", "台東專科學校", "國立台東專科學校"]
 HWUs = ["hwu", "HWU", "醒吾科技大學", "醒吾科大", "醒吾"]
@@ -207,7 +179,7 @@ NKUHTs = ["nkuht", "NKUHT", "國立高雄餐旅大學", "高雄餐旅大學", "�
 CGUs = ["cgu", "CGU", "長庚大學", "長庚"]
 CCUs = ["ccu", "CCU", "國立中正大學", "中正大學", "中正大", "中正", "鳳梨田"]
 CJCUs = ["cjcu", "CJCU", "長榮大學", "長榮", "長榮大"]
-TPMLs = ["tpml","TPML","臺北市立圖書館", "台北市立圖書館", "臺北市圖書館",
+TPMLs = ["tpml", "TPML", "臺北市立圖書館", "台北市立圖書館", "臺北市圖書館",
          "台北市圖書館", "臺北圖書館", "台北圖書館", "臺北市圖", "台北市圖"]
 MMCs = ["mmc", "MMC", "馬偕醫學院", "馬偕醫", "馬偕"]
 ITRIs = ["itri", "ITRI", "工業技術研究院", "工研院"]
@@ -250,19 +222,27 @@ e_dict = dict.fromkeys(east, ("東", "east"))
 app = Flask(__name__)
 
 # LINE 聊天機器人的基本資料
-line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
-handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
-# line_bot_api = LineBotApi(
-#     'rtut2oGaCBibk5DTObwKuFgQgD8rC7JazGdF9f68BIP/2lXU+bBWjm3JgHQtvh0iHySthUi2We1XPVlGTMCh9s8Q1IZZL58osZBRvyHz8GXOnp4cd959MMyh/bXZkpaqdOepM0vcrSXXZvHSzcolLQdB04t89/1O/w1cDnyilFU=')
-# handler = WebhookHandler('5fecbae22c9e1492decda139bd70fd70')
+# line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
+# handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
+line_bot_api = LineBotApi(
+    'rtut2oGaCBibk5DTObwKuFgQgD8rC7JazGdF9f68BIP/2lXU+bBWjm3JgHQtvh0iHySthUi2We1XPVlGTMCh9s8Q1IZZL58osZBRvyHz8GXOnp4cd959MMyh/bXZkpaqdOepM0vcrSXXZvHSzcolLQdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('5fecbae22c9e1492decda139bd70fd70')
 parser = WebhookParser('5fecbae22c9e1492decda139bd70fd70')
+# test
+# line_bot_api = LineBotApi(
+#     'pI2RMOmFid7t4LcAXLD6xtINIdt1GTk47SV+/3VObyfqrnEO+OVv/1NiJGDmv5nldjF6fzXrwZ+uMie+Hil5rjD1UhstcCOYtNrOuR0b5OXWIKEt1L7D83YlWEaRRwSw39lUY9CxEzpqeduShuc6EQdB04t89/1O/w1cDnyilFU=')
+# handler = WebhookHandler('0583d8005933cf8d466126a3649b1952')
 
 # 打個招呼 :)
+
+
 @app.route("/", methods=['GET'])
 def hello():
     return "Hi! Wanna find some InTeREsTInG books?"
 
 # 接收 LINE 的資訊
+
+
 @app.route("/callback", methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -276,6 +256,8 @@ def callback():
     return 'OK'
 
 # ----------------設定回覆訊息介面-----------------
+
+
 @handler.add(MessageEvent, message=TextMessage)
 def test1(event):
     # ----------------取得userid-----------------
