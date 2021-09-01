@@ -111,7 +111,7 @@ def organize_columns(df1):
 
 # ## DEFINED FUNCTIONS
 
-# In[58]:
+# In[4]:
 
 
 def plot_horizontal_line():
@@ -231,7 +231,7 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
 
 # ### 函式本體
 
-# In[11]:
+# In[5]:
 
 
 def click_more_btn(driver):
@@ -248,7 +248,7 @@ def click_more_btn(driver):
         return
 
 
-# In[12]:
+# In[6]:
 
 
 def webpac_gov_crawler(driver, org, org_url, ISBN):
@@ -304,7 +304,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         return organize_columns(table)
 
 
-# In[13]:
+# In[7]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -335,7 +335,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[14]:
+# In[8]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
@@ -373,7 +373,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
             
             # 判斷是不是＂零筆＂查詢結果
             if wait_for_element_present(driver, '#totalpage').text == '0':
-                print(f'在「{org}」找不到「{ISBN}」')
+                alert_exception_report(function, 'not found book')
                 return
             
             # ＂多筆＂查詢結果
@@ -411,7 +411,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[15]:
+# In[9]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -423,7 +423,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[16]:
+# In[10]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -435,7 +435,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[17]:
+# In[11]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -447,7 +447,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[18]:
+# In[12]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -473,7 +473,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[19]:
+# In[13]:
 
 
 def easy_crawler(driver, org, org_url, ISBN):
@@ -495,7 +495,7 @@ def easy_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[20]:
+# In[14]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -521,7 +521,7 @@ def easy_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[21]:
+# In[15]:
 
 
 def webpac_pro_crawler(driver, org, org_url, ISBN):
@@ -556,7 +556,7 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[22]:
+# In[16]:
 
 
 def webpac_ajax_crawler(driver, org, org_url, ISBN):
@@ -610,7 +610,7 @@ def webpac_ajax_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[23]:
+# In[17]:
 
 
 def webpac_aspx_crawler(driver, org, org_url, ISBN):
@@ -660,7 +660,7 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[24]:
+# In[18]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -686,7 +686,7 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[25]:
+# In[19]:
 
 
 def uhtbin_crawler(driver, org, org_url, ISBN):
@@ -718,7 +718,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[26]:
+# In[20]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -743,7 +743,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[27]:
+# In[21]:
 
 
 def toread_crawler(driver, org, org_url, ISBN):
@@ -811,7 +811,7 @@ def toread_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[28]:
+# In[22]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -842,7 +842,7 @@ def toread_crawler(driver, org, org_url, ISBN):
 #     - 基隆市公共圖書館：[只有一筆書目時，會直接進入＂詳細書目＂](https://webpac.klccab.gov.tw/webpac/search.cfm?m=ss&k0=986729193X&t0=k&c0=and)
 #     - 國立臺北大學：和其他機構的 class name 不同，是 table.book_location，而不是 table.list_border。
 
-# In[29]:
+# In[23]:
 
 
 def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
@@ -863,7 +863,7 @@ def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
     return table
 
 
-# In[30]:
+# In[24]:
 
 
 def get_all_tgt_urls(driver, link_text):
@@ -876,7 +876,7 @@ def get_all_tgt_urls(driver, link_text):
     return tgt_urls
 
 
-# In[31]:
+# In[25]:
 
 
 def webpac_cfm_crawler(driver, org, org_url, ISBN):
@@ -933,7 +933,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 
 
 
-# In[32]:
+# In[26]:
 
 
 # # 一筆「二十一世紀資本論」，測試成功
@@ -946,7 +946,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[33]:
+# In[27]:
 
 
 # # 兩筆「蘋果橘子經濟學」，測試成功
@@ -959,7 +959,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[34]:
+# In[28]:
 
 
 # # 三筆「蘋果橘子經濟學」，測試成功
@@ -972,7 +972,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[35]:
+# In[29]:
 
 
 # # 未解決校區問題
@@ -985,7 +985,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[36]:
+# In[30]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1016,7 +1016,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # ### 函式說明
 # - 『適用的機構』：[國立臺中科技大學](https://ntit.ent.sirsidynix.net/client/zh_TW/NUTC)、[南投縣圖書館](https://nccc.ent.sirsi.net/client/zh_TW/main)、[國立臺南藝術大學](https://tnnua.ent.sirsi.net/client/zh_TW/tnnua/?)
 
-# In[37]:
+# In[31]:
 
 
 def sirsidynix_crawler(driver, org, org_url, ISBN):
@@ -1075,7 +1075,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[38]:
+# In[32]:
 
 
 # # 一筆，測試成功
@@ -1088,7 +1088,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[39]:
+# In[33]:
 
 
 # # 兩筆＂二十一世紀資本論＂，測試成功
@@ -1101,7 +1101,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[40]:
+# In[34]:
 
 
 # # 五筆＂神秘的魔法師＂，測試成功
@@ -1114,7 +1114,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[41]:
+# In[35]:
 
 
 # # 一筆＂神秘的魔法師＂，測試成功
@@ -1131,7 +1131,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # - 『最後編輯』：2021/08/14
 # - 『函式完成度』：
 
-# In[42]:
+# In[36]:
 
 
 def moc_thm_crawler(driver, org, org_url, ISBN):
@@ -1158,7 +1158,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[43]:
+# In[37]:
 
 
 # # 一筆，成功
@@ -1171,7 +1171,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[44]:
+# In[38]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1183,7 +1183,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[45]:
+# In[39]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1201,7 +1201,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 
 
 
-# In[46]:
+# In[40]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1238,7 +1238,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[47]:
+# In[41]:
 
 
 def 連江縣公共圖書館(driver, org, org_url, ISBN):
@@ -1281,7 +1281,7 @@ def 連江縣公共圖書館(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[48]:
+# In[42]:
 
 
 def 國家圖書館(driver, org, org_url, ISBN):
@@ -1320,7 +1320,7 @@ def 國家圖書館(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[49]:
+# In[43]:
 
 
 def 世新大學(driver, org, org_url, ISBN):
@@ -1338,7 +1338,7 @@ def 世新大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[50]:
+# In[44]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1354,7 +1354,7 @@ def 世新大學(driver, org, org_url, ISBN):
 # - 『最後編輯』：2021/08/14
 # - 『函式完成度』：高
 
-# In[51]:
+# In[45]:
 
 
 def 敏實科技大學(driver, org, org_url, ISBN):
@@ -1385,7 +1385,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[52]:
+# In[46]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1406,7 +1406,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[53]:
+# In[47]:
 
 
 def webpac_two_cralwer(driver, org, org_url, ISBN):
@@ -1431,7 +1431,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
         return table
 
 
-# In[ ]:
+# In[48]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1443,7 +1443,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
 # )
 
 
-# In[55]:
+# In[49]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1462,7 +1462,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
 
 # ### Unable to coerce to Series
 
-# In[56]:
+# In[50]:
 
 
 def 台北海洋科技大學(driver, org, org_url, ISBN):
@@ -1493,7 +1493,7 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[57]:
+# In[51]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
