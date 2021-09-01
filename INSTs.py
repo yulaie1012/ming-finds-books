@@ -3013,6 +3013,50 @@ def NKUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
+# 國立清華大學 NTHU
+
+
+def NTHU(ISBN):
+    sheet = ggSheet()
+    worksheet = sheet.get_worksheet(0)
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
+
+    gg = primo_crawler(
+        driver,
+        '國立清華大學',
+        "https://nthu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+        ISBN,
+        "&tab=LibraryCatalog&search_scope=MyInstitution&vid=886UST_NTHU:886UST_NTHU&lang=zh-tw&offset=0",
+        "layout-align-space-between-center.layout-row.flex-100"
+    )
+
+    driver.close()
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
+# 國立陽明交通大學 NYCU
+
+
+def NYCU(ISBN):
+    sheet = ggSheet()
+    worksheet = sheet.get_worksheet(0)
+    driver = webdriver.Chrome(
+        options=my_options, desired_capabilities=my_capabilities)
+
+    gg = primo_crawler(
+        driver,
+        '國立陽明交通大學',
+        "https://nycu.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+        ISBN,
+        "&tab=Everything&search_scope=MyInst_and_CI&vid=886UST_NYCU:886UST_NYCU&lang=zh-tw&offset=0",
+        "layout-align-space-between-center.layout-row.flex-100"
+    )
+
+    driver.close()
+    worksheet.append_rows(gg.values.tolist())
+    return gg
+
 
 # ------------------------------------------Primo v2-----------------------------------------
 # primo_two_crawler()
