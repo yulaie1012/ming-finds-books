@@ -22,6 +22,7 @@ import pandas as pd  # 載入 pandas
 import requests
 from bs4 import BeautifulSoup
 import time  # 強制等待
+import inspect
 
 
 # ## 設定 driver 的參數：options、desired_capabilities
@@ -46,7 +47,7 @@ my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解�
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[58]:
+# In[3]:
 
 
 def organize_columns(df1):
@@ -55,6 +56,8 @@ def organize_columns(df1):
         df1 = pd.concat(df1, axis=0, ignore_index=True)
     except:
         df1.reset_index(drop=True, inplace=True)
+        
+    df1_columns = df1
 
     # 處理 column 2：館藏地
     c2 = {
@@ -70,7 +73,7 @@ def organize_columns(df1):
             pass
 
     # 處理 column 3：索書號
-    c3 = ['索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)']
+    c3 = {'索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)'}
     df1['c3'] = ''
     for c in c3:
         try:
@@ -79,12 +82,12 @@ def organize_columns(df1):
             pass
 
     # 處理 column 4：館藏狀態
-    c4 = [
+    c4 = {
         '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
         '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態',
-        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status',
-        '館藏狀況(月-日-西元年)', '現況', '處理狀態 (狀態說明)', '狀態／到期日'
-    ]
+        '狀態', '館藏狀態(月-日-西元年)', '圖書狀況', '現況/異動日', 'Unnamed: 24',
+        '圖書狀況Book Status', '館藏狀況(月-日-西元年)', '現況', '處理狀態 (狀態說明)', '狀態／到期日'
+    }
     df1['c4'] = ''
     for c in c4:
         try:
@@ -106,180 +109,110 @@ def organize_columns(df1):
     return df2
 
 
-# In[59]:
+# ## DEFINED FUNCTIONS
+
+# In[58]:
 
 
-# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+def plot_horizontal_line():
+    print('='*78)
 
-# driver.get('https://webpac.isu.edu.tw/webpac/detail/344897/')
+def alert_execution_report(function):
+    plot_horizontal_line()
+    print(f'PERFORM {function.__name__} FUNCTION!')
+    print(inspect.signature(function))
 
-# accurately_find_table_and_read_it(driver, 'table.table-bordered')
+def alert_exception_report(function, exception):
+    print(f'STOP {function.__name__} FUNCTION, ERROR MESSAGE: "{exception}"'.replace('\n', ''))
+    plot_horizontal_line()
 
+def alert_completion_report(function):
+    print(f'COMPLETE {function.__name__} FUNCTION')
+    plot_horizontal_line()
 
-# In[ ]:
-
-
-
-
-
-# ## wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR)
-# - 用法：
-#     - 等待 element 出現，每間隔 0.5 秒定位一次，直到 5 秒。如果定位 element 成功，回傳 element；否則，回傳 False。
-# - 參數：
-#     - driver
-#     - element_position：元素位置，預設 CSS selector
-#     - waiting_time：等待時間，預設 5 秒
-#     - by：定位方式，預設 By.CSS_SELECTOR
-
-# In[4]:
-
+def node_off(waiting_time=0.5):
+    time.sleep(waiting_time)
 
 def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
-    print('==============================================================================')
-    print(f'PERFORM wait_for_element_present() FUNCTION')
-    print(f'ARGUMENTS: element_position: {element_position}, waiting_time: {waiting_time}')
+    function = wait_for_element_present
+    alert_execution_report(function)
     try:
-        time.sleep(0.3)
-        element = WebDriverWait(driver, waiting_time).until(
-            EC.presence_of_element_located((by, element_position)))
+        node_off()
+        element = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, element_position)))
     except Exception as e:
-        print(f'STOP wait_for_element_present() FUNCTION, RETURN False, ERROR MESSAGE: "{e}"')
-        print('==============================================================================')
+        alert_exception_report(function, e)
         return False
     else:
-        print('RETURN element')
-        print('==============================================================================')
+        alert_completion_report(function)
         return element
-
-
-# ## wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR)
-
-# In[5]:
-
 
 def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
-    print('==============================================================================')
-    print(f'PERFORM wait_for_elements_present() FUNCTION')
-    print(f'ARGUMENTS: elements_position: {elements_position}, waiting_time: {waiting_time}, bt: {by}')
+    function = wait_for_elements_present
+    alert_execution_report(function)
     try:
-        time.sleep(0.3)
-        element = WebDriverWait(driver, waiting_time).until(EC.presence_of_all_elements_located((by, elements_position)))
+        node_off()
+        elements = WebDriverWait(driver, waiting_time).until(EC.presence_of_all_elements_located((by, elements_position)))
     except Exception as e:
-        print(f'STOP wait_for_element_present() FUNCTION, RETURN False, ERROR MESSAGE: "{e}"')
-        print('==============================================================================')
+        alert_exception_report(function, e)
         return False
     else:
-        print('RETURN element')
-        print('==============================================================================')
-        return element
-
-
-# ## wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT)
-# - 同上
-
-# In[6]:
-
+        alert_completion_report(function)
+        return elements
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
-    print('=============================================================================================')
-    print(f'PERFORM wait_for_element_clickable({element_position}) FUNCTION')
-    print(f'ARGUMENTS: element_position: {element_position}, waiting_time: {waiting_time}, by: {by}')
+    function = wait_for_element_clickable
+    alert_execution_report(function)
     try:
-        time.sleep(0.3)
+        node_off()
         element = WebDriverWait(driver, waiting_time).until(EC.element_to_be_clickable((by, element_position)))
     except Exception as e:
-        print(f'STOP wait_for_element_clickable() FUNCTION, RETURN False, ERROR MESSAGE: "{e}"')
-        print('=============================================================================================')
+        alert_exception_report(function, e)
         return False
     else:
-        print('RETURN element')
-        print('==============================================================================')
+        alert_completion_report(function)
         return element
 
-
-# ## accurately_find_table_and_read_it(driver, table_position, table_index=0)
-# - 用法：
-#     - 精準定位 table 並讀取成 pd.DataFrame。如果定位 table 成功，回傳 table；否則，回傳 False。
-#     - 為 table 增加＂圖書館＂和＂連結＂的欄位。
-# - 參數：
-#     - table_position：table 位置，預設 CSS selector
-
-# In[7]:
-
-
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
-    print(f'PERFORM accurately_find_table_and_read_it() FUNCTION')
-    print(f'ARGUMENTS: table_position: {table_position}, table_index: {table_index}')
+    function = accurately_find_table_and_read_it
+    alert_execution_report(function)
     try:
         if not wait_for_element_present(driver, table_position):
-            print(f'STOP accurately_find_table_and_read_it() FUNCTION, NOT FOUND: {table_position}！')
+            alert_exception_report(function, 'not found table')
             return
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         table_innerHTML = soup.select(table_position)[table_index]
         tgt = pd.read_html(str(table_innerHTML), encoding='utf-8')[0]
         # tgt['圖書館'], tgt['連結'] = org, driver.current_url
     except Exception as e:
-        print(f'STOP accurately_find_table_and_read_it() FUNCTION, ERROR MESSAGE: "{e}"')
-        print('=============================================================================================')
+        alert_exception_report(function, e)
         return
     else:
-        print('RETURN table')
-        print('==============================================================================')
+        alert_completion_report(function)
         return tgt
 
-
-# ## select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME)
-# - 用法：
-#     - 等待 select 出現，並選擇以 ISBN 方式搜尋
-# - 參數：
-#     - driver
-#     - select_position：select 位置，預設 name
-#     - option_position：option 位置，預設 value
-#     - waiting_time：等待時間，預設 30 秒
-#     - by：預設 By.NAME
-
-# In[8]:
-
-
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
-    print('=============================================================================================')
-    print(f'PERFORM select_ISBN_strategy() FUNCTION')
-    print(f'ARGUMENTS: select_position: {select_position}, option_position: {option_position}, waiting_time: {waiting_time}')
+    function = select_ISBN_strategy
+    alert_execution_report(function)
     try:
         search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
         select = Select(search_field)
-        time.sleep(0.5)
+        node_off()
         select.select_by_value(option_position)
     except Exception as e:
-        print(f'STOP select_ISBN_strategy() FUNCTION, ERROR MESSAGE: "{e}"')
-        print('=============================================================================================')
+        alert_completion_report(function)
         return
 
-
-# ## search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME)
-# - 用法：
-#     - 等待 input 出現，輸入 ISBN 並按下 ENTER
-# - 參數：
-#     - ISBN：ISBN
-#     - input_position：input 位置，預設 name
-#     - waiting_time：等待時間，預設 10 秒
-#     - by：預設 By.NAME
-
-# In[9]:
-
-
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
-    print('=============================================================================================')
-    print('PERFORM search_ISBN() FUNCTION')
-    print(f'ARGUMENTS: ISBN: {ISBN}, input_position: {input_position}, waiting_time: {waiting_time}, by: {by}')
+    function = search_ISBN
+    alert_execution_report(function)
     try:
         search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
         search_input.send_keys(ISBN)
-        time.sleep(0.5)
+        node_off()
         search_input.send_keys(Keys.ENTER)
+        alert_completion_report(function)
     except Exception as e:
-        print(f'STOP search_ISBN() FUNCTION, ERROR MESSAGE: "{e}"')
-        print('=============================================================================================')
+        alert_exception_report(function, e)
         return
 
 
@@ -298,11 +231,12 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
 
 # ### 函式本體
 
-# In[10]:
+# In[11]:
 
 
 def click_more_btn(driver):
-    print(f'PERFORM「click_more_btn()」FUNCTION')
+    function = wait_for_elements_present
+    alert_execution_report(function)
     try:
         while True:
             more_btn = wait_for_element_clickable(driver, '載入更多')
@@ -314,7 +248,7 @@ def click_more_btn(driver):
         return
 
 
-# In[11]:
+# In[12]:
 
 
 def webpac_gov_crawler(driver, org, org_url, ISBN):
@@ -370,7 +304,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         return organize_columns(table)
 
 
-# In[12]:
+# In[13]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -380,18 +314,6 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 #     org_url='https://www.libwebpac.yuntech.edu.tw/',
 #     ISBN='9789861371955'
 # )
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
 
 # ## <mark>完成</mark>webpac_jsp_crawler(driver, org, org_url, ISBN)
@@ -413,11 +335,12 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[13]:
+# In[14]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
-    print(f'PERFORM「webpac_jsp_crawler({org})」FUNCTION')
+    function = wait_for_elements_present
+    alert_execution_report(function)
     try:
         table = []
         
@@ -446,7 +369,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
         elif wait_for_element_present(driver, 'iframe#leftFrame'):
             iframe = driver.find_element_by_id('leftFrame')
             driver.switch_to.frame(iframe)
-            time.sleep(1)  # 切換到 <frame> 需要時間，否則會無法讀取
+            time.sleep(1.5)  # 切換到 <frame> 需要時間，否則會無法讀取
             
             # 判斷是不是＂零筆＂查詢結果
             if wait_for_element_present(driver, '#totalpage').text == '0':
@@ -481,20 +404,57 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
                     continue
         table = organize_columns(table)
     except Exception as e:
-        print(f'在「{org}」搜尋「{ISBN}」時，發生錯誤，錯誤訊息為：「{e}」！')
+        alert_exception_report(function, e)
         return
     else:
+        alert_completion_report(function)
         return table
 
 
-# In[14]:
+# In[15]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 # webpac_jsp_crawler(
 #     driver=driver, 
-#     org='國立宜蘭大學', 
-#     org_url='https://lib.niu.edu.tw/webpacIndex.jsp', 
+#     org='佛光大學', 
+#     org_url='http://libils.fgu.edu.tw/webpacIndex.jsp', 
+#     ISBN='9789573317241'
+# )
+
+
+# In[16]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# webpac_jsp_crawler(
+#     driver=driver, 
+#     org='國立空中大學', 
+#     org_url='https://hyweblib.nou.edu.tw/webpac/webpacIndex.jsp', 
+#     ISBN='9789573317241'
+# )
+
+
+# In[17]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# webpac_jsp_crawler(
+#     driver=driver, 
+#     org='育達科技大學', 
+#     org_url='https://hyweblib.nou.edu.tw/webpac/webpacIndex.jsp', 
+#     ISBN='9789573317241'
+# )
+
+
+# In[18]:
+
+
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# webpac_jsp_crawler(
+#     driver=driver, 
+#     org='國立金門大學', 
+#     org_url='https://lib.nqu.edu.tw/webpacIndex.jsp', 
 #     ISBN='9789573317241'
 # )
 
@@ -513,7 +473,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[15]:
+# In[19]:
 
 
 def easy_crawler(driver, org, org_url, ISBN):
@@ -535,7 +495,7 @@ def easy_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[16]:
+# In[20]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -561,7 +521,7 @@ def easy_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[17]:
+# In[21]:
 
 
 def webpac_pro_crawler(driver, org, org_url, ISBN):
@@ -596,7 +556,7 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[18]:
+# In[22]:
 
 
 def webpac_ajax_crawler(driver, org, org_url, ISBN):
@@ -650,7 +610,7 @@ def webpac_ajax_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[19]:
+# In[23]:
 
 
 def webpac_aspx_crawler(driver, org, org_url, ISBN):
@@ -700,7 +660,7 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[20]:
+# In[24]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -726,7 +686,7 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[21]:
+# In[25]:
 
 
 def uhtbin_crawler(driver, org, org_url, ISBN):
@@ -758,7 +718,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[22]:
+# In[26]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -783,7 +743,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[23]:
+# In[27]:
 
 
 def toread_crawler(driver, org, org_url, ISBN):
@@ -851,7 +811,7 @@ def toread_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[24]:
+# In[28]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -882,7 +842,7 @@ def toread_crawler(driver, org, org_url, ISBN):
 #     - 基隆市公共圖書館：[只有一筆書目時，會直接進入＂詳細書目＂](https://webpac.klccab.gov.tw/webpac/search.cfm?m=ss&k0=986729193X&t0=k&c0=and)
 #     - 國立臺北大學：和其他機構的 class name 不同，是 table.book_location，而不是 table.list_border。
 
-# In[25]:
+# In[29]:
 
 
 def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
@@ -903,7 +863,7 @@ def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
     return table
 
 
-# In[26]:
+# In[30]:
 
 
 def get_all_tgt_urls(driver, link_text):
@@ -916,7 +876,7 @@ def get_all_tgt_urls(driver, link_text):
     return tgt_urls
 
 
-# In[27]:
+# In[31]:
 
 
 def webpac_cfm_crawler(driver, org, org_url, ISBN):
@@ -973,7 +933,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 
 
 
-# In[28]:
+# In[32]:
 
 
 # # 一筆「二十一世紀資本論」，測試成功
@@ -986,7 +946,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[29]:
+# In[33]:
 
 
 # # 兩筆「蘋果橘子經濟學」，測試成功
@@ -999,7 +959,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[30]:
+# In[34]:
 
 
 # # 三筆「蘋果橘子經濟學」，測試成功
@@ -1012,7 +972,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[31]:
+# In[35]:
 
 
 # # 未解決校區問題
@@ -1025,7 +985,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[32]:
+# In[36]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1056,7 +1016,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # ### 函式說明
 # - 『適用的機構』：[國立臺中科技大學](https://ntit.ent.sirsidynix.net/client/zh_TW/NUTC)、[南投縣圖書館](https://nccc.ent.sirsi.net/client/zh_TW/main)、[國立臺南藝術大學](https://tnnua.ent.sirsi.net/client/zh_TW/tnnua/?)
 
-# In[33]:
+# In[37]:
 
 
 def sirsidynix_crawler(driver, org, org_url, ISBN):
@@ -1115,7 +1075,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[34]:
+# In[38]:
 
 
 # # 一筆，測試成功
@@ -1128,7 +1088,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[35]:
+# In[39]:
 
 
 # # 兩筆＂二十一世紀資本論＂，測試成功
@@ -1141,7 +1101,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[36]:
+# In[40]:
 
 
 # # 五筆＂神秘的魔法師＂，測試成功
@@ -1154,7 +1114,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[37]:
+# In[41]:
 
 
 # # 一筆＂神秘的魔法師＂，測試成功
@@ -1171,7 +1131,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # - 『最後編輯』：2021/08/14
 # - 『函式完成度』：
 
-# In[38]:
+# In[42]:
 
 
 def moc_thm_crawler(driver, org, org_url, ISBN):
@@ -1198,7 +1158,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[39]:
+# In[43]:
 
 
 # # 一筆，成功
@@ -1211,7 +1171,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[40]:
+# In[44]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1223,7 +1183,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[41]:
+# In[45]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1241,7 +1201,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 
 
 
-# In[42]:
+# In[46]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1278,7 +1238,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[43]:
+# In[47]:
 
 
 def 連江縣公共圖書館(driver, org, org_url, ISBN):
@@ -1321,7 +1281,7 @@ def 連江縣公共圖書館(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[44]:
+# In[48]:
 
 
 def 國家圖書館(driver, org, org_url, ISBN):
@@ -1360,7 +1320,7 @@ def 國家圖書館(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[45]:
+# In[49]:
 
 
 def 世新大學(driver, org, org_url, ISBN):
@@ -1378,7 +1338,7 @@ def 世新大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[46]:
+# In[50]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1394,7 +1354,7 @@ def 世新大學(driver, org, org_url, ISBN):
 # - 『最後編輯』：2021/08/14
 # - 『函式完成度』：高
 
-# In[47]:
+# In[51]:
 
 
 def 敏實科技大學(driver, org, org_url, ISBN):
@@ -1425,7 +1385,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[48]:
+# In[52]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1446,7 +1406,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[49]:
+# In[53]:
 
 
 def webpac_two_cralwer(driver, org, org_url, ISBN):
@@ -1471,19 +1431,19 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
         return table
 
 
-# In[50]:
+# In[ ]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
 # webpac_two_cralwer(
 #     driver=driver,
-#     org='國家衛生研究院',
-#     org_url='http://webpac.nhri.edu.tw/webpac/',
-#     ISBN='986729193X'
+#     org='義守大學',
+#     org_url='https://webpac.isu.edu.tw/webpac/',
+#     ISBN='9789861371955'
 # )
 
 
-# In[51]:
+# In[55]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1502,7 +1462,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
 
 # ### Unable to coerce to Series
 
-# In[52]:
+# In[56]:
 
 
 def 台北海洋科技大學(driver, org, org_url, ISBN):
@@ -1533,14 +1493,14 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[54]:
+# In[57]:
 
 
-driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
-台北海洋科技大學(
-    driver=driver,
-    org='台北海洋科技大學',
-    org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
-    ISBN='986729193X'
-)
+# driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+# 台北海洋科技大學(
+#     driver=driver,
+#     org='台北海洋科技大學',
+#     org_url='http://140.129.253.4/webopac7/sim_data2.php?pageno=1&pagerows=15&orderby=BRN&ti=&au=&se=&su=&pr=&mt=&mt2=&yrs=&yre=&nn=&lc=&bn=',
+#     ISBN='986729193X'
+# )
 
