@@ -2510,8 +2510,6 @@ def TCU(ISBN):
     return gg
 
 # 國立澎湖科技大學 NPU V OK
-
-
 def NPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
