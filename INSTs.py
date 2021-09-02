@@ -28,7 +28,7 @@ from crawlers import *
 
 my_options = Options()
 my_options.add_argument('--incognito')  # 開啟無痕模式
-# my_options.add_argument('--headless')  # 不開啟實體瀏覽器
+my_options.add_argument('--headless')  # 不開啟實體瀏覽器
 my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
@@ -125,8 +125,7 @@ def ILCCB(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = webpac_gov_crawler(
         driver,
         '宜蘭縣公共圖書館',
@@ -143,8 +142,7 @@ def ILCCB(ISBN):
 def TYPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_gov_crawler(
         driver,
@@ -162,8 +160,7 @@ def TYPL(ISBN):
 def KSML(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_gov_crawler(
         driver,
@@ -181,8 +178,7 @@ def KSML(ISBN):
 def PTPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_gov_crawler(
         driver,
@@ -201,8 +197,7 @@ def PTPL(ISBN):
 def HLPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_gov_crawler(
         driver,
@@ -221,8 +216,7 @@ def HLPL(ISBN):
 def PHPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_gov_crawler(
         driver,
@@ -241,8 +235,7 @@ def PHPL(ISBN):
 def NYUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_gov_crawler(
         driver,
@@ -261,8 +254,7 @@ def NYUST(ISBN):
 def TFAI(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_gov_crawler(
         driver,
@@ -286,8 +278,7 @@ def TFAI(ISBN):
 def FGU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -306,8 +297,7 @@ def FGU(ISBN):
 def CKU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -326,8 +316,7 @@ def CKU(ISBN):
 def NIU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -346,8 +335,7 @@ def NIU(ISBN):
 def CUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -366,8 +354,7 @@ def CUST(ISBN):
 def CCT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -386,8 +373,7 @@ def CCT(ISBN):
 def HDUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -406,8 +392,7 @@ def HDUT(ISBN):
 def CNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -426,8 +411,7 @@ def CNU(ISBN):
 def TPML(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -446,8 +430,7 @@ def TPML(ISBN):
 def NTUA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -466,8 +449,7 @@ def NTUA(ISBN):
 def UTaipei(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -487,8 +469,7 @@ def NTUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -507,8 +488,7 @@ def NTUT(ISBN):
 def TMU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -527,8 +507,7 @@ def TMU(ISBN):
 def NTUB(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -547,8 +526,7 @@ def NTUB(ISBN):
 def JUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -567,8 +545,7 @@ def JUST(ISBN):
 def CLUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -587,8 +564,7 @@ def CLUT(ISBN):
 def VNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -607,8 +583,7 @@ def VNU(ISBN):
 def UCH(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -627,8 +602,7 @@ def UCH(ISBN):
 def MUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -647,8 +621,7 @@ def MUST(ISBN):
 def NOU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -667,8 +640,7 @@ def NOU(ISBN):
 def HCLIB(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -687,8 +659,7 @@ def HCLIB(ISBN):
 def HCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -707,8 +678,7 @@ def HCPL(ISBN):
 def Miaoli(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -727,8 +697,7 @@ def Miaoli(ISBN):
 def YDU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -747,8 +716,7 @@ def YDU(ISBN):
 def Jente(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -767,8 +735,7 @@ def Jente(ISBN):
 def CUTE(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -787,8 +754,7 @@ def CUTE(ISBN):
 def NTCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -807,8 +773,7 @@ def NTCU(ISBN):
 def NTUS(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -827,8 +792,7 @@ def NTUS(ISBN):
 def THU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -847,8 +811,7 @@ def THU(ISBN):
 def PU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -867,8 +830,7 @@ def PU(ISBN):
 def OCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -887,8 +849,7 @@ def OCU(ISBN):
 def NCUE(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -907,8 +868,7 @@ def NCUE(ISBN):
 def YLCCB(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -927,8 +887,7 @@ def YLCCB(ISBN):
 def CYLIB(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -947,8 +906,7 @@ def CYLIB(ISBN):
 def CYCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -967,8 +925,7 @@ def CYCPL(ISBN):
 def NHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -987,8 +944,7 @@ def NHU(ISBN):
 def FEU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -1007,8 +963,7 @@ def FEU(ISBN):
 def CSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -1027,8 +982,7 @@ def CSU(ISBN):
 def Meiho(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -1047,8 +1001,7 @@ def Meiho(ISBN):
 def NTTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -1067,8 +1020,7 @@ def NTTU(ISBN):
 def TTCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -1087,8 +1039,7 @@ def TTCPL(ISBN):
 def NQU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -1107,8 +1058,7 @@ def NQU(ISBN):
 def KMCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_jsp_crawler(
         driver,
@@ -1160,8 +1110,7 @@ def NTOU(ISBN):
 def NTUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1180,8 +1129,7 @@ def NTUST(ISBN):
 def NTNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1200,8 +1148,7 @@ def NTNU(ISBN):
 def CYCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1220,8 +1167,7 @@ def CYCU(ISBN):
 def FCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1240,8 +1186,7 @@ def FCU(ISBN):
 def CYUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1260,8 +1205,7 @@ def CYUT(ISBN):
 def NSYSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1280,8 +1224,7 @@ def NSYSU(ISBN):
 def NKNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1300,8 +1243,7 @@ def NKNU(ISBN):
 def WZU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1320,8 +1262,7 @@ def WZU(ISBN):
 def Tajen(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1340,8 +1281,7 @@ def Tajen(ISBN):
 def NCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = easy_crawler(
         driver,
@@ -1363,8 +1303,7 @@ def NCU(ISBN):
 def SINICA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_pro_crawler(
         driver,
@@ -1381,8 +1320,7 @@ def SINICA(ISBN):
 def PCCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_pro_crawler(
         driver,
@@ -1399,8 +1337,7 @@ def PCCU(ISBN):
 def FJU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_pro_crawler(
         driver,
@@ -1417,8 +1354,7 @@ def FJU(ISBN):
 def NYCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_pro_crawler(
         driver,
@@ -1442,8 +1378,7 @@ def NYCU(ISBN):
 def NTPC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_ajax_crawler(
         driver,
@@ -1463,8 +1398,7 @@ def OUK(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_ajax_crawler(
         driver,
@@ -1483,8 +1417,7 @@ def OUK(ISBN):
 def NPTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_ajax_crawler(
         driver,
@@ -1507,8 +1440,7 @@ def NPTU(ISBN):
 def STU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1527,8 +1459,7 @@ def STU(ISBN):
 def TSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1547,8 +1478,7 @@ def TSU(ISBN):
 def KSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1568,8 +1498,7 @@ def HKU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1588,8 +1517,7 @@ def HKU(ISBN):
 def HUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1608,8 +1536,7 @@ def HUST(ISBN):
 def HWH(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1669,8 +1596,7 @@ def USC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1689,8 +1615,7 @@ def USC(ISBN):
 def HFU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1709,8 +1634,7 @@ def HFU(ISBN):
 def NUU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_aspx_crawler(
         driver,
@@ -1734,8 +1658,7 @@ def NUU(ISBN):
 def NTUNHS(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = uhtbin_crawler(
         driver,
@@ -1755,8 +1678,7 @@ def TTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = uhtbin_crawler(
         driver,
@@ -1776,8 +1698,7 @@ def NTSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = uhtbin_crawler(
         driver,
@@ -1821,8 +1742,7 @@ def ugly_crawler(driver, org, org_url, ISBN):
 def Matsu(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = ugly_crawler(
         driver,
@@ -1841,8 +1761,7 @@ def Matsu(ISBN):
 def KNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = ugly_crawler(
         driver,
@@ -1866,8 +1785,7 @@ def KNU(ISBN):
 def NTC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -1887,8 +1805,7 @@ def HWU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -1907,8 +1824,7 @@ def HWU(ISBN):
 def CHPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -1927,8 +1843,7 @@ def CHPL(ISBN):
 def KMU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -1947,8 +1862,7 @@ def KMU(ISBN):
 def NFU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -1967,8 +1881,7 @@ def NFU(ISBN):
 def SJU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -1987,8 +1900,7 @@ def SJU(ISBN):
 def TNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2007,8 +1919,7 @@ def TNU(ISBN):
 def HSC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2027,8 +1938,7 @@ def HSC(ISBN):
 def CJC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2047,8 +1957,7 @@ def CJC(ISBN):
 def YPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2067,8 +1976,7 @@ def YPU(ISBN):
 def LTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2087,8 +1995,7 @@ def LTU(ISBN):
 def MDU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2107,8 +2014,7 @@ def MDU(ISBN):
 def DYU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2127,8 +2033,7 @@ def DYU(ISBN):
 def CTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2147,8 +2052,7 @@ def CTU(ISBN):
 def NKUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2167,8 +2071,7 @@ def NKUT(ISBN):
 def NUK(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = toread_crawler(
         driver,
@@ -2188,8 +2091,7 @@ def NDHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = toread_crawler(
         driver,
         '國立東華大學',
@@ -2212,8 +2114,7 @@ def NDHU(ISBN):
 def TNUA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_two_cralwer(
         driver,
@@ -2233,8 +2134,7 @@ def NCUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_two_cralwer(
         driver,
@@ -2253,8 +2153,7 @@ def NCUT(ISBN):
 def ISU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_two_cralwer(
         driver,
@@ -2273,8 +2172,7 @@ def ISU(ISBN):
 def CSMU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_two_cralwer(
         driver,
@@ -2293,8 +2191,7 @@ def CSMU(ISBN):
 def NHRI(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_two_cralwer(
         driver,
@@ -2318,8 +2215,7 @@ def NHRI(ISBN):
 def NTPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2338,8 +2234,7 @@ def NTPU(ISBN):
 def TPCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2358,8 +2253,7 @@ def TPCU(ISBN):
 def TMUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2378,8 +2272,7 @@ def TMUST(ISBN):
 def LHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2398,8 +2291,7 @@ def LHU(ISBN):
 def TCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2418,8 +2310,7 @@ def TCPL(ISBN):
 def CMU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2438,8 +2329,7 @@ def CMU(ISBN):
 def Asia(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2458,8 +2348,7 @@ def Asia(ISBN):
 def TNPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2478,8 +2367,7 @@ def TNPL(ISBN):
 def TCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2496,8 +2384,7 @@ def TCU(ISBN):
 def NPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = webpac_cfm_crawler(
         driver,
@@ -2564,8 +2451,7 @@ def 基隆市公共圖書館(driver, org, org_url, ISBN):
 def KLCCAB(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = 基隆市公共圖書館(
         driver,
@@ -2589,8 +2475,7 @@ def KLCCAB(ISBN):
 def NUTC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = sirsidynix_crawler(
         driver,
@@ -2609,8 +2494,7 @@ def NUTC(ISBN):
 def NTCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = sirsidynix_crawler(
         driver,
@@ -2629,8 +2513,7 @@ def NTCPL(ISBN):
 def TNNUA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = sirsidynix_crawler(
         driver,
@@ -2655,8 +2538,7 @@ def NMP(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = moc_thm_crawler(
         driver,
         '國立臺灣史前文化博物館',
@@ -2698,8 +2580,7 @@ def NCL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = 國家圖書館(
         driver,
         '國家圖書館',
@@ -2734,8 +2615,7 @@ def SHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = 世新大學(
         driver,
         '世新大學',
@@ -2752,8 +2632,7 @@ def SHU(ISBN):
 def TUMT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = 台北海洋科技大學(
         driver,
@@ -2802,8 +2681,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
 def MITUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = 敏實科技大學(
         driver,
@@ -2888,8 +2766,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
 def NTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -2910,8 +2787,7 @@ def NTU(ISBN):
 def NCCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -2932,8 +2808,7 @@ def NCCU(ISBN):
 def TKU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -2954,8 +2829,7 @@ def TKU(ISBN):
 def MCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = primo_crawler(
         driver,
         '銘傳大學',
@@ -2975,8 +2849,7 @@ def MCU(ISBN):
 def SCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -2997,8 +2870,7 @@ def SCU(ISBN):
 def NKUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -3019,8 +2891,7 @@ def NKUST(ISBN):
 def NTHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -3041,8 +2912,7 @@ def NTHU(ISBN):
 def NYCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -3140,8 +3010,7 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
 def NPUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -3162,8 +3031,7 @@ def NPUST(ISBN):
 def NKUHT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_crawler(
         driver,
@@ -3219,8 +3087,7 @@ def CGU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = primo_greendot_crawler(
         driver,
         '長庚大學',
@@ -3239,8 +3106,7 @@ def CGU(ISBN):
 def CCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = primo_greendot_crawler(
         driver,
         '國立中正大學',
@@ -3258,8 +3124,7 @@ def CCU(ISBN):
 def CJCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = primo_greendot_crawler(
         driver,
@@ -3348,8 +3213,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
 def MMC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3373,8 +3237,7 @@ def MMC(ISBN):
 def ITRI(ISBN):
     sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3398,8 +3261,7 @@ def ITRI(ISBN):
 def MCUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3423,8 +3285,7 @@ def MCUT(ISBN):
 def CGUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3448,8 +3309,7 @@ def CGUST(ISBN):
 def NTHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3473,8 +3333,7 @@ def NTHU(ISBN):
 def NCNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3498,8 +3357,7 @@ def NCNU(ISBN):
 def NUTN(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3524,8 +3382,7 @@ def NTCH(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = clickclick_crawler(
         driver,
         '國家兩廳院',
@@ -3549,8 +3406,7 @@ def TGST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = clickclick_crawler(
         driver,
         '台灣神學研究學院',
@@ -3574,8 +3430,7 @@ def NTMOFA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = clickclick_crawler(
         driver,
         '國立臺灣美術館',
@@ -3597,8 +3452,7 @@ def KYU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
 
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = clickclick_crawler(
         driver,
@@ -3639,8 +3493,7 @@ def chungchung_crawler(driver, org, org_url, ISBN):
 def CTUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
 
     gg = chungchung_crawler(
         driver,
@@ -3659,8 +3512,7 @@ def CTUST(ISBN):
 def CCUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
-    driver = webdriver.Chrome(
-        options=my_options, desired_capabilities=my_capabilities)
+    driver = get_chrome()
     gg = chungchung_crawler(
         driver,
         '中州科技大學',
