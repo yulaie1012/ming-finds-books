@@ -6,7 +6,7 @@
 # ## 載入套件
 # - selenium、pandas、requests、bs4、time
 
-# In[1]:
+# In[3]:
 
 
 from selenium import webdriver
@@ -120,6 +120,7 @@ column4 = {
 
 
 def organize_columns(df_list):
+    print(df_list)
     try:
         df1 = pd.concat(df_list, axis=0, ignore_index=True)
     except:
@@ -155,17 +156,15 @@ def organize_columns(df_list):
 
 # ## DEFINED FUNCTIONS
 
-# In[6]:
+# In[4]:
 
 
 def plot_horizontal_line():
-    print('='*78)
+    print('='*50)
 
 def alert_execution_report(function):
     plot_horizontal_line()
     print(f'EXECUTE {function.__name__} FUNCTION!')
-    # print(f'ARGUMENTS: {inspect.getfullargspec(function)}')
-    # print(f'ARGUMENTS: {inspect.signature(function)}')
 
 def alert_exception_report(function, exception):
     print(f'STOP {function.__name__} FUNCTION, MESSAGE: "{exception}"'.replace('\n', ''))
