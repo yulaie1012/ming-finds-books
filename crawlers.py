@@ -156,7 +156,7 @@ def organize_columns(df_list):
 
 # ## DEFINED FUNCTIONS
 
-# In[4]:
+# In[6]:
 
 
 def plot_horizontal_line():
@@ -220,6 +220,7 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
     function = accurately_find_table_and_read_it
     alert_execution_report(function)
     try:
+        node_off()
         if not wait_for_element_present(driver, table_position):
             alert_exception_report(function, 'not found table')
             return
