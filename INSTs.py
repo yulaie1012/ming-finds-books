@@ -23,7 +23,7 @@ import requests
 # import requests.packages.urllib3
 # requests.packages.urllib3.disable_warnings()  # 關閉錯誤警告
 # from urllib.request import HTTPError  # 載入 HTTPError
-import import_ipynb
+# import import_ipynb
 from crawlers import *
 
 my_options = Options()
