@@ -3303,30 +3303,6 @@ def CGUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-# 國立清華大學 NTHU V
-
-
-def NTHU(ISBN):
-    sheet = ggSheet()
-    worksheet = sheet.get_worksheet(0)
-    driver = get_chrome()
-
-    gg = clickclick_crawler(
-        driver,
-        '國立清華大學',
-        "https://webpac.lib.nthu.edu.tw/F/?func=find-d-0",
-        ISBN,
-        "7",
-        "/html/body/form/table[1]/tbody/tr[7]/td/input",
-        "span/a",
-        '/html/body/table[12]',
-        [2, 4, 8]
-    )
-
-    driver.close()
-    worksheet.append_rows(gg.values.tolist())
-    return gg
-
 # 國立暨南國際大學 NCNU V
 
 
