@@ -6,7 +6,7 @@
 # ## 載入套件
 # - selenium、pandas、requests、bs4、time
 
-# In[3]:
+# In[1]:
 
 
 from selenium import webdriver
@@ -22,7 +22,7 @@ import pandas as pd  # 載入 pandas
 import requests
 from bs4 import BeautifulSoup
 import time  # 強制等待
-import inspect
+import os
 
 
 # ## 設定 driver 的參數：options、desired_capabilities
@@ -30,15 +30,24 @@ import inspect
 # In[2]:
 
 
-my_options = Options()
-my_options.add_argument('--incognito')  # 開啟無痕模式
-# my_options.add_argument('--start-maximized')  # 視窗最大化
-my_options.add_argument('--headless')  # 不開啟實體瀏覽器
-my_capabilities = DesiredCapabilities.CHROME
-my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+chrome_options.add_argument('--incognito')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('disable-dev-shm-usage')
+chrome_options.add_argument('--no-sandbox')
+chrome_capabilities = DesiredCapabilities.CHROME
+chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
+
+# def get_chrome():
+#     return webdriver.Chrome(executable_path='C:/Users/jason/chromedriver.exe',
+#                             options=chrome_options,
+#                             desired_capabilities=chrome_capabilities)
 def get_chrome():
-    return webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
+    return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+                            options=chrome_options,
+                            desired_capabilities=chrome_capabilities)
 
 
 # In[3]:
@@ -187,7 +196,6 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
         alert_exception_report(function, e)
         return False
     else:
-        alert_completion_report(function)
         return element
 
 def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
@@ -200,7 +208,6 @@ def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.C
         alert_exception_report(function, e)
         return False
     else:
-        alert_completion_report(function)
         return elements
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
@@ -213,7 +220,6 @@ def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.L
         alert_exception_report(function, e)
         return False
     else:
-        alert_completion_report(function)
         return element
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
@@ -232,7 +238,6 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         alert_exception_report(function, e)
         return
     else:
-        alert_completion_report(function)
         return tgt
 
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
@@ -244,7 +249,7 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
         node_off()
         select.select_by_value(option_position)
     except Exception as e:
-        alert_completion_report(function)
+        alert_exception_report(function, e)
         return
 
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
@@ -255,12 +260,14 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
         search_input.send_keys(ISBN)
         node_off()
         search_input.send_keys(Keys.ENTER)
-        alert_completion_report(function)
     except Exception as e:
         alert_exception_report(function, e)
         return
 
 def get_all_tgt_urls(driver):
+    function = search_ISBN
+    alert_execution_report(function)
+    
     tgt_urls = []
 
     anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
@@ -272,14 +279,14 @@ def get_all_tgt_urls(driver):
     return tgt_urls
 
 
-# # 已完成的爬蟲程式
-
 # In[7]:
 
 
 def get_all_arguments(function):
     return [locals()[arg] for arg in inspect.getargspec(function).args]
 
+
+# # 已完成的爬蟲程式
 
 # ## <mark>完成</mark>webpac_jsp_crawler(driver, org, ISBN)
 # - 『最後編輯』：2021/09/01
