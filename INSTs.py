@@ -107,6 +107,17 @@ def primo_greendot_finding(driver, org):  # 改 wait
 
     return sub_df_lst
 
+#改館藏狀態的def
+
+def status(table):
+    arimasu = ["可外借", "在架上" , "在架", "仍在館內", "有可用館藏", "書在館", "目前可獲得", "可獲得", "在書架上"]
+    arimasen = []
+    for i in range(0, len(table)): #選取每一列，館藏狀態那一行的資料
+        if table[i, "館藏狀態"] in arimasu:
+            table[i, "館藏狀態"] = "可借閱"
+        else:
+            table[i, "館藏狀態"] = "不可借閱"
+    return table
 
 # ------------------------Google Sheet--------------------------
 def ggSheet():
@@ -3002,6 +3013,7 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
     table = pd.DataFrame(primo_two_lst)
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
+    table = status(table)
     return table
 
 # 國立屏東科技大學 NPUST V
