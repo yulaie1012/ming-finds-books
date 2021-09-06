@@ -176,6 +176,9 @@ SCUs = ["scu", "SCU", "東吳大學", "東吳"]
 NKUSTs = ["nkust", "NKUST", "國立高雄科技大學", "高雄科技大學", "高雄科大", "高科大", "高科"]
 NPUSTs = ["npust", "NPUST", "國立屏東科技大學", "屏東科技大學", "屏東科大", "屏科大", "屏科"]
 NKUHTs = ["nkuht", "NKUHT", "國立高雄餐旅大學", "高雄餐旅大學", "高餐大", "高餐"]
+NTHUs = ["nthu", "NTHU", "國立清華大學", "清華大學", "清大"]
+NYCUs = ["nycu", "NYCU", "國立陽明交通大學", "陽明交通大學", "陽交大"]
+
 CGUs = ["cgu", "CGU", "長庚大學", "長庚"]
 CCUs = ["ccu", "CCU", "國立中正大學", "中正大學", "中正大", "中正", "鳳梨田"]
 CJCUs = ["cjcu", "CJCU", "長榮大學", "長榮", "長榮大"]
@@ -571,6 +574,10 @@ def test1(event):
                 NPUST(ISBN)
             elif str_input[i] in NKUHTs:  # 國立高雄餐旅大學
                 NKUHT(ISBN)
+            elif str_input[i] in NTHUs:  # 國立清華大學
+                NTHU(ISBN)
+            elif str_input[i] in NYCUs:  # 國立陽明交通大學
+                NYCU(ISBN)
             elif str_input[i] in CGUs:  # 長庚大學
                 CGU(ISBN)
             elif str_input[i] in CCUs:  # 國立中正大學
