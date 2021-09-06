@@ -28,7 +28,7 @@ import sys
 
 # ## 設定 driver 的參數：options、desired_capabilities
 
-# In[55]:
+# In[2]:
 
 
 chrome_options = webdriver.ChromeOptions()
@@ -161,6 +161,7 @@ def organize_columns(df_list):
     # 遇到值為 NaN時，將前一列的值填補進來
     df2.fillna(method="ffill", axis=0, inplace=True)
 
+    print(df2.columns)
     return df2
 
 
