@@ -23,6 +23,7 @@ import requests
 from bs4 import BeautifulSoup
 import time  # 強制等待
 import os
+import sys
 
 
 # ## 設定 driver 的參數：options、desired_capabilities
@@ -31,23 +32,23 @@ import os
 
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+# chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 chrome_options.add_argument('--incognito')
-chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--headless')
 chrome_options.add_argument('disable-dev-shm-usage')
 chrome_options.add_argument('--no-sandbox')
 chrome_capabilities = DesiredCapabilities.CHROME
 chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
 
-# def get_chrome():
-#     return webdriver.Chrome(executable_path='C:/Users/jason/chromedriver.exe',
-#                             options=chrome_options,
-#                             desired_capabilities=chrome_capabilities)
 def get_chrome():
-    return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+    return webdriver.Chrome(executable_path='C:/Users/jason/chromedriver.exe',
                             options=chrome_options,
                             desired_capabilities=chrome_capabilities)
+# def get_chrome():
+#     return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+#                             options=chrome_options,
+#                             desired_capabilities=chrome_capabilities)
 
 
 # In[3]:
@@ -165,30 +166,36 @@ def organize_columns(df_list):
 
 # ## DEFINED FUNCTIONS
 
-# In[6]:
+# In[114]:
 
 
-def plot_horizontal_line():
-    print('='*50)
+def plot_horizontal_line(count=50):
+    print('='*count)
 
-def alert_execution_report(function):
-    plot_horizontal_line()
-    print(f'EXECUTE {function.__name__} FUNCTION!')
+def alert_execution_report(function, count=50):
+    plot_horizontal_line(count)
+    print(f'EXECUTE "{function}" FUNCTION!')
 
-def alert_exception_report(function, exception):
-    print(f'STOP {function.__name__} FUNCTION, MESSAGE: "{exception}"'.replace('\n', ''))
-    plot_horizontal_line()
+def alert_exception_report(function, exception, count=50):
+    print(f'STOP "{function}" FUNCTION, MESSAGE: "{exception}"'.replace('\n', ''))
+    plot_horizontal_line(count)
 
-def alert_completion_report(function):
-    print(f'COMPLETE {function.__name__} FUNCTION')
-    plot_horizontal_line()
+def alert_completion_report(function, count=50):
+    print(f'COMPLETE "{function}" FUNCTION')
+    plot_horizontal_line(count)
 
-def node_off(waiting_time=0.5):
+def node_off(waiting_time=1):
     time.sleep(waiting_time)
 
+def print_all_arguments(saved_args):
+    saved_args.pop('driver')
+    saved_args.pop('function')
+    print('ARGUMENTS:', saved_args)
+    
 def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS_SELECTOR):
-    function = wait_for_element_present
+    function = sys._getframe().f_code.co_name
     alert_execution_report(function)
+    print_all_arguments(locals())
     try:
         node_off()
         element = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, element_position)))
@@ -199,8 +206,9 @@ def wait_for_element_present(driver, element_position, waiting_time=5, by=By.CSS
         return element
 
 def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.CSS_SELECTOR):
-    function = wait_for_elements_present
+    function = sys._getframe().f_code.co_name
     alert_execution_report(function)
+    print_all_arguments(locals())
     try:
         node_off()
         elements = WebDriverWait(driver, waiting_time).until(EC.presence_of_all_elements_located((by, elements_position)))
@@ -211,8 +219,9 @@ def wait_for_elements_present(driver, elements_position, waiting_time=5, by=By.C
         return elements
 
 def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.LINK_TEXT):
-    function = wait_for_element_clickable
+    function = sys._getframe().f_code.co_name
     alert_execution_report(function)
+    print_all_arguments(locals())
     try:
         node_off()
         element = WebDriverWait(driver, waiting_time).until(EC.element_to_be_clickable((by, element_position)))
@@ -223,8 +232,9 @@ def wait_for_element_clickable(driver, element_position, waiting_time=5, by=By.L
         return element
 
 def accurately_find_table_and_read_it(driver, table_position, table_index=0):
-    function = accurately_find_table_and_read_it
+    function = sys._getframe().f_code.co_name
     alert_execution_report(function)
+    print_all_arguments(locals())
     try:
         node_off()
         if not wait_for_element_present(driver, table_position):
@@ -241,8 +251,9 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
         return tgt
 
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
-    function = select_ISBN_strategy
+    function = sys._getframe().f_code.co_name
     alert_execution_report(function)
+    print_all_arguments(locals())
     try:
         search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
         select = Select(search_field)
@@ -253,8 +264,9 @@ def select_ISBN_strategy(driver, select_position, option_position, waiting_time=
         return
 
 def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
-    function = search_ISBN
+    function = sys._getframe().f_code.co_name
     alert_execution_report(function)
+    print_all_arguments(locals())
     try:
         search_input = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, input_position)))
         search_input.send_keys(ISBN)
@@ -265,8 +277,9 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
         return
 
 def get_all_tgt_urls(driver):
-    function = search_ISBN
+    function = sys._getframe().f_code.co_name
     alert_execution_report(function)
+    print_all_arguments(locals())
     
     tgt_urls = []
 
@@ -277,13 +290,6 @@ def get_all_tgt_urls(driver):
         tgt_urls.append(anchor.get_attribute('href'))
 
     return tgt_urls
-
-
-# In[7]:
-
-
-def get_all_arguments(function):
-    return [locals()[arg] for arg in inspect.getargspec(function).args]
 
 
 # # 已完成的爬蟲程式
@@ -307,12 +313,12 @@ def get_all_arguments(function):
 
 # ### 函式本體
 
-# In[8]:
+# In[108]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
-    function = webpac_jsp_crawler
-    alert_execution_report(function)
+    function = sys._getframe().f_code.co_name
+    alert_execution_report(function, 100)
     try:
         table = []
         
@@ -371,28 +377,40 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
                     continue
         table = organize_columns(table)
     except Exception as e:
-        alert_exception_report(function, e)
+        alert_exception_report(function, e, 100)
         return
     else:
-        alert_completion_report(function)
+        alert_completion_report(function, 100)
         return table
 
 
 # ### 函式測試
 
-# In[9]:
+# In[ ]:
 
 
-# driver = get_chrome()
-# webpac_jsp_crawler(
-#     driver=driver, 
-#     org='佛光大學',
-#     org_url='http://libils.fgu.edu.tw/webpacIndex.jsp',
-#     ISBN='9789573317241'
-# )
+driver = get_chrome()
+webpac_jsp_crawler(
+    driver=driver, 
+    org='臺北市立圖書館',
+    org_url='https://book.tpml.edu.tw/webpac/webpacIndex.jsp',
+    ISBN='9789573317241'
+)
 
 
-# In[10]:
+# In[ ]:
+
+
+driver = get_chrome()
+webpac_jsp_crawler(
+    driver=driver, 
+    org='佛光大學',
+    org_url='http://libils.fgu.edu.tw/webpacIndex.jsp',
+    ISBN='9789573317241'
+)
+
+
+# In[11]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -404,7 +422,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[11]:
+# In[12]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -416,7 +434,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[12]:
+# In[13]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -441,7 +459,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[13]:
+# In[14]:
 
 
 def click_more_btn(driver):
@@ -458,7 +476,7 @@ def click_more_btn(driver):
         return
 
 
-# In[14]:
+# In[15]:
 
 
 def webpac_gov_crawler(driver, org, org_url, ISBN):
@@ -515,7 +533,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
         return organize_columns(table)
 
 
-# In[15]:
+# In[16]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -541,7 +559,7 @@ def webpac_gov_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[16]:
+# In[17]:
 
 
 def easy_crawler(driver, org, org_url, ISBN):
@@ -563,7 +581,7 @@ def easy_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[17]:
+# In[18]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -589,7 +607,7 @@ def easy_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[18]:
+# In[19]:
 
 
 def webpac_pro_crawler(driver, org, org_url, ISBN):
@@ -624,7 +642,7 @@ def webpac_pro_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[19]:
+# In[20]:
 
 
 def webpac_ajax_crawler(driver, org, org_url, ISBN):
@@ -678,7 +696,7 @@ def webpac_ajax_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[20]:
+# In[21]:
 
 
 def webpac_aspx_crawler(driver, org, org_url, ISBN):
@@ -728,7 +746,7 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[21]:
+# In[22]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -754,7 +772,7 @@ def webpac_aspx_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[22]:
+# In[23]:
 
 
 def uhtbin_crawler(driver, org, org_url, ISBN):
@@ -786,7 +804,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[23]:
+# In[24]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -811,7 +829,7 @@ def uhtbin_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[24]:
+# In[25]:
 
 
 def toread_crawler(driver, org, org_url, ISBN):
@@ -879,7 +897,7 @@ def toread_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[25]:
+# In[26]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -910,7 +928,7 @@ def toread_crawler(driver, org, org_url, ISBN):
 #     - 基隆市公共圖書館：[只有一筆書目時，會直接進入＂詳細書目＂](https://webpac.klccab.gov.tw/webpac/search.cfm?m=ss&k0=986729193X&t0=k&c0=and)
 #     - 國立臺北大學：和其他機構的 class name 不同，是 table.book_location，而不是 table.list_border。
 
-# In[26]:
+# In[27]:
 
 
 def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
@@ -931,7 +949,7 @@ def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
     return table
 
 
-# In[27]:
+# In[28]:
 
 
 def get_all_tgt_urls(driver, link_text):
@@ -944,7 +962,7 @@ def get_all_tgt_urls(driver, link_text):
     return tgt_urls
 
 
-# In[28]:
+# In[29]:
 
 
 def webpac_cfm_crawler(driver, org, org_url, ISBN):
@@ -1001,7 +1019,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 
 
 
-# In[29]:
+# In[30]:
 
 
 # # 一筆「二十一世紀資本論」，測試成功
@@ -1014,7 +1032,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[30]:
+# In[31]:
 
 
 # # 兩筆「蘋果橘子經濟學」，測試成功
@@ -1027,7 +1045,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[31]:
+# In[32]:
 
 
 # # 三筆「蘋果橘子經濟學」，測試成功
@@ -1040,7 +1058,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[32]:
+# In[33]:
 
 
 # # 未解決校區問題
@@ -1053,7 +1071,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[33]:
+# In[34]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1084,7 +1102,7 @@ def webpac_cfm_crawler(driver, org, org_url, ISBN):
 # ### 函式說明
 # - 『適用的機構』：[國立臺中科技大學](https://ntit.ent.sirsidynix.net/client/zh_TW/NUTC)、[南投縣圖書館](https://nccc.ent.sirsi.net/client/zh_TW/main)、[國立臺南藝術大學](https://tnnua.ent.sirsi.net/client/zh_TW/tnnua/?)
 
-# In[34]:
+# In[35]:
 
 
 def sirsidynix_crawler(driver, org, org_url, ISBN):
@@ -1143,7 +1161,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[35]:
+# In[36]:
 
 
 # # 一筆，測試成功
@@ -1156,7 +1174,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[36]:
+# In[37]:
 
 
 # # 兩筆＂二十一世紀資本論＂，測試成功
@@ -1169,7 +1187,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[37]:
+# In[38]:
 
 
 # # 五筆＂神秘的魔法師＂，測試成功
@@ -1182,7 +1200,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[38]:
+# In[39]:
 
 
 # # 一筆＂神秘的魔法師＂，測試成功
@@ -1199,7 +1217,7 @@ def sirsidynix_crawler(driver, org, org_url, ISBN):
 # - 『最後編輯』：2021/08/14
 # - 『函式完成度』：
 
-# In[39]:
+# In[40]:
 
 
 def moc_thm_crawler(driver, org, org_url, ISBN):
@@ -1226,7 +1244,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
         return table
 
 
-# In[40]:
+# In[41]:
 
 
 # # 一筆，成功
@@ -1239,7 +1257,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[41]:
+# In[42]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1251,7 +1269,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 # )
 
 
-# In[42]:
+# In[43]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1269,7 +1287,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 
 
 
-# In[43]:
+# In[44]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1306,7 +1324,7 @@ def moc_thm_crawler(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[44]:
+# In[45]:
 
 
 def 連江縣公共圖書館(driver, org, org_url, ISBN):
@@ -1349,7 +1367,7 @@ def 連江縣公共圖書館(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[45]:
+# In[46]:
 
 
 def 國家圖書館(driver, org, org_url, ISBN):
@@ -1388,7 +1406,7 @@ def 國家圖書館(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[46]:
+# In[47]:
 
 
 def 世新大學(driver, org, org_url, ISBN):
@@ -1406,7 +1424,7 @@ def 世新大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[47]:
+# In[48]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1422,7 +1440,7 @@ def 世新大學(driver, org, org_url, ISBN):
 # - 『最後編輯』：2021/08/14
 # - 『函式完成度』：高
 
-# In[48]:
+# In[49]:
 
 
 def 敏實科技大學(driver, org, org_url, ISBN):
@@ -1453,7 +1471,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[49]:
+# In[50]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1474,7 +1492,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
 
 # ### 函式本體
 
-# In[50]:
+# In[51]:
 
 
 def webpac_two_cralwer(driver, org, org_url, ISBN):
@@ -1499,7 +1517,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
         return table
 
 
-# In[51]:
+# In[52]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1511,7 +1529,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
 # )
 
 
-# In[52]:
+# In[53]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
@@ -1530,7 +1548,7 @@ def webpac_two_cralwer(driver, org, org_url, ISBN):
 
 # ### Unable to coerce to Series
 
-# In[53]:
+# In[54]:
 
 
 def 台北海洋科技大學(driver, org, org_url, ISBN):
@@ -1561,7 +1579,7 @@ def 台北海洋科技大學(driver, org, org_url, ISBN):
         return table
 
 
-# In[54]:
+# In[55]:
 
 
 # driver = webdriver.Chrome(options=my_options, desired_capabilities=my_capabilities)
