@@ -295,7 +295,12 @@ def test1(event):
                 line_bot_api.reply_message(event.reply_token, flex_message1)
 
         f_region.close()
-    # ----------------test-----------------
+    # ----------------問題回報-----------------
+    # elif event.message.text == "問題回報":
+    
+    # ----------------支援機構-----------------
+    # elif event.message.text == "支援機構":
+
 
     # ----------------爬蟲-----------------
     else:
