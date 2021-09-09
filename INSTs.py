@@ -76,8 +76,7 @@ def primo_two_finding(driver, org):
     num_xpath = similar_xpath + "5]"
     all = wait_for_element_present(
         driver, "ng-binding.ng-scope.zero-margin", 20, By.CLASS_NAME).text
-    print(all)
-    status = all.split(",")[0]
+    status = all.split(",")[0].strip(' ')
     place = (all.split(",")[1]).split("(")[0]
     number = (all.split(",")[1]).split("(")[1].strip(')')
 
