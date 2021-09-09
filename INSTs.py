@@ -110,6 +110,8 @@ def primo_greendot_finding(driver, org):  # 改 wait
 #改館藏狀態的def
 
 def status(table):
+    print("進status了")
+    print(table)
     arimasu = ["可外借", "在架上" , "在架", "仍在館內", "有可用館藏", "書在館", "目前可獲得", "可獲得", "在書架上"]
     arimasen = []
     for i in range(0, len(table)): #選取每一列，館藏狀態那一行的資料
@@ -117,6 +119,7 @@ def status(table):
             table[i, "館藏狀態"] = "可借閱"
         else:
             table[i, "館藏狀態"] = "不可借閱"
+    print(table)
     return table
 
 # ------------------------Google Sheet--------------------------
