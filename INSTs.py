@@ -109,7 +109,7 @@ def primo_greendot_finding(driver, org):  # 改 wait
 
 #改館藏狀態的def
 
-def status(table):
+def statuss(table):
     print("進status了")
     print(table)
     arimasu = ["可外借", "在架上" , "在架", "仍在館內", "有可用館藏", "書在館", "目前可獲得", "可獲得", "在書架上"]
@@ -3016,7 +3016,7 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
     table = pd.DataFrame(primo_two_lst)
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
-    table = status(table)
+    table = statuss(table)
     return table
 
 # 國立屏東科技大學 NPUST V
