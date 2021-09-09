@@ -2771,6 +2771,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
     table = pd.DataFrame(primo_lst)
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
+    table = statuss(table)
     return table
 
 # 國立臺灣大學 NTU V
