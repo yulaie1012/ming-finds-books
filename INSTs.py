@@ -112,8 +112,8 @@ def statuss(table):
     print("進status了")
     arimasu = ["可外借", "在架上" , "在架", "仍在館內", "有可用館藏", "書在館", "目前可獲得", "可獲得", "在書架上"]
     arimasen = []
-    table["館藏狀態"].str.replace("目前可獲得", "可借閱")
-    table["館藏狀態"].str.replace("不可獲得", "不可借閱")
+    table = table["館藏狀態"].str.replace("目前可獲得", "可借閱")
+    table = table["館藏狀態"].str.replace("不可獲得", "不可借閱")
     print(table)
     return table
 
