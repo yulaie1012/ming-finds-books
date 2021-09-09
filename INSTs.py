@@ -110,10 +110,13 @@ def primo_greendot_finding(driver, org):  # 改 wait
 
 def statuss(table):
     print("進status了")
-    arimasu = ["可外借", "在架上" , "在架", "仍在館內", "有可用館藏", "書在館", "目前可獲得", "可獲得", "在書架上"]
-    arimasen = []
-    table = table["館藏狀態"].str.replace("目前可獲得", "可借閱")
-    table = table["館藏狀態"].str.replace("不可獲得", "不可借閱")
+    arimasu = {"可外借", "在架上" , "在架", "仍在館內", "有可用館藏", "書在館", "目前可獲得", "可獲得", "在書架上"}
+    arimasen = {}
+    for i in set(table["館藏狀態"]):
+        if i in arimasu:
+            table["館藏狀態"] = table["館藏狀態"].str.replace(i, "可借閱")
+        else:
+            table["館藏狀態"] = table["館藏狀態"].str.replace(i, "不可借閱")
     print(table)
     return table
 
