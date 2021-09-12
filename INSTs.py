@@ -2453,6 +2453,7 @@ def 基隆市公共圖書館(driver, org, org_url, ISBN):
             table = pd.concat(table, axis=0, ignore_index=True)
         table['圖書館'], table['連結'] = org, driver.current_url
         table = organize_columns(table)
+        table = statuss(table)
         return table
     except:
         print(f'《{ISBN}》在「{org_url}」無法爬取')
@@ -2618,6 +2619,7 @@ def 世新大學(driver, org, org_url, ISBN):
         print(f'在「{org}」找不到「{ISBN}」')
         return
     else:
+        table = statuss(table)
         return table
 
 # 世新大學 SHU V OK
@@ -2685,6 +2687,7 @@ def 敏實科技大學(driver, org, org_url, ISBN):
         return
     else:
         table = organize_columns(table)
+        table = statuss(table)
         return table
 
 # 敏實科技大學 MITUST
@@ -3092,6 +3095,7 @@ def primo_greendot_crawler(driver, org, url_front, ISBN, url_behind):
     table = pd.DataFrame(primo_greendot_lst)
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
+    table = statuss(table)
     return table
 
 # 長庚大學 CGU V OK
@@ -3219,6 +3223,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
     print("rename成功")
+    table = statuss(table)
     return table
 
 # 馬偕醫學院 MMC V OK
@@ -3475,6 +3480,7 @@ def chungchung_crawler(driver, org, org_url, ISBN):
     table = accurately_find_table_and_read_it(driver, "table", table_index=3)
     table = organize_columns(table)
     table.drop([0], inplace=True)
+    table = statuss(table)
     return table
 
 # 中臺科技大學 CTUST
