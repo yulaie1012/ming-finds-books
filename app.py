@@ -275,7 +275,7 @@ def test1(event):
         zip(["north", "center", "south", "east"], [north, center, south, east]))
 
     # ----------------選擇縣市介面-----------------
-    if event.message.text == "以縣市搜尋":
+    if event.message.text == "選擇縣市":
         flex_message0 = flex_template.main_panel_flex()
         line_bot_api.reply_message(event.reply_token, flex_message0)
     # ----------------不同區域的介面設定-----------------
