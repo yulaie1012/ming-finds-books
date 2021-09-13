@@ -301,7 +301,7 @@ def test1(event):
     # ----------------支援機構-----------------
     elif event.message.text == "支援機構":
         line_bot_api.reply_message(
-            event.reply_token, '支援機構.txt')
+            event.reply_token, 'https://docs.google.com/document/d/1eLUrfEoEQMkfS0qIbdWdZ6gnj0WJwttcesTytAEn1Pc/edit?usp=sharing')
 
 
     # ----------------爬蟲-----------------
