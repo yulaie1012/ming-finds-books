@@ -301,10 +301,7 @@ def test1(event):
     # ----------------支援機構-----------------
     elif event.message.text == "支援機構":
         line_bot_api.reply_message(
-            event.reply_token,
-            FileSendMessage(
-                filename="支援機構")
-        )
+            event.reply_token, filename="支援機構")
 
 
     # ----------------爬蟲-----------------
