@@ -3549,7 +3549,7 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                             df_lst.append(new_row)
 
                     table.append(df_lst)
-
+                    print(df_lst)
                     wait_for_element_clickable(driver, str(2+i), 2).click()
                     i += 1
                     time.sleep(0.5)
@@ -3586,7 +3586,7 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                                     df_lst.append(new_row)
 
                             table.append(df_lst)
-
+                            print(df_lst)
                             wait_for_element_clickable(driver, str(2+i), 2).click()
                             i += 1
                             time.sleep(0.5)
@@ -3595,9 +3595,9 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                 else:
                     continue
         table = pd.DataFrame(table)
+        print(table)
         table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
                  3: '館藏狀態', 4: '連結'}, inplace=True)
-        table = statuss(table)
     except Exception as e:
         alert_exception_report(function, e, 100)
         return
