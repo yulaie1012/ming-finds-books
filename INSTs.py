@@ -330,7 +330,7 @@ def NIU(ISBN):
     worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
-    gg = webpac_jsp_crawler(
+    gg = jing_jsp_crawler(
         driver,
         '國立宜蘭大學',
         "https://lib.niu.edu.tw/webpacIndex.jsp",
@@ -3519,3 +3519,88 @@ def CCUST(ISBN):
     driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
+
+#靖的jsp
+def jing_jsp_crawler(driver, org, org_url, ISBN):
+    function = sys._getframe().f_code.co_name
+    alert_execution_report(function, 100)
+    try:
+        table = []
+        
+        driver.get(org_url)
+        try:
+            select_ISBN_strategy(driver, 'search_field', 'ISBN')
+        except:
+            select_ISBN_strategy(driver, 'search_field', 'STANDARDNO')  # 北科大
+        search_ISBN(driver, ISBN, 'search_input')
+        
+        # 一筆
+        if wait_for_element_present(driver, 'table.order'):
+            i = 0
+            while True:
+                try:
+                    datatable = driver.find_elements_by_class_name("order")
+                    trlist = datatable.find_elements_by_tag_name('tr')
+                    df_lst = []
+                    for row in trlist:
+                        tdlist = row.find_elements_by_tag_name('td')
+                        for sth in tdlist:
+                            new_row = [org, tdlist[2].text, tdlist[3].text, tdlist[5].text, driver.current_url]
+                            df_lst.append(new_row)
+
+                    table.append(df_lst)
+
+                    wait_for_element_clickable(driver, str(2+i), 2).click()
+                    i += 1
+                    time.sleep(0.5)
+                except:
+                    break
+        # 多筆、零筆
+        elif wait_for_element_present(driver, 'iframe#leftFrame'):
+            iframe = driver.find_element_by_id('leftFrame')
+            driver.switch_to.frame(iframe)
+            time.sleep(1.5)  # 切換到 <frame> 需要時間，否則會無法讀取
+            
+            # 判斷是不是＂零筆＂查詢結果
+            if wait_for_element_present(driver, '#totalpage').text == '0':
+                alert_exception_report(function, 'not found book')
+                return
+            
+            # ＂多筆＂查詢結果
+            tgt_urls = get_all_tgt_urls(driver)
+
+            for tgt_url in tgt_urls:
+                driver.get(tgt_url)
+                # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
+                if wait_for_element_present(driver, 'table.order'):
+                    i = 0
+                    while True:
+                        try:
+                            datatable = driver.find_elements_by_class_name("order")
+                            trlist = datatable.find_elements_by_tag_name('tr')
+                            df_lst = []
+                            for row in trlist:
+                                tdlist = row.find_elements_by_tag_name('td')
+                                for sth in tdlist:
+                                    new_row = [org, tdlist[2].text, tdlist[3].text, tdlist[5].text, driver.current_url]
+                                    df_lst.append(new_row)
+
+                            table.append(df_lst)
+
+                            wait_for_element_clickable(driver, str(2+i), 2).click()
+                            i += 1
+                            time.sleep(0.5)
+                        except:
+                            break
+                else:
+                    continue
+        table = pd.DataFrame(table)
+        table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
+                 3: '館藏狀態', 4: '連結'}, inplace=True)
+        table = statuss(table)
+    except Exception as e:
+        alert_exception_report(function, e, 100)
+        return
+    else:
+        alert_completion_report(function, 100)
+        return table
