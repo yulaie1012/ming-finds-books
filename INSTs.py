@@ -3536,21 +3536,23 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
         
         # 一筆
         if wait_for_element_present(driver, 'table.order'):
-            try:
-                datatable = driver.find_element_by_class_name("order")
-                trlist = datatable.find_elements_by_tag_name('tr')
-                df_lst = []
-                for row in trlist:
-                    tdlist = row.find_elements_by_tag_name('td')
-                    for sth in tdlist:
-                        new_row = [org, tdlist[2].text, tdlist[3].text, tdlist[5].text, driver.current_url]
-                        df_lst.append(new_row)
+            i = 0
+            while True:
+                try:
+                    datatable = driver.find_element_by_class_name("order")
+                    trlist = datatable.find_elements_by_tag_name('tr')
+                    df_lst = []
+                    for row in trlist:
+                        tdlist = row.find_elements_by_tag_name('td')
+                        for sth in tdlist:
+                            new_row = [org, tdlist[2].text, tdlist[3].text, tdlist[5].text, driver.current_url]
+                            df_lst.append(new_row)
 
-                table.append(df_lst)
-                print(df_lst)
-                wait_for_element_clickable(driver, str(2+i), 2).click()
-                i += 1
-                time.sleep(0.5)
+                    table.append(df_lst)
+                    print(df_lst)
+                    wait_for_element_clickable(driver, str(2+i), 2).click()
+                    i += 1
+                    time.sleep(0.5)
             except:
                 pass
         # 多筆、零筆
@@ -3571,6 +3573,7 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                 driver.get(tgt_url)
                 # 等待元素出現，如果出現，那麼抓取 DataFrame；如果沒出現，那麼跳出迴圈
                 if wait_for_element_present(driver, 'table.order'):
+                    i = 0
                     while True:
                         try:
                             datatable = driver.find_element_by_class_name("order")
