@@ -3553,8 +3553,8 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                     wait_for_element_clickable(driver, str(2+i), 2).click()
                     i += 1
                     time.sleep(0.5)
-            except:
-                pass
+                except:
+                    pass
         # 多筆、零筆
         elif wait_for_element_present(driver, 'iframe#leftFrame'):
             iframe = driver.find_element_by_id('leftFrame')
