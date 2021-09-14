@@ -3552,7 +3552,7 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                 i += 1
                 time.sleep(0.5)
             except:
-                break
+                pass
         # 多筆、零筆
         elif wait_for_element_present(driver, 'iframe#leftFrame'):
             iframe = driver.find_element_by_id('leftFrame')
@@ -3588,7 +3588,7 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                             i += 1
                             time.sleep(0.5)
                         except:
-                            break
+                            pass
                 else:
                     continue
         table = pd.DataFrame(table)
