@@ -33,6 +33,8 @@ my_capabilities = DesiredCapabilities.CHROME
 my_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
 # ------------------------Primo找書--------------------------
+
+
 def primo_finding(driver, org, tcn):  # 改wait
     sub_df_lst = []
     try:
@@ -66,6 +68,7 @@ def primo_finding(driver, org, tcn):  # 改wait
             break
     return sub_df_lst
 
+
 def primo_two_finding(driver, org):
     print("進two_finding了")
     sub_df_lst = []
@@ -88,7 +91,6 @@ def primo_two_finding(driver, org):
     return sub_df_lst
 
 
-
 # ------------------------綠點點找書--------------------------
 def primo_greendot_finding(driver, org):  # 改 wait
     sub_df_lst = []
@@ -106,11 +108,13 @@ def primo_greendot_finding(driver, org):  # 改 wait
 
     return sub_df_lst
 
-#改館藏狀態的def
+# 改館藏狀態的def
+
 
 def statuss(table):
     print("進status了")
-    arimasu = {"可外借", "在架上" , "在架", "仍在館內", "有可用館藏", "書在館", "目前可獲得", "可獲得", "在書架上", "圖書 / 在書架上"}
+    arimasu = {"可外借", "在架上", "在架", "仍在館內", "有可用館藏",
+               "書在館", "目前可獲得", "可獲得", "在書架上", "圖書 / 在書架上"}
     arimasen = {}
     for i in set(table["館藏狀態"]):
         if i in arimasu:
@@ -121,6 +125,8 @@ def statuss(table):
     return table
 
 # ------------------------Google Sheet--------------------------
+
+
 def ggSheet():
     scope = ['https://www.googleapis.com/auth/spreadsheets']
     creds = Credentials.from_service_account_file(
@@ -292,7 +298,7 @@ def FGU(ISBN):
     worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
-    gg = jing_jsp_crawler(
+    gg = webpac_jsp_crawler(
         driver,
         '佛光大學',
         "http://libils.fgu.edu.tw/webpacIndex.jsp",
@@ -330,7 +336,7 @@ def NIU(ISBN):
     worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
-    gg = jing_jsp_crawler(
+    gg = webpac_jsp_crawler(
         driver,
         '國立宜蘭大學',
         "https://lib.niu.edu.tw/webpacIndex.jsp",
@@ -1329,6 +1335,8 @@ def SINICA(ISBN):
     return gg
 
 # 中國文化大學 PCCU V
+
+
 def PCCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1346,6 +1354,8 @@ def PCCU(ISBN):
     return gg
 
 # 輔仁大學 FJU V
+
+
 def FJU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1363,6 +1373,8 @@ def FJU(ISBN):
     return gg
 
 # 國立陽明交通大學 NYCU V
+
+
 def NYCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2393,6 +2405,8 @@ def TCU(ISBN):
     return gg
 
 # 國立澎湖科技大學 NPU V OK
+
+
 def NPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3520,20 +3534,22 @@ def CCUST(ISBN):
     worksheet.append_rows(gg.values.tolist())
     return gg
 
-#靖的jsp
+# 靖的jsp
+
+
 def jing_jsp_crawler(driver, org, org_url, ISBN):
     function = sys._getframe().f_code.co_name
     alert_execution_report(function, 100)
     try:
         table = []
-        
+
         driver.get(org_url)
         try:
             select_ISBN_strategy(driver, 'search_field', 'ISBN')
         except:
             select_ISBN_strategy(driver, 'search_field', 'STANDARDNO')  # 北科大
         search_ISBN(driver, ISBN, 'search_input')
-        
+
         # 一筆
         if wait_for_element_present(driver, 'table.order'):
             i = 0
@@ -3545,7 +3561,8 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                     for row in trlist:
                         tdlist = row.find_elements_by_tag_name('td')
                         for sth in tdlist:
-                            new_row = [org, tdlist[2].text, tdlist[3].text, tdlist[5].text, driver.current_url]
+                            new_row = [org, tdlist[2].text, tdlist[3].text,
+                                       tdlist[5].text, driver.current_url]
                             df_lst.append(new_row)
 
                     table.append(df_lst)
@@ -3560,12 +3577,12 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
             iframe = driver.find_element_by_id('leftFrame')
             driver.switch_to.frame(iframe)
             time.sleep(1.5)  # 切換到 <frame> 需要時間，否則會無法讀取
-            
+
             # 判斷是不是＂零筆＂查詢結果
             if wait_for_element_present(driver, '#totalpage').text == '0':
                 alert_exception_report(function, 'not found book')
                 return
-            
+
             # ＂多筆＂查詢結果
             tgt_urls = get_all_tgt_urls(driver)
 
@@ -3576,18 +3593,21 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
                     i = 0
                     while True:
                         try:
-                            datatable = driver.find_element_by_class_name("order")
+                            datatable = driver.find_element_by_class_name(
+                                "order")
                             trlist = datatable.find_elements_by_tag_name('tr')
                             df_lst = []
                             for row in trlist:
                                 tdlist = row.find_elements_by_tag_name('td')
                                 for sth in tdlist:
-                                    new_row = [org, tdlist[2].text, tdlist[3].text, tdlist[5].text, driver.current_url]
+                                    new_row = [
+                                        org, tdlist[2].text, tdlist[3].text, tdlist[5].text, driver.current_url]
                                     df_lst.append(new_row)
 
                             table.append(df_lst)
                             print(df_lst)
-                            wait_for_element_clickable(driver, str(2+i), 2).click()
+                            wait_for_element_clickable(
+                                driver, str(2+i), 2).click()
                             i += 1
                             time.sleep(0.5)
                         except:
@@ -3597,7 +3617,7 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
         table = pd.DataFrame(table)
         print(table)
         table.rename(columns={0: '圖書館', 1: '館藏地', 2: '索書號',
-                 3: '館藏狀態', 4: '連結'}, inplace=True)
+                              3: '館藏狀態', 4: '連結'}, inplace=True)
     except Exception as e:
         alert_exception_report(function, e, 100)
         return
