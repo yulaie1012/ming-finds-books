@@ -298,7 +298,7 @@ def FGU(ISBN):
     worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
-    gg = webpac_jsp_crawler(
+    gg = jing_jsp_crawler(
         driver,
         '佛光大學',
         "http://libils.fgu.edu.tw/webpacIndex.jsp",
