@@ -41,16 +41,16 @@ chrome_options.add_argument('--headless')
 chrome_capabilities = DesiredCapabilities.CHROME
 chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
-def get_chrome():
-    return webdriver.Chrome(executable_path='C:/Users/jason/chromedriver.exe',
-                            options=chrome_options,
-                            desired_capabilities=chrome_capabilities)
-
-# chrome_options.add_argument('--headless')
 # def get_chrome():
-#     return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+#     return webdriver.Chrome(executable_path='C:/Users/jason/chromedriver.exe',
 #                             options=chrome_options,
 #                             desired_capabilities=chrome_capabilities)
+
+chrome_options.add_argument('--headless')
+def get_chrome():
+    return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+                            options=chrome_options,
+                            desired_capabilities=chrome_capabilities)
 
 
 # In[3]:
