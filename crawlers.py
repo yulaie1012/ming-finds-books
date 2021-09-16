@@ -28,11 +28,11 @@ import sys
 
 # ## 設定 driver 的參數：options、desired_capabilities
 
-# In[56]:
+# In[57]:
 
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+# chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 chrome_options.add_argument('--incognito')
 # chrome_options.add_argument('--headless')
 
@@ -46,14 +46,14 @@ chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML �
 #                             options=chrome_options,
 #                             desired_capabilities=chrome_capabilities)
 
-def get_chrome():
-    return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
-                            options=chrome_options,
-                            desired_capabilities=chrome_capabilities)
-
-# def get_chrome2():
-#     return webdriver.Chrome(options=chrome_options,
+# def get_chrome():
+#     return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+#                             options=chrome_options,
 #                             desired_capabilities=chrome_capabilities)
+
+def get_chrome():
+    return webdriver.Chrome(options=chrome_options,
+                            desired_capabilities=chrome_capabilities)
 
 
 # In[3]:
