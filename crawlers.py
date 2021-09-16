@@ -28,29 +28,29 @@ import sys
 
 # ## 設定 driver 的參數：options、desired_capabilities
 
-# In[2]:
+# In[56]:
 
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 chrome_options.add_argument('--incognito')
-# chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
 
-chrome_options.add_argument('disable-dev-shm-usage')
-chrome_options.add_argument('--no-sandbox')
+# chrome_options.add_argument('disable-dev-shm-usage')
+# chrome_options.add_argument('--no-sandbox')
 chrome_capabilities = DesiredCapabilities.CHROME
 chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
 
-# def get_chrome():
-#     return webdriver.Chrome(executable_path='C:/Users/jason/chromedriver.exe',
-#                             options=chrome_options,
-#                             desired_capabilities=chrome_capabilities)
-
-chrome_options.add_argument('--headless')
 def get_chrome():
-    return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+    return webdriver.Chrome(executable_path='C:/Users/jason/chromedriver.exe',
                             options=chrome_options,
                             desired_capabilities=chrome_capabilities)
+
+# chrome_options.add_argument('--headless')
+# def get_chrome():
+#     return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+#                             options=chrome_options,
+#                             desired_capabilities=chrome_capabilities)
 
 
 # In[3]:
@@ -128,11 +128,10 @@ column4 = {
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[5]:
+# In[58]:
 
 
 def organize_columns(df_list):
-    print(df_list)
     try:
         df1 = pd.concat(df_list, axis=0, ignore_index=True)
     except:
@@ -163,10 +162,6 @@ def organize_columns(df_list):
     # 遇到值為 NaN時，將前一列的值填補進來
     df2.fillna(method="ffill", axis=0, inplace=True)
 
-    print('====================索書號====================')
-    print(df2['索書號'])
-    print('====================館藏狀態====================')
-    print(df2['館藏狀態'])
     return df2
 
 
@@ -392,7 +387,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 
 # ### 函式測試
 
-# In[8]:
+# In[ ]:
 
 
 # driver = get_chrome()
