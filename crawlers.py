@@ -34,7 +34,7 @@ import sys
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 chrome_options.add_argument('--incognito')
-chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--headless')
 
 # chrome_options.add_argument('disable-dev-shm-usage')
 # chrome_options.add_argument('--no-sandbox')
@@ -46,11 +46,14 @@ chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML �
 #                             options=chrome_options,
 #                             desired_capabilities=chrome_capabilities)
 
-chrome_options.add_argument('--headless')
 def get_chrome():
     return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
                             options=chrome_options,
                             desired_capabilities=chrome_capabilities)
+
+# def get_chrome2():
+#     return webdriver.Chrome(options=chrome_options,
+#                             desired_capabilities=chrome_capabilities)
 
 
 # In[3]:
@@ -128,7 +131,7 @@ column4 = {
 # - 新增必要欄位（圖書館、連結）
 # - 填滿 NaN（用 ffill 的 方式）
 
-# In[58]:
+# In[5]:
 
 
 def organize_columns(df_list):
