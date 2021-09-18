@@ -28,14 +28,15 @@ import sys
 
 # ## 設定 driver 的參數：options、desired_capabilities
 
-# In[2]:
+# In[57]:
 
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+# chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
 chrome_options.add_argument('--incognito')
+# chrome_options.add_argument('--headless')
 
-chrome_options.add_argument('disable-dev-shm-usage')
+# chrome_options.add_argument('disable-dev-shm-usage')
 # chrome_options.add_argument('--no-sandbox')
 chrome_capabilities = DesiredCapabilities.CHROME
 chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML 解析成 DOM
@@ -45,10 +46,13 @@ chrome_capabilities['pageLoadStrategy'] = 'eager'  # 頁面加載策略：HTML �
 #                             options=chrome_options,
 #                             desired_capabilities=chrome_capabilities)
 
-chrome_options.add_argument('--headless')
+# def get_chrome():
+#     return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
+#                             options=chrome_options,
+#                             desired_capabilities=chrome_capabilities)
+
 def get_chrome():
-    return webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH'),
-                            options=chrome_options,
+    return webdriver.Chrome(options=chrome_options,
                             desired_capabilities=chrome_capabilities)
 
 
@@ -107,14 +111,14 @@ ORG_TO_URL = {
 column2 = {
     '分館/專室', '館藏地/室', '館藏室', '館藏地/館藏室', '館藏地', '典藏館', '館藏位置', '館藏地/區域',
     '典藏地名稱', '館藏地/館別', '館藏地(已外借/總數)', '館藏地/區域Location', '現行位置', '典藏地點', '典藏區域',
-    '書架位置'
+    '書架位置', 'Location'
 }
-column3 = {'索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)'}
+column3 = {'索書號', '索書號/期刊合訂本卷期', '索書號 / 部冊號', '索書號Call No.', '索書號(卷期)', 'Call Number'}
 column4 = {
     '館藏位置(到期日期僅為期限，不代表上架日期)', '狀態/到期日', '目前狀態 / 到期日', '館藏狀態', '處理狀態',
     '狀態 (說明)', '館藏現況 說明', '目前狀態/預計歸還日期', '圖書狀況 / 到期日', '調閱說明', '借閱狀態', '狀態',
     '圖書狀況', '現況/異動日', 'Unnamed: 24', '圖書狀況Book Status', '館藏狀況(月-日-西元年)',
-    '館藏狀況(西元年-月-日)', '館藏狀態(月-日-西元年)', '現況', '處理狀態 (狀態說明)', '狀態／到期日'
+    '館藏狀況(西元年-月-日)', '館藏狀態(月-日-西元年)', '現況', '處理狀態 (狀態說明)', '狀態／到期日', 'Status / Due Date'
 }
 
 
@@ -131,7 +135,6 @@ column4 = {
 
 
 def organize_columns(df_list):
-    print(df_list)
     try:
         df1 = pd.concat(df_list, axis=0, ignore_index=True)
     except:
@@ -162,16 +165,12 @@ def organize_columns(df_list):
     # 遇到值為 NaN時，將前一列的值填補進來
     df2.fillna(method="ffill", axis=0, inplace=True)
 
-    print('====================索書號====================')
-    print(df2['索書號'])
-    print('====================館藏狀態====================')
-    print(df2['館藏狀態'])
     return df2
 
 
 # ## DEFINED FUNCTIONS
 
-# In[6]:
+# In[58]:
 
 
 def plot_horizontal_line(count=50):
@@ -255,6 +254,19 @@ def accurately_find_table_and_read_it(driver, table_position, table_index=0):
     else:
         return tgt
 
+def select_language_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
+    function = sys._getframe().f_code.co_name
+    alert_execution_report(function)
+    print_all_arguments(locals())
+    try:
+        search_field = WebDriverWait(driver, waiting_time).until(EC.presence_of_element_located((by, select_position)))
+        select = Select(search_field)
+        node_off()
+        select.select_by_value(option_position)
+    except Exception as e:
+        alert_exception_report(function, e)
+        return
+    
 def select_ISBN_strategy(driver, select_position, option_position, waiting_time=30, by=By.NAME):
     function = sys._getframe().f_code.co_name
     alert_execution_report(function)
@@ -318,7 +330,7 @@ def get_all_tgt_urls(driver):
 
 # ### 函式本體
 
-# In[7]:
+# In[59]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
@@ -328,6 +340,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
         table = []
         
         driver.get(org_url)
+        select_language_strategy(driver, 'webpacLang', 'zh_TW')
         try:
             select_ISBN_strategy(driver, 'search_field', 'ISBN')
         except:
@@ -391,7 +404,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
 
 # ### 函式測試
 
-# In[8]:
+# In[ ]:
 
 
 # driver = get_chrome()
