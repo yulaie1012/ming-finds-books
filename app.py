@@ -456,6 +456,8 @@ def test1(event):
                 FJU(ISBN)
             elif str_input[i] in NYCUs:  # 國立陽明交通大學
                 NYCU(ISBN)
+            elif str_input[i] in NCKUs:  # 國立成功大學
+                NCKU(ISBN)                
             elif str_input[i] in NTPCs:  # 新北市立圖書館
                 NTPC(ISBN)
             elif str_input[i] in OUKs:  # 高雄市立空中大學
