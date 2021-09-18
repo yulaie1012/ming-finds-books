@@ -297,7 +297,12 @@ def test1(event):
 
         f_region.close()
     # ----------------問題回報-----------------
-    # elif event.message.text == "問題回報":
+    elif event.message.text == "問題回報":
+        line_bot_api.reply_message(
+            event.reply_token, 
+            TextSendMessage(
+                text='https://docs.google.com/spreadsheets/d/1twIbwJkmLKUa8t5BaEFT6Py7E8Dks9uFDXuQFN4Q7RI/edit?usp=sharing')
+        )
     
     # ----------------支援機構-----------------
     elif event.message.text == "支援機構":
@@ -307,6 +312,13 @@ def test1(event):
                 text='https://docs.google.com/document/d/1eLUrfEoEQMkfS0qIbdWdZ6gnj0WJwttcesTytAEn1Pc/edit?usp=sharing')
         )
 
+    # ----------------使用說明-----------------
+    elif event.message.text == "使用說明":
+        line_bot_api.reply_message(
+            event.reply_token, 
+            TextSendMessage(
+                text='https://docs.google.com/document/d/19c9yDG68zhEdMOiB_hOpPsEqtB3bf2qjl8UdbUuH21Y/edit?usp=sharing')
+        )
 
     # ----------------爬蟲-----------------
     else:
