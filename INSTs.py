@@ -1222,8 +1222,6 @@ def SINICA(ISBN):
     return gg
 
 # 中國文化大學 PCCU V
-
-
 def PCCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1241,8 +1239,6 @@ def PCCU(ISBN):
     return gg
 
 # 輔仁大學 FJU V
-
-
 def FJU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1260,8 +1256,6 @@ def FJU(ISBN):
     return gg
 
 # 國立陽明交通大學 NYCU V
-
-
 def NYCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1303,8 +1297,6 @@ def NCKU(ISBN):
 # 新北市|高空大|屏大
 
 # 新北市立圖書館 NTPC V
-
-
 def NTPC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1322,8 +1314,6 @@ def NTPC(ISBN):
     return gg
 
 # 高雄市立空中大學 OUK V
-
-
 def OUK(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1342,8 +1332,6 @@ def OUK(ISBN):
     return gg
 
 # 國立屏東大學 NPTU V
-
-
 def NPTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1365,8 +1353,6 @@ def NPTU(ISBN):
 # webpac_aspx_crawler()
 # 樹德|首府|崑山|弘光|修平|華夏|真理|實踐|華梵|聯合
 # 樹德科技大學 STU V
-
-
 def STU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1384,8 +1370,6 @@ def STU(ISBN):
     return gg
 
 # 台灣首府大學 TSU V
-
-
 def TSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1403,8 +1387,6 @@ def TSU(ISBN):
     return gg
 
 # 崑山科技大學 KSU V
-
-
 def KSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1422,8 +1404,6 @@ def KSU(ISBN):
     return gg
 
 # 弘光科技大學 HKU V
-
-
 def HKU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1442,8 +1422,6 @@ def HKU(ISBN):
     return gg
 
 # 修平科技大學 HUST V
-
-
 def HUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1461,8 +1439,6 @@ def HUST(ISBN):
     return gg
 
 # 華夏科技大學 HWH V
-
-
 def HWH(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1480,8 +1456,6 @@ def HWH(ISBN):
     return gg
 
 # 真理大學 AU V
-
-
 def AU(ISBN):
     try:
         print('（./INSTs.py）執行這行1')
@@ -1520,8 +1494,6 @@ def AU(ISBN):
         return gg
 
 # 實踐大學 USC V
-
-
 def USC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1540,8 +1512,6 @@ def USC(ISBN):
     return gg
 
 # 華梵大學 HFU V
-
-
 def HFU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1559,8 +1529,6 @@ def HFU(ISBN):
     return gg
 
 # 國立聯合大學 NUU V
-
-
 def NUU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1583,8 +1551,6 @@ def NUU(ISBN):
 # 國北護|大同|國體大
 
 # 國立臺北護理健康大學 NTUNHS V
-
-
 def NTUNHS(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1602,8 +1568,6 @@ def NTUNHS(ISBN):
     return gg
 
 # 大同大學 TTU V
-
-
 def TTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1622,8 +1586,6 @@ def TTU(ISBN):
     return gg
 
 # 國立體育大學 NTSU V
-
-
 def NTSU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1667,8 +1629,6 @@ def ugly_crawler(driver, org, org_url, ISBN):
         return table
 
 # 連江縣公共圖書館 Matsu V
-
-
 def Matsu(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1686,8 +1646,6 @@ def Matsu(ISBN):
     return gg
 
 # 開南大學 KNU V
-
-
 def KNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1710,8 +1668,6 @@ def KNU(ISBN):
 # 東專|醒吾|彰化縣|高醫|虎科|聖約翰|東南|新生|崇仁|元培
 
 # ------------國立臺東專科學校-------------
-
-
 def NTC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1729,8 +1685,6 @@ def NTC(ISBN):
     return gg
 
 # ------------醒吾科技大學-------------
-
-
 def HWU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1749,8 +1703,6 @@ def HWU(ISBN):
     return gg
 
 # 彰化縣公共圖書館 CHPL V
-
-
 def CHPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1768,8 +1720,6 @@ def CHPL(ISBN):
     return gg
 
 # 高雄醫學大學 KMU V
-
-
 def KMU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1787,8 +1737,6 @@ def KMU(ISBN):
     return gg
 
 # 國立虎尾科技大學 NFU V
-
-
 def NFU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1806,8 +1754,6 @@ def NFU(ISBN):
     return gg
 
 # 聖約翰科技大學 SJU V
-
-
 def SJU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1825,8 +1771,6 @@ def SJU(ISBN):
     return gg
 
 # 東南科技大學 TNU V
-
-
 def TNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1844,8 +1788,6 @@ def TNU(ISBN):
     return gg
 
 # 新生醫護管理專科學校 HSC V
-
-
 def HSC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1863,8 +1805,6 @@ def HSC(ISBN):
     return gg
 
 # 崇仁醫護管理專科學校 CJC V
-
-
 def CJC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1882,8 +1822,6 @@ def CJC(ISBN):
     return gg
 
 # 元培醫事科技大學 YPU V
-
-
 def YPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1901,8 +1839,6 @@ def YPU(ISBN):
     return gg
 
 # 嶺東科技大學 LTU V
-
-
 def LTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1920,8 +1856,6 @@ def LTU(ISBN):
     return gg
 
 # 明道大學 MDU V
-
-
 def MDU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1939,8 +1873,6 @@ def MDU(ISBN):
     return gg
 
 # 大葉大學 DYU V
-
-
 def DYU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1958,8 +1890,6 @@ def DYU(ISBN):
     return gg
 
 # 建國科技大學 CTU V
-
-
 def CTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1977,8 +1907,6 @@ def CTU(ISBN):
     return gg
 
 # 南開科技大學 NKUT V
-
-
 def NKUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -1996,8 +1924,6 @@ def NKUT(ISBN):
     return gg
 
 # 國立高雄大學 NUK V
-
-
 def NUK(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2015,8 +1941,6 @@ def NUK(ISBN):
     return gg
 
 # 國立東華大學 NDHU V
-
-
 def NDHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2039,8 +1963,6 @@ def NDHU(ISBN):
 # 北藝大|勤益|義守|中山醫|國衛院
 
 # 國立臺北藝術大學 TNUA V OK
-
-
 def TNUA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2058,8 +1980,6 @@ def TNUA(ISBN):
     return gg
 
 # 國立勤益科技大學 NCUT V OK
-
-
 def NCUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2078,8 +1998,6 @@ def NCUT(ISBN):
     return gg
 
 # 義守大學 ISU V
-
-
 def ISU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2097,8 +2015,6 @@ def ISU(ISBN):
     return gg
 
 # 中山醫學大學 CSMU V
-
-
 def CSMU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2116,8 +2032,6 @@ def CSMU(ISBN):
     return gg
 
 # 國家衛生研究院 NHRI V
-
-
 def NHRI(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2140,8 +2054,6 @@ def NHRI(ISBN):
 # 北大|城市科大|德明|龍華|臺中市|中國醫|亞洲|臺南市|慈濟|澎科
 
 # 國立臺北大學 NTPU X(卡在進table前的頁面)
-
-
 def NTPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2159,8 +2071,6 @@ def NTPU(ISBN):
     return gg
 
 # 臺北城市科技大學 TPCU V
-
-
 def TPCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2178,8 +2088,6 @@ def TPCU(ISBN):
     return gg
 
 # 德明財經科技大學 TMUST V
-
-
 def TMUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2197,8 +2105,6 @@ def TMUST(ISBN):
     return gg
 
 # 龍華科技大學 LHU V
-
-
 def LHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2216,8 +2122,6 @@ def LHU(ISBN):
     return gg
 
 # 臺中市立圖書館 TCPL V
-
-
 def TCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2235,8 +2139,6 @@ def TCPL(ISBN):
     return gg
 
 # 中國醫藥大學 CMU V
-
-
 def CMU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2254,8 +2156,6 @@ def CMU(ISBN):
     return gg
 
 # 亞洲大學 Asia V
-
-
 def Asia(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2273,8 +2173,6 @@ def Asia(ISBN):
     return gg
 
 # 臺南市立圖書館 TNPL V
-
-
 def TNPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2292,8 +2190,6 @@ def TNPL(ISBN):
     return gg
 
 # 慈濟大學 TCU V
-
-
 def TCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2311,8 +2207,6 @@ def TCU(ISBN):
     return gg
 
 # 國立澎湖科技大學 NPU V OK
-
-
 def NPU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2379,8 +2273,6 @@ def 基隆市公共圖書館(driver, org, org_url, ISBN):
         print(f'《{ISBN}》在「{org_url}」無法爬取')
 
 # 基隆市公共圖書館 KLCCAB X(無館藏資料時會掛掉)
-
-
 def KLCCAB(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2403,8 +2295,6 @@ def KLCCAB(ISBN):
 # 中科大|南投縣|南藝大
 
 # 國立臺中科技大學 NUTC
-
-
 def NUTC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2422,8 +2312,6 @@ def NUTC(ISBN):
     return gg
 
 # 南投縣圖書館 NTCPL
-
-
 def NTCPL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2441,8 +2329,6 @@ def NTCPL(ISBN):
     return gg
 
 # 國立臺南藝術大學 TNNUA OK
-
-
 def TNNUA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2465,8 +2351,6 @@ def TNNUA(ISBN):
 # 臺史館|臺文館|史前館|
 
 # 國立臺灣史前文化博物館 NMP
-
-
 def NMP(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2507,8 +2391,6 @@ def 國家圖書館(driver, org, org_url, ISBN):
     return table
 
 # 國家圖書館 NCL V
-
-
 def NCL(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2543,8 +2425,6 @@ def 世新大學(driver, org, org_url, ISBN):
         return table
 
 # 世新大學 SHU V OK
-
-
 def SHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2560,7 +2440,6 @@ def SHU(ISBN):
     driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
-
 
 # 台北海洋科技大學 TUMT V
 def TUMT(ISBN):
@@ -2578,7 +2457,6 @@ def TUMT(ISBN):
     driver.close()
     worksheet.append_rows(gg.values.tolist())
     return gg
-
 
 # ---------------------------------被獨立出來的敏實科大----------------------------------------
 def 敏實科技大學(driver, org, org_url, ISBN):
@@ -2611,8 +2489,6 @@ def 敏實科技大學(driver, org, org_url, ISBN):
         return table
 
 # 敏實科技大學 MITUST
-
-
 def MITUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2697,8 +2573,6 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
     return table
 
 # 國立臺灣大學 NTU V
-
-
 def NTU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2718,8 +2592,6 @@ def NTU(ISBN):
     return gg
 
 # 國立政治大學 NCCU V
-
-
 def NCCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2739,8 +2611,6 @@ def NCCU(ISBN):
     return gg
 
 # 淡江大學 TKU V OK
-
-
 def TKU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2760,8 +2630,6 @@ def TKU(ISBN):
     return gg
 
 # 銘傳大學 MCU V(索書號是空的) OK
-
-
 def MCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2780,8 +2648,6 @@ def MCU(ISBN):
     return gg
 
 # 東吳大學 SCU V OK
-
-
 def SCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2801,8 +2667,6 @@ def SCU(ISBN):
     return gg
 
 # 國立高雄科技大學 NKUST V OK
-
-
 def NKUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2822,8 +2686,6 @@ def NKUST(ISBN):
     return gg
 
 # 國立清華大學 NTHU
-
-
 def NTHU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2843,8 +2705,6 @@ def NTHU(ISBN):
     return gg
 
 # 國立陽明交通大學 NYCU
-
-
 def NYCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2942,8 +2802,6 @@ def primo_two_crawler(driver, org, url_front, ISBN, url_behind):
     return table
 
 # 國立屏東科技大學 NPUST V
-
-
 def NPUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -2963,8 +2821,6 @@ def NPUST(ISBN):
     return gg
 
 # 國立高雄餐旅大學 NKUHT V
-
-
 def NKUHT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3019,8 +2875,6 @@ def primo_greendot_crawler(driver, org, url_front, ISBN, url_behind):
     return table
 
 # 長庚大學 CGU V OK
-
-
 def CGU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3039,8 +2893,6 @@ def CGU(ISBN):
     return gg
 
 # 國立中正大學 CCU V OK
-
-
 def CCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3057,8 +2909,6 @@ def CCU(ISBN):
     return gg
 
 # 長榮大學 CJCU V OK
-
-
 def CJCU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3147,8 +2997,6 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
     return table
 
 # 馬偕醫學院 MMC V OK
-
-
 def MMC(ISBN):
     sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
@@ -3171,8 +3019,6 @@ def MMC(ISBN):
     return gg
 
 # 工業技術研究院 ITRI V
-
-
 def ITRI(ISBN):
     sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
@@ -3195,8 +3041,6 @@ def ITRI(ISBN):
     return gg
 
 # 明志科技大學 MCUT V
-
-
 def MCUT(ISBN):
     sheet = ggSheet()
     worksheet = sheet.worksheet('worksheet_2')
@@ -3219,8 +3063,6 @@ def MCUT(ISBN):
     return gg
 
 # 長庚科技大學 CGUST V
-
-
 def CGUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
@@ -3243,8 +3085,6 @@ def CGUST(ISBN):
     return gg
 
 # 國立暨南國際大學 NCNU V
-
-
 def NCNU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3267,8 +3107,6 @@ def NCNU(ISBN):
     return gg
 
 # 國立臺南大學 NUTN V
-
-
 def NUTN(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3291,8 +3129,6 @@ def NUTN(ISBN):
     return gg
 
 # 國家兩廳院 NTCH 9573308436 V
-
-
 def NTCH(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3315,8 +3151,6 @@ def NTCH(ISBN):
     return gg
 
 # 台灣神學研究學院 TGST V
-
-
 def TGST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3339,8 +3173,6 @@ def TGST(ISBN):
     return gg
 
 # 國立臺灣美術館 NTMOFA 9784897376547
-
-
 def NTMOFA(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3361,8 +3193,6 @@ def NTMOFA(ISBN):
     return gg
 
 # 高苑科技大學 KYU X (您所想要連結的資料庫目前維護中)
-
-
 def KYU(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(0)
@@ -3404,8 +3234,6 @@ def chungchung_crawler(driver, org, org_url, ISBN):
     return table
 
 # 中臺科技大學 CTUST
-
-
 def CTUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
@@ -3423,8 +3251,6 @@ def CTUST(ISBN):
     return gg
 
 # 中州科技大學 CCUST
-
-
 def CCUST(ISBN):
     sheet = ggSheet()
     worksheet = sheet.get_worksheet(1)
