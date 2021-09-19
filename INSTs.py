@@ -2526,10 +2526,11 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             else:  # 如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
                 time.sleep(5)
                 editions[0].click()
-                if org == "國立政治大學":
+                if org == "國立政治大學" or org == "國立清華大學" or org == "國立陽明交通大學":
                     try:
                         editions = driver.find_elements_by_class_name(
                             'item-title', 10)  # 這時候是第二層的分版本了！(ex.政大 9789869109321)
+                        print("應該是有找到裡面的版本了啦")
                     except:
                         pass
 
