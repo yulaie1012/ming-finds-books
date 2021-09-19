@@ -2518,7 +2518,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
         driver.get(url)
 
         try:  # 開始爬蟲
-            editions = wait_for_elements_clickable(
+            editions = wait_for_elements_present(
                 driver, 'item-title', 20, By.CLASS_NAME)
             print("進入搜尋")
             try: #找有沒有多個版本的箭頭
@@ -2531,7 +2531,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 print("有多個版本QQ")
                 editions[0].click()
                 time.sleep(5)
-                editions = wait_for_elements_clickable(
+                editions = wait_for_elements_present(
                     driver, 'item-title', 20, By.CLASS_NAME)
             else:
                 editions[0].click()
