@@ -2521,6 +2521,20 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             editions = wait_for_elements_present(
                 driver, 'item-title', 20, By.CLASS_NAME)
             print("進入搜尋")
+            try: #找有沒有多個版本的箭頭
+                edition_check = wait_for_element_clickable(
+                    driver, "neutralized-button.arrow-link-button.md-button.md-primoExplore-theme.md-ink-ripple").click()
+            except:
+                edition_check = None
+                editions[0].click()
+                print(edition_check)
+            if edition_check != None: #如果有箭頭，代表有多個版本，再爬一次版本！
+                print("有多個版本QQ")
+                editions[0].click()
+                editions = wait_for_elements_present(
+                    driver, 'item-title', 20, By.CLASS_NAME)
+
+            """
             if len(editions) > 1:  # 如果最外面有兩個版本(默認點進去不會再分版本了啦)(ex.政大 9789861371955)，直接交給下面處理
                 pass
             else:  # 如果最外面只有一個版本，那有可能點進去還有再分，先click進去，再分一個版本跟多個版本的狀況
@@ -2533,6 +2547,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                         print("應該是有找到裡面的版本了啦")
                     except:
                         pass
+            """
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
