@@ -2523,7 +2523,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             print("進入搜尋")
             try: #找有沒有多個版本的箭頭
                 edition_check = wait_for_element_clickable(
-                    driver, "neutralized-button.arrow-link-button.md-button.md-primoExplore-theme.md-ink-ripple").click()
+                    driver, "neutralized-button.arrow-link-button.md-button.md-primoExplore-theme.md-ink-ripple", 20, By.CLASS_NAME).click()
             except:
                 edition_check = None
                 editions[0].click()
@@ -2531,6 +2531,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             if edition_check != None: #如果有箭頭，代表有多個版本，再爬一次版本！
                 print("有多個版本QQ")
                 editions[0].click()
+                time.sleep(5)
                 editions = wait_for_elements_present(
                     driver, 'item-title', 20, By.CLASS_NAME)
 
@@ -2547,7 +2548,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                         print("應該是有找到裡面的版本了啦")
                     except:
                         pass
-            """
+            
 
             try:  # 先找叉叉確定是不是在最裡層了
                 back_check = wait_for_element_present(
@@ -2556,7 +2557,9 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
             except:
                 back_check = None
                 print("沒有叉叉，進版本迴圈")
-            if back_check == None:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
+            """
+
+            if len(editions) > 1:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 for i in range(0, len(editions)):  # 有幾個版本就跑幾次，不管哪一層版本都適用
                     time.sleep(5)
                     into = editions[i].click()
