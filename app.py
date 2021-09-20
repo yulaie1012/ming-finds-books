@@ -317,7 +317,7 @@ def test1(event):
         line_bot_api.reply_message(
             event.reply_token, 
             TextSendMessage(
-                text='輸入您想查詢的書及 ISBN 與館藏機構，中間以半形空格作為分隔。範例格式：9789869109321 台大 國圖 新北市圖')
+                text='輸入您想查詢的書籍ISBN與館藏機構，中間以半形空格作為分隔。範例格式：9789869109321 台大 國圖 新北市圖')
         )
 
     # ----------------爬蟲-----------------
