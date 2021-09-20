@@ -3022,7 +3022,7 @@ def clickclick_crawler(driver, org, org_url, ISBN, xpath_num, gogo_xpath, xpath_
 # 馬偕醫學院 MMC V OK
 def MMC(ISBN):
     sheet = ggSheet()
-    worksheet = sheet.worksheet('worksheet_2')
+    worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
     gg = clickclick_crawler(
@@ -3044,7 +3044,7 @@ def MMC(ISBN):
 # 工業技術研究院 ITRI V
 def ITRI(ISBN):
     sheet = ggSheet()
-    worksheet = sheet.worksheet('worksheet_2')
+    worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
     gg = clickclick_crawler(
@@ -3066,7 +3066,7 @@ def ITRI(ISBN):
 # 明志科技大學 MCUT V
 def MCUT(ISBN):
     sheet = ggSheet()
-    worksheet = sheet.worksheet('worksheet_2')
+    worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
     gg = clickclick_crawler(
@@ -3088,7 +3088,7 @@ def MCUT(ISBN):
 # 長庚科技大學 CGUST V
 def CGUST(ISBN):
     sheet = ggSheet()
-    worksheet = sheet.get_worksheet(1)
+    worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
     gg = clickclick_crawler(
