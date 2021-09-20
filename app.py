@@ -200,6 +200,7 @@ NTMOFAs = ["ntmpfa", "NTMOFA", "國立臺灣美術館", "國立台灣美術館",
 KYUs = ["kyu", "KYU", "高苑科技大學", "高苑科大", "高苑"]
 CTUSTs = ["ctust", "CTUST", "中臺科技大學", "中台科技大學", "中臺科大", "中台科大", "中臺", "中台"]
 CCUSTs = ["ccust", "CCUST", "中州科技大學", "中州科大", "中州"]
+NewTaipeiCitys = ["NewTaipeiCity","New Taipei City", "新北市", "新北市們", "新北市全部"]
 
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -636,6 +637,8 @@ def test1(event):
                 CTUST(ISBN)
             elif str_input[i] in CCUSTs:  # 中州科技大學
                 CCUST(ISBN)
+            elif str_input[i] in NewTaipeiCitys:  # 新北市全部
+                NewTaipeiCity(ISBN)            
             else:
                 print("nono")
 
