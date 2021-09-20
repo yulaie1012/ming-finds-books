@@ -3259,7 +3259,7 @@ def chungchung_crawler(driver, org, org_url, ISBN):
 # 中臺科技大學 CTUST
 def CTUST(ISBN):
     sheet = ggSheet()
-    worksheet = sheet.get_worksheet(1)
+    worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
 
     gg = chungchung_crawler(
@@ -3276,7 +3276,7 @@ def CTUST(ISBN):
 # 中州科技大學 CCUST
 def CCUST(ISBN):
     sheet = ggSheet()
-    worksheet = sheet.get_worksheet(1)
+    worksheet = sheet.get_worksheet(0)
     driver = get_chrome()
     gg = chungchung_crawler(
         driver,
@@ -3379,3 +3379,36 @@ def jing_jsp_crawler(driver, org, org_url, ISBN):
     else:
         alert_completion_report(function, 100)
         return table
+
+
+
+# ___________________________________________________
+# 新北市 NewTaipeiCity
+def NewTaipeiCity(ISBN):
+    sheet = ggSheet()
+    worksheet = sheet.get_worksheet(0)
+    driver = get_chrome()
+    all_Insts = []
+
+    all_Insts.append(
+        webpac_ajax_crawler(
+            driver,
+            '新北市立圖書館',
+            "https://webpac.tphcc.gov.tw/webpac/search.cfm",
+            ISBN
+        )
+    )
+
+    all_Insts.append(
+        toread_crawler(
+            driver,
+            '東南科技大學',
+            "http://140.129.140.176/toread/opac",
+            ISBN
+        )
+    )
+
+    driver.close()
+    gg = pd.concat(all_Insts, axis=0, ignore_index=True).fillna("")
+    worksheet.append_rows(gg.values.tolist())
+    return gg    
