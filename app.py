@@ -317,7 +317,7 @@ def test1(event):
         line_bot_api.reply_message(
             event.reply_token, 
             TextSendMessage(
-                text='https://docs.google.com/document/d/19c9yDG68zhEdMOiB_hOpPsEqtB3bf2qjl8UdbUuH21Y/edit?usp=sharing')
+                text='輸入您想查詢的書及 ISBN 與館藏機構，中間以半形空格作為分隔。範例格式：9789869109321 台大 國圖 新北市圖')
         )
 
     # ----------------爬蟲-----------------
