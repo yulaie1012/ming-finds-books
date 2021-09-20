@@ -3408,6 +3408,153 @@ def NewTaipeiCity(ISBN):
         )
     )
 
+    all_Insts.append(   
+        webpac_jsp_crawler(
+            driver,
+            '致理科技大學',
+            'http://hylib.chihlee.edu.tw/webpacIndex.jsp',
+            ISBN
+        )        
+    )
+
+    all_Insts.append(   
+        toread_crawler(
+            driver,
+            '聖約翰科技大學',
+            "http://163.21.66.231:8080/toread/opac",
+            ISBN
+        )      
+    )
+
+    all_Insts.append(   
+        webpac_jsp_crawler(
+            driver,
+            '國立臺灣藝術大學',
+            'http://webpac.ntua.edu.tw/webpacIndex.jsp',
+            ISBN
+        )     
+    )
+
+    all_Insts.append(   
+        webpac_aspx_crawler(
+            driver,
+            '華夏科技大學',
+            "http://webopac.lib.hwh.edu.tw/webopac/",
+            ISBN
+        )   
+    )
+
+    all_Insts.append(   
+        webpac_jsp_crawler(
+            driver,
+            '臺北基督學院',
+            "http://webpac.cct.edu.tw/webpacIndex.jsp",
+            ISBN
+        ) 
+    )
+
+    all_Insts.append(   
+        webpac_pro_crawler(
+            driver,
+            '輔仁大學',
+            "https://library.lib.fju.edu.tw/",
+            ISBN
+        )
+    )
+
+    all_Insts.append(   
+        webpac_aspx_crawler(
+            driver,
+            '華梵大學',
+            "http://210.59.113.12/webopac/",
+            ISBN
+        )
+    )    
+    
+    all_Insts.append(   
+        primo_crawler(
+            driver,
+            '淡江大學',
+            "https://uco-network.primo.exlibrisgroup.com/discovery/search?query=any,contains,",
+            ISBN,
+            "&tab=Everything&search_scope=MyInst_and_CI&vid=886UCO_TKU:886TKU_INST&lang=zh-tw&offset=0",
+            "neutralized-button.layout-full-width.layout-display-flex.md-button.md-ink-ripple.layout-row"
+        )
+    )    
+
+    all_Insts.append(   
+        clickclick_crawler(
+            driver,
+            '明志科技大學',
+            "https://aleph.lib.cgu.edu.tw/F/?func=find-d-0&local_base=FLY03",
+            ISBN,
+            "7",
+            "/html/body/form/table[1]/tbody/tr[9]/td/input",
+            "a",
+            '/html/body/table[9]',
+            [3, 4, 7]
+        )
+    ) 
+
+    all_Insts.append(   
+        台北海洋科技大學(
+            driver,
+            '台北海洋科技大學',
+            'http://140.129.253.4/webopac7/sim_data2.php?pagerows=15&orderby=BRN&pageno=1&bn=',
+            ISBN
+        )
+    ) 
+
+    all_Insts.append(   
+        clickclick_crawler(
+            driver,
+            '馬偕醫學院',
+            "http://aleph.library.mmc.edu.tw/F?func=find-b&adjacent=Y&find_code=WRD&local_base=TOP02&request=&TY=",
+            ISBN,
+            "7",
+            "/html/body/form/table[1]/tbody/tr[7]/td/input",
+            "span/a[1]",
+            '/html/body/table[10]',
+            [2, 4, 7]
+        )
+    ) 
+
+    all_Insts.append(   
+        webpac_jsp_crawler(
+            driver,
+            '宏國德霖科技大學',
+            "http://210.60.142.23/webpacIndex.jsp",
+            ISBN
+        )
+    ) 
+
+    all_Insts.append(   
+        toread_crawler(
+            driver,
+            org='醒吾科技大學',
+            org_url="http://120.102.129.237/toread/opac",
+            ISBN=ISBN
+        )
+    )            
+
+    all_Insts.append(   
+        ebpac_aspx_crawler(
+            driver,
+            '真理大學',
+            "https://lib.au.edu.tw/webopac/",
+            ISBN
+        )
+    )    
+
+    all_Insts.append(   
+        webpac_jsp_crawler(
+            driver,
+            '景文科技大學',
+            'https://jinwenlib.just.edu.tw/webpacIndex.jsp',
+            ISBN
+        )
+    )    
+
     driver.close()
     gg = pd.concat(all_Insts, axis=0, ignore_index=True).fillna("")
     worksheet.append_rows(gg.values.tolist())
