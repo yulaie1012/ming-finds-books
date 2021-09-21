@@ -2529,7 +2529,6 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 
             if edition_check != None: #如果有箭頭，代表有多個版本，再爬一次版本！
                 print("有多個版本QQ")
-                editions[0].click()
                 time.sleep(5)
                 editions = wait_for_elements_present(
                     driver, 'item-title', 20, By.CLASS_NAME)
