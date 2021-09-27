@@ -3537,7 +3537,7 @@ def NewTaipeiCity(ISBN):
     )            
 
     all_Insts.append(   
-        ebpac_aspx_crawler(
+        webpac_aspx_crawler(
             driver,
             '真理大學',
             "https://lib.au.edu.tw/webopac/",
