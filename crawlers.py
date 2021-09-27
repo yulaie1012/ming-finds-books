@@ -293,19 +293,17 @@ def search_ISBN(driver, ISBN, input_position, waiting_time=10, by=By.NAME):
         alert_exception_report(function, e)
         return
 
-def get_all_tgt_urls(driver):
+def get_all_tgt_urls(driver, link_text):
     function = sys._getframe().f_code.co_name
     alert_execution_report(function)
     print_all_arguments(locals())
     
     tgt_urls = []
 
-    anchors = driver.find_elements(By.LINK_TEXT, '詳細內容')
-    if anchors == []:
-        anchors = driver.find_elements(By.LINK_TEXT, '內容')
+    anchors = driver.find_elements_by_link_text(link_text)
     for anchor in anchors:
         tgt_urls.append(anchor.get_attribute('href'))
-
+    
     return tgt_urls
 
 
@@ -330,7 +328,7 @@ def get_all_tgt_urls(driver):
 
 # ### 函式本體
 
-# In[59]:
+# In[1]:
 
 
 def webpac_jsp_crawler(driver, org, org_url, ISBN):
@@ -373,7 +371,7 @@ def webpac_jsp_crawler(driver, org, org_url, ISBN):
                 return
             
             # ＂多筆＂查詢結果
-            tgt_urls = get_all_tgt_urls(driver)
+            tgt_urls = get_all_tgt_urls(driver, '詳細內容')
 
             for tgt_url in tgt_urls:
                 driver.get(tgt_url)
@@ -977,19 +975,6 @@ def crawl_all_tables_on_page(driver, table_position, org, url_pattern):
             break
     
     return table
-
-
-# In[28]:
-
-
-def get_all_tgt_urls(driver, link_text):
-    tgt_urls = []
-
-    anchors = driver.find_elements_by_link_text(link_text)
-    for anchor in anchors:
-        tgt_urls.append(anchor.get_attribute('href'))
-    
-    return tgt_urls
 
 
 # In[29]:
