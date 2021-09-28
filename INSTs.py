@@ -2522,8 +2522,9 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 driver, 'item-title', 20, By.CLASS_NAME)
             print("進入搜尋")
             try: #找有沒有多個版本的箭頭
-                edition_check = wait_for_element_clickable(
-                    driver, "neutralized-button.arrow-link-button.md-button.md-primoExplore-theme.md-ink-ripple", 20, By.CLASS_NAME).click()
+                if org != "國立臺灣大學": #排除台大，不然台大沒辦法跑
+                    edition_check = wait_for_element_clickable(
+                        driver, "neutralized-button.arrow-link-button.md-button.md-primoExplore-theme.md-ink-ripple", 20, By.CLASS_NAME).click()
             except:
                 edition_check = None
                 
