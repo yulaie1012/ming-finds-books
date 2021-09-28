@@ -2563,7 +2563,7 @@ def primo_crawler(driver, org, url_front, ISBN, url_behind, tcn):
                 print("沒有叉叉，進版本迴圈")
             
 
-            if back_check = None:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
+            if back_check == None:  # 多個版本才要再跑迴圈(找不到叉叉代表不在最裡面，可知不是一個版本)
                 print("進多個版本")
                 for i in range(0, len(editions)):  # 有幾個版本就跑幾次，不管哪一層版本都適用
                     time.sleep(5)
